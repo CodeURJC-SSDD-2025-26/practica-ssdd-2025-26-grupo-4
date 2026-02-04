@@ -6,7 +6,7 @@
 | David Díaz Gómez-Escalonilla | d.diaz.2021@alumnos.urjc.es | daviddge |
 | Jonay Sebastián Oortiz Armas| js.ortiz.2023@alumnos.urjc.es | kuuharuh |
 | Ramiro Daniel Flores Aquino | rd.flores.2025@alumnos.urjc.es | danilo-uni |
-| Joel Domené Álvaro | j.domene.2022@alumnos.urjc.es |  |
+| Joel Domené Álvaro | j.domene.2022@alumnos.urjc.es |  joel-domene |
 
 ---
 
