@@ -31,11 +31,11 @@ Aplicación web dedicada exclusivamente a la venta de componentes de PC, orienta
 ### **Permisos de los Usuarios**
 
 **Usuario Anónimo**: 
-  - Permisos: Explorar catálogo, buscar productos, registrarse/iniciar sesion y gestionar un carrito temporal.
+  - Permisos: Explorar catálogo, buscar productos, registrarse/iniciar sesion.
   - No es dueño de ninguna entidad.
 
 **Usuario Registrado**: 
-  - Permisos: Gestionar su perfil, realizar pedidos, escribir reseñas y gestionar carrito persistente.
+  - Permisos: Gestionar su perfil, escribir reseñas y gestionar pedido.
   - Es dueño de sus propios pedidos, de su usuario y sus reseñas.
 
 **Administrador**: 
@@ -60,7 +60,6 @@ Aplicación web dedicada exclusivamente a la venta de componentes de PC, orienta
 
 - Envío automático correos electrónicos mediante JavaMailSender.
 - Generación de facturas en formato PDF usando iText o similar.
-- Simulación del proceso de pago.
 
 ### **Algoritmo o Consulta Avanzada**
 
