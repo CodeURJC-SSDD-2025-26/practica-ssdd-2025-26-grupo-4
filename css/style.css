@@ -1,6 +1,6 @@
 /* style.css */
 
-/* 1. Forzamos el fondo oscuro en los items del menú lateral */
+/* Fondo oscuro en los items del menú lateral */
 #sidebarCategorias .list-group-item {
     background-color: transparent;
     color: rgba(255, 255, 255, .75);
@@ -8,15 +8,42 @@
     padding: .5rem 1rem;
 }
 
-/* 2. Efecto al pasar el ratón */
+/* Efecto al pasar el ratón */
 #sidebarCategorias .list-group-item:hover {
     background-color: rgba(255, 255, 255, .1);
     color: #fff;
 }
 
-/* 3. Ajuste para las imágenes de los productos */
+/* Ajuste para las imágenes de los productos */
 .card-img-top {
     height: 200px;
     object-fit: contain;
     background-color: #fff;
+}
+
+/* Estilo para las estrellas de puntuación */
+.stars-outer {
+    position: relative;
+    display: inline-block;
+    color: #ccc; /* Color de las estrellas vacías */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+}
+
+.stars-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0; /* Este ancho lo cambiaremos por producto (ej: 80% para 4 estrellas) */
+    color: #f8ce0b; /* Color de las estrellas rellenas */
+}
+
+.stars-outer::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+}
+
+.stars-inner::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
 }
