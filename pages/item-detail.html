@@ -357,6 +357,26 @@
             document.getElementById('mainImage').src = src;
         }
     </script>
+
+    <script>
+        // 1. Miramos si hay alguien logueado en la memoria del navegador
+        // (Simulamos que si existe la clave 'isLoggedIn', el usuario entró)
+        const userIsLogged = localStorage.getItem('isLoggedIn');
+
+        // 2. Elegimos el archivo según el resultado
+        const headerFile = userIsLogged ? 'headers/loged_header.html' : 'headers/unloged_header.html';
+
+        // 3. Hacemos el fetch con el archivo elegido
+        fetch(headerFile)
+            .then(response => {
+                if (!response.ok) throw new Error("Error al cargar " + headerFile);
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('navbar-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error("Error:", error));
+    </script>
 </body>
 
 </html>
