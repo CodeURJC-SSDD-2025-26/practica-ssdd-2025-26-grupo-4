@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Compra Exitosa! - PCBuilderShop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/carrito_error.css">
+</head>
+<body>
+
+    <div class="container d-flex flex-column justify-content-center align-items-center min-vh-100 py-5">
+        
+        <div class="card shadow-lg border-0 rounded-4 text-center p-5" style="max-width: 600px; width: 100%;">
+            
+            <div class="success-animation mb-4">
+                <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                </svg>
+            </div>
+
+            <h1 class="fw-bold text-success mb-3">¡Pago Realizado con Éxito!</h1>
+            <p class="text-muted fs-5 mb-4">
+                Gracias por tu compra. Tu pedido está confirmado y listo para prepararse.
+            </p>
+
+            <div class="bg-light rounded-3 p-4 mb-4 text-start border">
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Número de Pedido:</span>
+                    <strong class="text-dark">#ORD-2024-8829X</strong>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Fecha:</span>
+                    <strong>18 Feb, 2026</strong>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Total Pagado:</span>
+                    <strong class="text-primary fs-5">764.00€</strong>
+                </div>
+                <hr>
+                <div class="d-flex align-items-center text-success">
+                    <i class="bi bi-truck me-2 fs-4"></i>
+                    <div>
+                        <small class="d-block fw-bold">Entrega Estimada</small>
+                        <small>Llega el Jueves, 20 Feb</small>
+                    </div>
+                </div>
+            </div>
+
+            <p class="small text-muted mb-4">
+                Hemos enviado la factura y el número de seguimiento a tu correo electrónico: <strong>usuario@ejemplo.com</strong>
+            </p>
+
+            <div class="d-grid gap-2 d-sm-flex justify-content-center">
+                <a href="index.html" class="btn btn-primary btn-lg px-4 gap-3 fw-bold">
+                    Volver a la Tienda
+                </a>
+                <button class="btn btn-outline-secondary btn-lg px-4" onclick="alert('Descargando PDF...')">
+                    <i class="bi bi-file-earmark-pdf me-2"></i> Descargar Factura
+                </button>
+            </div>
+        </div>
+
+        <div class="mt-4 text-muted small">
+            ¿Necesitas ayuda? <a href="#" class="text-decoration-none">Contactar Soporte</a>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
