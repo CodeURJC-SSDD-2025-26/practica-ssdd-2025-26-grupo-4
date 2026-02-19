@@ -39,8 +39,7 @@
             </li>
           </ul>
 
-
-          <form class="d-flex me-3" role="search">
+          <form class="d-flex me-3" role="search" action="pages/search-result.html" method="GET">
             <input class="form-control me-2" type="search" placeholder="Buscar componente (ej: RTX 4060)">
             <button class="btn btn-outline-primary" type="submit">Buscar</button>
           </form>
@@ -52,7 +51,6 @@
     </nav>
   </header>
 
-
   <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="sidebarCategorias"
     aria-labelledby="offcanvasLabel">
     <div class="offcanvas-header border-bottom border-secondary">
@@ -61,47 +59,16 @@
     </div>
     <div class="offcanvas-body">
       <div class="list-group list-group-flush">
-
-        <a href="#" class="list-group-item list-group-item-action">
-          <i class="bi bi-cpu me-2"></i>
-          Procesadores
-        </a>
-
-        <a href="#" class="list-group-item list-group-item-action">
-          <i class="bi bi-gpu-card me-2"></i>
-          Tarjetas Gráficas
-        </a>
-
-        <a href="#" class="list-group-item list-group-item-action">
-          <i class="bi bi-motherboard me-2"></i>
-          Placas base
-        </a>
-
-        <a href="#" class="list-group-item list-group-item-action">
-          <i class="bi bi-memory me-2"></i>
-          Memoria RAM
-        </a>
-
-        <a href="#" class="list-group-item list-group-item-action">
-          <i class="bi bi-device-hdd me-2"></i>
-          Discos duros
-        </a>
-
-        <a href="#" class="list-group-item list-group-item-action">
-          <i class="bi bi-lightning-charge me-2"></i>
-          Fuentes de alimentación
-        </a>
-
-        <a href="#" class="list-group-item list-group-item-action">
-          <i class="bi bi-snow me-2"></i>
-          Refrigeración
-        </a>
-
+        <a href="#" class="list-group-item list-group-item-action"><i class="bi bi-cpu me-2"></i>Procesadores</a>
+        <a href="#" class="list-group-item list-group-item-action"><i class="bi bi-gpu-card me-2"></i>Tarjetas Gráficas</a>
+        <a href="#" class="list-group-item list-group-item-action"><i class="bi bi-motherboard me-2"></i>Placas base</a>
+        <a href="#" class="list-group-item list-group-item-action"><i class="bi bi-memory me-2"></i>Memoria RAM</a>
+        <a href="#" class="list-group-item list-group-item-action"><i class="bi bi-device-hdd me-2"></i>Discos duros</a>
+        <a href="#" class="list-group-item list-group-item-action"><i class="bi bi-lightning-charge me-2"></i>Fuentes de alimentación</a>
+        <a href="#" class="list-group-item list-group-item-action"><i class="bi bi-snow me-2"></i>Refrigeración</a>
       </div>
     </div>
   </div>
-
-
 
   <section class="bg-light my-5 pt-4">
     <div class="container">
@@ -113,6 +80,9 @@
             </a>
             <a class="nav-link my-0" id="orders-tab" data-bs-toggle="pill" data-bs-target="#orders-pane" role="tab" aria-controls="orders-pane" aria-selected="false" style="cursor: pointer;">
               Mis pedidos
+            </a>
+            <a class="nav-link my-0" id="modify-tab" data-bs-toggle="pill" data-bs-target="#modify-pane" role="tab" aria-controls="modify-pane" aria-selected="false" style="cursor: pointer;">
+              Modificar cuenta
             </a>
             <a class="nav-link my-0" href="../index.html">
               Cerrar sesión
@@ -128,8 +98,7 @@
                 <div class="content-body">
                   <div class="d-flex align-items-center">
                     <div class="me-3">
-                      <img src="https://mdbootstrap.com/img/bootstrap-ecommerce/avatars/avatar.webp" class="rounded-circle"
-                        style="height: 60px; width: 60px;" />
+                      <img src="https://mdbootstrap.com/img/bootstrap-ecommerce/avatars/avatar.webp" class="rounded-circle" style="height: 60px; width: 60px;" />
                     </div>
                     <div class="pt-2">
                       <h6 class="pt-2">Juan José García Gómez</h6>
@@ -161,7 +130,6 @@
               </div>
 
               <div class="tab-pane fade" id="orders-pane" role="tabpanel" aria-labelledby="orders-tab" tabindex="0">
-                
                 <h5 class="mb-3">Tus pedidos</h5>
                 
                 <div class="card border border-primary mb-4 shadow-0">
@@ -178,16 +146,11 @@
                     <div class="row">
                       <div class="col-lg-6 border-start">
                         <p class="mb-0 text-muted">Dirección de envío</p>
-                        <p class="m-0">
-                          Calle de Sagasta, 13, Chamberí, 28004 Madrid
-                        </p>
+                        <p class="m-0">Calle de Sagasta, 13, Chamberí, 28004 Madrid</p>
                       </div>
                       <div class="col-lg-6 border-start">
                         <p class="mb-0 text-muted">Pago</p>
-                        <p class="m-0">
-                          Coste de envío: 31,36€ <br />
-                          Total: 496,31€
-                        </p>
+                        <p class="m-0">Coste de envío: 31,36€ <br />Total: 496,31€</p>
                       </div>
                     </div>
                     <hr />
@@ -221,16 +184,11 @@
                     <div class="row">
                       <div class="col-lg-6 border-start">
                         <p class="mb-0 text-muted">Dirección de envío</p>
-                        <p class="m-0">
-                          Calle de Sagasta, 13, Chamberí, 28004 Madrid
-                        </p>
+                        <p class="m-0">Calle de Sagasta, 13, Chamberí, 28004 Madrid</p>
                       </div>
                       <div class="col-lg-6 border-start">
                         <p class="mb-0 text-muted">Pago</p>
-                        <p class="m-0">
-                          Coste de envío: 31,36€ <br />
-                          Total: 496,31€
-                        </p>
+                        <p class="m-0">Coste de envío: 31,36€ <br />Total: 496,31€</p>
                       </div>
                     </div>
                     <hr />
@@ -250,12 +208,16 @@
                   </div>
                 </div>
               </div>
+
+              <div class="tab-pane fade" id="modify-pane" role="tabpanel" aria-labelledby="modify-tab" tabindex="0">
+                 <h5 class="mb-3">Modificar cuenta</h5>
+                 <p class="text-muted">Aquí irá el formulario para cambiar los datos del usuario.</p>
+              </div>
               
             </div>
           </div>
         </main>
       </div>
-
     </div>
   </section>
 
@@ -269,9 +231,7 @@
           <div class="col-md-6 col-sm-12">
             <div class="input-group">
               <input type="email" class="form-control" placeholder="Tu correo electrónico..." />
-              <button class="btn btn-primary" type="button">
-                Suscribirse
-              </button>
+              <button class="btn btn-primary" type="button">Suscribirse</button>
             </div>
           </div>
         </div>
