@@ -1,0 +1,14 @@
+/* Pequeños ajustes visuales */
+    .icon-hover:hover {
+      border-color: #3b71ca !important;
+      color: #3b71ca !important;
+    }
+
+    .card-banner {
+      background-size: cover;
+      background-position: center;
+    }
+
+    a {
+      text-decoration: none;
+    }
