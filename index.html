@@ -14,46 +14,7 @@
 
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#"></i><span class="text-primary">PC</span>BuilderShop</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarScroll">
-        <ul class="navbar-nav me-auto my-2 my-lg-0">
-          <li class="nav-item">
-            <a class="nav-link d-flex align-items-center" href="#sidebarCategorias" role="button"
-              data-bs-toggle="offcanvas" aria-controls="sidebarCategorias">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                class="bi bi-justify me-2" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                  d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5" />
-              </svg>
-              Todas las categorías
-            </a>
-          </li>
-        </ul>
-
-       <form class="d-flex me-3" role="search" action="pages/search-result.html" method="GET">
-    <input class="form-control me-2" type="search" placeholder="Buscar componente (ej: RTX 4060)">
-    <button class="btn btn-outline-primary" type="submit">Buscar</button>
-</form>
-
-<div id="nav-unlogged" class="d-flex">
-    <a href="pages/login.html" class="btn btn-outline-light me-2">Entrar</a>
-    <a href="./pages/login.html" class="btn btn-light">Mi Cesta</a>
-</div>
-
-<div id="nav-logged" class="d-flex d-none">
-    <a href="pages/profile.html" class="btn btn-outline-light me-2">Perfil</a>
-    <a href="pages/shopping-cart.html" class="btn btn-light">Mi Cesta</a>
-    
-    <button id="btnLogout" class="btn btn-danger ms-2">Salir</button>
-</div>
-      </div>
-    </div>
-  </nav>
+<div id="header-container"></div>
 
   <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="sidebarCategorias"
     aria-labelledby="offcanvasLabel">
@@ -790,35 +751,42 @@
       </div>
     </div>
   </footer>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // 1. Obtenemos los contenedores
-        const unloggedNav = document.getElementById('nav-unlogged');
-        const loggedNav = document.getElementById('nav-logged');
-        const btnLogout = document.getElementById('btnLogout');
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // 1. Comprobamos si el usuario está logueado
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        
+        // 2. Truco para las rutas: 
+        // Si estamos dentro de la carpeta "pages", la ruta es "headers/..."
+        // Si estamos en la raíz (index.html), la ruta es "pages/headers/..."
+        const isInPagesFolder = window.location.pathname.includes('/pages/');
+        const basePath = isInPagesFolder ? 'headers/' : 'pages/headers/';
+        
+        // 3. Elegimos el archivo correcto de tu compañero
+        const headerFile = isLoggedIn ? basePath + 'loged_header.html' : basePath + 'unloged_header.html';
 
-        // 2. Comprobamos si hay sesión
-        const isLoggedIn = localStorage.getItem('isLoggedIn');
-
-        if (isLoggedIn === 'true') {
-            // Si está logueado: Ocultamos el de Entrar, mostramos el de Perfil
-            unloggedNav.classList.add('d-none');
-            loggedNav.classList.remove('d-none');
-        } else {
-            // Si NO está logueado: Aseguramos que se muestre el de Entrar
-            unloggedNav.classList.remove('d-none');
-            loggedNav.classList.add('d-none');
-        }
-
-        // 3. Lógica para el botón de "Salir"
-        if (btnLogout) {
-            btnLogout.addEventListener('click', function() {
-                // Borramos la sesión
-                localStorage.removeItem('isLoggedIn');
-                // Recargamos la página para que los cambios surtan efecto
-                window.location.reload(); 
-            });
-        }
+        // 4. Cargamos el archivo y lo metemos en el contenedor
+        fetch(headerFile)
+            .then(response => {
+                if (!response.ok) throw new Error("No se pudo cargar el header");
+                return response.text();
+            })
+            .then(html => {
+                document.getElementById('header-container').innerHTML = html;
+                
+                // --- BONUS: AÑADIR FUNCIÓN CERRAR SESIÓN ---
+                // Si cargamos el loged_header, le damos vida al botón de Salir (si lo añades)
+                if(isLoggedIn) {
+                    const btnSalir = document.getElementById('btnCerrarSesion');
+                    if(btnSalir) {
+                        btnSalir.addEventListener('click', function() {
+                            localStorage.removeItem('isLoggedIn');
+                            window.location.reload(); // Recarga la página
+                        });
+                    }
+                }
+            })
+            .catch(error => console.error('Error cargando la cabecera:', error));
     });
 </script>
 
