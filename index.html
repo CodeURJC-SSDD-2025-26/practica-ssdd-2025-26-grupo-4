@@ -35,13 +35,22 @@
           </li>
         </ul>
 
-        <form class="d-flex me-3" role="search" action="pages/search-result.html" method="GET">
-          <input class="form-control me-2" type="search" placeholder="Buscar componente (ej: RTX 4060)">
-          <button class="btn btn-outline-primary" type="submit">Buscar</button>
-        </form>
+       <form class="d-flex me-3" role="search" action="pages/search-result.html" method="GET">
+    <input class="form-control me-2" type="search" placeholder="Buscar componente (ej: RTX 4060)">
+    <button class="btn btn-outline-primary" type="submit">Buscar</button>
+</form>
 
-        <a href="pages/login.html" class="btn btn-outline-light me-2"> Entrar </a>
-        <a href="pages/carrito.html" class="btn btn-light"> Mi Cesta</a>
+<div id="nav-unlogged" class="d-flex">
+    <a href="pages/login.html" class="btn btn-outline-light me-2">Entrar</a>
+    <a href="./pages/login.html" class="btn btn-light">Mi Cesta</a>
+</div>
+
+<div id="nav-logged" class="d-flex d-none">
+    <a href="pages/profile.html" class="btn btn-outline-light me-2">Perfil</a>
+    <a href="pages/shopping-cart.html" class="btn btn-light">Mi Cesta</a>
+    
+    <button id="btnLogout" class="btn btn-danger ms-2">Salir</button>
+</div>
       </div>
     </div>
   </nav>
@@ -781,6 +790,37 @@
       </div>
     </div>
   </footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. Obtenemos los contenedores
+        const unloggedNav = document.getElementById('nav-unlogged');
+        const loggedNav = document.getElementById('nav-logged');
+        const btnLogout = document.getElementById('btnLogout');
+
+        // 2. Comprobamos si hay sesión
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+        if (isLoggedIn === 'true') {
+            // Si está logueado: Ocultamos el de Entrar, mostramos el de Perfil
+            unloggedNav.classList.add('d-none');
+            loggedNav.classList.remove('d-none');
+        } else {
+            // Si NO está logueado: Aseguramos que se muestre el de Entrar
+            unloggedNav.classList.remove('d-none');
+            loggedNav.classList.add('d-none');
+        }
+
+        // 3. Lógica para el botón de "Salir"
+        if (btnLogout) {
+            btnLogout.addEventListener('click', function() {
+                // Borramos la sesión
+                localStorage.removeItem('isLoggedIn');
+                // Recargamos la página para que los cambios surtan efecto
+                window.location.reload(); 
+            });
+        }
+    });
+</script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

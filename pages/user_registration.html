@@ -1,25 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
-    rel="stylesheet" 
-    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
-    crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <title>PCBuilderShop - Crear Cuenta</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
-<body>
+<body class="bg-light">
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand" href="../index.html"><span class="text-primary">PC</span>BuilderShop</a>
-      
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll">
         <span class="navbar-toggler-icon"></span>
       </button>
-      
       <div class="collapse navbar-collapse" id="navbarScroll">
         <ul class="navbar-nav me-auto my-2 my-lg-0"></ul>        
       </div>
@@ -28,112 +23,135 @@
 
   <div class="container d-flex flex-column justify-content-center align-items-center min-vh-100 pt-5">
     
-    <div class="card card-login shadow-lg border-0 rounded-4 mt-4">
+    <div class="card card-login shadow-lg border-0 rounded-4 mt-4" style="max-width: 450px; width: 100%;">
         <div class="card-body p-5">
             
             <div class="text-center mb-4">
                 <h3 class="fw-bold text-dark">CREAR CUENTA</h3>
-                <p class="text-muted">Accede para gestionar tus pedidos y PC a medida.</p>
+                <p class="text-muted">Únete a PCBuilderShop para gestionar tus pedidos.</p>
             </div>
 
             <div class="d-grid gap-2 mb-4">
                 <button class="btn btn-outline-dark rounded-pill" type="button">
-                    <i class="bi bi-google me-2"></i> Iniciar sesión con Google
+                    <i class="bi bi-google me-2"></i> Registrarse con Google
                 </button>
             </div>
 
             <div class="text-center text-muted mb-4">
-                <p class="fw-bold">o bien</p>
-
+                <small class="fw-bold">o con tu correo electrónico</small>
             </div>
 
-            <form action="index.html"> 
+            <form id="registerForm" class="needs-validation" novalidate> 
+                
                 <div class="mb-3">
-                    <label for="name" class="form-label fw-bold small">Nombre</label>
+                    <label for="name" class="form-label fw-bold small">Nombre Completo</label>
                     <div class="input-group">
                         <span class="input-group-text bg-light border-end-0"><i class="bi bi-person"></i></span>
-                        <input type="text" class="form-control bg-light border-start-0" id="name" placeholder="Tu nombre completo" required>
+                        <input type="text" class="form-control bg-light border-start-0" id="name" placeholder="Tu nombre" required>
+                        <div class="invalid-feedback">Por favor, introduce tu nombre.</div>
                     </div>
                 </div>
 
                 <div class="mb-3">  
-                    <div class="d-flex justify-content-between">
-                        <label for="E-mail" class="form-label fw-bold small">E-mail</label>
-                    </div>
+                    <label for="email" class="form-label fw-bold small">E-mail</label>
                     <div class="input-group">
                         <span class="input-group-text bg-light border-end-0"><i class="bi bi-envelope"></i></span>
-                        <input type="email" class="form-control bg-light border-start-0" id="email" placeholder="E-mail*" required>
+                        <input type="email" class="form-control bg-light border-start-0" id="email" placeholder="correo@ejemplo.com" required>
+                        <div class="invalid-feedback">Introduce un correo válido.</div>
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <label for="password" class="form-label fw-bold small">Contraseña</label>
                     <div class="input-group">
-                        <span class="input-group-text bg-light border-end-0"><i class="bi bi-envelope"></i></span>
-                        <input type="password" class="form-control bg-light border-start-0" id="password" placeholder="Contraseña*" required>
+                        <span class="input-group-text bg-light border-end-0"><i class="bi bi-lock"></i></span>
+                        <input type="password" class="form-control bg-light border-start-0" id="password" placeholder="••••••••" minlength="6" required>
+                        <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
                     </div>
                 </div>
                 
                 <div class="mb-3">
                     <label for="confirmPassword" class="form-label fw-bold small">Repetir Contraseña</label>
                     <div class="input-group">
-                        <span class="input-group-text bg-light border-end-0"><i class="bi bi-envelope"></i></span>
-                        <input type="password" class="form-control bg-light border-start-0" id="confirmPassword" placeholder="Repetir contraseña*" required>
+                        <span class="input-group-text bg-light border-end-0"><i class="bi bi-lock-fill"></i></span>
+                        <input type="password" class="form-control bg-light border-start-0" id="confirmPassword" placeholder="••••••••" required>
+                        <div class="invalid-feedback">Las contraseñas no coinciden.</div>
                     </div>
                 </div>
 
-
-                <div class="mb-4 form-check">
-                    <input type="checkbox" class="form-check-input" id="remember">
-                    <label class="form-check-label small text-muted" for="remember">He leído y acepto la <a href="#" class="text-dark">Política de privacidad</a></label>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="privacy" required>
+                    <label class="form-check-label small text-muted" for="privacy">He leído y acepto la <a href="#" class="text-dark">Política de privacidad</a></label>
+                    <div class="invalid-feedback">Debes aceptar la política de privacidad.</div>
                 </div>
 
                 <div class="mb-4 form-check">
-    <input type="checkbox" class="form-check-input" id="recibir">
-    <label class="form-check-label small text-muted" for="recibir">
-        Recibir descuentos exclusivos, novedades y tendencias por e-mail. Me puedo dar de baja desde mi panel.
-    </label>
-</div>
+                    <input type="checkbox" class="form-check-input" id="newsletter">
+                    <label class="form-check-label small text-muted" for="newsletter">
+                        Recibir descuentos exclusivos y novedades por e-mail.
+                    </label>
+                </div>
 
                 <div class="d-grid">
-                    <a href="../index.html" class="btn btn-primary btn-lg rounded-3 fw-bold shadow-sm">
+                    <button type="submit" class="btn btn-primary btn-lg rounded-3 fw-bold shadow-sm">
                         Crear cuenta
-                    </a>
+                    </button>
                 </div>
             </form>
 
-            <div class="text-center mt-4">
-           
-                <p class="fw-bold">Ya tengo una cuenta </p>
-                <a href="login.html"  class="btn btn-outline-secondary">Iniciar sesión</a>
+            <div class="text-center mt-4 pt-3 border-top">
+                <p class="small text-muted mb-1">¿Ya tienes una cuenta?</p>
+                <a href="login.html" class="btn btn-outline-secondary btn-sm px-4">Iniciar sesión</a>
             </div>
 
         </div>
     </div> 
 
-    <div class="mt-4 text-muted small text-center">
+    <div class="mt-4 text-muted small text-center mb-5">
         &copy; 2024 PCBuilderShop. Todos los derechos reservados.
     </div>
 
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
+  <script>
+    const registerForm = document.getElementById('registerForm');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
 
+    registerForm.addEventListener('submit', function (event) {
+        
+        // Comprobar manualmente si las contraseñas coinciden
+        if (passwordInput.value !== confirmPasswordInput.value) {
+            confirmPasswordInput.setCustomValidity('Las contraseñas no coinciden');
+        } else {
+            confirmPasswordInput.setCustomValidity(''); // Resetea el error si son iguales
+        }
 
+        // Si el formulario NO es válido
+        if (!registerForm.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        } else {
+            // SI TODO ES CORRECTO
+            event.preventDefault(); // Evitamos que la página recargue mal
+            
+            // 1. Guardamos que el usuario está logueado
+            localStorage.setItem('isLoggedIn', 'true');
+            
+            // 2. (Opcional) Podemos guardar su nombre para saludarle en el index
+            const userName = document.getElementById('name').value;
+            localStorage.setItem('userName', userName);
+            
+            // 3. Redirigimos al inicio
+            window.location.href = "../index.html"; 
+        }
 
+        // Mostramos las alertas rojas/verdes
+        registerForm.classList.add('was-validated');
+    }, false);
+  </script>
 
-
-
-
-
-
-
-
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
-integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
-crossorigin="anonymous"></script>
 </body>
 </html>
