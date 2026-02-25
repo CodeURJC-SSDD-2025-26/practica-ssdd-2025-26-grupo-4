@@ -355,6 +355,23 @@
                 document.getElementById('navbar-placeholder').innerHTML = data;
             })
             .catch(error => console.error("Error:", error));
+
+
+
+            // ... dentro del .then(html => { ...
+document.getElementById('header-container').innerHTML = html;
+
+// Corregir rutas de enlaces si estamos en el index
+if (!isInPagesFolder) {
+    const links = document.querySelectorAll('#header-container a');
+    links.forEach(link => {
+        const href = link.getAttribute('href');
+        // Si el enlace no es un link externo (http) y no empieza por "pages/"
+        if (href && !href.startsWith('http') && !href.startsWith('pages/') && href !== '#') {
+            link.setAttribute('href', 'pages/' + href);
+        }
+    });
+}
     </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>

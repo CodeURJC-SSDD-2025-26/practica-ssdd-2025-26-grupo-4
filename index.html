@@ -5,13 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PCBuilderShop - Tienda de Componentes</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/index.css">
 </head>
-
 <body>
 
 <div id="header-container"></div>
@@ -752,6 +750,7 @@
     </div>
   </footer>
 <script>
+  
     document.addEventListener("DOMContentLoaded", function() {
         // 1. Comprobamos si el usuario está logueado
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
@@ -772,7 +771,20 @@
                 return response.text();
             })
             .then(html => {
-                document.getElementById('header-container').innerHTML = html;
+              // ... dentro del .then(html => { ...
+document.getElementById('header-container').innerHTML = html;
+
+// Corregir rutas de enlaces si estamos en el index
+if (!isInPagesFolder) {
+    const links = document.querySelectorAll('#header-container a');
+    links.forEach(link => {
+        const href = link.getAttribute('href');
+        // Si el enlace no es un link externo (http) y no empieza por "pages/"
+        if (href && !href.startsWith('http') && !href.startsWith('pages/') && href !== '#') {
+            link.setAttribute('href', 'pages/' + href);
+        }
+    });
+}
                 
                 // --- BONUS: AÑADIR FUNCIÓN CERRAR SESIÓN ---
                 // Si cargamos el loged_header, le damos vida al botón de Salir (si lo añades)
