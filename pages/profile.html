@@ -315,6 +315,16 @@
                 document.getElementById('navbar-placeholder').innerHTML = data;
             })
             .catch(error => console.error("Error:", error));
+             
+            if(isLoggedIn) {
+                    const btnSalir = document.getElementById('btnCerrarSesion');
+                    if(btnSalir) {
+                        btnSalir.addEventListener('click', function() {
+                            localStorage.removeItem('isLoggedIn');
+                            window.location.reload(); // Recarga la página
+                        });
+                    }
+                }
     </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
