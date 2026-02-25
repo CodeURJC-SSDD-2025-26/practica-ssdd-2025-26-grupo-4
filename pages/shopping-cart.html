@@ -359,7 +359,7 @@
                 if (btnSalir) {
                     btnSalir.addEventListener('click', function() {
                         localStorage.removeItem('isLoggedIn');
-                        window.location.reload();
+                        window.location.href = "../index.html";
                     });
                 }
             }
