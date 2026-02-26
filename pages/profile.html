@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
@@ -8,11 +8,8 @@
   <title>Profile - PCBuilderShop</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-
   <link rel="stylesheet" href="../styles/profile.css">
-
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 </head>
@@ -25,13 +22,13 @@
       <div class="row">
         <div class="col-lg-3 col-xl-3">
           <nav class="nav flex-lg-column w-100 d-flex nav-pills mb-4" role="tablist">
-            <a class="nav-link my-0 active" id="account-tab" data-bs-toggle="pill" data-bs-target="#account-pane" role="tab" aria-controls="account-pane" aria-selected="true" style="cursor: pointer;">
+            <a class="nav-link my-0 active nav-link-pointer" id="account-tab" data-bs-toggle="pill" data-bs-target="#account-pane" role="tab" aria-controls="account-pane" aria-selected="true">
               Mi cuenta
             </a>
-            <a class="nav-link my-0" id="orders-tab" data-bs-toggle="pill" data-bs-target="#orders-pane" role="tab" aria-controls="orders-pane" aria-selected="false" style="cursor: pointer;">
+            <a class="nav-link my-0 nav-link-pointer" id="orders-tab" data-bs-toggle="pill" data-bs-target="#orders-pane" role="tab" aria-controls="orders-pane" aria-selected="false">
               Mis pedidos
             </a>
-            <a class="nav-link my-0" id="modify-tab" data-bs-toggle="pill" data-bs-target="#modify-pane" role="tab" aria-controls="modify-pane" aria-selected="false" style="cursor: pointer;">
+            <a class="nav-link my-0 nav-link-pointer" id="modify-tab" data-bs-toggle="pill" data-bs-target="#modify-pane" role="tab" aria-controls="modify-pane" aria-selected="false">
               Modificar cuenta
             </a>
           </nav>
@@ -45,7 +42,7 @@
                 <div class="content-body">
                   <div class="d-flex align-items-center">
                     <div class="me-3">
-                      <img src="../assets/images/profile_photo_example.jpeg" class="rounded-circle" style="height: 60px; width: 60px;" />
+                      <img src="../assets/images/profile_photo_example.jpeg" class="rounded-circle avatar-sm" />
                     </div>
                     <div class="pt-2">
                       <h6 class="pt-2">Juan José García Gómez</h6>
@@ -54,7 +51,7 @@
                         <br>
                         Teléfono: +34 600 50 04 00
                         <br>
-                        <a href="#" class="px-2"><i class="fa fa-pen"></i></a>
+                        <a href="#" id="btn-ir-a-modificar" class="px-2 edit-icon"><i class="fa fa-pen"></i></a>
                       </p>
                     </div>
                   </div>
@@ -166,7 +163,7 @@
                 <h5 class="mb-4">Modificar cuenta</h5>                
                 <form>
                   <div class="mb-4 d-flex align-items-center">
-                    <img src="../assets/images/profile_photo_example.jpeg" class="rounded-circle border me-3" style="height: 80px; width: 80px; object-fit: cover;" alt="Avatar actual" />
+                    <img src="../assets/images/profile_photo_example.jpeg" class="rounded-circle border me-3 avatar-lg" alt="Avatar actual" />
                     <div>
                       <label for="profilePic" class="form-label mb-1 fw-bold">Cambiar foto de perfil</label>
                       <input class="form-control form-control-sm" id="profilePic" type="file" accept="image/*">
@@ -193,7 +190,6 @@
 
                   <div class="d-flex justify-content-between align-items-center pt-4 border-top">
                     <button type="submit" class="btn btn-primary px-4">Guardar cambios</button>
-                    
                     <button type="button" class="btn btn-outline-danger">Borrar cuenta</button>
                   </div>
                 </form>
@@ -234,7 +230,6 @@
               Expertos en hardware, modding y configuraciones a medida desde 2010. Tu PC, a tu manera.
             </p>
           </div>
-
           <div class="col-6 col-sm-4 col-lg-2">
             <h6 class="text-uppercase text-dark fw-bold mb-2">Tienda</h6>
             <ul class="list-unstyled mb-4">
@@ -244,7 +239,6 @@
               <li><a class="text-muted text-decoration-none" href="#">Configurador</a></li>
             </ul>
           </div>
-
           <div class="col-6 col-sm-4 col-lg-2">
             <h6 class="text-uppercase text-dark fw-bold mb-2">Soporte</h6>
             <ul class="list-unstyled mb-4">
@@ -254,7 +248,6 @@
               <li><a class="text-muted text-decoration-none" href="#">Contacto</a></li>
             </ul>
           </div>
-
           <div class="col-12 col-sm-12 col-lg-3">
             <h6 class="text-uppercase text-dark fw-bold mb-2">Síguenos</h6>
             <div class="d-flex gap-3">
@@ -285,13 +278,9 @@
   </footer>
 
   <script>
-    // 1. Pillamos el estado del login
     const userIsLogged = localStorage.getItem('isLoggedIn');
-
-    // 2. Decidimos qué header cargar
     const headerFile = userIsLogged ? 'headers/loged_header.html' : 'headers/unloged_header.html';
 
-    // 3. Cargamos el header y configuramos el botón de salida
     fetch(headerFile)
         .then(response => {
             if (!response.ok) throw new Error("Error al cargar " + headerFile);
@@ -300,7 +289,6 @@
         .then(data => {
             document.getElementById('navbar-placeholder').innerHTML = data;
 
-            // Solo buscamos el botón si el usuario está logueado
             if (userIsLogged) {
                 const btnSalir = document.getElementById('btnCerrarSesion');
                 if (btnSalir) {
@@ -312,6 +300,19 @@
             }
         })
         .catch(error => console.error("Errorazo:", error));
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const btnModificar = document.getElementById('btn-ir-a-modificar');
+        const tabModificar = document.getElementById('modify-tab');
+
+        if (btnModificar && tabModificar) {
+            btnModificar.addEventListener('click', function (e) {
+                e.preventDefault();
+                const tabTrigger = new bootstrap.Tab(tabModificar);
+                tabTrigger.show();
+            });
+        }
+    });
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
