@@ -24,41 +24,34 @@
             <h4 class="mb-3">Dirección de Envío</h4>
             
             <form id="formPago" class="needs-validation" novalidate>
-                <div class="row g-3">
-                    <div class="col-sm-6">
-                        <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" placeholder="Tu nombre" required>
-                        <div class="invalid-feedback">Nombre requerido.</div>
+                <div class="row g-2 mb-3">
+                    <div class="col-md-6">
+                        <label class="w-100" style="cursor: pointer;">
+                            <div class="border p-3 rounded-3 bg-white d-flex align-items-center">
+                                <input class="form-check-input me-3" type="radio" name="shipAddress" value="dir_1" checked required>
+                                <div>
+                                    <b class="text-muted"><i class="fa fa-map-marker-alt me-2"></i></b>
+                                    Calle de Sagasta, 13, Chamberí, 28004 Madrid
+                                </div>
+                            </div>
+                        </label>
                     </div>
 
-                    <div class="col-sm-6">
-                        <label class="form-label">Apellidos</label>
-                        <input type="text" class="form-control" placeholder="Tus apellidos" required>
-                        <div class="invalid-feedback">Apellidos requeridos.</div>
-                    </div>
-
-                    <div class="col-12">
-                        <label class="form-label">Dirección</label>
-                        <input type="text" class="form-control" placeholder="Calle, número, piso..." required>
-                        <div class="invalid-feedback">La dirección es obligatoria.</div>
-                    </div>
-
-                    <div class="col-md-5">
-                        <label class="form-label">País</label>
-                        <select class="form-select" required>
-                            <option value="">Elige...</option>
-                            <option>España</option>
-                            <option>México</option>
-                        </select>
-                        <div class="invalid-feedback">Selecciona un país.</div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label class="form-label">CP</label>
-                        <input type="text" class="form-control" placeholder="28001" required>
-                        <div class="invalid-feedback">CP requerido.</div>
+                    <div class="col-md-6">
+                        <label class="w-100" style="cursor: pointer;">
+                            <div class="border p-3 rounded-3 bg-white d-flex align-items-center">
+                                <input class="form-check-input me-3" type="radio" name="shipAddress" value="dir_2" required>
+                                <div>
+                                    <b class="text-muted"><i class="fa fa-map-marker-alt me-2"></i></b>
+                                    Carrer del Pare Perera, 2, L'Eixample, 46006 València, Valencia
+                                </div>
+                            </div>
+                        </label>
                     </div>
                 </div>
+
+                <a href="#" class="btn btn-light border"> <i class="me-2 fa fa-plus"></i>Añadir dirección</a>
+
 
                 <hr class="my-4">
 
