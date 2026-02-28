@@ -761,7 +761,7 @@
         const isInPagesFolder = window.location.pathname.includes('/pages/');
         const basePath = isInPagesFolder ? 'headers/' : 'pages/headers/';
         
-        // 3. Elegimos el archivo correcto de tu compañero
+        // 3. Elegimos el archivo correcto 
         const headerFile = isLoggedIn ? basePath + 'loged_header.html' : basePath + 'unloged_header.html';
 
         // 4. Cargamos el archivo y lo metemos en el contenedor
@@ -793,7 +793,7 @@ if (!isInPagesFolder) {
                     if(btnSalir) {
                         btnSalir.addEventListener('click', function() {
                             localStorage.removeItem('isLoggedIn');
-                            window.location.reload(); // Recarga la página
+                            window.location.href = '../index.html'; // Recarga la página
                         });
                     }
                 }
