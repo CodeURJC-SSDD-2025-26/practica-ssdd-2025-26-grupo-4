@@ -62,3 +62,25 @@
     font-size: 0.9rem;
     margin-top: 5px;
 }
+
+/* Eliminar las flechas (spinners) de los inputs de número para ganar espacio */
+.custom-input::-webkit-outer-spin-button,
+.custom-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.custom-input {
+    -moz-appearance: textfield; /* Firefox */
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+
+/* Ajuste opcional para que los recuadros se vean más cuadrados */
+.input-group-text {
+    border-left: none; /* Une visualmente el cuadro y el símbolo € */
+}
+
+.form-control:focus {
+    z-index: 0; /* Evita que el borde azul tape el símbolo € */
+}
