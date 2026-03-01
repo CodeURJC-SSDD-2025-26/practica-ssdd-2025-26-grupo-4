@@ -775,17 +775,17 @@
 document.getElementById('header-container').innerHTML = html;
 
 // Corregir rutas de enlaces si estamos en el index
-if (!isInPagesFolder) {
-    const links = document.querySelectorAll('#header-container a');
-    links.forEach(link => {
-        const href = link.getAttribute('href');
-        // Si el enlace no es un link externo (http) y no empieza por "pages/"
-        if (href && !href.startsWith('http') && !href.startsWith('pages/') && href !== '#') {
-            link.setAttribute('href', 'pages/' + href);
-        }
-    });
-}
-                
+              if (!isInPagesFolder) {
+                  const links = document.querySelectorAll('#header-container a');
+                  links.forEach(link => {
+                      const href = link.getAttribute('href');
+                      // Si el enlace no es un link externo (http) y no empieza por "pages/"
+                      if (href && !href.startsWith('http') && !href.startsWith('pages/') && href !== '#') {
+                          link.setAttribute('href', 'pages/' + href);
+                      }
+                  });
+              }
+                              
                 // --- BONUS: AÑADIR FUNCIÓN CERRAR SESIÓN ---
                 // Si cargamos el loged_header, le damos vida al botón de Salir (si lo añades)
                 if(isLoggedIn) {
@@ -793,7 +793,7 @@ if (!isInPagesFolder) {
                     if(btnSalir) {
                         btnSalir.addEventListener('click', function() {
                             localStorage.removeItem('isLoggedIn');
-                            window.location.href = '../index.html'; // Recarga la página
+                            window.location.reload(); // Recarga la página
                         });
                     }
                 }
