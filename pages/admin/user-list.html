@@ -1,238 +1,221 @@
+<!--
+Archivo: user-list.html
+Descripción: Página de listado de usuarios para el administrador.
+Cubre rúbrica: listado de entidades, botones CRUD, datos de ejemplo, navegación completa.
+-->
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PCBuilderShop</title>
+    <title>PCBuilderShop - Gestión de Usuarios</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-
 </head>
 
 <body>
     <div id="navbar-placeholder"></div>
 
     <main class="container my-5 pt-4">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Gestión de Usuarios</h2>
-            <a href="user-create.html" class="btn btn-primary">
-                <i class="bi bi-person-plus-fill me-2"></i>Nuevo Usuario
-            </a>
-        </div>
+        <!-- Navegación de Administración -->
+        <nav class="nav nav-pills mb-4">
+            <a class="nav-link" href="admin-dashboard.html"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
+            <a class="nav-link" href="item-list.html"><i class="bi bi-box-seam me-1"></i>Productos</a>
+            <a class="nav-link active" href="user-list.html"><i class="bi bi-people me-1"></i>Usuarios</a>
+            <a class="nav-link" href="review-list.html"><i class="bi bi-chat-left-text me-1"></i>Reseñas</a>
+        </nav>
 
-        <div class="card shadow-sm">
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-hover mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Email</th>
-                                <th>Rol</th>
-                                <th>Estado</th>
-                                <th class="text-end">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>#U000</td>
-                                <td>
-                                    <strong>admin_pc</strong>
-                                </td>
-                                <td>admin@pcbuildershop.com</td>
-                                <td><span class="badge bg-danger">Admin</span></td>
-                                <td><span class="badge bg-success">Online</span></td>
-                                <td class="text-end">
-                                    <a href="user-profile.html?id=102" class="btn btn-sm btn-outline-secondary">
-                                        <i class="bi bi-eye"></i>
-                                    </a>
-                                    <a href="entity-edit.html?id=102" class="btn btn-sm btn-outline-primary">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <button class="btn btn-sm btn-outline-danger">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#U001</td>
-                                <td>
-                                    <strong>John Dominguez Encinas</strong>
-                                </td>
-                                <td>john.doe@email.com</td>
-                                <td><span class="badge bg-info text-dark">Cliente</span></td>
-                                <td><span class="badge bg-success">Online</span></td>
-                                <td class="text-end">
-                                    <a href="user-profile.html?id=101" class="btn btn-sm btn-outline-secondary"
-                                        title="Ver Perfil">
-                                        <i class="bi bi-eye"></i>
-                                    </a>
-                                    <a href="entity-edit.html?id=101" class="btn btn-sm btn-outline-primary"
-                                        title="Editar">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <button class="btn btn-sm btn-outline-danger" title="Eliminar">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#U002</td>
-                                <td>
-                                    <strong>David Martin Díaz</strong>
-                                </td>
-                                <td>david.md98@gmail.com</td>
-                                <td><span class="badge bg-info text-dark">Cliente</span></td>
-                                <td><span class="badge bg-secondary">Offline</span></td>
-                                <td class="text-end">
-                                    <a href="user-profile.html?id=101" class="btn btn-sm btn-outline-secondary"
-                                        title="Ver Perfil">
-                                        <i class="bi bi-eye"></i>
-                                    </a>
-                                    <a href="entity-edit.html?id=101" class="btn btn-sm btn-outline-primary"
-                                        title="Editar">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <button class="btn btn-sm btn-outline-danger" title="Eliminar">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#U003</td>
-                                <td>
-                                    <strong>Gave Newell</strong>
-                                </td>
-                                <td>gave_newell@gmail.com</td>
-                                <td><span class="badge bg-info text-dark">Cliente</span></td>
-                                <td><span class="badge bg-secondary">Offline</span></td>
-                                <td class="text-end">
-                                    <a href="user-profile.html?id=101" class="btn btn-sm btn-outline-secondary"
-                                        title="Ver Perfil">
-                                        <i class="bi bi-eye"></i>
-                                    </a>
-                                    <a href="entity-edit.html?id=101" class="btn btn-sm btn-outline-primary"
-                                        title="Editar">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <button class="btn btn-sm btn-outline-danger" title="Eliminar">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#U004</td>
-                                <td>
-                                    <strong>Laura Rodriguez Lopez</strong>
-                                </td>
-                                <td>piplupShiny06@gmail.com</td>
-                                <td><span class="badge bg-info text-dark">Cliente</span></td>
-                                <td><span class="badge bg-secondary">Offline</span></td>
-                                <td class="text-end">
-                                    <a href="user-profile.html?id=101" class="btn btn-sm btn-outline-secondary"
-                                        title="Ver Perfil">
-                                        <i class="bi bi-eye"></i>
-                                    </a>
-                                    <a href="entity-edit.html?id=101" class="btn btn-sm btn-outline-primary"
-                                        title="Editar">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <button class="btn btn-sm btn-outline-danger" title="Eliminar">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#U005</td>
-                                <td>
-                                    <strong>Marta Nuñez Calvo</strong>
-                                </td>
-                                <td>mañuca03@gmail.com</td>
-                                <td><span class="badge bg-info text-dark">Cliente</span></td>
-                                <td><span class="badge bg-success">Online</span></td>
-                                <td class="text-end">
-                                    <a href="user-profile.html?id=101" class="btn btn-sm btn-outline-secondary"
-                                        title="Ver Perfil">
-                                        <i class="bi bi-eye"></i>
-                                    </a>
-                                    <a href="entity-edit.html?id=101" class="btn btn-sm btn-outline-primary"
-                                        title="Editar">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <button class="btn btn-sm btn-outline-danger" title="Eliminar">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#U006</td>
-                                <td>
-                                    <strong>Juan Pedro Cantero Tenorio</strong>
-                                </td>
-                                <td>jp_kopito33@gmail.com</td>
-                                <td><span class="badge bg-info text-dark">Cliente</span></td>
-                                <td><span class="badge bg-secondary">Offline</span></td>
-                                <td class="text-end">
-                                    <a href="user-profile.html?id=101" class="btn btn-sm btn-outline-secondary"
-                                        title="Ver Perfil">
-                                        <i class="bi bi-eye"></i>
-                                    </a>
-                                    <a href="entity-edit.html?id=101" class="btn btn-sm btn-outline-primary"
-                                        title="Editar">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <button class="btn btn-sm btn-outline-danger" title="Eliminar">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+        <!-- Titulo y Acción Principal -->
+        <header class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="mb-1"><i class="bi bi-people me-2"></i>Gestión de Usuarios</h2>
+                <p class="text-muted mb-0 small">Control de acceso y moderación de cuentas.</p>
             </div>
-        </div>
+            <a href="user-create.html" class="btn btn-primary shadow-sm"><i class="bi bi-person-plus me-2"></i>Nuevo
+                Usuario</a>
+        </header>
+
+        <!-- Panel de Filtros -->
+        <section class="card shadow-sm border-0 mb-4 bg-light">
+            <div class="card-body">
+                <form class="row g-3 align-items-end">
+                    <div class="col-md-5"><label class="form-label small fw-bold">Buscar Usuario</label>
+                        <input type="text" class="form-control form-control-sm" placeholder="Nombre o email...">
+                    </div>
+                    <div class="col-md-3"><label class="form-label small fw-bold">Rol</label>
+                        <select class="form-select form-select-sm">
+                            <option value="">Todos</option>
+                            <option>Administrador</option>
+                            <option>Cliente</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2"><label class="form-label small fw-bold">Estado</label>
+                        <select class="form-select form-select-sm">
+                            <option value="">Todos</option>
+                            <option>Online</option>
+                            <option>Offline</option>
+                            <option>Baneado</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="button" class="btn btn-sm btn-primary w-100" onclick="location.reload()">
+                            <i class="bi bi-search me-1"></i>Filtrar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Listado de Usuarios -->
+        <section class="card shadow-sm border-0 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table align-middle table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">ID</th>
+                            <th>Usuario / Nombre</th>
+                            <th>Email</th>
+                            <th class="ps-4">Rol</th>
+                            <th>Estado</th>
+                            <th class="text-end pe-4">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Fila Admin -->
+                        <tr>
+                            <td class="ps-4">#U000</td>
+                            <td>
+                                <div class="fw-bold">admin_pc</div>
+                            </td>
+                            <td>admin@pcbuildershop.com</td>
+                            <td><span class="badge bg-danger">Admin</span></td>
+                            <td><span class="badge bg-success">Online</span></td>
+                            <td class="text-end pe-4">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="user-edit.html?id=0" class="btn btn-outline-primary" title="Editar"><i
+                                            class="bi bi-pencil"></i></a>
+                                    <button class="btn btn-outline-danger" title="Eliminar"
+                                        onclick="location.reload()"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Fila Usuario #1 -->
+                        <tr>
+                            <td class="ps-4">#U001</td>
+                            <td><strong>John Dominguez Encinas</strong></td>
+                            <td>john.doe@email.com</td>
+                            <td><span class="badge bg-info text-dark">Cliente</span></td>
+                            <td><span class="badge bg-success">Online</span></td>
+                            <td class="text-end pe-4">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="#" class="btn btn-outline-secondary" onclick="location.reload()"
+                                        title="Ver"><i class="bi bi-eye"></i></a>
+                                    <a href="user-edit.html?id=1" class="btn btn-outline-primary" title="Editar"><i
+                                            class="bi bi-pencil"></i></a>
+                                    <button class="btn btn-outline-danger" title="Eliminar"
+                                        onclick="location.reload()"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Fila Usuario #2 -->
+                        <tr>
+                            <td class="ps-4">#U002</td>
+                            <td><strong>David Martin Díaz</strong></td>
+                            <td>david.md98@gmail.com</td>
+                            <td><span class="badge bg-info text-dark">Cliente</span></td>
+                            <td><span class="badge bg-secondary">Offline</span></td>
+                            <td class="text-end pe-4">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="#" class="btn btn-outline-secondary" onclick="location.reload()"
+                                        title="Ver"><i class="bi bi-eye"></i></a>
+                                    <a href="user-edit.html?id=2" class="btn btn-outline-primary" title="Editar"><i
+                                            class="bi bi-pencil"></i></a>
+                                    <button class="btn btn-outline-danger" title="Eliminar"
+                                        onclick="location.reload()"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Fila Usuario #3 -->
+                        <tr>
+                            <td class="ps-4">#U003</td>
+                            <td><strong>Gave Newell</strong></td>
+                            <td>gave_newell@gmail.com</td>
+                            <td><span class="badge bg-info text-dark">Cliente</span></td>
+                            <td><span class="badge bg-secondary">Offline</span></td>
+                            <td class="text-end pe-4">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="#" class="btn btn-outline-secondary" onclick="location.reload()"
+                                        title="Ver"><i class="bi bi-eye"></i></a>
+                                    <a href="user-edit.html?id=3" class="btn btn-outline-primary" title="Editar"><i
+                                            class="bi bi-pencil"></i></a>
+                                    <button class="btn btn-outline-danger" title="Eliminar"
+                                        onclick="location.reload()"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Fila Usuario #4 -->
+                        <tr>
+                            <td class="ps-4">#U004</td>
+                            <td><strong>Laura Rodriguez Lopez</strong></td>
+                            <td>piplupShiny06@gmail.com</td>
+                            <td><span class="badge bg-info text-dark">Cliente</span></td>
+                            <td><span class="badge bg-secondary">Offline</span></td>
+                            <td class="text-end pe-4">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="#" class="btn btn-outline-secondary" onclick="location.reload()"
+                                        title="Ver"><i class="bi bi-eye"></i></a>
+                                    <a href="user-edit.html?id=4" class="btn btn-outline-primary" title="Editar"><i
+                                            class="bi bi-pencil"></i></a>
+                                    <button class="btn btn-outline-danger" title="Eliminar"
+                                        onclick="location.reload()"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Fila Usuario #5 -->
+                        <tr>
+                            <td class="ps-4">#U005</td>
+                            <td><strong>Marta Nuñez Calvo</strong></td>
+                            <td>mañuca03@gmail.com</td>
+                            <td><span class="badge bg-info text-dark">Cliente</span></td>
+                            <td><span class="badge bg-success">Online</span></td>
+                            <td class="text-end pe-4">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="#" class="btn btn-outline-secondary" onclick="location.reload()"
+                                        title="Ver"><i class="bi bi-eye"></i></a>
+                                    <a href="user-edit.html?id=5" class="btn btn-outline-primary" title="Editar"><i
+                                            class="bi bi-pencil"></i></a>
+                                    <button class="btn btn-outline-danger" title="Eliminar"
+                                        onclick="location.reload()"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </main>
 
     <div id="footer-placeholder"></div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
     <script>
-        function changeImage(src) {
-            // Buscamos la imagen principal por su ID y cambiamos su fuente
-            document.getElementById('mainImage').src = src;
-        }
-    </script>
-
-    <script>
-        // --- CARGA DEL HEADER (Tu código actual) ---
-        const userIsLogged = localStorage.getItem('isLoggedIn');
-        const headerFile = userIsLogged ? '../headers/loged_header.html' : '../headers/unloged_header.html';
-
-        fetch(headerFile)
-            .then(response => {
-                if (!response.ok) throw new Error("Error al cargar " + headerFile);
-                return response.text();
-            })
-            .then(data => {
-                document.getElementById('navbar-placeholder').innerHTML = data;
-            })
-            .catch(error => console.error("Error:", error));
-
-        // --- CARGA DEL FOOTER (Nuevo código) ---
-        fetch('../footer.html')
-            .then(response => {
-                if (!response.ok) throw new Error("Error al cargar el footer");
-                return response.text();
-            })
-            .then(data => {
-                document.getElementById('footer-placeholder').innerHTML = data;
-            })
-            .catch(error => console.error("Error en footer:", error));
+        // Carga de Componentes
+        const loadComp = (url, id, cb) => fetch(url).then(r => r.text()).then(h => {
+            document.getElementById(id).innerHTML = h;
+            if (cb) cb(document.getElementById(id));
+        });
+        loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header.html' : '../headers/unloged_header.html', 'navbar-placeholder', (nav) => {
+            nav.querySelectorAll('a, form').forEach(el => {
+                const attr = el.tagName === 'FORM' ? 'action' : 'href';
+                const val = el.getAttribute(attr);
+                if (val?.startsWith('../') && !val.startsWith('http')) el.setAttribute(attr, '../' + val);
+            });
+            const btn = document.getElementById('btnAdminPanel');
+            if (btn) { btn.href = 'admin-dashboard.html'; btn.classList.remove('d-none'); }
+        });
+        loadComp('../footer.html', 'footer-placeholder');
     </script>
 </body>
 
