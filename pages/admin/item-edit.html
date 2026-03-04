@@ -1,0 +1,155 @@
+<!--
+Archivo: item-edit.html
+Descripción: Formulario de edición de un producto existente para el administrador.
+Cubre rúbrica: formulario editar entidad, campos pre-rellenados, galería de imágenes, uso correcto Bootstrap.
+-->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCBuilderShop - Editar Producto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+</head>
+
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <main class="container my-5 pt-4">
+        <!-- Navegación de Administración -->
+        <nav class="nav nav-pills mb-4">
+            <a class="nav-link" href="admin-dashboard.html"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
+            <a class="nav-link active" href="item-list.html"><i class="bi bi-box-seam me-1"></i>Productos</a>
+            <a class="nav-link" href="user-list.html"><i class="bi bi-people me-1"></i>Usuarios</a>
+            <a class="nav-link" href="review-list.html"><i class="bi bi-chat-left-text me-1"></i>Reseñas</a>
+        </nav>
+
+        <!-- Titulo y Acción Principal -->
+        <header class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="mb-1"><i class="bi bi-pencil-square me-2"></i>Editar Producto</h2>
+                <p class="text-muted mb-0 small">Modificando especificaciones de <strong>AMD Ryzen 7 9800X3D</strong>
+                </p>
+            </div>
+            <span class="badge bg-secondary">ID: #P001</span>
+        </header>
+
+        <!-- Formulario de Edición -->
+        <section class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <form id="editForm" action="#" method="POST">
+                    <div class="row g-4">
+                        <!-- Datos Principales -->
+                        <div class="col-lg-8">
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold">Nombre del Producto</label>
+                                <input type="text" class="form-control" name="nombre"
+                                    value="AMD Ryzen 7 9800X3D 4.7/5.2GHz" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold">Descripción Detallada</label>
+                                <textarea class="form-control" name="descripcion" rows="5"
+                                    required>Procesador AMD Ryzen 7 9800X3D con tecnología 3D V-Cache de segunda generación. 8 núcleos y 16 hilos. Ideal para gaming de alto rendimiento.</textarea>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-md-4"><label class="form-label small fw-bold">Categoría</label>
+                                    <select class="form-select" name="categoria" required>
+                                        <option selected>Procesadores</option>
+                                        <option>Gráficas</option>
+                                        <option>Placas Base</option>
+                                        <option>RAM</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4"><label class="form-label small fw-bold">Precio (€)</label>
+                                    <div class="input-group"><input type="number" class="form-control" name="precio"
+                                            step="0.01" value="464.95" required><span class="input-group-text">€</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4"><label class="form-label small fw-bold">Stock en Almacén</label>
+                                    <input type="number" class="form-control" name="stock" value="24" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Panel Multimedia -->
+                        <div class="col-lg-4">
+                            <div class="card bg-light border-0">
+                                <div class="card-body">
+                                    <label class="form-label small fw-bold">Galería Actual</label>
+                                    <div class="d-flex flex-wrap gap-2 mb-3">
+                                        <div class="position-relative">
+                                            <img src="../../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg"
+                                                class="img-thumbnail" style="width:60px;height:60px;object-fit:cover;">
+                                            <span
+                                                class="badge bg-primary position-absolute top-0 start-0 x-small">P</span>
+                                        </div>
+                                        <img src="../../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-front.jpg"
+                                            class="img-thumbnail" style="width:60px;height:60px;object-fit:cover;">
+                                        <img src="../../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-side.jpg"
+                                            class="img-thumbnail" style="width:60px;height:60px;object-fit:cover;">
+                                    </div>
+                                    <label class="form-label small fw-bold">Añadir Imágenes</label>
+                                    <input type="file" class="form-control form-control-sm" id="imgInput" multiple
+                                        accept="image/*">
+                                    <div id="preview" class="d-flex flex-wrap gap-2 mt-3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-4 border-top d-flex gap-2">
+                        <button type="submit" class="btn btn-primary px-4 shadow-sm"><i
+                                class="bi bi-save me-2"></i>Guardar Cambios</button>
+                        <a href="item-list.html" class="btn btn-outline-secondary px-4">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Manejo de Previsualización
+        document.getElementById('imgInput').addEventListener('change', e => {
+            const preview = document.getElementById('preview');
+            preview.innerHTML = '';
+            [...e.target.files].forEach(file => {
+                const reader = new FileReader();
+                reader.onload = r => {
+                    const div = document.createElement('div');
+                    div.className = 'position-relative';
+                    div.innerHTML = `<img src="${r.target.result}" class="img-thumbnail" style="width:60px;height:60px;object-fit:cover;">
+                                     <button type="button" class="btn-close position-absolute top-0 end-0 bg-white" onclick="this.parentElement.remove()"></button>`;
+                    preview.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+
+        // Simulación de Envío
+        document.getElementById('editForm').onsubmit = e => { e.preventDefault(); location.href = 'item-list.html'; };
+
+        // Carga de Componentes
+        const loadComp = (url, id, cb) => fetch(url).then(r => r.text()).then(h => {
+            document.getElementById(id).innerHTML = h;
+            if (cb) cb(document.getElementById(id));
+        });
+        loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header.html' : '../headers/unloged_header.html', 'navbar-placeholder', (nav) => {
+            nav.querySelectorAll('a, form').forEach(el => {
+                const attr = el.tagName === 'FORM' ? 'action' : 'href';
+                const val = el.getAttribute(attr);
+                if (val?.startsWith('../') && !val.startsWith('http')) el.setAttribute(attr, '../' + val);
+            });
+            const btn = document.getElementById('btnAdminPanel');
+            if (btn) { btn.href = 'admin-dashboard.html'; btn.classList.remove('d-none'); }
+        });
+        loadComp('../footer.html', 'footer-placeholder');
+    </script>
+</body>
+
+</html>

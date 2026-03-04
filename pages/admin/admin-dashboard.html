@@ -1,0 +1,230 @@
+<!--
+Archivo: admin-dashboard.html
+Descripción: Panel de control principal del administrador con estadísticas resumidas y gráfica.
+Cubre rúbrica: gráfica estadística (Chart.js), datos de ejemplo, navegación completa, uso correcto Bootstrap.
+-->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCBuilderShop - Panel de Administración</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Chart.js CDN para la gráfica estadística -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <div id="navbar-placeholder"></div>
+
+    <main class="container my-5 pt-4">
+        <!-- Navegación entre secciones de administración -->
+        <nav class="nav nav-pills mb-4">
+            <a class="nav-link active" href="admin-dashboard.html"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
+            <a class="nav-link" href="item-list.html"><i class="bi bi-box-seam me-1"></i>Productos</a>
+            <a class="nav-link" href="user-list.html"><i class="bi bi-people me-1"></i>Usuarios</a>
+            <a class="nav-link" href="review-list.html"><i class="bi bi-chat-left-text me-1"></i>Reseñas</a>
+        </nav>
+
+        <!-- Encabezado del dashboard -->
+        <div class="mb-4">
+            <h2 class="mb-1"><i class="bi bi-speedometer2 me-2"></i>Panel de Administración</h2>
+            <p class="text-muted mb-0">Bienvenido, admin_pc. Resumen general de la tienda.</p>
+        </div>
+
+        <!-- Tarjetas de resumen -->
+        <section class="row g-4 mb-4">
+            <!-- Total productos -->
+            <div class="col-xl-3 col-md-6">
+                <div class="card shadow-sm border-start border-primary border-4 card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <p class="text-muted small mb-1">PRODUCTOS</p>
+                            <h3 class="mb-0">16</h3>
+                        </div>
+                        <i class="bi bi-box-seam fs-1 text-primary"></i>
+                    </div>
+                    <a href="item-list.html" class="text-decoration-none small">Ver productos →</a>
+                </div>
+            </div>
+            <!-- Total usuarios -->
+            <div class="col-xl-3 col-md-6">
+                <div class="card shadow-sm border-start border-success border-4 card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <p class="text-muted small mb-1">USUARIOS</p>
+                            <h3 class="mb-0">7</h3>
+                        </div>
+                        <i class="bi bi-people fs-1 text-success"></i>
+                    </div>
+                    <a href="user-list.html" class="text-decoration-none small">Ver usuarios →</a>
+                </div>
+            </div>
+            <!-- Total pedidos -->
+            <div class="col-xl-3 col-md-6">
+                <div class="card shadow-sm border-start border-warning border-4 card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <p class="text-muted small mb-1">PEDIDOS</p>
+                            <h3 class="mb-0">5</h3>
+                        </div>
+                        <i class="bi bi-cart-check fs-1 text-warning"></i>
+                    </div>
+                    <span class="text-muted small">Últimos 30 días</span>
+                </div>
+            </div>
+            <!-- Ingresos -->
+            <div class="col-xl-3 col-md-6">
+                <div class="card shadow-sm border-start border-danger border-4 card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <p class="text-muted small mb-1">INGRESOS</p>
+                            <h3 class="mb-0">3.762,75€</h3>
+                        </div>
+                        <i class="bi bi-currency-euro fs-1 text-danger"></i>
+                    </div>
+                    <span class="text-muted small">Últimos 30 días</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="row g-4 mb-5">
+            <!-- Gráfica de Análisis -->
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-header">
+                        <h5 class="mb-0">Ventas por Categoría</h5>
+                    </div>
+                    <div class="card-body"><canvas id="graficaVentas" height="300"></canvas></div>
+                </div>
+            </div>
+
+            <!-- Accesos rápidos -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Accesos Rápidos</h5>
+                    </div>
+                    <div class="card-body d-grid gap-2">
+                        <a href="item-create.html" class="btn btn-outline-primary text-start"><i
+                                class="bi bi-plus-circle me-2"></i>Nuevo Producto</a>
+                        <a href="user-create.html" class="btn btn-outline-success text-start"><i
+                                class="bi bi-person-plus me-2"></i>Nuevo Usuario</a>
+                        <a href="review-list.html" class="btn btn-outline-info text-start"><i
+                                class="bi bi-chat-left-dots me-2"></i>Gestionar Reseñas</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tablas de Actividad Reciente -->
+        <div class="row g-4">
+            <div class="col-lg-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0 fw-bold">Pedidos Recientes</h5>
+                        <span class="badge bg-light text-dark border">Últimas 24h</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0 x-small">
+                            <thead class="bg-light">
+                                <tr class="text-muted">
+                                    <th>ID</th>
+                                    <th>Cliente</th>
+                                    <th>Producto</th>
+                                    <th>Importe</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Pedido 1 -->
+                                <tr>
+                                    <td><strong>#ORD001</strong></td>
+                                    <td>John Dominguez</td>
+                                    <td>AMD Ryzen 7 9800X3D</td>
+                                    <td>464,95€</td>
+                                    <td><span class="badge bg-success">Entregado</span></td>
+                                </tr>
+                                <!-- Pedido 2 -->
+                                <tr>
+                                    <td><strong>#ORD002</strong></td>
+                                    <td>David Martin</td>
+                                    <td>MSI GeForce RTX 5080</td>
+                                    <td>1.190,00€</td>
+                                    <td><span class="badge bg-primary">Enviado</span></td>
+                                </tr>
+                                <!-- Pedido 3 -->
+                                <tr>
+                                    <td><strong>#ORD003</strong></td>
+                                    <td>Gave Newell</td>
+                                    <td>Corsair Vengeance RGB DDR5</td>
+                                    <td>459,95€</td>
+                                    <td><span class="badge bg-warning text-dark">Procesando</span></td>
+                                </tr>
+                                <!-- Pedido 4 -->
+                                <tr>
+                                    <td><strong>#ORD004</strong></td>
+                                    <td>Laura Rodriguez</td>
+                                    <td>MSI B850 GAMING PLUS</td>
+                                    <td>187,90€</td>
+                                    <td><span class="badge bg-success">Entregado</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>#ORD005</strong></td>
+                                    <td>Marta Nuñez</td>
+                                    <td>WD BLACK SN7100 2TB</td>
+                                    <td>269,95€</td>
+                                    <td><span class="badge bg-info text-dark">Pendiente</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script para la gráfica de barras con Chart.js (datos estáticos) -->
+    <script>
+        // Configuración de Chart.js
+        new Chart(document.getElementById('graficaVentas'), {
+            type: 'bar',
+            data: {
+                labels: ['Procesadores', 'Tarjetas Gráficas', 'Placas Base', 'Memoria RAM', 'Almacenamiento'],
+                datasets: [{
+                    label: 'Ventas',
+                    data: [18, 12, 9, 15, 11],
+                    backgroundColor: '#0d6efd99',
+                    borderRadius: 5
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+        });
+
+        // Carga de Componentes
+        const loadComp = (url, id, cb) => fetch(url).then(r => r.text()).then(h => {
+            document.getElementById(id).innerHTML = h;
+            if (cb) cb(document.getElementById(id));
+        });
+        loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header.html' : '../headers/unloged_header.html', 'navbar-placeholder', (nav) => {
+            nav.querySelectorAll('a, form').forEach(el => {
+                const attr = el.tagName === 'FORM' ? 'action' : 'href';
+                const val = el.getAttribute(attr);
+                if (val?.startsWith('../') && !val.startsWith('http')) el.setAttribute(attr, '../' + val);
+            });
+            const btn = document.getElementById('btnAdminPanel');
+            if (btn) { btn.href = 'admin-dashboard.html'; btn.classList.remove('d-none'); }
+        });
+        loadComp('../footer.html', 'footer-placeholder');
+    </script>
+</body>
+
+</html>

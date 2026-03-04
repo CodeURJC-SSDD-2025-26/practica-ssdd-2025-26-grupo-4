@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <div id="navbar-placeholder"></div>
+    <div id="header-container"></div>
 
     <div class="container-fluid" style="margin-top: 80px;">
         <div class="row">
@@ -594,11 +594,23 @@
 
         fetch(headerFile)
             .then(response => {
-                if (!response.ok) throw new Error("Error al cargar " + headerFile);
+                if (!response.ok) throw new Error("No se pudo cargar el header");
                 return response.text();
             })
-            .then(data => {
-                document.getElementById('navbar-placeholder').innerHTML = data;
+            .then(html => {
+                document.getElementById('header-container').innerHTML = html;
+                
+                // --- BONUS: AÑADIR FUNCIÓN CERRAR SESIÓN ---
+                // Si cargamos el loged_header, le damos vida al botón de Salir (si lo añades)
+                if(isLoggedIn) {
+                    const btnSalir = document.getElementById('btnCerrarSesion');
+                    if(btnSalir) {
+                        btnSalir.addEventListener('click', function() {
+                            localStorage.removeItem('isLoggedIn');
+                            window.location.reload(); // Recarga la página
+                        });
+                    }
+                }
             })
             .catch(error => console.error("Error:", error));
 
