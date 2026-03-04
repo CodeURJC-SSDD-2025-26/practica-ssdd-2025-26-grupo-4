@@ -599,13 +599,13 @@
             })
             .then(html => {
                 document.getElementById('header-container').innerHTML = html;
-                
+
                 // --- BONUS: AÑADIR FUNCIÓN CERRAR SESIÓN ---
                 // Si cargamos el loged_header, le damos vida al botón de Salir (si lo añades)
-                if(isLoggedIn) {
+                if (isLoggedIn) {
                     const btnSalir = document.getElementById('btnCerrarSesion');
-                    if(btnSalir) {
-                        btnSalir.addEventListener('click', function() {
+                    if (btnSalir) {
+                        btnSalir.addEventListener('click', function () {
                             localStorage.removeItem('isLoggedIn');
                             window.location.reload(); // Recarga la página
                         });
