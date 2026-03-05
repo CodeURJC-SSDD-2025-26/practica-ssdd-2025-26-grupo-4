@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCBuilderShop - Gestión de Pedidos</title>
+    <link rel="icon" type="image/x-icon" href="../../assets/icons/logo.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+</head>
+
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <main class="container my-5 pt-4">
+        <nav class="nav nav-pills mb-4">
+            <a class="nav-link" href="admin-dashboard.html"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
+            <a class="nav-link" href="item-list.html"><i class="bi bi-box-seam me-1"></i>Productos</a>
+            <a class="nav-link" href="user-list.html"><i class="bi bi-people me-1"></i>Usuarios</a>
+            <a class="nav-link" href="review-list.html"><i class="bi bi-chat-left-text me-1"></i>Reseñas</a>
+            <a class="nav-link active" href="order-list.html"><i class="bi bi-truck me-1"></i>Pedidos</a>
+        </nav>
+
+        <header class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="mb-1"><i class="bi bi-truck me-2"></i>Gestión de Pedidos</h2>
+                <p class="text-muted mb-0 small">Control de pedidos, facturación y estados de envío.</p>
+            </div>
+            <button class="btn btn-primary shadow-sm" onclick="alert('Funcionalidad en desarrollo')">
+                <i class="bi bi-plus-circle me-2"></i>Nuevo Pedido
+            </button>
+        </header>
+
+        <section class="card shadow-sm border-0 mb-4 bg-light">
+            <div class="card-body">
+                <form class="row g-3 align-items-end">
+                    <div class="col-md-5">
+                        <label class="form-label small fw-bold">Buscar Pedido</label>
+                        <input type="text" class="form-control form-control-sm" placeholder="Nº de pedido o nombre de cliente...">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold">Estado del Envío</label>
+                        <select class="form-select form-select-sm">
+                            <option value="">Todos los estados</option>
+                            <option>Pendiente</option>
+                            <option>Enviado</option>
+                            <option>Entregado</option>
+                            <option>Cancelado</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="button" class="btn btn-sm btn-primary w-100" onclick="location.reload()">
+                            <i class="bi bi-search me-1"></i>Filtrar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="card shadow-sm border-0 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table align-middle table-hover mb-0">
+                    <thead class="bg-light border-bottom">
+                        <tr class="small text-uppercase fw-bold text-muted">
+                            <th class="ps-4">ID Pedido</th>
+                            <th>Cliente</th>
+                            <th>Fecha</th>
+                            <th class="ps-2">Total</th>
+                            <th>Estado</th>
+                            <th class="text-end pe-4">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="ps-4">#O7721</td>
+                            <td>
+                                <div class="fw-bold">John Dominguez Encinas</div>
+                                <div class="small text-muted">john.doe@email.com</div>
+                            </td>
+                            <td>02/03/2026</td>
+                            <td>1.450,00 €</td>
+                            <td><span class="badge bg-success">Entregado</span></td>
+                            <td class="text-end pe-4">
+                                <a href="order-edit.html" class="btn btn-sm btn-outline-primary" title="Editar"><i class="bi bi-pencil"></i></a>
+                                <button class="btn btn-sm btn-outline-danger" title="Cancelar" data-bs-toggle="modal" data-bs-target="#modalCancelar" onclick="document.getElementById('orderIdText').textContent='#O7721'"><i class="bi bi-x-circle"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="ps-4">#O7725</td>
+                            <td>
+                                <div class="fw-bold">David Martin Díaz</div>
+                                <div class="small text-muted">david.md98@gmail.com</div>
+                            </td>
+                            <td>04/03/2026</td>
+                            <td>89,90 €</td>
+                            <td><span class="badge bg-warning text-dark">Enviado</span></td>
+                            <td class="text-end pe-4">
+                                <a href="order-edit.html" class="btn btn-sm btn-outline-primary" title="Editar"><i class="bi bi-pencil"></i></a>
+                                <button class="btn btn-sm btn-outline-danger" title="Cancelar" data-bs-toggle="modal" data-bs-target="#modalCancelar" onclick="document.getElementById('orderIdText').textContent='#O7725'"><i class="bi bi-x-circle"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="ps-4">#O7728</td>
+                            <td>
+                                <div class="fw-bold">Marta Nuñez Calvo</div>
+                                <div class="small text-muted">mañuca03@gmail.com</div>
+                            </td>
+                            <td>Hoy, 09:15</td>
+                            <td>2.100,50 €</td>
+                            <td><span class="badge bg-info text-dark">Procesando</span></td>
+                            <td class="text-end pe-4">
+                                <a href="order-edit.html" class="btn btn-sm btn-outline-primary" title="Editar"><i class="bi bi-pencil"></i></a>
+                                <button class="btn btn-sm btn-outline-danger" title="Cancelar" data-bs-toggle="modal" data-bs-target="#modalCancelar" onclick="document.getElementById('orderIdText').textContent='#O7728'"><i class="bi bi-x-circle"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="ps-4">#O7729</td>
+                            <td>
+                                <div class="fw-bold">Laura Rodriguez Lopez</div>
+                                <div class="small text-muted">piplupShiny06@gmail.com</div>
+                            </td>
+                            <td>Hoy, 10:30</td>
+                            <td>45,00 €</td>
+                            <td><span class="badge bg-secondary">Pendiente</span></td>
+                            <td class="text-end pe-4">
+                                <a href="order-edit.html" class="btn btn-sm btn-outline-primary" title="Editar"><i class="bi bi-pencil"></i></a>
+                                <button class="btn btn-sm btn-outline-danger" title="Cancelar" data-bs-toggle="modal" data-bs-target="#modalCancelar" onclick="document.getElementById('orderIdText').textContent='#O7729'"><i class="bi bi-x-circle"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="ps-4">#O7601</td>
+                            <td>
+                                <div class="fw-bold">Gave Newell</div>
+                                <div class="small text-muted">gave_newell@gmail.com</div>
+                            </td>
+                            <td>28/02/2026</td>
+                            <td>320,00 €</td>
+                            <td><span class="badge bg-danger">Cancelado</span></td>
+                            <td class="text-end pe-4">
+                                <a href="order-edit.html" class="btn btn-sm btn-outline-primary" title="Editar"><i class="bi bi-pencil"></i></a>
+                                <button class="btn btn-sm btn-outline-danger" title="Eliminar Registro"><i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal fade" id="modalCancelar" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-danger text-white border-0 py-2">
+                    <h6 class="modal-title small fw-bold text-uppercase">¿Cancelar Pedido?</h6>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <p class="mb-0 small">Se marcará como cancelado el pedido:</p>
+                    <strong id="orderIdText" class="d-block mt-1"></strong>
+                </div>
+                <div class="modal-footer border-0 p-2 justify-content-center">
+                    <button type="button" class="btn btn-sm btn-light px-3" data-bs-dismiss="modal">No, volver</button>
+                    <button type="button" class="btn btn-sm btn-danger px-3" onclick="location.reload()">Sí, cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Carga de Componentes
+        const loadComp = (url, id, cb) => fetch(url).then(r => r.text()).then(h => {
+            document.getElementById(id).innerHTML = h;
+            if (cb) cb(document.getElementById(id));
+        });
+        loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header.html' : '../headers/unloged_header.html', 'navbar-placeholder', (nav) => {
+            nav.querySelectorAll('a, form').forEach(el => {
+                const attr = el.tagName === 'FORM' ? 'action' : 'href';
+                const val = el.getAttribute(attr);
+                if (val?.startsWith('../') && !val.startsWith('http')) el.setAttribute(attr, '../' + val);
+            });
+            const btn = document.getElementById('btnAdminPanel');
+            if (btn) { btn.href = 'admin-dashboard.html'; btn.classList.remove('d-none'); }
+        });
+        loadComp('../footer.html', 'footer-placeholder');
+    </script>
+</body>
+
+</html>
