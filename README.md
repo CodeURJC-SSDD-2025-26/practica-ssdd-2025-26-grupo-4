@@ -89,7 +89,7 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 ### **Participación de Miembros en la Práctica 1**
 
-#### **Alumno 1 - [Nombre Completo]**
+#### **Alumno 1 - Ramiro Daniel Flores Aquino**
 
 [Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
 
@@ -103,7 +103,7 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 ---
 
-#### **Alumno 2 - [Nombre Completo]**
+#### **Alumno 2 - David Díaz Gómez-Escalonilla**
 
 [Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
 
@@ -117,7 +117,7 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 ---
 
-#### **Alumno 3 - [Nombre Completo]**
+#### **Alumno 3 - Jonay Sebastián Oortiz Armas**
 
 [Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
 
@@ -131,7 +131,7 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 ---
 
-#### **Alumno 4 - [Nombre Completo]**
+#### **Alumno 4 - Joel Domené Álvaro**
 
 [Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
 
