@@ -74,18 +74,99 @@ Aplicación web dedicada exclusivamente a la venta de componentes de PC, orienta
 ### **Diagrama de Navegación**
 Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicación:
 
-![Diagrama de Navegación](images/navigation-diagram.png)
+![Diagrama de Navegación](assets/images/readme-images/DiagramaNavegacion_PcBuilderShop.jpg)
 
-> [Descripción opcional del flujo de navegación: Ej: "El usuario puede acceder desde la página principal a todas las secciones mediante el menú de navegación. Los usuarios anónimos solo tienen acceso a las páginas públicas, mientras que los registrados pueden acceder a su perfil y panel de usuario."]
+
+Todos los usuarios parte desde la página principal, y hay acceso sin restricciones a las páginas de busqueda, página del producto y las pantallas de inicio de sesión y registro. Sin embargo, las páginas correspondientes al perfil, el carrito de compra, proceso de pago y crear reseñas requieren que el usuario haya iniciado su sesión. El administrador tiene acceso a todas las pantallas anteriores, además del admin-dashboard, que es el panel de control del admin donde puede administrar cada entidad de la página.
 
 ### **Capturas de Pantalla y Descripción de Páginas**
 
 #### **1. Página Principal / Home**
-![Página Principal](images/home-page.png)
+![Página Principal](assets/images/readme-images/home-page.png)
 
-> [Descripción breve: Ej: "Página de inicio que muestra los productos destacados, categorías principales y un banner promocional. Incluye barra de navegación y acceso a registro/login para usuarios no autenticados."]
+![Página Principal](assets/images/readme-images/home-page-sidebar.png)
 
-#### **AQUÍ AÑADIR EL RESTO DE PÁGINAS**
+La página de inicio muestra en primer lugar las categorias de hardware disponibles, las cuales también se pueden visualizar desde el menu desplegable del header. También se muestran una serie de productos recomendados, además de distintas novedades en hardware. En el header se incluye la barra de navegación, el acceso a la cesta para usuarios registrados, y boton dropdown que permite acceder al perfil o cerrar sesión. En el caso de no estar logueado, se muestra un botón "Entrar" para iniciar sesión o registrarse.
+
+#### **RESTO DE PÁGINAS**
+
+#### **TODOS LOS USUARIOS**
+
+#### **2. Pagina de busqueda:**
+
+![Pagina de busqueda](assets/images/readme-images/search-result.png)
+
+#### **3. Pagina de Producto:**
+
+![Pagina de producto](assets/images/readme-images/item-detail.png)
+
+#### **4. Pagina de Login:**
+
+![Pagina de Login](assets/images/readme-images/login.png)
+
+#### **5. Pagina de Registro:**
+
+![Pagina de Registro](assets/images/readme-images/user-registration.png)
+
+#### **USUARIOS REGISTRADOS**
+
+#### **6. Pagina de Perfil:**
+
+![Pagina de Perfil](assets/images/readme-images/profile.png)
+![Pagina de Perfil-pedidos](assets/images/readme-images/profile-orders.png)
+![Pagina de Perfil-modificar](assets/images/readme-images/profile-modify.png)
+
+#### **7. Pagina de Carrito:**
+
+![Pagina de Carrito](assets/images/readme-images/shopping-cart.png)
+
+#### **8. Pagina de Pago:**
+
+![Pagina de Pago](assets/images/readme-images/payment.png)
+![Pagina de Pago correcto](assets/images/readme-images/payment-correct.png)
+
+#### **9. Pagina de Crear Review:**
+
+![Pagina de Crear Review](assets/images/readme-images/create-review.png)
+
+#### **ADMINISTRADOR**
+
+#### **10. Pagina de Admin-Dashboard:**
+
+![Pagina de Admin-Dashboard](assets/images/readme-images/admin-dashboard.png)
+
+#### **11. Pagina de Lista Producto:**
+
+![Pagina de Lista Producto](assets/images/readme-images/admin-item-list.png)
+
+#### **12. Pagina de Crear Producto:**
+
+![Pagina de Crear Producto](assets/images/readme-images/admin-item-create.png)
+
+#### **13. Pagina de Editar Producto:**
+
+![Pagina de Editar Producto](assets/images/readme-images/admin-item-edit.png)
+
+#### **14. Pagina de Lista Usuarios:**
+
+![Pagina de Lista Usuarios](assets/images/readme-images/admin-user-list.png)
+
+#### **15. Pagina de Editar Usuarios:**
+
+![Pagina de Editar Usuarios](assets/images/readme-images/admin-user-edit.png)
+
+#### **16. Pagina de Lista Reseñas:**
+
+![Pagina de Lista Reseñas](assets/images/readme-images/admin-review-list.png)
+
+#### **17. Pagina de Lista Pedidos:**
+
+![Pagina de Lista Pedidos](assets/images/readme-images/admin-order-list.png)
+
+#### **18. Pagina de Detalles Pedidos:**
+
+![Pagina de Detalles Pedidos](assets/images/readme-images/admin-order-edit.png)
+
 
 ### **Participación de Miembros en la Práctica 1**
 
