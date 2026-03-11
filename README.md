@@ -186,18 +186,25 @@ Permite actualizar el estado del envío entre Pendiente, Procesando, Enviado, En
 
 #### **Alumno 2 - David Díaz Gómez-Escalonilla**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
 Principal responsable de las páginas de search-result, item-detail, create-review, user-list, user-edit, order-list, order-edit y los headers. También he ayudado con la estructura del index.html para que fuera similar a la de search-result.
 Creación y diseño del diagrama de navegación de README, junto con la inserción de las imagenes el resto de páginas junto con su descripción..
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [search-result html implementation](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/492fb1a6cb0778e6813eb550ac9eca71604968f7)  | [Archivo1](URL_archivo_1)   |
+|1| [Construccion de estructura básica de search-result html, incluyendo estilos css, cabecera, pie de pagina, filtros y los primeros ejemplos de productos](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/492fb1a6cb0778e6813eb550ac9eca71604968f7)  | [search-result.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/492fb1a6cb0778e6813eb550ac9eca71604968f7/pages/search-result.html)   |
 
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|2| [Implementacion de la pagina del producto, añadiendo también la tabla de especificaciones y la seccion de comentarios y reseñas](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/bafb9f9ef63e13400de7bd6b56348491aaad526d)  | [item-detail](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/bafb9f9ef63e13400de7bd6b56348491aaad526d/pages/item-detail.html)   |
+
+|3| [Implementacion de la pagina de creaciond e reseñas, permitiendo crear una reseña con una descripcion y destacar pros y contras del producto](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/07b45dbbc1914c7f83cfd0d22323ff531d967da7)  | [create-review](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/07b45dbbc1914c7f83cfd0d22323ff531d967da7/pages/create-review.html)   |
+
+|4| [Creacion, optimizacion y modularizacion de headers independientes para usuarios logueados y no logueados con el objetivo de evitar codigo duplicado](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/a6e834f70750229803f921ac1b096a6e083267ba)  | [loged_header.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/a6e834f70750229803f921ac1b096a6e083267ba/pages/headers/loged_header.html)   | [unloged_header.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/a6e834f70750229803f921ac1b096a6e083267ba/pages/headers/unloged_header.html)
+
+|5| [Creacion y modularizacion de footer](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/d953c975fd888a16b8a9fc3214d2ce4db1270252)  | [ArchivoX](URL_archivo_5)   |
+
+|6| [Creacion de estructura inicial basica de paginas de admin e implementacion de user-list, permitiendo visualizar todos los perfiles y su info correspondiente en una tabla](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/0b310a7a427ae7dc01e95dc00e41efc0883fc885)  | [user-list.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/0b310a7a427ae7dc01e95dc00e41efc0883fc885/pages/admin/user-list.html)   |
+
+|7| [Implementacion de pantallas de lista de productos y edicion de productos, pudiendo visualizar informacion relevante sobre cada pedido en una tabla y esditar su estado respectivamente](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/2f55ddab736a82327ef2cccd7a5c143c610ee390)  | [order-list.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/2f55ddab736a82327ef2cccd7a5c143c610ee390/pages/admin/order-list.html)   | [order-edit.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/2f55ddab736a82327ef2cccd7a5c143c610ee390/pages/admin/order-edit.html)  
+
 
 ---
 
