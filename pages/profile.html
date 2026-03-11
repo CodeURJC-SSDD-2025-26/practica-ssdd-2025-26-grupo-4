@@ -22,71 +22,85 @@
       <div class="row">
         <div class="col-lg-3 col-xl-3">
           <nav class="nav flex-lg-column w-100 d-flex nav-pills mb-4" role="tablist">
-            <a class="nav-link my-0 active nav-link-pointer" id="account-tab" data-bs-toggle="pill" data-bs-target="#account-pane" role="tab" aria-controls="account-pane" aria-selected="true">
-              Mi cuenta
+            <a class="nav-link my-0 active nav-link-pointer" id="account-tab" data-bs-toggle="pill"
+              data-bs-target="#account-pane" role="tab" aria-controls="account-pane" aria-selected="true">
+              Perfil
             </a>
-            <a class="nav-link my-0 nav-link-pointer" id="orders-tab" data-bs-toggle="pill" data-bs-target="#orders-pane" role="tab" aria-controls="orders-pane" aria-selected="false">
-              Mis pedidos
+            <a class="nav-link my-0 nav-link-pointer" id="orders-tab" data-bs-toggle="pill"
+              data-bs-target="#orders-pane" role="tab" aria-controls="orders-pane" aria-selected="false">
+              Pedidos
             </a>
-            <a class="nav-link my-0 nav-link-pointer" id="modify-tab" data-bs-toggle="pill" data-bs-target="#modify-pane" role="tab" aria-controls="modify-pane" aria-selected="false">
+            <a class="nav-link my-0 nav-link-pointer" id="modify-tab" data-bs-toggle="pill"
+              data-bs-target="#modify-pane" role="tab" aria-controls="modify-pane" aria-selected="false">
               Modificar cuenta
             </a>
           </nav>
         </div>
+
         <main class="col-lg-9 col-xl-9">
           <div class="card p-4 mb-0 shadow-0 border">
-            
+
             <div class="tab-content" id="myTabContent">
-              
-              <div class="tab-pane fade show active" id="account-pane" role="tabpanel" aria-labelledby="account-tab" tabindex="0">
+
+              <div class="tab-pane fade show active" id="account-pane" role="tabpanel" aria-labelledby="account-tab"
+                tabindex="0">
                 <div class="content-body">
-                  <div class="d-flex align-items-center">
-                    <div class="me-3">
-                      <img src="../assets/images/profile_photo_example.jpeg" class="rounded-circle avatar-sm" />
-                    </div>
-                    <div class="pt-2">
-                      <h6 class="pt-2">Juan José García Gómez</h6>
-                      <p>
-                        Email: juanjosereal67@gmail.com
-                        <br>
-                        Teléfono: +34 600 50 04 00
-                        <br>
-                        <a href="#" id="btn-ir-a-modificar" class="px-2 edit-icon"><i class="fa fa-pen"></i></a>
-                      </p>
-                    </div>
+                  <div class="text-center mb-5">
+                    <img src="../assets/images/profile_photo_example.jpeg" 
+                         class="rounded-circle border shadow-sm mb-3" 
+                         style="width: 150px; height: 150px; object-fit: cover;" />
+                    <h3 class="fw-bold">Juan José García Gómez</h3>
+                    <p class="text-muted">Cliente desde 2024</p>
                   </div>
 
                   <hr />
 
-                  <div class="row g-2 mb-3">
-                    <div class="col-md-6">
-                      <div class="border p-3 rounded-3 bg-light">
-                        <b class="mx-2 text-muted"><i class="fa fa-map-marker-alt"></i></b>
-                        Calle de Sagasta, 13, Chamberí, 28004 Madrid
+                  <div class="mt-4">
+                    <h5 class="fw-bold mb-4">Opiniones recientes</h5>
+
+                    <div class="card border-0 border-bottom rounded-0 mb-4 pb-4 bg-transparent">
+                      <div class="d-flex align-items-center mb-3">
+                        <img src="../assets/images/profile_photo_example.jpeg" class="rounded-circle me-2" alt="Usuario"
+                          style="width: 35px; height: 35px; object-fit: cover;">
+                        <span class="fw-bold small">Juan José García Gómez</span>
+                        <span class="text-muted small ms-auto">08/02/2026</span>
                       </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="border p-3 rounded-3 bg-light">
-                        <b class="mx-2 text-muted"><i class="fa fa-map-marker-alt"></i></b>
-                        Carrer del Pare Perera, 2, L'Eixample, 46006 València, Valencia
+
+                      <div class="d-flex align-items-center mb-2 p-2 bg-light rounded-2">
+                        <img src="../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg" 
+                             class="rounded border me-2" style="width: 45px; height: 45px; object-fit: cover;">
+                        <div>
+                            <span class="d-block small fw-bold">AMD Ryzen 7 9800X3D</span>
+                            <div class="stars-outer small">
+                                <div class="stars-inner" style="width: 100%;"></div>
+                            </div>
+                        </div>
+                      </div>
+
+                      <h6 class="fw-bold text-primary mt-2">"Rendimiento top, precio algo elevado"</h6>
+                      <p class="text-secondary small mb-2">
+                        "Es el rey del gaming, de eso no hay duda. Lo único malo es el precio de salida y que
+                        necesitas sí o sí una placa AM5 decente. Por lo demás, nada que reprochar."
+                      </p>
+
+                      <div class="d-flex align-items-center">
+                        <span class="badge bg-success-subtle text-success me-3">
+                          <i class="fas fa-check me-1"></i> Compra verificada
+                        </span>
                       </div>
                     </div>
                   </div>
-              
-                  <a href="#" class="btn btn-light border"> <i class="me-2 fa fa-plus"></i>Añadir dirección</a>
-                  
-                  <hr class="my-4" />
                 </div>
               </div>
 
               <div class="tab-pane fade" id="orders-pane" role="tabpanel" aria-labelledby="orders-tab" tabindex="0">
                 <h5 class="mb-3">Tus pedidos</h5>
-                
+
                 <div class="card border border-primary mb-4 shadow-0">
                   <div class="card-body pb-0">
                     <header class="d-lg-flex">
                       <div class="flex-grow-1">
-                        <h6 class="mb-0">ID de pedido: 8924 <i class="dot"></i>  
+                        <h6 class="mb-0">ID de pedido: 8924 <i class="dot"></i>
                           <span class="text-success">Enviado</span>
                         </h6>
                         <span class="text-muted">Fecha: 15 Febrero 2026</span>
@@ -110,7 +124,7 @@
                           <div class="me-3">
                             <img width="72" height="72" src="../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg" class="img-sm rounded border" />
                           </div>
-                          <div class="">
+                          <div>
                             <p class="mb-0">AMD Ryzen 7 9800X3D 4.7/5.2GHz</p>
                             <strong> 1x = 464,95€</strong>
                           </div>
@@ -120,50 +134,51 @@
                   </div>
                 </div>
 
-                <div class="card border border-primary mb-4 shadow-0">
-                  <div class="card-body pb-0">
-                    <header class="d-lg-flex">
-                      <div class="flex-grow-1">
-                        <h6 class="mb-0">ID de pedido: 8920 <i class="dot"></i>  
-                          <span class="text-danger">Pendiente</span>
-                        </h6>
-                        <span class="text-muted">Fecha: 13 Febrero 2026</span>
-                      </div>
-                    </header>
-                    <hr />
-                    <div class="row">
-                      <div class="col-lg-6 border-start">
-                        <p class="mb-0 text-muted">Dirección de envío</p>
-                        <p class="m-0">Calle de Sagasta, 13, Chamberí, 28004 Madrid</p>
-                      </div>
-                      <div class="col-lg-6 border-start">
-                        <p class="mb-0 text-muted">Pago</p>
-                        <p class="m-0">Coste de envío: 31,36€ <br />Total: 496,31€</p>
-                      </div>
-                    </div>
-                    <hr />
-                    <ul class="row list-unstyled">
-                      <li class="col-xl-4 col-lg-6">
-                        <div class="d-flex mb-3 mb-xl-0">
-                          <div class="me-3">
-                            <img width="72" height="72" src="../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg" class="img-sm rounded border" />
-                          </div>
-                          <div class="">
-                            <p class="mb-0">AMD Ryzen 7 9800X3D 4.7/5.2GHz</p>
-                            <strong> 1x = 464,95€ </strong>
-                          </div>
+                <div class="card border border-danger mb-4 shadow-0">
+                    <div class="card-body pb-0">
+                      <header class="d-lg-flex">
+                        <div class="flex-grow-1">
+                          <h6 class="mb-0">ID de pedido: 8920 <i class="dot"></i>  
+                            <span class="text-danger">Pendiente</span>
+                          </h6>
+                          <span class="text-muted">Fecha: 13 Febrero 2026</span>
                         </div>
-                      </li>
-                    </ul>
+                      </header>
+                      <hr />
+                      <div class="row">
+                        <div class="col-lg-6 border-start">
+                          <p class="mb-0 text-muted">Dirección de envío</p>
+                          <p class="m-0">Calle de Sagasta, 13, Chamberí, 28004 Madrid</p>
+                        </div>
+                        <div class="col-lg-6 border-start">
+                          <p class="mb-0 text-muted">Pago</p>
+                          <p class="m-0">Coste de envío: 31,36€ <br />Total: 496,31€</p>
+                        </div>
+                      </div>
+                      <hr />
+                      <ul class="row list-unstyled">
+                        <li class="col-xl-4 col-lg-6">
+                          <div class="d-flex mb-3 mb-xl-0">
+                            <div class="me-3">
+                              <img width="72" height="72" src="../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg" class="img-sm rounded border" />
+                            </div>
+                            <div>
+                              <p class="mb-0">AMD Ryzen 7 9800X3D 4.7/5.2GHz</p>
+                              <strong> 1x = 464,95€ </strong>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
-                </div>
               </div>
 
               <div class="tab-pane fade" id="modify-pane" role="tabpanel" aria-labelledby="modify-tab" tabindex="0">
-                <h5 class="mb-4">Modificar cuenta</h5>                
+                <h5 class="mb-4">Modificar cuenta</h5>
                 <form>
                   <div class="mb-4 d-flex align-items-center">
-                    <img src="../assets/images/profile_photo_example.jpeg" class="rounded-circle border me-3 avatar-lg" alt="Avatar actual" />
+                    <img src="../assets/images/profile_photo_example.jpeg"
+                      class="rounded-circle border me-3 avatar-lg" alt="Avatar actual" />
                     <div>
                       <label for="profilePic" class="form-label mb-1 fw-bold">Cambiar foto de perfil</label>
                       <input class="form-control form-control-sm" id="profilePic" type="file" accept="image/*">
@@ -176,16 +191,37 @@
                       <label for="userName" class="form-label fw-bold">Nombre completo</label>
                       <input type="text" class="form-control" id="userName" value="Juan José García Gómez">
                     </div>
-                    
+
                     <div class="col-md-6">
                       <label for="userEmail" class="form-label fw-bold">Correo electrónico</label>
                       <input type="email" class="form-control" id="userEmail" value="juanjosereal67@gmail.com">
                     </div>
-                    
+
                     <div class="col-md-6">
                       <label for="userPhone" class="form-label fw-bold">Número de teléfono</label>
                       <input type="tel" class="form-control" id="userPhone" value="+34 600 50 04 00">
                     </div>
+
+                    <hr class="my-4" />
+
+                    <div class="row g-2 mb-3">
+                      <div class="col-md-6">
+                        <div class="border p-3 rounded-3 bg-light">
+                          <b class="mx-2 text-muted"><i class="fa fa-map-marker-alt"></i></b>
+                          Calle de Sagasta, 13, Chamberí, 28004 Madrid
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="border p-3 rounded-3 bg-light">
+                          <b class="mx-2 text-muted"><i class="fa fa-map-marker-alt"></i></b>
+                          Carrer del Pare Perera, 2, L'Eixample, 46006 València, Valencia
+                        </div>
+                      </div>
+                    </div>
+
+                    <a href="#" class="btn btn-light border"> <i class="me-2 fa fa-plus"></i>Añadir dirección</a>
+
+                    <hr class="my-4" />
                   </div>
 
                   <div class="d-flex justify-content-between align-items-center pt-4 border-top">
@@ -194,7 +230,7 @@
                   </div>
                 </form>
               </div>
-              
+
             </div>
           </div>
         </main>
@@ -278,64 +314,50 @@
   </footer>
 
   <script>
-      const userIsLogged = localStorage.getItem('isLoggedIn');
-  const headerFile = userIsLogged ? 'headers/loged_header.html' : 'headers/unloged_header.html';
+    const userIsLogged = localStorage.getItem('isLoggedIn');
+    const headerFile = userIsLogged ? 'headers/loged_header.html' : 'headers/unloged_header.html';
 
-  fetch(headerFile)
+    fetch(headerFile)
       .then(response => {
-          if (!response.ok) throw new Error("Error al cargar " + headerFile);
-          return response.text();
+        if (!response.ok) throw new Error("Error al cargar " + headerFile);
+        return response.text();
       })
       .then(data => {
-          // 1. Inyectamos el HTML
-          document.getElementById('navbar-placeholder').innerHTML = data;
-
-          // 2. Ahora que el botón EXISTE en el DOM, lo buscamos
-          if (userIsLogged) {
-              // Lógica de cerrar sesión
-              const btnSalir = document.getElementById('btnCerrarSesion');
-              if (btnSalir) {
-                  btnSalir.addEventListener('click', function() {
-                      localStorage.removeItem('isLoggedIn');
-                      localStorage.removeItem('userRole'); // No olvides limpiar el rol
-                      window.location.href = "../index.html";
-                  });
-              }
-
-              // Lógica del botón de Admin (Moverlo aquí es clave)
-              const userRole = localStorage.getItem('userRole');
-              const adminBtn = document.getElementById('btnAdminPanel');
-              
-              if (userRole === 'admin' && adminBtn) {
-                  adminBtn.classList.remove('d-none');
-              } else if (adminBtn) {
-                  // Por si acaso, asegúrate de que esté oculto si no es admin
-                  adminBtn.classList.add('d-none');
-              }
+        document.getElementById('navbar-placeholder').innerHTML = data;
+        if (userIsLogged) {
+          const btnSalir = document.getElementById('btnCerrarSesion');
+          if (btnSalir) {
+            btnSalir.addEventListener('click', function () {
+              localStorage.removeItem('isLoggedIn');
+              localStorage.removeItem('userRole');
+              window.location.href = "../index.html";
+            });
           }
+          const userRole = localStorage.getItem('userRole');
+          const adminBtn = document.getElementById('btnAdminPanel');
+          if (userRole === 'admin' && adminBtn) {
+            adminBtn.classList.remove('d-none');
+          } else if (adminBtn) {
+            adminBtn.classList.add('d-none');
+          }
+        }
       })
-      .catch(error => console.error("Errorazo fatal:", error));
+      .catch(error => console.error("Error:", error));
 
-  // El DOMContentLoaded déjalo solo para cosas que SÍ estén en el HTML principal
-  document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
       const btnModificar = document.getElementById('btn-ir-a-modificar');
       const tabModificar = document.getElementById('modify-tab');
-
       if (btnModificar && tabModificar) {
-          btnModificar.addEventListener('click', function (e) {
-              e.preventDefault();
-              const tabTrigger = new bootstrap.Tab(tabModificar);
-              tabTrigger.show();
-          });
+        btnModificar.addEventListener('click', function (e) {
+          e.preventDefault();
+          const tabTrigger = new bootstrap.Tab(tabModificar);
+          tabTrigger.show();
+        });
       }
-  });
-  
-
+    });
   </script>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
