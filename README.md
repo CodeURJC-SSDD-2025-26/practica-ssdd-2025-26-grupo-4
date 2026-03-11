@@ -187,12 +187,13 @@ Permite actualizar el estado del envío entre Pendiente, Procesando, Enviado, En
 #### **Alumno 2 - David Díaz Gómez-Escalonilla**
 
 [Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
-Principal responsable de las páginas de search-result, item-detail, create-review, user-list, user-edit, order-list, order-edit y los headers.
+Principal responsable de las páginas de search-result, item-detail, create-review, user-list, user-edit, order-list, order-edit y los headers. También he ayudado con la estructura del index.html para que fuera similar a la de search-result.
 Creación y diseño del diagrama de navegación de README, junto con la inserción de las imagenes el resto de páginas junto con su descripción..
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
+|1| [search-result html implementation](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/492fb1a6cb0778e6813eb550ac9eca71604968f7)  | [Archivo1](URL_archivo_1)   |
+
 |2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
 |3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
 |4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
