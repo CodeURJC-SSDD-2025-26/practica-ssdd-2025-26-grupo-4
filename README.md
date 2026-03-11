@@ -160,12 +160,9 @@ Formulario para que los usuarios valoren los productos comprados. Incluye un sis
 ![Pagina de Lista Reseñas](assets/images/readme-images/admin-review-list.png)
 
 #### **17. Pagina de Lista Pedidos:**
-Incluye una barra de navegación superior para conmutar entre métricas y gestión de inventario, además de filtros por estado y un buscador de clientes.
+
 ![Pagina de Lista Pedidos](assets/images/readme-images/admin-order-list.png)
 
-#### **18. Pagina de Modificar Pedidos:**
-Permite actualizar el estado del envío entre Pendiente, Procesando, Enviado, Entregado, y Cancelado. Notifica al cliente automáticamente por correo si asi se indica y muestra tanto el desglose de productos como el resumen económico con impuestos incluidos
-![Pagina de Modificar Pedidos](assets/images/readme-images/admin-order-edit.png)
 
 
 ### **Participación de Miembros en la Práctica 1**
@@ -186,7 +183,7 @@ Permite actualizar el estado del envío entre Pendiente, Procesando, Enviado, En
 
 #### **Alumno 2 - David Díaz Gómez-Escalonilla**
 
-Principal responsable de las páginas de search-result, item-detail, create-review, user-list, user-edit, order-list, order-edit y los headers. También he ayudado con la estructura del index.html para que fuera similar a la de search-result.
+Principal responsable de las páginas de search-result, item-detail, create-review y los headers. También he ayudado con la estructura del index.html para que fuera similar a la de search-result, además de crear la implementacion inicial de las paginas user-list, user-edit, order-list, order-edit, las cuales han sido mejoradas posteriormente por otros compañeros.
 Creación y diseño del diagrama de navegación de README, junto con la inserción de las imagenes el resto de páginas junto con su descripción..
 
 | Nº    | Commits      | Files      |
