@@ -93,11 +93,12 @@ La página de inicio muestra en primer lugar las categorias de hardware disponib
 #### **TODOS LOS USUARIOS**
 
 #### **2. Pagina de busqueda:**
+Muestra una lista de  productos en una cuadrícula con sus datos principales. También tiene implementada una barra lateral con filtros por marca y rango de precio, además de un selector para ordenar los resultados según lo que busque el usuario.
 
 ![Pagina de busqueda](assets/images/readme-images/search-result.png)
 
 #### **3. Pagina de Producto:**
-
+Maquetación detallada del componente con un carrusel de imágenes y la zona de compra. Contiene una tabla para las especificaciones técnicas y una sección de reseñas donde los usuarios pueden ver las valoraciones y opiniones de otros compradores.
 ![Pagina de producto](assets/images/readme-images/item-detail.png)
 
 #### **4. Pagina de Login:**
@@ -105,7 +106,6 @@ La página de inicio muestra en primer lugar las categorias de hardware disponib
 ![Pagina de Login](assets/images/readme-images/login.png)
 
 #### **5. Pagina de Registro:**
-
 ![Pagina de Registro](assets/images/readme-images/user-registration.png)
 
 #### **USUARIOS REGISTRADOS**
@@ -126,7 +126,7 @@ La página de inicio muestra en primer lugar las categorias de hardware disponib
 ![Pagina de Pago correcto](assets/images/readme-images/payment-correct.png)
 
 #### **9. Pagina de Crear Review:**
-
+Formulario para que los usuarios valoren los productos comprados. Incluye un sistema de puntuación por estrellas, campos de texto para el título y el comentario, y secciones específicas para listar pros y contras, además de permitir la subida de imágenes reales del componente.
 ![Pagina de Crear Review](assets/images/readme-images/create-review.png)
 
 #### **ADMINISTRADOR**
@@ -160,12 +160,12 @@ La página de inicio muestra en primer lugar las categorias de hardware disponib
 ![Pagina de Lista Reseñas](assets/images/readme-images/admin-review-list.png)
 
 #### **17. Pagina de Lista Pedidos:**
-
+Incluye una barra de navegación superior para conmutar entre métricas y gestión de inventario, además de filtros por estado y un buscador de clientes.
 ![Pagina de Lista Pedidos](assets/images/readme-images/admin-order-list.png)
 
-#### **18. Pagina de Detalles Pedidos:**
-
-![Pagina de Detalles Pedidos](assets/images/readme-images/admin-order-edit.png)
+#### **18. Pagina de Modificar Pedidos:**
+Permite actualizar el estado del envío entre Pendiente, Procesando, Enviado, Entregado, y Cancelado. Notifica al cliente automáticamente por correo si asi se indica y muestra tanto el desglose de productos como el resumen económico con impuestos incluidos
+![Pagina de Modificar Pedidos](assets/images/readme-images/admin-order-edit.png)
 
 
 ### **Participación de Miembros en la Práctica 1**
@@ -187,6 +187,8 @@ La página de inicio muestra en primer lugar las categorias de hardware disponib
 #### **Alumno 2 - David Díaz Gómez-Escalonilla**
 
 [Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+Principal responsable de las páginas de search-result, item-detail, create-review, user-list, user-edit, order-list, order-edit y los headers.
+Creación y diseño del diagrama de navegación de README, junto con la inserción de las imagenes el resto de páginas junto con su descripción..
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
