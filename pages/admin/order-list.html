@@ -1,54 +1,173 @@
+<!--
+Archivo: order-list.html
+Descripción: Listado de pedidos de clientes con filtros por estado, buscador de clientes,
+             pestañas para conmutar entre métricas globales y gestión de inventario.
+             Permite acceder al detalle/edición de cada pedido individual.
+-->
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PCBuilderShop - Gestión de Pedidos</title>
-    <link rel="icon" type="image/x-icon" href="../../assets/icons/logo.png">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="../../css/style.css" rel="stylesheet" />
 </head>
 
 <body>
     <div id="navbar-placeholder"></div>
 
     <main class="container my-5 pt-4">
+        <!-- Navegación de Administración -->
         <nav class="nav nav-pills mb-4">
             <a class="nav-link" href="admin-dashboard.html"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
             <a class="nav-link" href="item-list.html"><i class="bi bi-box-seam me-1"></i>Productos</a>
             <a class="nav-link" href="user-list.html"><i class="bi bi-people me-1"></i>Usuarios</a>
             <a class="nav-link" href="review-list.html"><i class="bi bi-chat-left-text me-1"></i>Reseñas</a>
-            <a class="nav-link active" href="order-list.html"><i class="bi bi-truck me-1"></i>Pedidos</a>
+            <a class="nav-link active" href="order-list.html"><i class="bi bi-cart-check me-1"></i>Pedidos</a>
         </nav>
 
+        <!-- Título y Acción Principal -->
         <header class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h2 class="mb-1"><i class="bi bi-truck me-2"></i>Gestión de Pedidos</h2>
-                <p class="text-muted mb-0 small">Control de pedidos, facturación y estados de envío.</p>
+                <p class="text-muted mb-0 small">Control de pedidos de clientes, facturación y estados de envío.</p>
             </div>
+            <a href="order-management.html" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-boxes me-1"></i>Reabastecimiento
+            </a>
         </header>
 
+        <!-- Pestañas Métricas / Inventario -->
+        <ul class="nav nav-tabs mb-4" id="orderTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="metrics-tab" data-bs-toggle="tab" data-bs-target="#metricsPanel"
+                    type="button" role="tab">
+                    <i class="bi bi-graph-up me-1"></i>Métricas
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="inventory-tab" data-bs-toggle="tab" data-bs-target="#inventoryPanel"
+                    type="button" role="tab">
+                    <i class="bi bi-boxes me-1"></i>Gestión Inventario
+                </button>
+            </li>
+        </ul>
+
+        <!-- Contenido de las Pestañas -->
+        <div class="tab-content mb-4" id="orderTabsContent">
+
+            <!-- Pestaña 1: Métricas Globales -->
+            <div class="tab-pane fade show active" id="metricsPanel" role="tabpanel">
+                <div class="row g-3 mb-4">
+                    <!-- Total de Pedidos -->
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow-sm text-center p-3">
+                            <div class="text-primary mb-1"><i class="bi bi-receipt fs-3"></i></div>
+                            <h4 class="fw-bold mb-0">156</h4>
+                            <small class="text-muted">Pedidos Totales</small>
+                        </div>
+                    </div>
+                    <!-- Ingresos -->
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow-sm text-center p-3">
+                            <div class="text-success mb-1"><i class="bi bi-currency-euro fs-3"></i></div>
+                            <h4 class="fw-bold mb-0">48.320€</h4>
+                            <small class="text-muted">Ingresos Totales</small>
+                        </div>
+                    </div>
+                    <!-- Pendientes -->
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow-sm text-center p-3">
+                            <div class="text-warning mb-1"><i class="bi bi-clock-history fs-3"></i></div>
+                            <h4 class="fw-bold mb-0">12</h4>
+                            <small class="text-muted">Pendientes</small>
+                        </div>
+                    </div>
+                    <!-- Cancelados -->
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow-sm text-center p-3">
+                            <div class="text-danger mb-1"><i class="bi bi-x-circle fs-3"></i></div>
+                            <h4 class="fw-bold mb-0">3</h4>
+                            <small class="text-muted">Cancelados</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pestaña 2: Gestión de Inventario -->
+            <div class="tab-pane fade" id="inventoryPanel" role="tabpanel">
+                <div class="row g-3 mb-4">
+                    <!-- Stock Bajo -->
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm border-start border-warning border-4 p-3">
+                            <h6 class="fw-bold text-uppercase x-small text-muted mb-2">
+                                <i class="bi bi-exclamation-triangle me-1"></i>Stock Bajo
+                            </h6>
+                            <p class="mb-1 small"><strong>AMD Ryzen 7 9800X3D</strong> — 3 uds.</p>
+                            <p class="mb-1 small"><strong>MSI RTX 5080 Ventus</strong> — 2 uds.</p>
+                            <p class="mb-0 small"><strong>Corsair DDR5 32GB</strong> — 5 uds.</p>
+                        </div>
+                    </div>
+                    <!-- Productos Más Vendidos -->
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm border-start border-success border-4 p-3">
+                            <h6 class="fw-bold text-uppercase x-small text-muted mb-2">
+                                <i class="bi bi-star me-1"></i>Más Vendidos este Mes
+                            </h6>
+                            <p class="mb-1 small"><strong>AMD Ryzen 7 9800X3D</strong> — 24 ventas</p>
+                            <p class="mb-1 small"><strong>ASUS TUF RTX 4070</strong> — 18 ventas</p>
+                            <p class="mb-0 small"><strong>WD Black SN7100 1TB</strong> — 15 ventas</p>
+                        </div>
+                    </div>
+                    <!-- Acciones Rápidas -->
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm border-start border-primary border-4 p-3">
+                            <h6 class="fw-bold text-uppercase x-small text-muted mb-2">
+                                <i class="bi bi-lightning me-1"></i>Acciones Rápidas
+                            </h6>
+                            <a href="order-management.html" class="btn btn-sm btn-outline-primary w-100 mb-2">
+                                <i class="bi bi-boxes me-1"></i>Ir a Reabastecimiento
+                            </a>
+                            <a href="item-list.html" class="btn btn-sm btn-outline-secondary w-100">
+                                <i class="bi bi-box-seam me-1"></i>Gestionar Productos
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel de Filtros -->
         <section class="card shadow-sm border-0 mb-4 bg-light">
             <div class="card-body">
                 <form class="row g-3 align-items-end">
-                    <div class="col-md-5">
-                        <label class="form-label small fw-bold">Buscar Pedido</label>
+                    <!-- Buscador de Clientes -->
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold">Buscar Cliente / Pedido</label>
                         <input type="text" class="form-control form-control-sm"
-                            placeholder="Nº de pedido o nombre de cliente...">
+                            placeholder="Nº de pedido o nombre de cliente..." />
                     </div>
+                    <!-- Filtro por Estado -->
                     <div class="col-md-3">
                         <label class="form-label small fw-bold">Estado del Envío</label>
                         <select class="form-select form-select-sm">
                             <option value="">Todos los estados</option>
                             <option>Pendiente</option>
+                            <option>Procesando</option>
                             <option>Enviado</option>
                             <option>Entregado</option>
                             <option>Cancelado</option>
                         </select>
                     </div>
+                    <!-- Filtro por Fecha -->
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold">Rango de Fecha</label>
+                        <input type="date" class="form-control form-control-sm" />
+                    </div>
+                    <!-- Botón Filtrar -->
                     <div class="col-md-2 d-flex align-items-end">
                         <button type="button" class="btn btn-sm btn-primary w-100" onclick="location.reload()">
                             <i class="bi bi-search me-1"></i>Filtrar
@@ -58,6 +177,7 @@
             </div>
         </section>
 
+        <!-- Tabla de Pedidos -->
         <section class="card shadow-sm border-0 overflow-hidden">
             <div class="table-responsive">
                 <table class="table align-middle table-hover mb-0">
@@ -66,113 +186,155 @@
                             <th class="ps-4">ID Pedido</th>
                             <th>Cliente</th>
                             <th>Fecha</th>
-                            <th class="ps-2">Total</th>
+                            <th>Total</th>
                             <th>Estado</th>
                             <th class="text-end pe-4">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <!-- Pedido 1 - Entregado -->
                         <tr>
-                            <td class="ps-4">#O7721</td>
+                            <td class="ps-4 fw-bold">#O7721</td>
                             <td>
                                 <div class="fw-bold">John Dominguez Encinas</div>
                                 <div class="small text-muted">john.doe@email.com</div>
                             </td>
                             <td>02/03/2026</td>
-                            <td>1.450,00 €</td>
+                            <td>1.347,88 €</td>
                             <td><span class="badge bg-success">Entregado</span></td>
                             <td class="text-end pe-4">
-                                <a href="order-edit.html" class="btn btn-sm btn-outline-primary"><i
-                                        class="bi bi-pencil"></i></a>
-                                <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                                    data-bs-target="#modalEliminar"
-                                    onclick="document.getElementById('nombreProductoEliminar').textContent='Corsair Vengeance RGB DDR5'">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                                <div class="btn-group btn-group-sm">
+                                    <a href="order-edit.html?id=O7721" class="btn btn-outline-primary"
+                                        title="Ver / Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <button class="btn btn-outline-danger" data-bs-toggle="modal"
+                                        data-bs-target="#modalCancelar"
+                                        onclick="document.getElementById('orderIdText').textContent='#O7721'"
+                                        title="Cancelar">
+                                        <i class="bi bi-x-circle"></i>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
+                        <!-- Pedido 2 - Enviado -->
                         <tr>
-                            <td class="ps-4">#O7725</td>
+                            <td class="ps-4 fw-bold">#O7725</td>
                             <td>
                                 <div class="fw-bold">David Martin Díaz</div>
                                 <div class="small text-muted">david.md98@gmail.com</div>
                             </td>
                             <td>04/03/2026</td>
-                            <td>89,90 €</td>
+                            <td>108,78 €</td>
                             <td><span class="badge bg-warning text-dark">Enviado</span></td>
                             <td class="text-end pe-4">
-                                <a href="order-edit.html" class="btn btn-sm btn-outline-primary"><i
-                                        class="bi bi-pencil"></i></a>
-                                <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                                    data-bs-target="#modalEliminar"
-                                    onclick="document.getElementById('nombreProductoEliminar').textContent='Corsair Vengeance RGB DDR5'">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                                <div class="btn-group btn-group-sm">
+                                    <a href="order-edit.html?id=O7725" class="btn btn-outline-primary"
+                                        title="Ver / Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <button class="btn btn-outline-danger" data-bs-toggle="modal"
+                                        data-bs-target="#modalCancelar"
+                                        onclick="document.getElementById('orderIdText').textContent='#O7725'"
+                                        title="Cancelar">
+                                        <i class="bi bi-x-circle"></i>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
+                        <!-- Pedido 3 - Procesando -->
                         <tr>
-                            <td class="ps-4">#O7728</td>
+                            <td class="ps-4 fw-bold">#O7728</td>
                             <td>
                                 <div class="fw-bold">Marta Nuñez Calvo</div>
                                 <div class="small text-muted">mañuca03@gmail.com</div>
                             </td>
                             <td>05/03/2026</td>
-                            <td>2.100,50 €</td>
+                            <td>2.541,61 €</td>
                             <td><span class="badge bg-info text-dark">Procesando</span></td>
                             <td class="text-end pe-4">
-                                <a href="order-edit.html" class="btn btn-sm btn-outline-primary"><i
-                                        class="bi bi-pencil"></i></a>
-                                <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                                    data-bs-target="#modalEliminar"
-                                    onclick="document.getElementById('nombreProductoEliminar').textContent='Corsair Vengeance RGB DDR5'">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                                <div class="btn-group btn-group-sm">
+                                    <a href="order-edit.html?id=O7728" class="btn btn-outline-primary"
+                                        title="Ver / Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <button class="btn btn-outline-danger" data-bs-toggle="modal"
+                                        data-bs-target="#modalCancelar"
+                                        onclick="document.getElementById('orderIdText').textContent='#O7728'"
+                                        title="Cancelar">
+                                        <i class="bi bi-x-circle"></i>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
+                        <!-- Pedido 4 - Pendiente -->
                         <tr>
-                            <td class="ps-4">#O7729</td>
+                            <td class="ps-4 fw-bold">#O7729</td>
                             <td>
                                 <div class="fw-bold">Laura Rodriguez Lopez</div>
                                 <div class="small text-muted">piplupShiny06@gmail.com</div>
                             </td>
                             <td>01/01/2026</td>
-                            <td>45,00 €</td>
+                            <td>54,45 €</td>
                             <td><span class="badge bg-secondary">Pendiente</span></td>
                             <td class="text-end pe-4">
-                                <a href="order-edit.html" class="btn btn-sm btn-outline-primary"><i
-                                        class="bi bi-pencil"></i></a>
-                                <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                                    data-bs-target="#modalEliminar"
-                                    onclick="document.getElementById('nombreProductoEliminar').textContent='Corsair Vengeance RGB DDR5'">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                                <div class="btn-group btn-group-sm">
+                                    <a href="order-edit.html?id=O7729" class="btn btn-outline-primary"
+                                        title="Ver / Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <button class="btn btn-outline-danger" data-bs-toggle="modal"
+                                        data-bs-target="#modalCancelar"
+                                        onclick="document.getElementById('orderIdText').textContent='#O7729'"
+                                        title="Cancelar">
+                                        <i class="bi bi-x-circle"></i>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
+                        <!-- Pedido 5 - Cancelado -->
                         <tr>
-                            <td class="ps-4">#O7601</td>
+                            <td class="ps-4 fw-bold">#O7601</td>
                             <td>
                                 <div class="fw-bold">Gave Newell</div>
                                 <div class="small text-muted">gave_newell@gmail.com</div>
                             </td>
                             <td>28/02/2026</td>
-                            <td>320,00 €</td>
+                            <td>387,20 €</td>
                             <td><span class="badge bg-danger">Cancelado</span></td>
                             <td class="text-end pe-4">
-                                <a href="order-edit.html" class="btn btn-sm btn-outline-primary"><i
-                                        class="bi bi-pencil"></i></a>
-                                <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                                    data-bs-target="#modalEliminar"
-                                    onclick="document.getElementById('nombreProductoEliminar').textContent='Corsair Vengeance RGB DDR5'">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                                <div class="btn-group btn-group-sm">
+                                    <a href="order-edit.html?id=O7601" class="btn btn-outline-primary"
+                                        title="Ver / Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <button class="btn btn-outline-danger" data-bs-toggle="modal"
+                                        data-bs-target="#modalCancelar"
+                                        onclick="document.getElementById('orderIdText').textContent='#O7601'"
+                                        title="Cancelar" disabled>
+                                        <i class="bi bi-x-circle"></i>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </section>
+
+        <!-- Paginación -->
+        <nav class="mt-4 d-flex justify-content-center">
+            <ul class="pagination pagination-sm">
+                <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+            </ul>
+        </nav>
     </main>
 
+    <!-- Modal de Cancelación de Pedido -->
     <div class="modal fade" id="modalCancelar" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content border-0 shadow">
@@ -181,34 +343,22 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body text-center py-4">
-                    <p class="mb-0 small">Se marcará como cancelado el pedido:</p>
-                    <strong id="orderIdText" class="d-block mt-1"></strong>
+                    <i class="bi bi-exclamation-triangle text-danger fs-1 mb-2 d-block"></i>
+                    <p class="mb-1 small">Se marcará como cancelado el pedido:</p>
+                    <strong id="orderIdText" class="d-block mt-1 fs-5"></strong>
+                    <!-- Opción de notificación -->
+                    <div class="form-check form-switch mt-3 d-flex justify-content-center gap-2">
+                        <input class="form-check-input" type="checkbox" id="notifyCancelEmail" checked />
+                        <label class="form-check-label small" for="notifyCancelEmail">Notificar al cliente por
+                            email</label>
+                    </div>
                 </div>
                 <div class="modal-footer border-0 p-2 justify-content-center">
                     <button type="button" class="btn btn-sm btn-light px-3" data-bs-dismiss="modal">No, volver</button>
-                    <button type="button" class="btn btn-sm btn-danger px-3" onclick="location.reload()">Sí,
-                        cancelar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de Confirmación -->
-    <div class="modal fade" id="modalEliminar" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content border-0 shadow">
-                <div class="modal-header bg-danger text-white border-0 py-2">
-                    <h6 class="modal-title small fw-bold">¿ELIMINAR PRODUCTO?</h6>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body text-center py-4">
-                    <p class="mb-0 small">Se eliminará permanentemente:</p>
-                    <strong id="pName" class="d-block mt-1"></strong>
-                </div>
-                <div class="modal-footer border-0 p-2 justify-content-center">
-                    <button type="button" class="btn btn-sm btn-light px-3" data-bs-dismiss="modal">No, volver</button>
-                    <button type="button" class="btn btn-sm btn-danger px-3" onclick="location.reload()">Sí,
-                        eliminar</button>
+                    <button type="button" class="btn btn-sm btn-danger px-3"
+                        onclick="alert('Pedido cancelado. Se ha notificado al cliente.'); location.reload()">
+                        Sí, cancelar
+                    </button>
                 </div>
             </div>
         </div>
@@ -217,20 +367,32 @@
     <div id="footer-placeholder"></div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Carga de Componentes
-        const loadComp = (url, id, cb) => fetch(url).then(r => r.text()).then(h => {
-            document.getElementById(id).innerHTML = h;
-            if (cb) cb(document.getElementById(id));
-        });
-        loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header.html' : '../headers/unloged_header.html', 'navbar-placeholder', (nav) => {
+        // --- Carga de Componentes Dinámicos ---
+        const loadComp = (url, id, cb) => {
+            fetch(url)
+                .then(r => r.text())
+                .then(h => {
+                    document.getElementById(id).innerHTML = h;
+                    if (cb) cb(document.getElementById(id));
+                });
+        };
+
+        // Carga del Header dependiendo del estado de sesión almacenado
+        loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header.html' : '../headers/unloged_header.html', 'navbar-placeholder', nav => {
             nav.querySelectorAll('a, form').forEach(el => {
-                const attr = el.tagName === 'FORM' ? 'action' : 'href';
-                const val = el.getAttribute(attr);
-                if (val?.startsWith('../') && !val.startsWith('http')) el.setAttribute(attr, '../' + val);
+                const a = el.tagName === 'FORM' ? 'action' : 'href';
+                const v = el.getAttribute(a);
+                if (v?.startsWith('../') && !v.startsWith('http')) {
+                    el.setAttribute(a, '../' + v);
+                }
             });
-            const btn = document.getElementById('btnAdminPanel');
-            if (btn) { btn.href = 'admin-dashboard.html'; btn.classList.remove('d-none'); }
+            const b = document.getElementById('btnAdminPanel');
+            if (b) {
+                b.href = 'admin-dashboard.html';
+                b.classList.remove('d-none');
+            }
         });
+
         loadComp('../footer.html', 'footer-placeholder');
     </script>
 </body>
