@@ -4,7 +4,7 @@
 | Nombre y Apellidos | Correo URJC | Usuario GitHub |
 |:--- |:--- |:--- |
 | David Díaz Gómez-Escalonilla | d.diaz.2021@alumnos.urjc.es | daviddge |
-| Jonay Sebastián Oortiz Armas| js.ortiz.2023@alumnos.urjc.es | kuuharuh |
+| Jonay Sebastián Ortiz Armas| js.ortiz.2023@alumnos.urjc.es | kuuharuh |
 | Ramiro Daniel Flores Aquino | rd.flores.2025@alumnos.urjc.es | danilo-uni |
 | Joel Domené Álvaro | j.domene.2022@alumnos.urjc.es |  joel-domene |
 
@@ -82,11 +82,12 @@ Todos los usuarios parte desde la página principal, y hay acceso sin restriccio
 ### **Capturas de Pantalla y Descripción de Páginas**
 
 #### **1. Página Principal / Home**
+
+Esta es la pagina principal de la pagina en la que tenemos una serie de productos recomendados, además de distintas novedades en hardware. En el header se incluye la barra de navegación, el acceso a la cesta para usuarios registrados, y boton dropdown que permite acceder al perfil o cerrar sesión. En el caso de no estar logueado, se muestra un botón "Entrar" para iniciar sesión o registrarse.
+
 ![Página Principal](assets/images/readme-images/home-page.png)
-
+-  La pagina de incio tambien te muestra las categorias de hardware disponibles, las cuales también se pueden visualizar desde el menu desplegable del header dandole a "categorias"
 ![Página Principal](assets/images/readme-images/home-page-sidebar.png)
-
-La página de inicio muestra en primer lugar las categorias de hardware disponibles, las cuales también se pueden visualizar desde el menu desplegable del header. También se muestran una serie de productos recomendados, además de distintas novedades en hardware. En el header se incluye la barra de navegación, el acceso a la cesta para usuarios registrados, y boton dropdown que permite acceder al perfil o cerrar sesión. En el caso de no estar logueado, se muestra un botón "Entrar" para iniciar sesión o registrarse.
 
 #### **RESTO DE PÁGINAS**
 
@@ -102,27 +103,36 @@ Maquetación detallada del componente con un carrusel de imágenes y la zona de 
 ![Pagina de producto](assets/images/readme-images/item-detail.png)
 
 #### **4. Pagina de Login:**
+En esta pantalla nos muestra como una persona que ya tiene cuenta de la pagina puede inciar sesion añadiendo su correo y contraseña o tambien te da la opcion de iniciar sesion con tu cuenta de google.
 
 ![Pagina de Login](assets/images/readme-images/login.png)
 
 #### **5. Pagina de Registro:**
+Esta pantalla es para que las personas que no tienen cuenta creada, la puedan tener añadiendo sus datos como correo, nombre, contraseña(repetir contraseña) y aceptar por obligacion las politicas de privacidad. Aqui tambien te da la opcion como el login en la que puedes resgistrarte con google.
+
 ![Pagina de Registro](assets/images/readme-images/user-registration.png)
 
 #### **USUARIOS REGISTRADOS**
 
 #### **6. Pagina de Perfil:**
-
-![Pagina de Perfil](assets/images/readme-images/profile.png)
-![Pagina de Perfil-pedidos](assets/images/readme-images/profile-orders.png)
-![Pagina de Perfil-modificar](assets/images/readme-images/profile-modify.png)
+Muestra el perfil del usuario. Incluye 3 pestañas:
+- Mi cuenta: muestra la información actual del usuario (foto de perfil, nombre, email, teléfono, direcciones) y permite añadir direcciones.
+- Pedidos: muestra los pedidos en curso del usuario.
+- Modificar cuenta: permite modificar la información que aparece en Mi cuenta.
+![Pagina de Perfil-Mi cuenta](assets/images/readme-images/profile.png)
+![Pagina de Perfil-Pedidos](assets/images/readme-images/profile-orders.png)
+![Pagina de Perfil-Modificar cuenta](assets/images/readme-images/profile-modify.png)
 
 #### **7. Pagina de Carrito:**
-
+Muestra el carrito de compra del usuario, incluyendo el precio y la cantidad de cada artículo, y permitiendo quitar artículos o finalizar la compra. También aparecen artículos recomendados en la parte inferior.
 ![Pagina de Carrito](assets/images/readme-images/shopping-cart.png)
 
 #### **8. Pagina de Pago:**
+En esta pantalla podemos ver como hemos implentado la forma de pago en lo que podemos seleccionar(solo una) y añadir la direccion del envio , tambien nos permite el tipo de pago (Tarjeta o PayPal) y el relleno de los datos de la tajeta. Y para hacer un seguimiento de la compra ,en el lado derecho de la pantalla se ve el resumen de la compra con el precio total y listo el boton para comprar y para salir si se arrepiente.
 
 ![Pagina de Pago](assets/images/readme-images/payment.png)
+
+En esta pantalla basicamente nos muestra el resultado de la compra al saber que el pago a sido recibido correctamente y además nos sale la opcion de descargar el pdf para ver la factura de la compra, al lado suyo tambien con el boton de volver a la tienda para seguir comprando o viendo mas componentes.
 ![Pagina de Pago correcto](assets/images/readme-images/payment-correct.png)
 
 #### **9. Pagina de Crear Review:**
@@ -169,15 +179,15 @@ Formulario para que los usuarios valoren los productos comprados. Incluye un sis
 
 #### **Alumno 1 - Ramiro Daniel Flores Aquino**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+Mi participación fue el encargado de la implementacion y edición de las paginas del menú principal(index.html), implementé las paginas de login(login.html) y registro(user_registration.html) y también las paginas de pago(payment.html) y la pantalla de pago correcto(payment_correct.html).
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Estrucutura base y navegación del menu principal ](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/68e97783e08ce6d9a00c434f09738d519f64456f)  | [index.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/index.html)   |
+|2| [Implementación de formulario de login y validación básica ,pudiendo el usuario tener mas privilegios](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/0fef36f48eb0db1b5feb60c2c901625b43f277dc)  | [login.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/login.html)   |
+|3| [Creación de pagina de registro de usuarios, permitiendo crear la cuenta del usuario con datos personales](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/ebcfcdc8e9ab164e8b244fc76657fcf496a8a7be)  | [user_registration.html](URL_archivo_3https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/user_registration.html)   |
+|4| [Integración de pasarela de pago y campos de tarjeta para que el usuario pueda tener mas libertad de elección](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/a5b9f8911bf89ee3177a08034087619ae023b767)  | [payment.html](URL_archttps://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/payment.htmlhivo_4)   |
+|5| [Diseño de pantalla de confirmación de pago con exito](URL_commihttps://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/f8c43e8576d007e2877ec18462194b2d3da58fedt_5)  | [payment_correct.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/payment_correct.html)   |
 
 ---
 
@@ -198,17 +208,28 @@ Principal responsable de las páginas de search-result, item-detail, create-revi
 
 ---
 
-#### **Alumno 3 - Jonay Sebastián Oortiz Armas**
+#### **Alumno 3 - Jonay Sebastián Ortiz Armas**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+Principal responsable de las páginas de perfil y carrito de compra, además de algunos cambios en el header y la página de pago. También hice el logo de la página.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Añadir página de perfil de usuario](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/0a580df10a0e133a60755ceea097ec4c25b4ce75)  | [profile.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/profile.html)   |
+|2| [Modificar barra lateral de la página de perfil](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/51eee89e8c182d4ad7268c30c9fa9bd8d157378e)  | [profile.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/profile.html)   |
+|3| [Añadir información de ejemplo a la página de perfil](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/2c46f835f0d1611a3c89c2ec6b80c936fa3eea9e)  | [profile.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/profile.html)   |
+|4| [Añadir footer a la página de perfil](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/60c5dd8d893ead8976a14d00383a65cfe8a2ac0f)  | [profile.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/profile.html)   |
+|5| [Añadir apartado de modificar cuenta en la página de perfil](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/c9f7de5b5d2e3b21c8c0fd85ce7d7b0ff253ef3f)  | [profile.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/profile.html)   |
+|6| [Cambiar footer en la página de carrito](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/b4dda29fa6ba3684a8c398479b33ac457671cc3e)  | [shopping-cart.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/shopping-cart.html)   |
+|7| [Quitar elementos de la plantilla en la página de carrito](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/79ec8df21df86249b8fd451b145e41ecb0341bef)  | [shopping-cart.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/shopping-cart.html)   |
+|8| [Cambiar header en la página de perfil](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/7124aa39338d7ebc25e66cfea6955522076af2c9)  | [profile.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/profile.html)   |
+|9| [Añadir información de ejemplo a la página de carrito](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/fbddbf972aedf0ba7cb5aa1add1703f180d03ba4)  | [shopping-cart.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/shopping-cart.html)   |
+|10| [Cambiar header en la página de carrito](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/42f4a9206673c07ae31970c852f7fec81f4aff35)  | [shopping-cart.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/shopping-cart.html)   |
+|11| [Enlazar botones de compra en la página de carrito](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/ab334d8ac5258d692de3a15f06fd1f83374687e5)  | [shopping-cart.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/shopping-cart.html)   |
+|12| [Arreglar botón de buscar en el loged_header](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/4d904aa1d8b2a732518f65579b8af51760da27f7)  | [loged_header.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/headers/loged_header.html)   |
+|13| [Añadir a la página de pago la función de usar una dirección guardada en el perfil](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/a6d1c3125ca831d9c63b8d6eee45fee370f235bb)  | [payment.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/payment.html)   |
+|14| [Añadir favicon e incluirlo en páginas de perfil y carrito](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/09479074f8c2a0ec56a74a3dde5ef9fd143f820a)  | [logo.png](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/assets/icons/logo.png)   |
+|15| [AÑadir botón de admin en páginas de perfil y carrito](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/2284a36e0debfd42c837ef0cf9801a6335478c9f)  | [profile.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/profile.html)   |
+|16| [Arreglar botón de buscar en el unloged_header](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/4d904aa1d8b2a732518f65579b8af51760da27f7)  | [unloged_header.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/headers/unloged_header.html)   |
 
 ---
 
