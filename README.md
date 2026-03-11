@@ -84,9 +84,9 @@ Todos los usuarios parte desde la página principal, y hay acceso sin restriccio
 #### **1. Página Principal / Home**
 
 Esta es la pagina principal de la pagina en la que tenemos una serie de productos recomendados, además de distintas novedades en hardware. En el header se incluye la barra de navegación, el acceso a la cesta para usuarios registrados, y boton dropdown que permite acceder al perfil o cerrar sesión. En el caso de no estar logueado, se muestra un botón "Entrar" para iniciar sesión o registrarse.
--  La pagina de incio tambien te muestra las categorias de hardware disponibles, las cuales también se pueden visualizar desde el menu desplegable del header dandole a "categorias"
-![Página Principal](assets/images/readme-images/home-page.png)
 
+![Página Principal](assets/images/readme-images/home-page.png)
+-  La pagina de incio tambien te muestra las categorias de hardware disponibles, las cuales también se pueden visualizar desde el menu desplegable del header dandole a "categorias"
 ![Página Principal](assets/images/readme-images/home-page-sidebar.png)
 
 #### **RESTO DE PÁGINAS**
@@ -181,11 +181,11 @@ Mi participación fue el encargado de la implementacion y edición de las pagina
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Estrucutura base y navegación del menu principal ](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/68e97783e08ce6d9a00c434f09738d519f64456f)  | [index.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/index.html)   |
+|2| [Implementación de formulario de login y validación básica ,pudiendo el usuario tener mas privilegios](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/0fef36f48eb0db1b5feb60c2c901625b43f277dc)  | [login.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/login.html)   |
+|3| [Creación de pagina de registro de usuarios, permitiendo crear la cuenta del usuario con datos personales](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/ebcfcdc8e9ab164e8b244fc76657fcf496a8a7be)  | [user_registration.html](URL_archivo_3https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/user_registration.html)   |
+|4| [Integración de pasarela de pago y campos de tarjeta para que el usuario pueda tener mas libertad de elección](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/a5b9f8911bf89ee3177a08034087619ae023b767)  | [payment.html](URL_archttps://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/payment.htmlhivo_4)   |
+|5| [Diseño de pantalla de confirmación de pago con exito](URL_commihttps://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/f8c43e8576d007e2877ec18462194b2d3da58fedt_5)  | [payment_correct.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/payment_correct.html)   |
 
 ---
 
