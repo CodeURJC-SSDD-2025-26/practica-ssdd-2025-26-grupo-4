@@ -1,0 +1,441 @@
+<!--
+Archivo: order-management.html
+Descripción: Gestión de pedidos de reabastecimiento: pedido actual, planificación semanal, historial.
+-->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>PCBuilderShop - Gestión de Pedidos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="../../css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="navbar-placeholder"></div>
+    <main class="container my-5 pt-4">
+        <!-- Navegación -->
+        <nav class="nav nav-pills mb-4">
+            <a class="nav-link" href="admin-dashboard.html"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
+            <a class="nav-link" href="item-list.html"><i class="bi bi-box-seam me-1"></i>Productos</a>
+            <a class="nav-link" href="user-list.html"><i class="bi bi-people me-1"></i>Usuarios</a>
+            <a class="nav-link" href="review-list.html"><i class="bi bi-chat-left-text me-1"></i>Reseñas</a>
+            <a class="nav-link active" href="order-management.html"><i class="bi bi-cart-check me-1"></i>Pedidos</a>
+        </nav>
+        <!-- Título y Resumen -->
+        <header class="mb-4">
+            <div class="row align-items-center">
+                <div class="col-md-7">
+                    <h2 class="mb-1"><i class="bi bi-truck me-2"></i>Gestión de Pedidos</h2>
+                    <p class="text-muted mb-0 small">Planificación y reabastecimiento de inventario.</p>
+                </div>
+                <div class="col-md-5">
+                    <div class="card bg-primary text-white border-0 shadow-sm p-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1 x-small fw-bold text-uppercase">Resumen Próximo Pedido</h6>
+                                <p class="mb-0 h4 fw-bold">1.450,30€</p>
+                                <span class="x-small">8 Productos - Estimado 48h</span>
+                            </div>
+                            <i class="bi bi-clipboard-check fs-1 opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Sección 1: Pedido Actual en Curso -->
+        <!-- Tablero principal que muestra los detalles del pedido que se va a emitir en la próxima ventana (semana en curso) -->
+        <section class="card shadow-sm border-0 mb-4 border-start border-4 border-primary">
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="mb-0 fw-bold small text-uppercase">Pedido Semanal - Ref: #S10 (Actual)</h5>
+                    <span class="x-small text-muted">A entregar: <strong>15/03/2026</strong></span>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-sm btn-outline-primary" data-bs-target="#modalModificarPedido"
+                        data-bs-toggle="modal"><i class="bi bi-pencil-square me-1"></i>Modificar Pedido / Fecha</button>
+                    <button class="btn btn-sm btn-outline-danger" data-bs-target="#modalEliminarPedido"
+                        data-bs-toggle="modal"><i class="bi bi-trash me-1"></i>Vaciar Pedido</button>
+                    <button class="btn btn-sm btn-success"
+                        onclick="alert('Pedido confirmado y enviado al proveedor.')"><i
+                            class="bi bi-send me-1"></i>Enviar Pedido</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr class="small text-muted">
+                            <th class="ps-4">Producto</th>
+                            <th>Proveedor</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unid.</th>
+                            <th class="text-end pe-4">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="ps-4">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded me-2"
+                                        src="../../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg"
+                                        style="width:32px;height:32px;object-fit:contain" />
+                                    <strong>AMD Ryzen 7 9800X3D</strong>
+                                </div>
+                            </td>
+                            <td>AMD Iberia</td>
+                            <td>5</td>
+                            <td>425,00€</td>
+                            <td class="text-end pe-4 fw-bold">2.125,00€</td>
+                        </tr>
+                        <tr>
+                            <td class="ps-4">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded me-2"
+                                        src="../../assets/images/ram-corsair-vengeance-rgb-cmh32gx5m2b6000c38-32gb-2x16gb-ddr5.jpg"
+                                        style="width:32px;height:32px;object-fit:contain" />
+                                    <strong>Corsair Vengeance RGB DDR5</strong>
+                                </div>
+                            </td>
+                            <td>Corsair Labs</td>
+                            <td>10</td>
+                            <td>210,00€</td>
+                            <td class="text-end pe-4 fw-bold">2.100,00€</td>
+                        </tr>
+                    </tbody>
+                    <tfoot class="table-light">
+                        <tr>
+                            <td class="text-end fw-bold" colspan="4">TOTAL ESTIMADO:</td>
+                            <td class="text-end pe-4 h5 fw-bold text-primary">4.225,00€</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </section>
+        <!-- Sección 2: Planificación de Nuevos Pedidos -->
+        <!-- Área para visualizar borradores de pedidos en semanas futuras y añadir nuevas ventanas de reabastecimiento -->
+        <section class="mb-5">
+            <h5 class="mb-3 fw-bold small text-uppercase text-muted"><i class="bi bi-calendar-event me-2"></i>Pedidos
+                Planificados</h5>
+            <div class="row g-3">
+                <!-- Ejemplo Pedido Semana Posterior 1 -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm border-0 bg-light">
+                        <div class="card-body p-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="mb-0 fw-bold">Semana 11 / 2026</h6>
+                                <span class="badge bg-info text-dark">Planificado</span>
+                            </div>
+                            <p class="small text-muted mb-3">3 Productos - Est. 850,00€</p>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-outline-primary py-1 px-2 small"
+                                    data-bs-target="#modalModificarPedido" data-bs-toggle="modal"
+                                    onclick="document.getElementById('inputReferenciaMod').value='#S11';document.getElementById('fechaMod').value='2026-03-22'"
+                                    style="font-size:.75rem">Editar</button>
+                                <button class="btn btn-outline-danger py-1 px-2 small"
+                                    data-bs-target="#modalEliminarPedido" data-bs-toggle="modal"
+                                    style="font-size:.75rem">Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Botón para añadir nuevo pedido -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm border-0 h-100" data-bs-target="#modalNuevoPedido" data-bs-toggle="modal"
+                        style="border:2px dashed #dee2e6;cursor:pointer">
+                        <div class="card-body d-flex flex-column justify-content-center align-items-center text-muted">
+                            <i class="bi bi-plus-circle fs-3 mb-2"></i>
+                            <span class="small fw-bold">Planificar Nueva Pedido</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Sección 3: Historial de Operaciones -->
+        <!-- Registro inmutable de los recibos de pedidos y facturas previas con acceso al desglose general en modalidad Solo-Lectura -->
+        <section>
+            <h5 class="mb-3 fw-bold small text-uppercase"><i class="bi bi-history me-2"></i>Historial de Pedidos</h5>
+            <div class="card shadow-sm border-0 border-top border-4 border-secondary">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0 x-small">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="ps-4">ID Pedido</th>
+                                <th>Fecha</th>
+                                <th>Productos</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                                <th class="text-end pe-4">Detalles</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="ps-4">#RE-4592</td>
+                                <td>15/05/2026</td>
+                                <td>12</td>
+                                <td>12.540,00€</td>
+                                <td><span class="badge bg-success">Completado</span></td>
+                                <td class="text-end pe-4">
+                                    <button class="btn btn-sm btn-light py-0" data-bs-target="#modalDetallesPedido"
+                                        data-bs-toggle="modal"><i class="bi bi-eye"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="ps-4">#RE-4601</td>
+                                <td>28/05/2026</td>
+                                <td>4</td>
+                                <td>3.120,50€</td>
+                                <td><span class="badge bg-info text-dark">En tránsito</span></td>
+                                <td class="text-end pe-4">
+                                    <button class="btn btn-sm btn-light py-0" data-bs-target="#modalDetallesPedido"
+                                        data-bs-toggle="modal"><i class="bi bi-eye"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Modal Modificar -->
+    <div class="modal fade" id="modalModificarPedido" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-primary text-white border-0">
+                    <h5 class="modal-title small fw-bold">MODIFICAR PEDIDO / FECHA</h5>
+                    <button class="btn-close btn-close-white" data-bs-dismiss="modal" type="button"></button>
+                </div>
+                <form id="formModificarPedido">
+                    <div class="modal-body p-0">
+                        <div class="p-3 border-bottom bg-light">
+                            <div class="row g-2">
+                                <div class="col-md-6">
+                                    <label class="form-label x-small fw-bold">Fecha de Entrega</label>
+                                    <input class="form-control form-control-sm" id="fechaMod" type="date"
+                                        value="2026-03-15" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label x-small fw-bold">Referencia</label>
+                                    <input class="form-control form-control-sm" disabled="" id="inputReferenciaMod"
+                                        type="text" value="#S10" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive" style="max-height:300px">
+                            <table class="table table-hover align-middle mb-0 x-small">
+                                <thead class="bg-light sticky-top">
+                                    <tr>
+                                        <th class="ps-3">Producto</th>
+                                        <th style="width:80px">Cant.</th>
+                                        <th style="width:40px"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="ps-3 text-truncate" style="max-width:150px">AMD Ryzen 7 9800X3D</td>
+                                        <td><input class="form-control form-control-sm" min="0" type="number"
+                                                value="5" /></td>
+                                        <td>
+                                            <button class="btn btn-link text-danger p-0" type="button"> <i
+                                                    class="bi bi-x"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ps-3 text-truncate" style="max-width:150px">Corsair Vengeance RGB
+                                        </td>
+                                        <td>
+                                            <input class="form-control form-control-sm" min="0" type="number"
+                                                value="10" />
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-link text-danger p-0" type="button"><i
+                                                    class="bi bi-x"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="p-3 bg-light border-top">
+                            <h6 class="x-small fw-bold mb-2">Añadir Nuevo Producto</h6>
+                            <div class="row g-2">
+                                <div class="col-md-6">
+                                    <input class="form-control form-control-sm" placeholder="Nombre o Referencia..."
+                                        type="text" />
+                                </div>
+                                <div class="col-3">
+                                    <input class="form-control form-control-sm" min="1" placeholder="Cant."
+                                        type="number" value="1" />
+                                </div>
+                                <div class="col-3">
+                                    <button class="btn btn-sm btn-primary w-100"
+                                        onclick="alert('Buscando producto y añadiendo...')" type="button">
+                                        <i class="bi bi-plus-circle"></i>Añadir
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button class="btn btn-light btn-sm px-4" data-bs-dismiss="modal"
+                            type="button">Cancelar</button>
+                        <button class="btn btn-primary btn-sm px-4" type="submit">Actualizar Pedido</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Nuevo Pedido -->
+    <div class="modal fade" id="modalNuevoPedido" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-success text-white border-0">
+                    <h5 class="modal-title small fw-bold">PLANIFICAR NUEVA SEMANA</h5>
+                    <button class="btn-close btn-close-white" data-bs-dismiss="modal" type="button"></button>
+                </div>
+                <form id="formNuevoPedido">
+                    <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Indicar Semana / Año</label>
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text">Semana</span>
+                                <input class="form-control" max="52" min="1" type="number" value="12" />
+                                <span class="input-group-text">Año</span>
+                                <input class="form-control" type="number" value="2026" />
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Buscar y Añadir Productos</label>
+                            <div class="input-group input-group-sm mb-2">
+                                <input class="form-control" placeholder="Escriba nombre o ref..." type="text" />
+                                <input class="form-control" min="1" style="max-width:80px" type="number" value="1" />
+                                <button class="btn btn-outline-secondary" onclick="alert('Añadido a la planificación')"
+                                    type="button"><i class="bi bi-plus"></i></button>
+                            </div>
+                            <div class="list-group list-group-flush x-small border rounded">
+                                <div class="list-group-item text-muted text-center py-3">No hay productos seleccionados
+                                    todavía.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button class="btn btn-light btn-sm px-4" data-bs-dismiss="modal"
+                            type="button">Cancelar</button>
+                        <button class="btn btn-success btn-sm px-4" type="submit">Crear Planificación</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Detalles -->
+    <div class="modal fade" id="modalDetallesPedido" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-dark text-white border-0">
+                    <h5 class="modal-title small fw-bold">DETALLES DEL PEDIDO #RE-4592</h5>
+                    <button class="btn-close btn-close-white" data-bs-dismiss="modal" type="button"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <table class="table table-hover align-middle mb-0 x-small">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="ps-3">Producto</th>
+                                <th class="text-center">Cantidad</th>
+                                <th class="text-end pe-3">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="ps-3">Intel Core i9-14900K</td>
+                                <td class="text-center">2</td>
+                                <td class="text-end pe-3">1.240€</td>
+                            </tr>
+                            <tr>
+                                <td class="ps-3">ASUS ROG Strix Z790-E</td>
+                                <td class="text-center">5</td>
+                                <td class="text-end pe-3">2.100€</td>
+                            </tr>
+                            <tr>
+                                <td class="ps-3">G.Skill Trident Z5 RGB 64GB</td>
+                                <td class="text-center">5</td>
+                                <td class="text-end pe-3">1.500€</td>
+                            </tr>
+                        </tbody>
+                        <tfoot class="table-light fw-bold">
+                            <tr>
+                                <td class="ps-3" colspan="2">TOTAL REALIZADO:</td>
+                                <td class="text-end pe-3 text-primary">4.840€</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Eliminar -->
+    <div class="modal fade" id="modalEliminarPedido" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-danger text-white border-0 py-2">
+                    <h6 class="modal-title small fw-bold">¿VACIAR PEDIDO?</h6>
+                    <button class="btn-close btn-close-white" data-bs-dismiss="modal" type="button"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <p class="mb-0 small">Se eliminarán todos los productos de la lista actual de pedido.</p>
+                </div>
+                <div class="modal-footer border-0 p-2 justify-content-center">
+                    <button class="btn btn-sm btn-light px-3" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-sm btn-danger px-3" onclick="location.reload()">Sí, eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer-placeholder"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // --- 1. LÓGICA DE FORMULARIOS MULTIPROPÓSITO ---
+        // Funciones preventivas para evitar la recarga real y evidenciar la acción (mock) en modales
+        document.getElementById('formModificarPedido').onsubmit = e => {
+            e.preventDefault();
+            alert('Pedido actualizado correctamente');
+            location.reload();
+        };
+
+        document.getElementById('formNuevoPedido').onsubmit = e => {
+            e.preventDefault();
+            alert('Planificación creada correctamente');
+            location.reload();
+        };
+
+        // --- 2. CARGA DE COMPONENTES DINÁMICOS ---     
+        const loadComp = (url, id, cb) => {
+            fetch(url)
+                .then(r => r.text())
+                .then(h => {
+                    document.getElementById(id).innerHTML = h;
+                    if (cb) cb(document.getElementById(id));
+                });
+        };
+
+        // Carga del Header dependiendo del estado de sesión almacenado
+        loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header.html' : '../headers/unloged_header.html', 'navbar-placeholder', nav => {
+            nav.querySelectorAll('a, form').forEach(el => {
+                const a = el.tagName === 'FORM' ? 'action' : 'href';
+                const v = el.getAttribute(a);
+                if (v?.startsWith('../') && !v.startsWith('http')) {
+                    el.setAttribute(a, '../' + v);
+                }
+            });
+            const b = document.getElementById('btnAdminPanel');
+            if (b) {
+                b.href = 'admin-dashboard.html';
+                b.classList.remove('d-none');
+            }
+        });
+
+        loadComp('../footer.html', 'footer-placeholder');
+    </script>
+</body>
+
+</html>
