@@ -82,11 +82,12 @@ Todos los usuarios parte desde la página principal, y hay acceso sin restriccio
 ### **Capturas de Pantalla y Descripción de Páginas**
 
 #### **1. Página Principal / Home**
+
+Esta es la pagina principal de la pagina en la que tenemos una serie de productos recomendados, además de distintas novedades en hardware. En el header se incluye la barra de navegación, el acceso a la cesta para usuarios registrados, y boton dropdown que permite acceder al perfil o cerrar sesión. En el caso de no estar logueado, se muestra un botón "Entrar" para iniciar sesión o registrarse.
+-  La pagina de incio tambien te muestra las categorias de hardware disponibles, las cuales también se pueden visualizar desde el menu desplegable del header dandole a "categorias"
 ![Página Principal](assets/images/readme-images/home-page.png)
 
 ![Página Principal](assets/images/readme-images/home-page-sidebar.png)
-
-La página de inicio muestra en primer lugar las categorias de hardware disponibles, las cuales también se pueden visualizar desde el menu desplegable del header. También se muestran una serie de productos recomendados, además de distintas novedades en hardware. En el header se incluye la barra de navegación, el acceso a la cesta para usuarios registrados, y boton dropdown que permite acceder al perfil o cerrar sesión. En el caso de no estar logueado, se muestra un botón "Entrar" para iniciar sesión o registrarse.
 
 #### **RESTO DE PÁGINAS**
 
@@ -102,16 +103,20 @@ Maquetación detallada del componente con un carrusel de imágenes y la zona de 
 ![Pagina de producto](assets/images/readme-images/item-detail.png)
 
 #### **4. Pagina de Login:**
+En esta pantalla nos muestra como una persona que ya tiene cuenta de la pagina puede inciar sesion añadiendo su correo y contraseña o tambien te da la opcion de iniciar sesion con tu cuenta de google.
 
 ![Pagina de Login](assets/images/readme-images/login.png)
 
 #### **5. Pagina de Registro:**
+Esta pantalla es para que las personas que no tienen cuenta creada, la puedan tener añadiendo sus datos como correo, nombre, contraseña(repetir contraseña) y aceptar por obligacion las politicas de privacidad. Aqui tambien te da la opcion como el login en la que puedes resgistrarte con google.
+
 ![Pagina de Registro](assets/images/readme-images/user-registration.png)
 
 #### **USUARIOS REGISTRADOS**
 
 #### **6. Pagina de Perfil:**
 
+En esta pantalla 
 ![Pagina de Perfil](assets/images/readme-images/profile.png)
 ![Pagina de Perfil-pedidos](assets/images/readme-images/profile-orders.png)
 ![Pagina de Perfil-modificar](assets/images/readme-images/profile-modify.png)
@@ -121,8 +126,11 @@ Maquetación detallada del componente con un carrusel de imágenes y la zona de 
 ![Pagina de Carrito](assets/images/readme-images/shopping-cart.png)
 
 #### **8. Pagina de Pago:**
+En esta pantalla podemos ver como hemos implentado la forma de pago en lo que podemos seleccionar(solo una) y añadir la direccion del envio , tambien nos permite el tipo de pago (Tarjeta o PayPal) y el relleno de los datos de la tajeta. Y para hacer un seguimiento de la compra ,en el lado derecho de la pantalla se ve el resumen de la compra con el precio total y listo el boton para comprar y para salir si se arrepiente.
 
 ![Pagina de Pago](assets/images/readme-images/payment.png)
+
+En esta pantalla basicamente nos muestra el resultado de la compra al saber que el pago a sido recibido correctamente y además nos sale la opcion de descargar el pdf para ver la factura de la compra, al lado suyo tambien con el boton de volver a la tienda para seguir comprando o viendo mas componentes.
 ![Pagina de Pago correcto](assets/images/readme-images/payment-correct.png)
 
 #### **9. Pagina de Crear Review:**
@@ -172,7 +180,7 @@ Permite actualizar el estado del envío entre Pendiente, Procesando, Enviado, En
 
 #### **Alumno 1 - Ramiro Daniel Flores Aquino**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+Mi participación fue el encargado de la implementacion y edición de las paginas del menú principal(index.html), implementé las paginas de login(login.html) y registro(user_registration.html) y también las paginas de pago(payment.html) y la pantalla de pago correcto(payment_correct.html).
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
