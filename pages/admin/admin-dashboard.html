@@ -1,7 +1,6 @@
 <!--
 Archivo: admin-dashboard.html
-Descripción: Panel de control principal del administrador con estadísticas resumidas y gráfica.
-Cubre rúbrica: gráfica estadística (Chart.js), datos de ejemplo, navegación completa, uso correcto Bootstrap.
+Descripción: Panel de control del administrador con estadísticas, gráficas y accesos rápidos.
 -->
 <!DOCTYPE html>
 <html lang="es">
@@ -11,17 +10,14 @@ Cubre rúbrica: gráfica estadística (Chart.js), datos de ejemplo, navegación 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PCBuilderShop - Panel de Administración</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <!-- Chart.js CDN para la gráfica estadística -->
+    <link rel="stylesheet" href="../../css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 
 <body>
     <!-- Header -->
     <div id="navbar-placeholder"></div>
-
     <main class="container my-5 pt-4">
         <!-- Navegación entre secciones de administración -->
         <nav class="nav nav-pills mb-4">
@@ -29,7 +25,7 @@ Cubre rúbrica: gráfica estadística (Chart.js), datos de ejemplo, navegación 
             <a class="nav-link" href="item-list.html"><i class="bi bi-box-seam me-1"></i>Productos</a>
             <a class="nav-link" href="user-list.html"><i class="bi bi-people me-1"></i>Usuarios</a>
             <a class="nav-link" href="review-list.html"><i class="bi bi-chat-left-text me-1"></i>Reseñas</a>
-            <a class="nav-link" href="order-list.html"><i class="bi bi-truck me-1"></i>Pedidos</a>
+            <a class="nav-link" href="order-management.html"><i class="bi bi-cart-check me-1"></i>Pedidos</a>
         </nav>
 
         <!-- Encabezado del dashboard -->
@@ -94,17 +90,41 @@ Cubre rúbrica: gráfica estadística (Chart.js), datos de ejemplo, navegación 
             </div>
         </section>
 
+        <!-- Contenedor principal de métricas detalladas y accesos de administración -->
         <div class="row g-4 mb-5">
-            <!-- Gráfica de Análisis -->
+            <!-- Sección Izquierda: Gráficas de Análisis Operativo con Pestañas (Tabs) -->
             <div class="col-lg-8">
                 <div class="card shadow-sm">
-                    <div class="card-header">
-                        <h5 class="mb-0">Ventas por Categoría</h5>
+                    <div class="card-header bg-white pb-0 border-0">
+                        <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                            <li class="nav-item">
+                                <button class="nav-link active small fw-bold" data-bs-toggle="tab"
+                                    data-bs-target="#ventas-cat">Ventas Categoría</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link small fw-bold" data-bs-toggle="tab"
+                                    data-bs-target="#ventas-mes">Ventas Mensuales</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link small fw-bold" data-bs-toggle="tab"
+                                    data-bs-target="#inventario">Estado Inventario</button>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="card-body"><canvas id="graficaVentas" height="300"></canvas></div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="ventas-cat"><canvas id="graficaVentasCat"
+                                    height="300"></canvas></div>
+                            <div class="tab-pane fade" id="ventas-mes"><canvas id="graficaVentasMes"
+                                    height="300"></canvas></div>
+                            <div class="tab-pane fade" id="inventario">
+                                <div class="d-flex justify-content-center"><canvas id="graficaInventario"
+                                        height="300"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
             <!-- Accesos rápidos -->
             <div class="col-lg-4">
                 <div class="card shadow-sm h-100">
@@ -112,93 +132,94 @@ Cubre rúbrica: gráfica estadística (Chart.js), datos de ejemplo, navegación 
                         <h5 class="mb-0">Accesos Rápidos</h5>
                     </div>
                     <div class="card-body d-grid gap-2">
-                        <a href="item-create.html" class="btn btn-outline-primary text-start"><i
-                                class="bi bi-plus-circle me-2"></i>Nuevo Producto</a>
-                        <a href="user-create.html" class="btn btn-outline-success text-start"><i
-                                class="bi bi-person-plus me-2"></i>Nuevo Usuario</a>
-                        <a href="review-list.html" class="btn btn-outline-info text-start"><i
-                                class="bi bi-chat-left-dots me-2"></i>Gestionar Reseñas</a>
-                        <a href="order-list.html" class="btn btn-outline-warning text-start"><i
-                                class="bi bi-truck me-2"></i>Gestionar Pedidos</a>
+                        <a href="item-create.html" class="btn btn-outline-primary text-start">
+                            <i class="bi bi-plus-circle me-2"></i> Nuevo Producto
+                        </a>
+                        <a href="user-create.html" class="btn btn-outline-success text-start">
+                            <i class="bi bi-person-plus me-2"></i> Nuevo Usuario
+                        </a>
+                        <a href="review-list.html" class="btn btn-outline-info text-start">
+                            <i class="bi bi-chat-left-dots me-2"></i> Gestionar Reseñas
+                        </a>
+                        <a href="order-management.html" class="btn btn-outline-warning text-start">
+                            <i class="bi bi-cart-check me-2"></i> Gestionar Pedido Actual
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Tablas de Actividad Reciente -->
-        <div class="row g-4">
-            <div class="col-lg-12">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0 fw-bold">Pedidos Recientes</h5>
-                        <span class="badge bg-light text-dark border">Últimas 24h</span>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0 x-small">
-                            <thead class="bg-light">
-                                <tr class="text-muted">
-                                    <th>ID</th>
-                                    <th>Cliente</th>
-                                    <th>Producto</th>
-                                    <th>Importe</th>
-                                    <th>Estado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Pedido 1 -->
-                                <tr>
-                                    <td>#O7721</td>
-                                    <td>John Dominguez</td>
-                                    <td>AMD Ryzen 7 9800X3D</td>
-                                    <td>464,95€</td>
-                                    <td><span class="badge bg-success">Entregado</span></td>
-                                </tr>
-                                <!-- Pedido 2 -->
-                                <tr>
-                                    <td>#O7725</td>
-                                    <td>David Martin</td>
-                                    <td>MSI GeForce RTX 5080</td>
-                                    <td>1.190,00€</td>
-                                    <td><span class="badge bg-primary">Enviado</span></td>
-                                </tr>
-                                <!-- Pedido 3 -->
-                                <tr>
-                                    <td>#O7728</td>
-                                    <td>Gave Newell</td>
-                                    <td>Corsair Vengeance RGB DDR5</td>
-                                    <td>459,95€</td>
-                                    <td><span class="badge bg-warning text-dark">Procesando</span></td>
-                                </tr>
-                                <!-- Pedido 4 -->
-                                <tr>
-                                    <td>#O7729</td>
-                                    <td>Laura Rodriguez</td>
-                                    <td>MSI B850 GAMING PLUS</td>
-                                    <td>187,90€</td>
-                                    <td><span class="badge bg-success">Entregado</span></td>
-                                </tr>
-                                <tr>
-                                    <td>#O7601</td>
-                                    <td>Marta Nuñez</td>
-                                    <td>WD BLACK SN7100 2TB</td>
-                                    <td>269,95€</td>
-                                    <td><span class="badge bg-info text-dark">Pendiente</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+        <!-- Sección Inferior: Listado tabular de los pedidos procesados recientemente -->
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">Pedidos Recientes</h5>
+                <span class="badge bg-light text-dark border">Últimas 24h</span>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 x-small">
+                    <thead class="bg-light">
+                        <tr class="text-muted">
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Producto</th>
+                            <th>Importe</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Pedido 1 -->
+                        <tr>
+                            <td><strong>#ORD001</strong></td>
+                            <td>John Dominguez</td>
+                            <td>AMD Ryzen 7 9800X3D</td>
+                            <td>464,95€</td>
+                            <td><span class="badge bg-success">Entregado</span></td>
+                        </tr>
+                        <!-- Pedido 2 -->
+                        <tr>
+                            <td><strong>#ORD002</strong></td>
+                            <td>David Martin</td>
+                            <td>MSI GeForce RTX 5080</td>
+                            <td>1.190,00€</td>
+                            <td><span class="badge bg-primary">Enviado</span></td>
+                        </tr>
+                        <!-- Pedido 3 -->
+                        <tr>
+                            <td><strong>#ORD003</strong></td>
+                            <td>Gave Newell</td>
+                            <td>Corsair Vengeance RGB DDR5</td>
+                            <td>459,95€</td>
+                            <td><span class="badge bg-warning text-dark">Procesando</span></td>
+                        </tr>
+                        <!-- Pedido 4 -->
+                        <tr>
+                            <td><strong>#ORD004</strong></td>
+                            <td>Laura Rodriguez</td>
+                            <td>MSI B850 GAMING PLUS</td>
+                            <td>187,90€</td>
+                            <td><span class="badge bg-success">Entregado</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>#ORD005</strong></td>
+                            <td>Marta Nuñez</td>
+                            <td>WD BLACK SN7100 2TB</td>
+                            <td>269,95€</td>
+                            <td><span class="badge bg-info text-dark">Pendiente</span></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </main>
 
     <div id="footer-placeholder"></div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Script para la gráfica de barras con Chart.js (datos estáticos) -->
     <script>
-        // Configuración de Chart.js
-        new Chart(document.getElementById('graficaVentas'), {
+        // --- 1. CONFIGURACIÓN DE GRÁFICAS (Chart.js) ---
+
+        // Configuración de Gráfica: Ventas por Categoría (Gráfico de Barras)
+        // Muestra el volumen de ventas segmentado por familia de productos
+        new Chart(document.getElementById('graficaVentasCat'), {
             type: 'bar',
             data: {
                 labels: ['Procesadores', 'Tarjetas Gráficas', 'Placas Base', 'Memoria RAM', 'Almacenamiento'],
@@ -212,19 +233,60 @@ Cubre rúbrica: gráfica estadística (Chart.js), datos de ejemplo, navegación 
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
         });
 
-        // Carga de Componentes
-        const loadComp = (url, id, cb) => fetch(url).then(r => r.text()).then(h => {
-            document.getElementById(id).innerHTML = h;
-            if (cb) cb(document.getElementById(id));
+        // Configuración de Gráfica: Ventas Mensuales (Gráfico de Líneas con área)
+        // Representa la evolución de los ingresos a lo largo de los últimos meses
+        new Chart(document.getElementById('graficaVentasMes'), {
+            type: 'line',
+            data: {
+                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Ventas (€)', data: [2100, 3500, 2800, 4200, 3100, 3762],
+                    borderColor: '#198754',
+                    backgroundColor: '#19875433',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
         });
-        loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header.html' : '../headers/unloged_header.html', 'navbar-placeholder', (nav) => {
+
+        // Configuración de Gráfica: Estado del Inventario (Gráfico de Rosco / Doughnut)
+        // Muestra la distribución porcentual del almacén según la disponibilidad
+        new Chart(document.getElementById('graficaInventario'), {
+            type: 'doughnut',
+            data: {
+                labels: ['En Stock', 'Bajo Stock', 'Agotado'],
+                datasets: [{
+                    data: [12, 3, 1],
+                    backgroundColor: ['#198754', '#ffc107', '#dc3545'],
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, cutout: '60%' }
+        });
+
+        // --- 2. CARGA DE COMPONENTES DINÁMICOS ---
+        // Utilidad reutilizable para inyectar fragmentos HTML (modificados para adaptar rutas de admin)
+        const loadComp = (url, id, cb) =>
+            fetch(url)
+                .then(r => r.text())
+                .then(h => {
+                    document.getElementById(id).innerHTML = h;
+                    if (cb) cb(document.getElementById(id));
+                });
+
+        // Carga del Header dependiendo del estado de sesión almacenado
+        loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header.html' : '../headers/unloged_header.html', 'navbar-placeholder', nav => {
             nav.querySelectorAll('a, form').forEach(el => {
-                const attr = el.tagName === 'FORM' ? 'action' : 'href';
-                const val = el.getAttribute(attr);
-                if (val?.startsWith('../') && !val.startsWith('http')) el.setAttribute(attr, '../' + val);
+                const a = el.tagName === 'FORM' ? 'action' : 'href', v = el.getAttribute(a);
+                if (v?.startsWith('../') && !v.startsWith('http')) el.setAttribute(a, '../' + v);
             });
-            const btn = document.getElementById('btnAdminPanel');
-            if (btn) { btn.href = 'admin-dashboard.html'; btn.classList.remove('d-none'); }
+            const b = document.getElementById('btnAdminPanel');
+            if (b) {
+                b.href = 'admin-dashboard.html';
+                b.classList.remove('d-none');
+            }
         });
         loadComp('../footer.html', 'footer-placeholder');
     </script>

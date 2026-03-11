@@ -6,18 +6,17 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>PCBuilderShop - Gestión de Reseñas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="../../css/style.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
 </head>
 
 <body>
     <div id="navbar-placeholder"></div>
-
     <main class="container my-5 pt-4">
         <!-- Navegación de Administración -->
         <nav class="nav nav-pills mb-4">
@@ -25,16 +24,14 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
             <a class="nav-link" href="item-list.html"><i class="bi bi-box-seam me-1"></i>Productos</a>
             <a class="nav-link" href="user-list.html"><i class="bi bi-people me-1"></i>Usuarios</a>
             <a class="nav-link active" href="review-list.html"><i class="bi bi-chat-left-text me-1"></i>Reseñas</a>
-            <a class="nav-link" href="order-list.html"><i class="bi bi-truck me-1"></i>Pedidos</a>
+            <a class="nav-link" href="order-management.html"><i class="bi bi-cart-check me-1"></i>Pedidos</a>
         </nav>
-
         <!-- Titulo de Sección -->
         <header class="mb-4">
             <h2 class="mb-1"><i class="bi bi-chat-left-dots me-2"></i>Gestión de Reseñas</h2>
             <p class="text-muted mb-0 small">Gestiona las opiniones de los clientes y responde oficialmente a sus
                 valoraciones.</p>
         </header>
-
         <!-- Panel de Filtros -->
         <section class="card shadow-sm mb-4">
             <div class="card-header bg-white py-2">
@@ -42,7 +39,8 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
             </div>
             <div class="card-body">
                 <form class="row g-3">
-                    <div class="col-md-3"><label class="form-label small">Categoría</label>
+                    <div class="col-md-3">
+                        <label class="form-label small">Categoría</label>
                         <select class="form-select form-select-sm">
                             <option value="">Todas</option>
                             <option>Procesadores</option>
@@ -54,7 +52,7 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
                     </div>
                     <div class="col-md-3">
                         <label class="form-label small">Producto específico</label>
-                        <input type="text" class="form-select-sm form-control" placeholder="Ej: Ryzen 7...">
+                        <input class="form-select-sm form-control" placeholder="Ej: Ryzen 7..." type="text" />
                     </div>
                     <div class="col-md-2">
                         <label class="form-label small">Valoración</label>
@@ -65,23 +63,22 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
                             <option>3 o menos</option>
                         </select>
                     </div>
-                    <div class="col-md-2"><label class="form-label small">Contenido</label>
+                    <div class="col-md-2">
+                        <label class="form-label small">Contenido</label>
                         <select class="form-select form-select-sm">
-                            <option value="" selected>Cualquiera</option>
+                            <option selected="" value="">Cualquiera</option>
                             <option value="sin">Sin Texto</option>
                             <option value="text">Con Texto</option>
                             <option value="image">Con Texto e Imagen</option>
                         </select>
                     </div>
                     <div class="col-md-2 d-flex align-items-end">
-                        <button type="button" class="btn btn-sm btn-primary w-100" onclick="location.reload()">
-                            <i class="bi bi-search me-1"></i>Filtrar
-                        </button>
+                        <button class="btn btn-sm btn-primary w-100" onclick="location.reload()" type="button"><i
+                                class="bi bi-search me-1"></i>Filtrar</button>
                     </div>
                 </form>
             </div>
         </section>
-
         <!-- Galería de Reseñas -->
         <div class="row g-3" id="reviewContainer">
             <!-- Review Card 1 -->
@@ -92,13 +89,17 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
                             <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3"
                                 style="width: 38px; height: 38px;"><i class="bi bi-person"></i></div>
                             <div>
-                                <h6 class="mb-0 small fw-bold">John Dominguez</h6><small class="text-muted">sobre AMD
-                                    Ryzen 7 9800X3D • hace 2 días</small>
+                                <h6 class="mb-0 small fw-bold">John Dominguez</h6>
+                                <small class="text-muted">sobre AMD Ryzen 7 9800X3D • hace 2 días</small>
                             </div>
                         </div>
-                        <div class="text-warning small"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                class="bi bi-star-fill"></i></div>
+                        <div class="text-warning small">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
                     </div>
                     <div class="card-body py-2">
                         <p class="card-text small">"Increíble rendimiento para gaming, el mejor procesador que he
@@ -109,54 +110,61 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
                     </div>
                     <div class="card-footer bg-white border-0 text-end pb-3">
                         <button class="btn btn-link btn-sm text-danger p-0 me-3"
-                            onclick="confirmDelete('John Dominguez')"><i class="bi bi-trash me-1"></i>Eliminar</button>
+                            onclick="confirmDelete('John Dominguez')">
+                            <i class="bi bi-trash me-1"></i>Eliminar
+                        </button>
                         <button class="btn btn-outline-primary btn-sm px-3"
-                            onclick="openReply('John Dominguez', '¡Gracias John!')"><i
-                                class="bi bi-pencil me-1"></i>Editar respuesta</button>
+                            onclick="openReply('John Dominguez', '¡Gracias John!')">
+                            <i class="bi bi-pencil me-1"></i>Editar respuesta
+                        </button>
                     </div>
                 </div>
             </article>
-
             <!-- Review Card #2 -->
             <article class="col-12">
                 <div class="card shadow-sm border-0">
                     <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center pt-3">
                         <div class="d-flex align-items-center">
                             <div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-3"
-                                style="width: 38px; height: 38px;"><i class="bi bi-person"></i></div>
+                                style="width: 38px; height: 38px;">
+                                <i class="bi bi-person"></i>
+                            </div>
                             <div>
-                                <h6 class="mb-0 small fw-bold">David Martin</h6><small class="text-muted">sobre MSI RTX
-                                    5080 • hace 3 días</small>
+                                <h6 class="mb-0 small fw-bold">David Martin</h6>
+                                <small class="text-muted">sobre MSI RTX 5080 • hace 3 días</small>
                             </div>
                         </div>
-                        <div class="text-warning small"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                class="bi bi-star-fill"></i><i class="bi bi-star-half"></i><i class="bi bi-star"></i>
+                        <div class="text-warning small">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-half"></i>
+                            <i class="bi bi-star"></i>
                         </div>
                     </div>
                     <div class="card-body py-2">
                         <p class="card-text small">"Muy potente pero el ventilador hace algo de ruido bajo carga
                             máxima."</p>
-                        <img src="../../assets/images/msi-geforce-rtx-5080-ventus.jpg" class="rounded border mt-2"
-                            style="height: 60px;" alt="Attached">
+                        <img alt="Attached" class="rounded border mt-2"
+                            src="../../assets/images/msi-geforce-rtx-5080-ventus.jpg" style="height: 60px;" />
                     </div>
                     <div class="card-footer bg-white border-0 text-end pb-3">
                         <button class="btn btn-link btn-sm text-danger p-0 me-3"
-                            onclick="confirmDelete('David Martin')"><i class="bi bi-trash me-1"></i>Eliminar</button>
+                            onclick="confirmDelete('David Martin')">
+                            <i class="bi bi-trash me-1"></i>Eliminar
+                        </button>
                         <button class="btn btn-primary btn-sm px-4"
                             onclick="openReply('David Martin')">Responder</button>
                     </div>
                 </div>
             </article>
-
             <!-- Reseña 3 -->
             <article class="col-12">
                 <div class="card shadow-sm">
                     <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
                         <div class="d-flex align-items-center">
                             <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center me-3"
-                                style="width: 40px; height: 40px;">
-                                <i class="bi bi-person-fill"></i>
-                            </div>
+                                style="width: 40px; height: 40px;"><i class="bi bi-person-fill"></i></div>
                             <div>
                                 <h6 class="mb-0">Gave Newell</h6>
                                 <small class="text-muted">sobre <strong>MSI B850 GAMING</strong> • hace 4 días</small>
@@ -182,7 +190,6 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
                     </div>
                 </div>
             </article>
-
             <!-- Reseña 4 -->
             <article class="col-12">
                 <div class="card shadow-sm">
@@ -194,7 +201,7 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
                             </div>
                             <div>
                                 <h6 class="mb-0">Laura Rodriguez</h6>
-                                <small class="text-muted">sobre <strong>Corsair DDR5</strong> • hace 1 semana</small>
+                                <small class="text-muted">sobre <strong>Corsair DDR5</strong>• hace 1 semana</small>
                             </div>
                         </div>
                         <div class="text-warning small">
@@ -216,16 +223,13 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
                     </div>
                 </div>
             </article>
-
             <!-- Reseña 5 -->
             <article class="col-12">
                 <div class="card shadow-sm">
                     <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
                         <div class="d-flex align-items-center">
                             <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3"
-                                style="width: 40px; height: 40px;">
-                                <i class="bi bi-person-fill"></i>
-                            </div>
+                                style="width: 40px; height: 40px;"><i class="bi bi-person-fill"></i></div>
                             <div>
                                 <h6 class="mb-0">Marta Nuñez</h6>
                                 <small class="text-muted">sobre <strong>WD BLACK SN7100</strong> • hace 1 semana</small>
@@ -243,8 +247,8 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
                         <p class="card-text">"Rapidísimo, las cargas de juegos son casi instantáneas. Muy contenta."</p>
                         <!-- Ejemplo de imagen adjunta -->
                         <div class="mt-2 mb-3">
-                            <img src="../../assets/images/ssd-wd-black.jpg" class="img-thumbnail" style="height: 80px;"
-                                alt="Adjunto SSD">
+                            <img alt="Adjunto SSD" class="img-thumbnail" src="../../assets/images/ssd-wd-black.jpg"
+                                style="height: 80px;" />
                         </div>
                     </div>
                     <div class="card-footer bg-white text-end">
@@ -257,44 +261,43 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
             </article>
         </div>
     </main>
-
     <!-- Modales de Gestión -->
-    <div class="modal fade" id="replyModal" tabindex="-1" aria-hidden="true">
+    <div aria-hidden="true" class="modal fade" id="replyModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg">
                 <div class="modal-header border-0">
-                    <h5 class="modal-title small fw-bold" id="replyLabel">Responder Reseña</h5><button type="button"
-                        class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title small fw-bold" id="replyLabel">Responder Reseña</h5>
+                    <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
                 </div>
                 <div class="modal-body py-0">
-                    <p id="replyToUser" class="small text-muted mb-2"></p>
-                    <textarea class="form-control form-control-sm" id="replyContent" rows="4"
-                        placeholder="Escribe tu respuesta aquí..."></textarea>
+                    <p class="small text-muted mb-2" id="replyToUser"></p>
+                    <textarea class="form-control form-control-sm" id="replyContent"
+                        placeholder="Escribe tu respuesta aquí..." rows="4"></textarea>
                 </div>
-                <div class="modal-footer border-0 pb-4"><button type="button" class="btn btn-light btn-sm px-4"
-                        data-bs-dismiss="modal">Cancelar</button><button type="button"
-                        class="btn btn-primary btn-sm px-4" onclick="saveReply()">Enviar Respuesta</button></div>
+                <div class="modal-footer border-0 pb-4">
+                    <button class="btn btn-light btn-sm px-4" data-bs-dismiss="modal" type="button">Cancelar</button>
+                    <button class="btn btn-primary btn-sm px-4" onclick="saveReply()" type="button">Enviar
+                        Respuesta</button>
+                </div>
             </div>
         </div>
     </div>
-
     <!-- Modal de Eliminación -->
-    <div class="modal fade" id="modalEliminar" tabindex="-1" aria-hidden="true">
+    <div aria-hidden="true" class="modal fade" id="modalEliminar" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content border-0 shadow">
                 <div class="modal-body text-center py-4">
                     <i class="bi bi-trash3 text-danger fs-1 mb-3"></i>
-                    <p class="mb-4">¿Eliminar la reseña de <br><strong id="delUserName"></strong>?</p>
+                    <p class="mb-4">¿Eliminar la reseña de <br /><strong id="delUserName"></strong> ?</p>
                     <div class="d-flex gap-2">
-                        <button type="button" class="btn btn-light w-100" data-bs-dismiss="modal">No, cancelar</button>
-                        <button type="button" class="btn btn-danger w-100" onclick="location.reload()">Sí,
+                        <button class="btn btn-light w-100" data-bs-dismiss="modal" type="button">No, cancelar</button>
+                        <button class="btn btn-danger w-100" onclick="location.reload()" type="button">Sí,
                             eliminar</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <div id="footer-placeholder"></div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -313,19 +316,31 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
         const saveReply = () => { alert('Respuesta guardada con éxito.'); location.reload(); };
 
         // Carga de Componentes
-        const loadComp = (url, id, cb) => fetch(url).then(r => r.text()).then(h => {
-            document.getElementById(id).innerHTML = h;
-            if (cb) cb(document.getElementById(id));
-        });
-        loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header.html' : '../headers/unloged_header.html', 'navbar-placeholder', (nav) => {
+        const loadComp = (url, id, cb) => {
+            fetch(url)
+                .then(r => r.text())
+                .then(h => {
+                    document.getElementById(id).innerHTML = h;
+                    if (cb) cb(document.getElementById(id));
+                });
+        };
+
+        // Carga del Header dependiendo del estado de sesión almacenado
+        loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header.html' : '../headers/unloged_header.html', 'navbar-placeholder', nav => {
             nav.querySelectorAll('a, form').forEach(el => {
-                const attr = el.tagName === 'FORM' ? 'action' : 'href';
-                const val = el.getAttribute(attr);
-                if (val?.startsWith('../') && !val.startsWith('http')) el.setAttribute(attr, '../' + val);
+                const a = el.tagName === 'FORM' ? 'action' : 'href';
+                const v = el.getAttribute(a);
+                if (v?.startsWith('../') && !v.startsWith('http')) {
+                    el.setAttribute(a, '../' + v);
+                }
             });
-            const btn = document.getElementById('btnAdminPanel');
-            if (btn) { btn.href = 'admin-dashboard.html'; btn.classList.remove('d-none'); }
+            const b = document.getElementById('btnAdminPanel');
+            if (b) {
+                b.href = 'admin-dashboard.html';
+                b.classList.remove('d-none');
+            }
         });
+
         loadComp('../footer.html', 'footer-placeholder');
     </script>
 </body>

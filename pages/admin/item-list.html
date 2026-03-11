@@ -1,52 +1,49 @@
 <!--
 Archivo: item-list.html
-Descripción: Página de listado de productos para el administrador.
-Cubre rúbrica: listado de entidades, botones CRUD, imagen en listado, datos de ejemplo, navegación completa.
+Descripción: Listado de productos del administrador con filtros, acciones CRUD y añadir al pedido.
 -->
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>PCBuilderShop - Gestión de Productos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="../../css/style.css" rel="stylesheet" />
 </head>
 
 <body>
     <div id="navbar-placeholder"></div>
-
     <main class="container my-5 pt-4">
-        <!-- Navegación de Administración -->
+        <!-- Navegación -->
         <nav class="nav nav-pills mb-4">
             <a class="nav-link" href="admin-dashboard.html"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
             <a class="nav-link active" href="item-list.html"><i class="bi bi-box-seam me-1"></i>Productos</a>
             <a class="nav-link" href="user-list.html"><i class="bi bi-people me-1"></i>Usuarios</a>
             <a class="nav-link" href="review-list.html"><i class="bi bi-chat-left-text me-1"></i>Reseñas</a>
-            <a class="nav-link" href="order-list.html"><i class="bi bi-truck me-1"></i>Pedidos</a>
+            <a class="nav-link" href="order-management.html"><i class="bi bi-cart-check me-1"></i>Pedidos</a>
         </nav>
-
         <!-- Titulo y Acción Principal -->
         <header class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h2 class="mb-1"><i class="bi bi-box-seam me-2"></i>Gestión de Productos</h2>
                 <p class="text-muted mb-0 small">Control de inventario y edición del catálogo.</p>
             </div>
-            <a href="item-create.html" class="btn btn-primary shadow-sm"><i class="bi bi-plus-circle me-2"></i>Nuevo
+            <a class="btn btn-primary shadow-sm" href="item-create.html"><i class="bi bi-plus-circle me-2"></i>Nuevo
                 Producto</a>
         </header>
-
-        <!-- Panel de Filtros -->
+        <!-- Panel de Filtros para búsquedas granulares en el catálogo completo -->
         <section class="card shadow-sm border-0 mb-4 bg-light">
             <div class="card-body">
                 <form class="row g-3 align-items-end">
-                    <div class="col-md-4"><label class="form-label small fw-bold">Buscar Producto</label>
-                        <input type="text" class="form-control form-control-sm" placeholder="Nombre o SKU...">
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold">Buscar Producto</label>
+                        <input class="form-control form-control-sm" placeholder="Nombre o SKU..." type="text" />
                     </div>
-                    <div class="col-md-3"><label class="form-label small fw-bold">Categoría</label>
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold">Categoría</label>
                         <select class="form-select form-select-sm">
                             <option value="">Todas</option>
                             <option>Procesadores</option>
@@ -56,7 +53,8 @@ Cubre rúbrica: listado de entidades, botones CRUD, imagen en listado, datos de 
                             <option>Fuentes de Alimentación</option>
                         </select>
                     </div>
-                    <div class="col-md-3"><label class="form-label small fw-bold">Disponibilidad</label>
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold">Disponibilidad</label>
                         <select class="form-select form-select-sm">
                             <option value="">Todos</option>
                             <option>En Stock</option>
@@ -65,143 +63,148 @@ Cubre rúbrica: listado de entidades, botones CRUD, imagen en listado, datos de 
                         </select>
                     </div>
                     <div class="col-md-2 d-flex align-items-end">
-                        <button type="button" class="btn btn-sm btn-primary w-100" onclick="location.reload()">
-                            <i class="bi bi-search me-1"></i>Filtrar
-                        </button>
+                        <button class="btn btn-sm btn-primary w-100" onclick="location.reload()" type="button"><i
+                                class="bi bi-search me-1"></i>Filtrar</button>
                     </div>
                 </form>
             </div>
         </section>
-
-        <!-- Listado de Productos -->
+        <!-- Listado de Productos: Contenedor principal del catálogo en forma tabular -->
         <section class="card shadow-sm border-0 overflow-hidden">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
                     <thead class="bg-light border-bottom">
                         <tr class="small text-uppercase fw-bold text-muted">
-                            <th class="ps-4">ID / Ref</th>
+                            <th class="ps-4">ID</th>
                             <th>Miniatura</th>
                             <th>Descripción</th>
                             <th>Categoría</th>
-                            <th class="ps-2">Precio</th>
-                            <th class="ps-3">Stock</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
                             <th class="text-end pe-4">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody class="border-top-0">
-                        <!-- Producto 1 -->
+                    <tbody>
                         <tr>
                             <td class="ps-4">#P001</td>
-                            <td class="ps-4">
-                                <img src="../../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg"
-                                    alt="AMD Ryzen 7 9800X3D" class="rounded"
-                                    style="width: 50px; height: 50px; object-fit: contain;">
+                            <td>
+                                <img class="rounded"
+                                    src="../../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg"
+                                    style="width:50px;height:50px;object-fit:contain" />
                             </td>
                             <td><strong>AMD Ryzen 7 9800X3D 4.7/5.2GHz</strong></td>
                             <td><span class="badge bg-info text-dark">Procesadores</span></td>
                             <td>464,95€</td>
-                            <td class="ps-4"><span class="badge bg-success">24</span></td>
-                            <td class="text-end pe-4">
-                                <a href="item-edit.html?id=1" class="btn btn-sm btn-outline-primary" title="Editar">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <button class="btn btn-sm btn-outline-danger" title="Eliminar" data-bs-toggle="modal"
-                                    data-bs-target="#modalEliminar"
-                                    onclick="document.getElementById('nombreProductoEliminar').textContent='AMD Ryzen 7 9800X3D'">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                            <td><span class="badge bg-success">24</span></td>
+                            <td class="pe-4">
+                                <div class="d-flex gap-1 justify-content-end">
+                                    <button class="btn btn-sm btn-outline-success" onclick="annadirAlPedido('#P001')"><i
+                                            class="bi bi-cart-plus"></i></button>
+                                    <a class="btn btn-sm btn-outline-primary" href="item-edit.html?id=1"><i
+                                            class="bi bi-pencil"></i></a>
+                                    <button class="btn btn-sm btn-outline-danger" data-bs-target="#modalEliminar"
+                                        data-bs-toggle="modal"
+                                        onclick="document.getElementById('pName').textContent='AMD Ryzen 7 9800X3D'"><i
+                                            class="bi bi-trash"></i></button>
+                                </div>
                             </td>
                         </tr>
                         <!-- Producto 2 -->
                         <tr>
                             <td class="ps-4">#P002</td>
-                            <td class="ps-4">
-                                <img src="../../assets/images/msi-geforce-rtx-5080-ventus.jpg"
-                                    alt="MSI GeForce RTX 5080" class="rounded"
-                                    style="width: 50px; height: 50px; object-fit: contain;">
+                            <td>
+                                <img class="rounded" src="../../assets/images/msi-geforce-rtx-5080-ventus.jpg"
+                                    style="width:50px;height:50px;object-fit:contain" />
                             </td>
                             <td><strong>MSI GeForce RTX 5080 VENTUS 3X OC 16GB</strong></td>
                             <td><span class="badge bg-warning text-dark">Tarjetas Gráficas</span></td>
                             <td>1.190,00€</td>
-                            <td class="ps-4"><span class="badge bg-success">12</span></td>
-                            <td class="text-end pe-4">
-                                <a href="item-edit.html?id=2" class="btn btn-sm btn-outline-primary" title="Editar">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <button class="btn btn-sm btn-outline-danger" title="Eliminar" data-bs-toggle="modal"
-                                    data-bs-target="#modalEliminar"
-                                    onclick="document.getElementById('nombreProductoEliminar').textContent='MSI GeForce RTX 5080 VENTUS'">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                            <td><span class="badge bg-success">12</span></td>
+                            <td class="pe-4">
+                                <div class="d-flex gap-1 justify-content-end">
+                                    <button class="btn btn-sm btn-outline-success" onclick="annadirAlPedido('#P002')"><i
+                                            class="bi bi-cart-plus"></i></button>
+                                    <a class="btn btn-sm btn-outline-primary" href="item-edit.html?id=2"><i
+                                            class="bi bi-pencil"></i></a>
+                                    <button class="btn btn-sm btn-outline-danger" data-bs-target="#modalEliminar"
+                                        data-bs-toggle="modal"
+                                        onclick="document.getElementById('pName').textContent='MSI GeForce RTX 5080 VENTUS'"><i
+                                            class="bi bi-trash"></i></button>
+                                </div>
                             </td>
                         </tr>
                         <!-- Producto 3 -->
                         <tr>
                             <td class="ps-4">#P003</td>
-                            <td class="ps-4">
-                                <img src="../../assets/images/msi-b850-gaming-plus-wifi.jpg"
-                                    alt="MSI B850 GAMING PLUS WIFI" class="rounded"
-                                    style="width: 50px; height: 50px; object-fit: contain;">
+                            <td>
+                                <img class="rounded" src="../../assets/images/msi-b850-gaming-plus-wifi.jpg"
+                                    style="width:50px;height:50px;object-fit:contain" />
                             </td>
                             <td><strong>Placa Base MSI B850 GAMING PLUS WIFI</strong></td>
                             <td><span class="badge bg-secondary">Placas Base</span></td>
                             <td>187,90€</td>
-                            <td class="ps-4"><span class="badge bg-success">18</span></td>
-                            <td class="text-end pe-4">
-                                <a href="item-edit.html?id=3" class="btn btn-sm btn-outline-primary" title="Editar">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <button class="btn btn-sm btn-outline-danger" title="Eliminar" data-bs-toggle="modal"
-                                    data-bs-target="#modalEliminar"
-                                    onclick="document.getElementById('nombreProductoEliminar').textContent='MSI B850 GAMING PLUS WIFI'">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                            <td><span class="badge bg-success">18</span></td>
+                            <td class="pe-4">
+                                <div class="d-flex gap-1 justify-content-end">
+                                    <button class="btn btn-sm btn-outline-success" onclick="annadirAlPedido('#P003')"><i
+                                            class="bi bi-cart-plus"></i></button>
+                                    <a class="btn btn-sm btn-outline-primary" href="item-edit.html?id=3"><i
+                                            class="bi bi-pencil"></i></a>
+                                    <button class="btn btn-sm btn-outline-danger" data-bs-target="#modalEliminar"
+                                        data-bs-toggle="modal"
+                                        onclick="document.getElementById('pName').textContent='MSI B850 GAMING PLUS WIFI'"><i
+                                            class="bi bi-trash"></i></button>
+                                </div>
                             </td>
                         </tr>
                         <!-- Producto 4 -->
                         <tr>
                             <td class="ps-4">#P004</td>
-                            <td class="ps-4">
-                                <img src="../../assets/images/ram-corsair-vengeance-rgb-cmh32gx5m2b6000c38-32gb-2x16gb-ddr5.jpg"
-                                    alt="Corsair Vengeance RGB DDR5" class="rounded"
-                                    style="width: 50px; height: 50px; object-fit: contain;">
+                            <td>
+                                <img class="rounded"
+                                    src="../../assets/images/ram-corsair-vengeance-rgb-cmh32gx5m2b6000c38-32gb-2x16gb-ddr5.jpg"
+                                    style="width:50px;height:50px;object-fit:contain" />
                             </td>
                             <td><strong>Corsair Vengeance RGB DDR5 6000MHz 32GB (2x16GB)</strong></td>
                             <td><span class="badge bg-primary">Memoria RAM</span></td>
                             <td>459,95€</td>
-                            <td class="ps-4"><span class="badge bg-warning text-dark">5</span></td>
-                            <td class="text-end pe-4">
-                                <a href="item-edit.html?id=4" class="btn btn-sm btn-outline-primary" title="Editar">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <button class="btn btn-sm btn-outline-danger" title="Eliminar" data-bs-toggle="modal"
-                                    data-bs-target="#modalEliminar"
-                                    onclick="document.getElementById('nombreProductoEliminar').textContent='Corsair Vengeance RGB DDR5'">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                            <td><span class="badge bg-warning text-dark">5</span></td>
+                            <td class="pe-4">
+                                <div class="d-flex gap-1 justify-content-end">
+                                    <button class="btn btn-sm btn-outline-success" onclick="annadirAlPedido('#P004')"><i
+                                            class="bi bi-cart-plus"></i></button>
+                                    <a class="btn btn-sm btn-outline-primary" href="item-edit.html?id=4"><i
+                                            class="bi bi-pencil"></i></a>
+                                    <button class="btn btn-sm btn-outline-danger" data-bs-target="#modalEliminar"
+                                        data-bs-toggle="modal"
+                                        onclick="document.getElementById('pName').textContent='Corsair Vengeance RGB DDR5'"><i
+                                            class="bi bi-trash"></i></button>
+                                </div>
                             </td>
                         </tr>
                         <!-- Producto 5 -->
                         <tr>
                             <td class="ps-4">#P005</td>
-                            <td class="ps-4">
-                                <img src="../../assets/images/wd-black-sn7100-2tb-disco-ssd-7250mb-s-nvme-pcie-40-m2-gen4-tlc-3d-nand.jpg"
-                                    alt="WD BLACK SN7100 2TB SSD" class="rounded"
-                                    style="width: 50px; height: 50px; object-fit: contain;">
+                            <td>
+                                <img class="rounded"
+                                    src="../../assets/images/wd-black-sn7100-2tb-disco-ssd-7250mb-s-nvme-pcie-40-m2-gen4-tlc-3d-nand.jpg"
+                                    style="width:50px;height:50px;object-fit:contain" />
                             </td>
                             <td><strong>WD BLACK SN7100 2TB SSD NVMe PCIe 4.0</strong></td>
                             <td><span class="badge bg-dark">Discos Duros</span></td>
                             <td>269,95€</td>
-                            <td class="ps-4"><span class="badge bg-danger">2</span></td>
-                            <td class="text-end pe-4">
-                                <a href="item-edit.html?id=5" class="btn btn-sm btn-outline-primary" title="Editar">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <button class="btn btn-sm btn-outline-danger" title="Eliminar" data-bs-toggle="modal"
-                                    data-bs-target="#modalEliminar"
-                                    onclick="document.getElementById('nombreProductoEliminar').textContent='WD BLACK SN7100 2TB SSD'">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                            <td><span class="badge bg-danger">2</span></td>
+                            <td class="pe-4">
+                                <div class="d-flex gap-1 justify-content-end">
+                                    <button class="btn btn-sm btn-outline-success" onclick="annadirAlPedido('#P005')"><i
+                                            class="bi bi-cart-plus"></i></button>
+                                    <a class="btn btn-sm btn-outline-primary" href="item-edit.html?id=5"><i
+                                            class="bi bi-pencil"></i></a>
+                                    <button class="btn btn-sm btn-outline-danger" data-bs-target="#modalEliminar"
+                                        data-bs-toggle="modal"
+                                        onclick="document.getElementById('pName').textContent='WD BLACK SN7100 2TB SSD'"><i
+                                            class="bi bi-trash"></i></button>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -209,45 +212,64 @@ Cubre rúbrica: listado de entidades, botones CRUD, imagen en listado, datos de 
             </div>
         </section>
     </main>
-
-    <!-- Modal de Confirmación -->
+    <!-- Modal Eliminar -->
     <div class="modal fade" id="modalEliminar" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content border-0 shadow">
                 <div class="modal-header bg-danger text-white border-0 py-2">
                     <h6 class="modal-title small fw-bold">¿ELIMINAR PRODUCTO?</h6>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <button class="btn-close btn-close-white" data-bs-dismiss="modal" type="button"></button>
                 </div>
                 <div class="modal-body text-center py-4">
                     <p class="mb-0 small">Se eliminará permanentemente:</p>
-                    <strong id="pName" class="d-block mt-1"></strong>
+                    <strong class="d-block mt-1" id="pName"></strong>
                 </div>
                 <div class="modal-footer border-0 p-2 justify-content-center">
-                    <button type="button" class="btn btn-sm btn-light px-3" data-bs-dismiss="modal">No, volver</button>
-                    <button type="button" class="btn btn-sm btn-danger px-3" onclick="location.reload()">Sí,
-                        eliminar</button>
+                    <button class="btn btn-sm btn-light px-3" data-bs-dismiss="modal">No, volver</button>
+                    <button class="btn btn-sm btn-danger px-3" onclick="location.reload()">Sí, eliminar</button>
                 </div>
             </div>
         </div>
     </div>
-
     <div id="footer-placeholder"></div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Carga de Componentes
-        const loadComp = (url, id, cb) => fetch(url).then(r => r.text()).then(h => {
-            document.getElementById(id).innerHTML = h;
-            if (cb) cb(document.getElementById(id));
-        });
-        loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header.html' : '../headers/unloged_header.html', 'navbar-placeholder', (nav) => {
+        // --- 1. LÓGICA DE NEGOCIO ---
+        // Maneja la acción de añadir un producto a la lista temporal de reabastecimiento
+        function annadirAlPedido(id) {
+            const q = prompt(`Cantidad para ${id}:`, '1');
+            if (q && !isNaN(q) && parseInt(q) > 0) alert(`${q} uds. de ${id} añadidas al pedido.`);
+            else if (q) alert('Cantidad no válida.');
+        }
+
+        // --- 2. CARGA DE COMPONENTES DINÁMICOS ---
+        // Inyección de NavBar y Footer ajustando el enrutamiento para que sea válido desde la carpeta admin/
+
+        const loadComp = (url, id, cb) => {
+            fetch(url)
+                .then(r => r.text())
+                .then(h => {
+                    document.getElementById(id).innerHTML = h;
+                    if (cb) cb(document.getElementById(id));
+                });
+        };
+
+        // Carga del Header dependiendo del estado de sesión almacenado
+        loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header.html' : '../headers/unloged_header.html', 'navbar-placeholder', nav => {
             nav.querySelectorAll('a, form').forEach(el => {
-                const attr = el.tagName === 'FORM' ? 'action' : 'href';
-                const val = el.getAttribute(attr);
-                if (val?.startsWith('../') && !val.startsWith('http')) el.setAttribute(attr, '../' + val);
+                const a = el.tagName === 'FORM' ? 'action' : 'href';
+                const v = el.getAttribute(a);
+                if (v?.startsWith('../') && !v.startsWith('http')) {
+                    el.setAttribute(a, '../' + v);
+                }
             });
-            const btn = document.getElementById('btnAdminPanel');
-            if (btn) { btn.href = 'admin-dashboard.html'; btn.classList.remove('d-none'); }
+            const b = document.getElementById('btnAdminPanel');
+            if (b) {
+                b.href = 'admin-dashboard.html';
+                b.classList.remove('d-none');
+            }
         });
+
         loadComp('../footer.html', 'footer-placeholder');
     </script>
 </body>

@@ -7,10 +7,9 @@ Cubre rúbrica: listado de entidades, botones CRUD, datos de ejemplo, navegació
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>PCBuilderShop - Gestión de Usuarios</title>
-    <link rel="icon" type="image/x-icon" href="../assets/icons/logo.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../css/style.css">
@@ -19,7 +18,6 @@ Cubre rúbrica: listado de entidades, botones CRUD, datos de ejemplo, navegació
 
 <body>
     <div id="navbar-placeholder"></div>
-
     <main class="container my-5 pt-4">
         <!-- Navegación de Administración -->
         <nav class="nav nav-pills mb-4">
@@ -27,34 +25,34 @@ Cubre rúbrica: listado de entidades, botones CRUD, datos de ejemplo, navegació
             <a class="nav-link" href="item-list.html"><i class="bi bi-box-seam me-1"></i>Productos</a>
             <a class="nav-link active" href="user-list.html"><i class="bi bi-people me-1"></i>Usuarios</a>
             <a class="nav-link" href="review-list.html"><i class="bi bi-chat-left-text me-1"></i>Reseñas</a>
-            <a class="nav-link" href="order-list.html"><i class="bi bi-truck me-1"></i>Pedidos</a>
         </nav>
-
         <!-- Titulo y Acción Principal -->
         <header class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h2 class="mb-1"><i class="bi bi-people me-2"></i>Gestión de Usuarios</h2>
                 <p class="text-muted mb-0 small">Control de acceso y moderación de cuentas.</p>
             </div>
-            <a href="user-create.html" class="btn btn-primary shadow-sm"><i class="bi bi-person-plus me-2"></i>Nuevo
+            <a class="btn btn-primary shadow-sm" href="user-create.html"><i class="bi bi-person-plus me-2"></i>Nuevo
                 Usuario</a>
         </header>
-
         <!-- Panel de Filtros -->
         <section class="card shadow-sm border-0 mb-4 bg-light">
             <div class="card-body">
                 <form class="row g-3 align-items-end">
-                    <div class="col-md-5"><label class="form-label small fw-bold">Buscar Usuario</label>
-                        <input type="text" class="form-control form-control-sm" placeholder="Nombre o email...">
+                    <div class="col-md-5">
+                        <label class="form-label small fw-bold">Buscar Usuario</label>
+                        <input class="form-control form-control-sm" placeholder="Nombre o email..." type="text" />
                     </div>
-                    <div class="col-md-3"><label class="form-label small fw-bold">Rol</label>
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold">Rol</label>
                         <select class="form-select form-select-sm">
                             <option value="">Todos</option>
                             <option>Administrador</option>
                             <option>Cliente</option>
                         </select>
                     </div>
-                    <div class="col-md-2"><label class="form-label small fw-bold">Estado</label>
+                    <div class="col-md-2">
+                        <label class="form-label small fw-bold">Estado</label>
                         <select class="form-select form-select-sm">
                             <option value="">Todos</option>
                             <option>Online</option>
@@ -63,14 +61,13 @@ Cubre rúbrica: listado de entidades, botones CRUD, datos de ejemplo, navegació
                         </select>
                     </div>
                     <div class="col-md-2 d-flex align-items-end">
-                        <button type="button" class="btn btn-sm btn-primary w-100" onclick="location.reload()">
+                        <button class="btn btn-sm btn-primary w-100" onclick="location.reload()" type="button">
                             <i class="bi bi-search me-1"></i>Filtrar
                         </button>
                     </div>
                 </form>
             </div>
         </section>
-
         <!-- Listado de Usuarios -->
         <section class="card shadow-sm border-0 overflow-hidden">
             <div class="table-responsive">
@@ -97,10 +94,10 @@ Cubre rúbrica: listado de entidades, botones CRUD, datos de ejemplo, navegació
                             <td><span class="badge bg-success">Online</span></td>
                             <td class="text-end pe-4">
                                 <div class="btn-group btn-group-sm">
-                                    <a href="user-edit.html?id=0" class="btn btn-outline-primary" title="Editar"><i
+                                    <a class="btn btn-outline-primary" href="user-edit.html?id=0" title="Editar"><i
                                             class="bi bi-pencil"></i></a>
-                                    <button class="btn btn-outline-danger" title="Eliminar"
-                                        onclick="location.reload()"><i class="bi bi-trash"></i></button>
+                                    <button class="btn btn-outline-danger" onclick="location.reload()"
+                                        title="Eliminar"><i class="bi bi-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -113,10 +110,12 @@ Cubre rúbrica: listado de entidades, botones CRUD, datos de ejemplo, navegació
                             <td><span class="badge bg-success">Online</span></td>
                             <td class="text-end pe-4">
                                 <div class="btn-group btn-group-sm">
+                                    <a href="#" class="btn btn-outline-secondary" onclick="location.reload()"
+                                        title="Ver"><i class="bi bi-eye"></i></a>
                                     <a href="user-edit.html?id=1" class="btn btn-outline-primary" title="Editar"><i
                                             class="bi bi-pencil"></i></a>
-                                    <button class="btn btn-outline-danger" title="Eliminar"
-                                        onclick="location.reload()"><i class="bi bi-trash"></i></button>
+                                    <button class="btn btn-outline-danger" onclick="location.reload()"
+                                        title="Eliminar"><i class="bi bi-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -129,10 +128,12 @@ Cubre rúbrica: listado de entidades, botones CRUD, datos de ejemplo, navegació
                             <td><span class="badge bg-secondary">Offline</span></td>
                             <td class="text-end pe-4">
                                 <div class="btn-group btn-group-sm">
+                                    <a href="#" class="btn btn-outline-secondary" onclick="location.reload()"
+                                        title="Ver"><i class="bi bi-eye"></i></a>
                                     <a href="user-edit.html?id=2" class="btn btn-outline-primary" title="Editar"><i
                                             class="bi bi-pencil"></i></a>
-                                    <button class="btn btn-outline-danger" title="Eliminar"
-                                        onclick="location.reload()"><i class="bi bi-trash"></i></button>
+                                    <button class="btn btn-outline-danger" onclick="location.reload()"
+                                        title="Eliminar"><i class="bi bi-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -145,10 +146,12 @@ Cubre rúbrica: listado de entidades, botones CRUD, datos de ejemplo, navegació
                             <td><span class="badge bg-secondary">Offline</span></td>
                             <td class="text-end pe-4">
                                 <div class="btn-group btn-group-sm">
+                                    <a href="#" class="btn btn-outline-secondary" onclick="location.reload()"
+                                        title="Ver"><i class="bi bi-eye"></i></a>
                                     <a href="user-edit.html?id=3" class="btn btn-outline-primary" title="Editar"><i
                                             class="bi bi-pencil"></i></a>
-                                    <button class="btn btn-outline-danger" title="Eliminar"
-                                        onclick="location.reload()"><i class="bi bi-trash"></i></button>
+                                    <button class="btn btn-outline-danger" onclick="location.reload()"
+                                        title="Eliminar"><i class="bi bi-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -161,10 +164,12 @@ Cubre rúbrica: listado de entidades, botones CRUD, datos de ejemplo, navegació
                             <td><span class="badge bg-secondary">Offline</span></td>
                             <td class="text-end pe-4">
                                 <div class="btn-group btn-group-sm">
+                                    <a href="#" class="btn btn-outline-secondary" onclick="location.reload()"
+                                        title="Ver"><i class="bi bi-eye"></i></a>
                                     <a href="user-edit.html?id=4" class="btn btn-outline-primary" title="Editar"><i
                                             class="bi bi-pencil"></i></a>
-                                    <button class="btn btn-outline-danger" title="Eliminar"
-                                        onclick="location.reload()"><i class="bi bi-trash"></i></button>
+                                    <button class="btn btn-outline-danger" onclick="location.reload()"
+                                        title="Eliminar"><i class="bi bi-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -177,10 +182,12 @@ Cubre rúbrica: listado de entidades, botones CRUD, datos de ejemplo, navegació
                             <td><span class="badge bg-success">Online</span></td>
                             <td class="text-end pe-4">
                                 <div class="btn-group btn-group-sm">
+                                    <a href="#" class="btn btn-outline-secondary" onclick="location.reload()"
+                                        title="Ver"><i class="bi bi-eye"></i></a>
                                     <a href="user-edit.html?id=5" class="btn btn-outline-primary" title="Editar"><i
                                             class="bi bi-pencil"></i></a>
-                                    <button class="btn btn-outline-danger" title="Eliminar"
-                                        onclick="location.reload()"><i class="bi bi-trash"></i></button>
+                                    <button class="btn btn-outline-danger" onclick="location.reload()"
+                                        title="Eliminar"><i class="bi bi-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -189,24 +196,35 @@ Cubre rúbrica: listado de entidades, botones CRUD, datos de ejemplo, navegació
             </div>
         </section>
     </main>
-
     <div id="footer-placeholder"></div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Carga de Componentes
-        const loadComp = (url, id, cb) => fetch(url).then(r => r.text()).then(h => {
-            document.getElementById(id).innerHTML = h;
-            if (cb) cb(document.getElementById(id));
-        });
-        loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header.html' : '../headers/unloged_header.html', 'navbar-placeholder', (nav) => {
+        const loadComp = (url, id, cb) => {
+            fetch(url)
+                .then(r => r.text())
+                .then(h => {
+                    document.getElementById(id).innerHTML = h;
+                    if (cb) cb(document.getElementById(id));
+                });
+        };
+
+        // Carga del Header dependiendo del estado de sesión almacenado
+        loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header.html' : '../headers/unloged_header.html', 'navbar-placeholder', nav => {
             nav.querySelectorAll('a, form').forEach(el => {
-                const attr = el.tagName === 'FORM' ? 'action' : 'href';
-                const val = el.getAttribute(attr);
-                if (val?.startsWith('../') && !val.startsWith('http')) el.setAttribute(attr, '../' + val);
+                const a = el.tagName === 'FORM' ? 'action' : 'href';
+                const v = el.getAttribute(a);
+                if (v?.startsWith('../') && !v.startsWith('http')) {
+                    el.setAttribute(a, '../' + v);
+                }
             });
-            const btn = document.getElementById('btnAdminPanel');
-            if (btn) { btn.href = 'admin-dashboard.html'; btn.classList.remove('d-none'); }
+            const b = document.getElementById('btnAdminPanel');
+            if (b) {
+                b.href = 'admin-dashboard.html';
+                b.classList.remove('d-none');
+            }
         });
+
         loadComp('../footer.html', 'footer-placeholder');
     </script>
 </body>
