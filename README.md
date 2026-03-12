@@ -179,14 +179,17 @@ Página del panel de administración dedicada a la gestión de reseñas de los c
 
 #### **17. Pagina de Lista Pedidos:**
 
+Página del panel de administración para la gestión de pedidos de clientes. Muestra métricas generales, herramientas de control de inventario, filtros de búsqueda y una tabla con los pedidos donde el administrador puede consultar, editar o cancelar cada pedido.
 ![Pagina de Lista Pedidos](assets/images/readme-images/admin-order-list.png)
 
 ### **18. Pagina de Editar Pedidos:**
 
+Página del panel de administración que muestra el detalle de un pedido individual de un cliente. Permite consultar la información del cliente, los productos comprados y el resumen económico, así como actualizar el estado del pedido, añadir notas internas y notificar al cliente por correo.
 ![Pagina de Editar Pedidos](assets/images/readme-images/pedidos-edit.png)
 
 ### **19. Pagina de Pedidos Reabastecimiento:**
 
+Página del panel de administración destinada a la gestión del reabastecimiento de inventario. Permite visualizar el pedido semanal actual, planificar nuevos pedidos para semanas futuras y consultar el historial de pedidos realizados a proveedores. También ofrece herramientas para modificar cantidades, fechas o añadir productos a los pedidos.
 ![Pagina de Editar Pedidos](assets/images/readme-images/pedidos-reabastecimiento.png)
 
 ### **Participación de Miembros en la Práctica 1**
