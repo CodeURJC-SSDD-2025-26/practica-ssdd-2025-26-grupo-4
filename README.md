@@ -143,51 +143,51 @@ Formulario para que los usuarios valoren los productos comprados. Incluye un sis
 
 #### **10. Pagina de Admin-Dashboard:**
 
-![Pagina de Admin-Dashboard](assets/images/readme-images/admin-dashboard.png)
-
 Página principal del panel de administración de la tienda, donde se muestra un resumen general del sistema con diferentes estadísticas como número de productos, usuarios, pedidos e ingresos. Incluye gráficas de ventas e inventario, accesos rápidos a funciones administrativas y una tabla con los pedidos recientes.
+![Pagina de Admin-Dashboard](assets/images/readme-images/admin-dashboard.png)
 
 #### **11. Pagina de Lista Producto:**
 
-![Pagina de Lista Producto](assets/images/readme-images/admin-item-list.png)
-
 Página de gestión de productos del panel de administración que muestra el catálogo en formato tabular con información de cada artículo (imagen, categoría, precio y stock). Permite buscar y filtrar productos, así como realizar acciones de administración como crear, editar o eliminar.
+![Pagina de Lista Producto](assets/images/readme-images/admin-item-list.png)
 
 #### **12. Pagina de Crear Producto:**
 
-![Pagina de Crear Producto](assets/images/readme-images/admin-item-create.png)
-
 Página que permite al administrador crear un nuevo producto para el catálogo de la tienda mediante un formulario con campos como nombre, descripción, categoría, precio y stock. Incluye la opción de subir múltiples imágenes (con previsualización de estas) antes de publicar el producto.
+![Pagina de Crear Producto](assets/images/readme-images/admin-item-create.png)
 
 #### **13. Pagina de Editar Producto:**
 
-![Pagina de Editar Producto](assets/images/readme-images/admin-item-edit.png)
-
 Página que permite al administrador editar la información de un producto existente del catálogo. El formulario muestra los datos previamente rellenados (nombre, descripción, categoría, precio y stock) y permite modificarlos antes de guardar los cambios.
+![Pagina de Editar Producto](assets/images/readme-images/admin-item-edit.png)
 
 #### **14. Pagina de Lista Usuarios:**
 
-![Pagina de Lista Usuarios](assets/images/readme-images/admin-user-list.png)
-
 Página de administración que muestra el listado de usuarios registrados en la plataforma junto con información como nombre, correo electrónico, rol y estado de conexión. Permite buscar y filtrar usuarios, así como realizar acciones de gestión como ver, editar, crear o eliminar cuentas.
+![Pagina de Lista Usuarios](assets/images/readme-images/admin-user-list.png)
 
 #### **15. Pagina de Editar Usuarios:**
 
-![Pagina de Editar Usuarios](assets/images/readme-images/admin-user-edit.png)
-
 Página que permite al administrador editar la información de un usuario existente, incluyendo nombre, correo electrónico, contraseña y rol dentro del sistema. También muestra y permite actualizar la imagen de perfil del usuario antes de guardar los cambios.
+
+![Pagina de Editar Usuarios](assets/images/readme-images/admin-user-edit.png)
 
 #### **16. Pagina de Lista Reseñas:**
 
-![Pagina de Lista Reseñas](assets/images/readme-images/admin-review-list.png)
-
 Página del panel de administración dedicada a la gestión de reseñas de los clientes sobre los productos de la tienda. Permite filtrar opiniones, responder o editar respuestas oficiales del administrador y eliminar reseñas inapropiadas.
+![Pagina de Lista Reseñas](assets/images/readme-images/admin-review-list.png)
 
 #### **17. Pagina de Lista Pedidos:**
 
 ![Pagina de Lista Pedidos](assets/images/readme-images/admin-order-list.png)
 
+### **18. Pagina de Editar Pedidos:**
 
+![Pagina de Editar Pedidos](assets/images/readme-images/pedidos-edit.png)
+
+### **19. Pagina de Pedidos Reabastecimiento:**
+
+![Pagina de Editar Pedidos](assets/images/readme-images/pedidos-reabastecimiento.png)
 
 ### **Participación de Miembros en la Práctica 1**
 
