@@ -255,13 +255,14 @@ Principal responsable de las páginas de perfil y carrito de compra, además de 
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Panel de administración, gestión de productos, usuarios y reseñas. Algunas páginas:](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/22b0c83ef82111b8a5f8d482512c4f6189fe3990)  |  [admin-dashboaard]([pages/admin/admin-dashboard.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/admin/admin-dashboard.html)) 
-|1|  |  [item-list.html]([pages/admin/item-list.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/admin/item-list.html))
+|1| [Panel de administración, gestión de productos, usuarios y reseñas](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/22b0c83ef82111b8a5f8d482512c4f6189fe3990)  |  [admin-dashboaard]([pages/admin/admin-dashboard.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/admin/admin-dashboard.html)) 
+|1| Algunas páginas: |  [item-list.html]([pages/admin/item-list.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/admin/item-list.html))
 |1|  |  [user-list.html]([pages/admin/user-list.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/admin/user-list.html))
-|1|  |  [review-list]([URL_archivo_4](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/admin/review-list.html))
+|1|  |  [review-list]([pages/admin/review-list.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/admin/review-list.html))
 |2| [Gestión de Pedidos, de usuarios y reabastecimiento]([URL_commit_5](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/e79baa1e26f5e7bf0733dfc18734cb784ed6b9ea))
 |2|  |  [order-list.html]([URL_archivo_5](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/admin/order-list.html))
 |2| |  [order-management.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/admin/order-management.html)
+|2|  |  [order-edit.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/admin/order-edit.html)
 
 ---
 
