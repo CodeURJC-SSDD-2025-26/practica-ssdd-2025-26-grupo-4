@@ -115,10 +115,10 @@ Esta pantalla es para que las personas que no tienen cuenta creada, la puedan te
 
 #### **6. Pagina de Perfil:**
 Muestra el perfil del usuario. Incluye 3 pestañas:
-- Mi cuenta: muestra la información actual del usuario (foto de perfil, nombre, email, teléfono, direcciones) y permite añadir direcciones.
+- Perfil: muestra la página de perfil pública, mostrando el nombre, la foto de perfil y las reseñas.
 - Pedidos: muestra los pedidos en curso del usuario.
-- Modificar cuenta: permite modificar la información que aparece en Mi cuenta.
-![Pagina de Perfil-Mi cuenta](assets/images/readme-images/profile.png)
+- Modificar cuenta: permite modificar la información de la cuenta (nombre, teléfono, email, direcciones) o borrar la cuenta.
+![Pagina de Perfil-Perfil](assets/images/readme-images/profile.png)
 ![Pagina de Perfil-Pedidos](assets/images/readme-images/profile-orders.png)
 ![Pagina de Perfil-Modificar cuenta](assets/images/readme-images/profile-modify.png)
 
@@ -232,20 +232,12 @@ Principal responsable de las páginas de perfil y carrito de compra, además de 
 |:------------: |:------------:| :------------:|
 |1| [Añadir página de perfil de usuario](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/0a580df10a0e133a60755ceea097ec4c25b4ce75)  | [profile.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/profile.html)   |
 |2| [Modificar barra lateral de la página de perfil](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/51eee89e8c182d4ad7268c30c9fa9bd8d157378e)  | [profile.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/profile.html)   |
-|3| [Añadir información de ejemplo a la página de perfil](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/2c46f835f0d1611a3c89c2ec6b80c936fa3eea9e)  | [profile.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/profile.html)   |
-|4| [Añadir footer a la página de perfil](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/60c5dd8d893ead8976a14d00383a65cfe8a2ac0f)  | [profile.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/profile.html)   |
-|5| [Añadir apartado de modificar cuenta en la página de perfil](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/c9f7de5b5d2e3b21c8c0fd85ce7d7b0ff253ef3f)  | [profile.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/profile.html)   |
-|6| [Cambiar footer en la página de carrito](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/b4dda29fa6ba3684a8c398479b33ac457671cc3e)  | [shopping-cart.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/shopping-cart.html)   |
-|7| [Quitar elementos de la plantilla en la página de carrito](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/79ec8df21df86249b8fd451b145e41ecb0341bef)  | [shopping-cart.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/shopping-cart.html)   |
-|8| [Cambiar header en la página de perfil](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/7124aa39338d7ebc25e66cfea6955522076af2c9)  | [profile.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/profile.html)   |
-|9| [Añadir información de ejemplo a la página de carrito](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/fbddbf972aedf0ba7cb5aa1add1703f180d03ba4)  | [shopping-cart.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/shopping-cart.html)   |
-|10| [Cambiar header en la página de carrito](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/42f4a9206673c07ae31970c852f7fec81f4aff35)  | [shopping-cart.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/shopping-cart.html)   |
-|11| [Enlazar botones de compra en la página de carrito](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/ab334d8ac5258d692de3a15f06fd1f83374687e5)  | [shopping-cart.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/shopping-cart.html)   |
-|12| [Arreglar botón de buscar en el loged_header](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/4d904aa1d8b2a732518f65579b8af51760da27f7)  | [loged_header.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/headers/loged_header.html)   |
-|13| [Añadir a la página de pago la función de usar una dirección guardada en el perfil](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/a6d1c3125ca831d9c63b8d6eee45fee370f235bb)  | [payment.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/payment.html)   |
-|14| [Añadir favicon e incluirlo en páginas de perfil y carrito](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/09479074f8c2a0ec56a74a3dde5ef9fd143f820a)  | [logo.png](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/assets/icons/logo.png)   |
-|15| [AÑadir botón de admin en páginas de perfil y carrito](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/2284a36e0debfd42c837ef0cf9801a6335478c9f)  | [profile.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/profile.html)   |
-|16| [Arreglar botón de buscar en el unloged_header](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/4d904aa1d8b2a732518f65579b8af51760da27f7)  | [unloged_header.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/headers/unloged_header.html)   |
+|3| [Enlazar botones de compra en la página de carrito](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/ab334d8ac5258d692de3a15f06fd1f83374687e5)  | [shopping-cart.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/shopping-cart.html)   |
+|4| [Arreglar botón de buscar en el loged_header](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/4d904aa1d8b2a732518f65579b8af51760da27f7)  | [loged_header.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/headers/loged_header.html)   |
+|5| [Añadir a la página de pago la función de usar una dirección guardada en el perfil](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/a6d1c3125ca831d9c63b8d6eee45fee370f235bb)  | [payment.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/payment.html)   |
+|6| [Añadir favicon e incluirlo en páginas de perfil y carrito](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/09479074f8c2a0ec56a74a3dde5ef9fd143f820a)  | [logo.png](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/assets/icons/logo.png)   |
+|7| [AÑadir botón de admin en páginas de perfil y carrito](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/2284a36e0debfd42c837ef0cf9801a6335478c9f)  | [profile.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/profile.html)   |
+|8| [Arreglar botón de buscar en el unloged_header](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/4d904aa1d8b2a732518f65579b8af51760da27f7)  | [unloged_header.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/headers/unloged_header.html)   |
 
 ---
 
