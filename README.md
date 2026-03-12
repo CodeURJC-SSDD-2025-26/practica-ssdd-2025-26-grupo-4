@@ -50,10 +50,9 @@ Aplicación web dedicada exclusivamente a la venta de componentes de PC, orienta
 
 ### **Gráficos**
 
-- Evolución de ventas mensuales - Gráfico de barras
-- Ranking de productos más vendidos - Gráfico circular
-- Crecimiento de usuarios registrados - Gráfico de líneas
-- Distribución de pedidos por categoría - Gráfico de barras horizontales
+- Evolución de ventas mensuales - Gráfico de lineas
+- Stock de productos - Gráfico circular
+- Distribución de pedidos por categoría - Gráfico de barras
 - Valoración media de los productos - Sistemas de estrellas o barras
 
 ### **Tecnología Complementaria**
@@ -256,11 +255,13 @@ Principal responsable de las páginas de perfil y carrito de compra, además de 
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Panel de administración, gestión de productos, usuarios y reseñas](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/22b0c83ef82111b8a5f8d482512c4f6189fe3990). Algunas páginas:
+  -  [admin-dashboaard]([pages/admin/admin-dashboard.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/admin/admin-dashboard.html))   -  [item-list.html]([pages/admin/item-list.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/admin/item-list.html))
+  -  [user-list.html]([pages/admin/user-list.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/admin/user-list.html))
+  -  review-list]([URL_archivo_4](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/admin/review-list.html))
+|2| [Gestión de Pedidos, de usuarios y reabastecimiento]([URL_commit_5](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/e79baa1e26f5e7bf0733dfc18734cb784ed6b9ea))
+  -  [order-list.html]([URL_archivo_5](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/admin/order-list.html))
+  -  [order-management.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/pages/admin/order-management.html)
 
 ---
 
