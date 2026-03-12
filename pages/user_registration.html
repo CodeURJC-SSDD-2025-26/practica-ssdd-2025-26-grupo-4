@@ -121,34 +121,25 @@
     const confirmPasswordInput = document.getElementById('confirmPassword');
 
     registerForm.addEventListener('submit', function (event) {
-        
-        // Comprobar manualmente si las contraseñas coinciden
         if (passwordInput.value !== confirmPasswordInput.value) {
-            confirmPasswordInput.setCustomValidity('Las contraseñas no coinciden');
+            confirmPasswordInput.setCustomValidity('Password mismatch');
         } else {
-            confirmPasswordInput.setCustomValidity(''); // Resetea el error si son iguales
+            confirmPasswordInput.setCustomValidity('');
         }
 
-        // Si el formulario NO es válido
         if (!registerForm.checkValidity()) {
             event.preventDefault();
             event.stopPropagation();
         } else {
-            // SI TODO ES CORRECTO
-            event.preventDefault(); // Evitamos que la página recargue mal
-            
-            // 1. Guardamos que el usuario está logueado
+            event.preventDefault();
             localStorage.setItem('isLoggedIn', 'true');
-            
-            // 2. (Opcional) Podemos guardar su nombre para saludarle en el index
+
             const userName = document.getElementById('name').value;
             localStorage.setItem('userName', userName);
-            
-            // 3. Redirigimos al inicio
-            window.location.href = "../index.html"; 
+
+            window.location.href = "../index.html";
         }
 
-        // Mostramos las alertas rojas/verdes
         registerForm.classList.add('was-validated');
     }, false);
   </script>

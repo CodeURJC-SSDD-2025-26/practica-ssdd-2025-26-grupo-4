@@ -1,7 +1,3 @@
-<!--
-Archivo: order-management.html
-Descripción: Gestión de pedidos de reabastecimiento: pedido actual, planificación semanal, historial.
--->
 <!DOCTYPE html>
 <html lang="es">
 
@@ -17,7 +13,7 @@ Descripción: Gestión de pedidos de reabastecimiento: pedido actual, planificac
 <body>
     <div id="navbar-placeholder"></div>
     <main class="container my-5 pt-4">
-        <!-- Navegación -->
+        <!-- Navigation -->
         <nav class="nav nav-pills mb-4">
             <a class="nav-link" href="admin-dashboard.html"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
             <a class="nav-link" href="item-list.html"><i class="bi bi-box-seam me-1"></i>Productos</a>
@@ -25,7 +21,7 @@ Descripción: Gestión de pedidos de reabastecimiento: pedido actual, planificac
             <a class="nav-link" href="review-list.html"><i class="bi bi-chat-left-text me-1"></i>Reseñas</a>
             <a class="nav-link active" href="order-list.html"><i class="bi bi-cart-check me-1"></i>Pedidos</a>
         </nav>
-        <!-- Título y Resumen -->
+        <!-- Title and Summary -->
         <header class="mb-4">
             <div class="row align-items-center">
                 <div class="col-md-7">
@@ -49,8 +45,8 @@ Descripción: Gestión de pedidos de reabastecimiento: pedido actual, planificac
                 </div>
             </div>
         </header>
-        <!-- Sección 1: Pedido Actual en Curso -->
-        <!-- Tablero principal que muestra los detalles del pedido que se va a emitir en la próxima ventana (semana en curso) -->
+        <!-- Section 1: Current Order in Progress -->
+        <!-- Main dashboard showing order details to be issued in the next window (current week) -->
         <section class="card shadow-sm border-0 mb-4 border-start border-4 border-primary">
             <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                 <div>
@@ -117,13 +113,13 @@ Descripción: Gestión de pedidos de reabastecimiento: pedido actual, planificac
                 </table>
             </div>
         </section>
-        <!-- Sección 2: Planificación de Nuevos Pedidos -->
-        <!-- Área para visualizar borradores de pedidos en semanas futuras y añadir nuevas ventanas de reabastecimiento -->
+        <!-- Section 2: New Order Planning -->
+        <!-- Area to view draft orders in future weeks and add new restocking windows -->
         <section class="mb-5">
             <h5 class="mb-3 fw-bold small text-uppercase text-muted"><i class="bi bi-calendar-event me-2"></i>Pedidos
                 Planificados</h5>
             <div class="row g-3">
-                <!-- Ejemplo Pedido Semana Posterior 1 -->
+                <!-- Example 1 -->
                 <div class="col-md-6">
                     <div class="card shadow-sm border-0 bg-light">
                         <div class="card-body p-3">
@@ -144,7 +140,7 @@ Descripción: Gestión de pedidos de reabastecimiento: pedido actual, planificac
                         </div>
                     </div>
                 </div>
-                <!-- Botón para añadir nuevo pedido -->
+                <!-- Button to add new order -->
                 <div class="col-md-6">
                     <div class="card shadow-sm border-0 h-100" data-bs-target="#modalNuevoPedido" data-bs-toggle="modal"
                         style="border:2px dashed #dee2e6;cursor:pointer">
@@ -156,8 +152,8 @@ Descripción: Gestión de pedidos de reabastecimiento: pedido actual, planificac
                 </div>
             </div>
         </section>
-        <!-- Sección 3: Historial de Operaciones -->
-        <!-- Registro inmutable de los recibos de pedidos y facturas previas con acceso al desglose general en modalidad Solo-Lectura -->
+        <!-- Section 3: Operations History -->
+        <!-- Immutable record of order receipts and previous invoices with access to the general breakdown in Read-Only mode -->
         <section>
             <h5 class="mb-3 fw-bold small text-uppercase"><i class="bi bi-history me-2"></i>Historial de Pedidos</h5>
             <div class="card shadow-sm border-0 border-top border-4 border-secondary">
@@ -202,7 +198,7 @@ Descripción: Gestión de pedidos de reabastecimiento: pedido actual, planificac
             </div>
         </section>
     </main>
-    <!-- Modal Modificar -->
+    <!-- Modal Modify -->
     <div class="modal fade" id="modalModificarPedido" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow">
@@ -289,7 +285,7 @@ Descripción: Gestión de pedidos de reabastecimiento: pedido actual, planificac
             </div>
         </div>
     </div>
-    <!-- Modal Nuevo Pedido -->
+    <!-- Modal New Order -->
     <div class="modal fade" id="modalNuevoPedido" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow">
@@ -331,7 +327,7 @@ Descripción: Gestión de pedidos de reabastecimiento: pedido actual, planificac
             </div>
         </div>
     </div>
-    <!-- Modal Detalles -->
+    <!-- Modal Details -->
     <div class="modal fade" id="modalDetallesPedido" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow">
@@ -376,7 +372,7 @@ Descripción: Gestión de pedidos de reabastecimiento: pedido actual, planificac
             </div>
         </div>
     </div>
-    <!-- Modal Eliminar -->
+    <!-- Modal Delete -->
     <div class="modal fade" id="modalEliminarPedido" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content border-0 shadow">
@@ -397,8 +393,8 @@ Descripción: Gestión de pedidos de reabastecimiento: pedido actual, planificac
     <div id="footer-placeholder"></div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // --- 1. LÓGICA DE FORMULARIOS MULTIPROPÓSITO ---
-        // Funciones preventivas para evitar la recarga real y evidenciar la acción (mock) en modales
+        // --- 1. MULTIPURPOSE FORM LOGIC ---
+        // Preventive functions to avoid real reload and display the action (mock) in modals
         document.getElementById('formModificarPedido').onsubmit = e => {
             e.preventDefault();
             alert('Pedido actualizado correctamente');
@@ -411,7 +407,7 @@ Descripción: Gestión de pedidos de reabastecimiento: pedido actual, planificac
             location.reload();
         };
 
-        // --- 2. CARGA DE COMPONENTES DINÁMICOS ---     
+        // --- 2. DYNAMIC COMPONENT LOADING ---     
         const loadComp = (url, id, cb) => {
             fetch(url)
                 .then(r => r.text())
@@ -421,7 +417,7 @@ Descripción: Gestión de pedidos de reabastecimiento: pedido actual, planificac
                 });
         };
 
-        // Carga del Header dependiendo del estado de sesión almacenado
+        // Load header based on stored session state
         loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header.html' : '../headers/unloged_header.html', 'navbar-placeholder', nav => {
             nav.querySelectorAll('a, form').forEach(el => {
                 const a = el.tagName === 'FORM' ? 'action' : 'href';

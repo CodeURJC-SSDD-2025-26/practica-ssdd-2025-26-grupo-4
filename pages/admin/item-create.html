@@ -1,8 +1,3 @@
-<!--
-Archivo: item-create.html
-Descripción: Formulario de creación de un nuevo producto para el administrador.
-Cubre rúbrica: formulario crear entidad, campos obligatorios, imagen con galería, uso correcto Bootstrap.
--->
 <!DOCTYPE html>
 <html lang="es">
 
@@ -19,7 +14,7 @@ Cubre rúbrica: formulario crear entidad, campos obligatorios, imagen con galer�
 <body>
     <div id="navbar-placeholder"></div>
     <main class="container my-5 pt-4">
-        <!-- Navegación de Administración -->
+        <!-- Navigation of Administration -->
         <nav class="nav nav-pills mb-4">
             <a class="nav-link" href="admin-dashboard.html"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
             <a class="nav-link active" href="item-list.html"><i class="bi bi-box-seam me-1"></i>Productos</a>
@@ -27,18 +22,18 @@ Cubre rúbrica: formulario crear entidad, campos obligatorios, imagen con galer�
             <a class="nav-link" href="review-list.html"><i class="bi bi-chat-left-text me-1"></i>Reseñas</a>
             <a class="nav-link" href="order-list.html"><i class="bi bi-cart-check me-1"></i>Pedidos</a>
         </nav>
-        <!-- Titulo y Acción Principal -->
+        <!-- Title and Main Action -->
         <header class="mb-4">
             <h2 class="mb-1"><i class="bi bi-plus-circle me-2"></i>Crear Nuevo Producto</h2>
             <p class="text-muted mb-0 small">Añade un nuevo artículo al catálogo con detalles técnicos, precio y stock.
             </p>
         </header>
-        <!-- Formulario de Creación -->
+        <!-- Creation Form -->
         <section class="card shadow-sm border-0">
             <div class="card-body p-4">
                 <form action="#" id="createForm" method="POST">
                     <div class="row g-4">
-                        <!-- Datos Principales -->
+                        <!-- Principal data -->
                         <div class="col-lg-8">
                             <div class="mb-3">
                                 <label class="form-label small fw-bold">Nombre del Producto</label>
@@ -76,7 +71,7 @@ Cubre rúbrica: formulario crear entidad, campos obligatorios, imagen con galer�
                                 </div>
                             </div>
                         </div>
-                        <!-- Panel Multimedia -->
+                        <!-- Multimedia Panel -->
                         <div class="col-lg-4">
                             <div class="card bg-light border-0">
                                 <div class="card-body">
@@ -103,7 +98,7 @@ Cubre rúbrica: formulario crear entidad, campos obligatorios, imagen con galer�
     <div id="footer-placeholder"></div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Manejo de Previsualización
+        // Preview Handling
         document.getElementById('imgInput').addEventListener('change', e => {
             const preview = document.getElementById('preview');
             preview.innerHTML = '';
@@ -120,10 +115,10 @@ Cubre rúbrica: formulario crear entidad, campos obligatorios, imagen con galer�
             });
         });
 
-        // Simulación de Envío
+        // Submission Simulation
         document.getElementById('createForm').onsubmit = e => { e.preventDefault(); location.href = 'item-list.html'; };
 
-        // Carga de Componentes
+        // Component Loading
         const loadComp = (url, id, cb) => {
             fetch(url)
                 .then(r => r.text())
@@ -133,7 +128,7 @@ Cubre rúbrica: formulario crear entidad, campos obligatorios, imagen con galer�
                 });
         };
 
-        // Carga del Header dependiendo del estado de sesión almacenado
+        // Load header based on stored session state
         loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header.html' : '../headers/unloged_header.html', 'navbar-placeholder', nav => {
             nav.querySelectorAll('a, form').forEach(el => {
                 const a = el.tagName === 'FORM' ? 'action' : 'href';

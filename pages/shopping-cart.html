@@ -330,36 +330,36 @@
           return response.text();
       })
       .then(data => {
-          // 1. Inyectamos el HTML
+          // 1. Inject HTML
           document.getElementById('navbar-placeholder').innerHTML = data;
 
-          // 2. Ahora que el botón EXISTE en el DOM, lo buscamos
+          // 2. Now that the button EXISTS in the DOM, we search for it
           if (userIsLogged) {
-              // Lógica de cerrar sesión
+              // Logout logic
               const btnSalir = document.getElementById('btnCerrarSesion');
               if (btnSalir) {
                   btnSalir.addEventListener('click', function() {
                       localStorage.removeItem('isLoggedIn');
-                      localStorage.removeItem('userRole'); // No olvides limpiar el rol
+                      localStorage.removeItem('userRole'); // Don't forget to clean up the role
                       window.location.href = "../index.html";
                   });
               }
 
-              // Lógica del botón de Admin (Moverlo aquí es clave)
+              // Admin button logic (Moving it here is key)
               const userRole = localStorage.getItem('userRole');
               const adminBtn = document.getElementById('btnAdminPanel');
               
               if (userRole === 'admin' && adminBtn) {
                   adminBtn.classList.remove('d-none');
               } else if (adminBtn) {
-                  // Por si acaso, asegúrate de que esté oculto si no es admin
+                  // Just in case, make sure it's hidden if not admin
                   adminBtn.classList.add('d-none');
               }
           }
       })
-      .catch(error => console.error("Errorazo fatal:", error));
+      .catch(error => console.error("Fatal error:", error));
 
-  // El DOMContentLoaded déjalo solo para cosas que SÍ estén en el HTML principal
+  // Keep DOMContentLoaded only for things that are in the main HTML
   document.addEventListener('DOMContentLoaded', function () {
       const btnModificar = document.getElementById('btn-ir-a-modificar');
       const tabModificar = document.getElementById('modify-tab');

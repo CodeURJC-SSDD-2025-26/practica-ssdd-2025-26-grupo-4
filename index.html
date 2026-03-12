@@ -288,95 +288,68 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      
       const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
       const userRole = localStorage.getItem('userRole');
 
-      // Rutas directas desde el index (raíz) a la carpeta pages
       const headerFile = isLoggedIn ? 'pages/headers/loged_header.html' : 'pages/headers/unloged_header.html';
       const footerFile = 'pages/footer.html';
 
-      // --------------------------------------------------------
-      // CARGAR EL HEADER
-      // --------------------------------------------------------
+      function fixRelativePaths(container) {
+        const links = container.querySelectorAll('a[href^="../"]');
+        links.forEach(link => {
+          link.setAttribute('href', link.getAttribute('href').replace('../', ''));
+        });
+
+        const forms = container.querySelectorAll('form[action^="../"]');
+        forms.forEach(form => {
+          form.setAttribute('action', form.getAttribute('action').replace('../', ''));
+        });
+
+        const imgs = container.querySelectorAll('img[src^="../"]');
+        imgs.forEach(img => {
+          img.setAttribute('src', img.getAttribute('src').replace('../', ''));
+        });
+      }
+
       fetch(headerFile)
         .then(response => {
-          if (!response.ok) throw new Error("No se pudo cargar el header");
+          if (!response.ok) throw new Error("Failed to load header");
           return response.text();
         })
         .then(html => {
           const headerContainer = document.getElementById('header-container');
           headerContainer.innerHTML = html;
+          fixRelativePaths(headerContainer);
 
-          // ==========================================
-          // MAGIA DE RUTAS PARA EL INDEX
-          // ==========================================
-          // Como los headers están pensados para usarse DENTRO de pages/,
-          // tienen rutas como href="../pages/shopping-cart.html".
-          // Al estar en la raíz, le quitamos el "../" para que funcionen perfecto.
-          
-          const links = headerContainer.querySelectorAll('a[href^="../"]');
-          links.forEach(link => {
-            link.setAttribute('href', link.getAttribute('href').replace('../', ''));
-          });
-
-          // Arreglar el buscador del header (la acción del formulario)
-          const forms = headerContainer.querySelectorAll('form[action^="../"]');
-          forms.forEach(form => {
-            form.setAttribute('action', form.getAttribute('action').replace('../', ''));
-          });
-
-          // Arreglar imágenes del header si las hubiera (ej. logo)
-          const imgs = headerContainer.querySelectorAll('img[src^="../"]');
-          imgs.forEach(img => {
-            img.setAttribute('src', img.getAttribute('src').replace('../', ''));
-          });
-          // ==========================================
-
-          // Mostrar botón Admin si el rol es admin
           if (userRole === 'admin') {
             const adminBtn = document.getElementById('btnAdminPanel');
             if (adminBtn) adminBtn.classList.remove('d-none');
           }
 
-          // Función Cerrar Sesión
           if (isLoggedIn) {
-            const btnSalir = document.getElementById('btnCerrarSesion');
-            if (btnSalir) {
-              btnSalir.addEventListener('click', function () {
+            const btnLogout = document.getElementById('btnCerrarSesion');
+            if (btnLogout) {
+              btnLogout.addEventListener('click', function () {
                 localStorage.removeItem('isLoggedIn');
                 localStorage.removeItem('userRole');
-                window.location.reload(); 
+                window.location.reload();
               });
             }
           }
         })
-        .catch(error => console.error('Error cargando la cabecera:', error));
+        .catch(error => console.error('Error loading header:', error));
 
-      // --------------------------------------------------------
-      // CARGAR EL FOOTER
-      // --------------------------------------------------------
       fetch(footerFile)
         .then(response => {
-            if (!response.ok) throw new Error("Error al cargar el footer");
-            return response.text();
+          if (!response.ok) throw new Error("Failed to load footer");
+          return response.text();
         })
         .then(data => {
-            const footerContainer = document.getElementById('footer-placeholder');
-            footerContainer.innerHTML = data;
-
-            // Arreglar las rutas del footer también si es necesario
-            const links = footerContainer.querySelectorAll('a[href^="../"]');
-            links.forEach(link => {
-              link.setAttribute('href', link.getAttribute('href').replace('../', ''));
-            });
-            const imgs = footerContainer.querySelectorAll('img[src^="../"]');
-            imgs.forEach(img => {
-              img.setAttribute('src', img.getAttribute('src').replace('../', ''));
-            });
+          const footerContainer = document.getElementById('footer-placeholder');
+          footerContainer.innerHTML = data;
+          fixRelativePaths(footerContainer);
         })
-        .catch(error => console.error("Error en footer:", error));
-
+        .catch(error => console.error("Error loading footer:", error));
     });
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

@@ -1,7 +1,3 @@
-<!--
-Archivo: admin-dashboard.html
-Descripción: Panel de control del administrador con estadísticas, gráficas y accesos rápidos.
--->
 <!DOCTYPE html>
 <html lang="es">
 
@@ -19,7 +15,7 @@ Descripción: Panel de control del administrador con estadísticas, gráficas y 
     <!-- Header -->
     <div id="navbar-placeholder"></div>
     <main class="container my-5 pt-4">
-        <!-- Navegación entre secciones de administración -->
+        <!-- Navigation between administration sections -->
         <nav class="nav nav-pills mb-4">
             <a class="nav-link active" href="admin-dashboard.html"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
             <a class="nav-link" href="item-list.html"><i class="bi bi-box-seam me-1"></i>Productos</a>
@@ -28,15 +24,15 @@ Descripción: Panel de control del administrador con estadísticas, gráficas y 
             <a class="nav-link" href="order-list.html"><i class="bi bi-cart-check me-1"></i>Pedidos</a>
         </nav>
 
-        <!-- Encabezado del dashboard -->
+        <!-- Dashboard header -->
         <div class="mb-4">
             <h2 class="mb-1"><i class="bi bi-speedometer2 me-2"></i>Panel de Administración</h2>
             <p class="text-muted mb-0">Bienvenido, admin_pc. Resumen general de la tienda.</p>
         </div>
 
-        <!-- Tarjetas de resumen -->
+        <!-- Summary cards -->
         <section class="row g-4 mb-4">
-            <!-- Total productos -->
+            <!-- Product total -->
             <div class="col-xl-3 col-md-6">
                 <div class="card shadow-sm border-start border-primary border-4 card-body">
                     <div class="d-flex justify-content-between">
@@ -49,7 +45,7 @@ Descripción: Panel de control del administrador con estadísticas, gráficas y 
                     <a href="item-list.html" class="text-decoration-none small">Ver productos →</a>
                 </div>
             </div>
-            <!-- Total usuarios -->
+            <!-- User total -->
             <div class="col-xl-3 col-md-6">
                 <div class="card shadow-sm border-start border-success border-4 card-body">
                     <div class="d-flex justify-content-between">
@@ -62,7 +58,7 @@ Descripción: Panel de control del administrador con estadísticas, gráficas y 
                     <a href="user-list.html" class="text-decoration-none small">Ver usuarios →</a>
                 </div>
             </div>
-            <!-- Total pedidos -->
+            <!-- Orders total -->
             <div class="col-xl-3 col-md-6">
                 <div class="card shadow-sm border-start border-warning border-4 card-body">
                     <div class="d-flex justify-content-between">
@@ -75,7 +71,7 @@ Descripción: Panel de control del administrador con estadísticas, gráficas y 
                     <span class="text-muted small">Últimos 30 días</span>
                 </div>
             </div>
-            <!-- Ingresos -->
+            <!-- Income -->
             <div class="col-xl-3 col-md-6">
                 <div class="card shadow-sm border-start border-danger border-4 card-body">
                     <div class="d-flex justify-content-between">
@@ -90,9 +86,9 @@ Descripción: Panel de control del administrador con estadísticas, gráficas y 
             </div>
         </section>
 
-        <!-- Contenedor principal de métricas detalladas y accesos de administración -->
+        <!-- Main container of detailed metrics and administration accesses -->
         <div class="row g-4 mb-5">
-            <!-- Sección Izquierda: Gráficas de Análisis Operativo con Pestañas (Tabs) -->
+            <!-- Left Section: Operational Analysis Charts with Tabs -->
             <div class="col-lg-8">
                 <div class="card shadow-sm">
                     <div class="card-header bg-white pb-0 border-0">
@@ -125,7 +121,7 @@ Descripción: Panel de control del administrador con estadísticas, gráficas y 
                     </div>
                 </div>
             </div>
-            <!-- Accesos rápidos -->
+            <!-- Quick accesses -->
             <div class="col-lg-4">
                 <div class="card shadow-sm h-100">
                     <div class="card-header bg-white">
@@ -149,7 +145,7 @@ Descripción: Panel de control del administrador con estadísticas, gráficas y 
             </div>
         </div>
 
-        <!-- Sección Inferior: Listado tabular de los pedidos procesados recientemente -->
+        <!-- Bottom Section: Tabular list of recently processed orders -->
         <div class="card border-0 shadow-sm">
             <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
                 <h5 class="mb-0 fw-bold">Pedidos Recientes</h5>
@@ -167,7 +163,7 @@ Descripción: Panel de control del administrador con estadísticas, gráficas y 
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Pedido 1 -->
+                        <!-- Order 1 -->
                         <tr>
                             <td><strong>#ORD001</strong></td>
                             <td>John Dominguez</td>
@@ -175,7 +171,7 @@ Descripción: Panel de control del administrador con estadísticas, gráficas y 
                             <td>464,95€</td>
                             <td><span class="badge bg-success">Entregado</span></td>
                         </tr>
-                        <!-- Pedido 2 -->
+                        <!-- Order 2 -->
                         <tr>
                             <td><strong>#ORD002</strong></td>
                             <td>David Martin</td>
@@ -183,7 +179,7 @@ Descripción: Panel de control del administrador con estadísticas, gráficas y 
                             <td>1.190,00€</td>
                             <td><span class="badge bg-primary">Enviado</span></td>
                         </tr>
-                        <!-- Pedido 3 -->
+                        <!-- Order 3 -->
                         <tr>
                             <td><strong>#ORD003</strong></td>
                             <td>Gave Newell</td>
@@ -191,7 +187,7 @@ Descripción: Panel de control del administrador con estadísticas, gráficas y 
                             <td>459,95€</td>
                             <td><span class="badge bg-warning text-dark">Procesando</span></td>
                         </tr>
-                        <!-- Pedido 4 -->
+                        <!-- Order 4 -->
                         <tr>
                             <td><strong>#ORD004</strong></td>
                             <td>Laura Rodriguez</td>
@@ -215,10 +211,10 @@ Descripción: Panel de control del administrador con estadísticas, gráficas y 
     <div id="footer-placeholder"></div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // --- 1. CONFIGURACIÓN DE GRÁFICAS (Chart.js) ---
+        // --- 1. CHART CONFIGURATION (Chart.js) ---
 
-        // Configuración de Gráfica: Ventas por Categoría (Gráfico de Barras)
-        // Muestra el volumen de ventas segmentado por familia de productos
+        // Chart Configuration: Sales by Category (Bar Chart)
+        // Shows sales volume segmented by product family
         new Chart(document.getElementById('graficaVentasCat'), {
             type: 'bar',
             data: {
@@ -233,8 +229,8 @@ Descripción: Panel de control del administrador con estadísticas, gráficas y 
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
         });
 
-        // Configuración de Gráfica: Ventas Mensuales (Gráfico de Líneas con área)
-        // Representa la evolución de los ingresos a lo largo de los últimos meses
+        // Chart Configuration: Monthly Sales (Line Chart with area)
+        // Represents revenue evolution over the last months
         new Chart(document.getElementById('graficaVentasMes'), {
             type: 'line',
             data: {
@@ -250,8 +246,8 @@ Descripción: Panel de control del administrador con estadísticas, gráficas y 
             options: { responsive: true, maintainAspectRatio: false }
         });
 
-        // Configuración de Gráfica: Estado del Inventario (Gráfico de Rosco / Doughnut)
-        // Muestra la distribución porcentual del almacén según la disponibilidad
+        // Chart Configuration: Inventory Status (Doughnut/Pie Chart)
+        // Shows percentage distribution of warehouse by availability
         new Chart(document.getElementById('graficaInventario'), {
             type: 'doughnut',
             data: {
@@ -266,8 +262,8 @@ Descripción: Panel de control del administrador con estadísticas, gráficas y 
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, cutout: '60%' }
         });
 
-        // --- 2. CARGA DE COMPONENTES DINÁMICOS ---
-        // Utilidad reutilizable para inyectar fragmentos HTML (modificados para adaptar rutas de admin)
+        // --- 2. DYNAMIC COMPONENT LOADING ---
+        // Reusable utility for injecting HTML fragments (modified to adapt admin routes)
         const loadComp = (url, id, cb) =>
             fetch(url)
                 .then(r => r.text())
@@ -276,7 +272,7 @@ Descripción: Panel de control del administrador con estadísticas, gráficas y 
                     if (cb) cb(document.getElementById(id));
                 });
 
-        // Carga del Header dependiendo del estado de sesión almacenado
+        // Load header based on stored session state
         loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header.html' : '../headers/unloged_header.html', 'navbar-placeholder', nav => {
             nav.querySelectorAll('a, form').forEach(el => {
                 const a = el.tagName === 'FORM' ? 'action' : 'href', v = el.getAttribute(a);

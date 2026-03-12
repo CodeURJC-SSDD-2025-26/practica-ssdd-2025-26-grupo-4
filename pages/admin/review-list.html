@@ -1,7 +1,3 @@
-<!--
-Archivo: review-list.html
-Descripción: Gestión de reseñas para el administrador.Permite responder, editar respuestas y eliminar reseñas.
--->
 <!DOCTYPE html>
 <html lang="es">
 
@@ -18,7 +14,7 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
 <body>
     <div id="navbar-placeholder"></div>
     <main class="container my-5 pt-4">
-        <!-- Navegación de Administración -->
+        <!-- Navigation of Administration -->
         <nav class="nav nav-pills mb-4">
             <a class="nav-link" href="admin-dashboard.html"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
             <a class="nav-link" href="item-list.html"><i class="bi bi-box-seam me-1"></i>Productos</a>
@@ -26,7 +22,7 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
             <a class="nav-link active" href="review-list.html"><i class="bi bi-chat-left-text me-1"></i>Reseñas</a>
             <a class="nav-link" href="order-list.html"><i class="bi bi-cart-check me-1"></i>Pedidos</a>
         </nav>
-        <!-- Titulo de Sección -->
+        <!-- Section Title -->
         <header class="mb-4">
             <h2 class="mb-1"><i class="bi bi-chat-left-dots me-2"></i>Gestión de Reseñas</h2>
             <p class="text-muted mb-0 small">Gestiona las opiniones de los clientes y responde oficialmente a sus
@@ -79,7 +75,7 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
                 </form>
             </div>
         </section>
-        <!-- Galería de Reseñas -->
+        <!-- Review Gallery -->
         <div class="row g-3" id="reviewContainer">
             <!-- Review Card 1 -->
             <article class="col-12">
@@ -158,7 +154,7 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
                     </div>
                 </div>
             </article>
-            <!-- Reseña 3 -->
+            <!-- Review 3 -->
             <article class="col-12">
                 <div class="card shadow-sm">
                     <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
@@ -190,7 +186,7 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
                     </div>
                 </div>
             </article>
-            <!-- Reseña 4 -->
+            <!-- Review 4 -->
             <article class="col-12">
                 <div class="card shadow-sm">
                     <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
@@ -223,7 +219,7 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
                     </div>
                 </div>
             </article>
-            <!-- Reseña 5 -->
+            <!-- Review 5 -->
             <article class="col-12">
                 <div class="card shadow-sm">
                     <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
@@ -261,7 +257,7 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
             </article>
         </div>
     </main>
-    <!-- Modales de Gestión -->
+    <!-- Management Modals -->
     <div aria-hidden="true" class="modal fade" id="replyModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg">
@@ -282,7 +278,7 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
             </div>
         </div>
     </div>
-    <!-- Modal de Eliminación -->
+    <!-- Deletion Modal -->
     <div aria-hidden="true" class="modal fade" id="modalEliminar" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content border-0 shadow">
@@ -301,7 +297,7 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
     <div id="footer-placeholder"></div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Lógica de Modales
+        // Modal Logic
         const showModal = (id) => new bootstrap.Modal(document.getElementById(id)).show();
         function openReply(user, existing = '') {
             document.getElementById('replyToUser').innerText = 'Respondiendo a: ' + user;
@@ -315,7 +311,7 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
         }
         const saveReply = () => { alert('Respuesta guardada con éxito.'); location.reload(); };
 
-        // Carga de Componentes
+        // Component Loading
         const loadComp = (url, id, cb) => {
             fetch(url)
                 .then(r => r.text())
@@ -325,7 +321,7 @@ Descripción: Gestión de reseñas para el administrador.Permite responder, edit
                 });
         };
 
-        // Carga del Header dependiendo del estado de sesión almacenado
+        // Load header based on stored session state
         loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header.html' : '../headers/unloged_header.html', 'navbar-placeholder', nav => {
             nav.querySelectorAll('a, form').forEach(el => {
                 const a = el.tagName === 'FORM' ? 'action' : 'href';

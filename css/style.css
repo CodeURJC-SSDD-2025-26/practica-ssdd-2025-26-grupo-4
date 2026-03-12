@@ -1,32 +1,31 @@
-/* Fondo oscuro en los items del menú lateral */
+/* Sidebar categories styling */
 #sidebarCategorias .list-group-item {
     background-color: transparent;
-    color: rgba(255, 255, 255, .75);
+    color: rgba(255, 255, 255, 0.75);
     border: none;
-    padding: .5rem 1rem;
+    padding: 0.5rem 1rem;
 }
 
-/* Efecto al pasar el ratón */
 #sidebarCategorias .list-group-item:hover {
-    background-color: rgba(255, 255, 255, .1);
+    background-color: rgba(255, 255, 255, 0.1);
     color: #fff;
 }
 
-/* Ajuste para las imágenes de los productos */
+/* Product image styling */
 .card-img-top {
     height: 200px;
     object-fit: contain;
     background-color: #fff;
 }
 
-/* Estilo para las estrellas de puntuación */
+/* Rating stars styling */
 .stars-outer {
     position: relative;
     display: inline-block;
     font-family: "Font Awesome 6 Free";
     font-weight: 900;
-    font-size: 1.2rem;   /* Tamaño reducido */
-    color: #e0e0e0;      /* Gris claro de fondo */
+    font-size: 1.2rem;
+    color: #e0e0e0;
 }
 
 .stars-inner {
@@ -35,17 +34,15 @@
     left: 0;
     white-space: nowrap;
     overflow: hidden;
-    color: #ffc107;      /* Amarillo clásico */
-    /* El width se controla desde el HTML (ej: style="width: 92%") */
+    color: #ffc107;
 }
 
-/* Contenido de las estrellas (Unicode de FontAwesome) */
-.stars-outer::before, 
+.stars-outer::before,
 .stars-inner::before {
     content: "\f005 \f005 \f005 \f005 \f005";
 }
 
-/* Contenedor y textos de reseñas */
+/* Rating container */
 .rating-container {
     text-align: center;
     font-family: sans-serif;
@@ -63,7 +60,7 @@
     margin-top: 5px;
 }
 
-/* Eliminar las flechas (spinners) de los inputs de número para ganar espacio */
+/* Remove spinner buttons from number inputs */
 .custom-input::-webkit-outer-spin-button,
 .custom-input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -71,16 +68,61 @@
 }
 
 .custom-input {
-    -moz-appearance: textfield; /* Firefox */
+    -moz-appearance: textfield;
     padding-left: 5px !important;
     padding-right: 5px !important;
 }
 
-/* Ajuste opcional para que los recuadros se vean más cuadrados */
+/* Input group styling */
 .input-group-text {
-    border-left: none; /* Une visualmente el cuadro y el símbolo € */
+    border-left: none;
 }
 
 .form-control:focus {
-    z-index: 0; /* Evita que el borde azul tape el símbolo € */
+    z-index: 0;
+}
+
+/* Icon hover effects - primary */
+.icon-hover-primary:hover {
+    border-color: #3b71ca !important;
+    background-color: white !important;
+}
+
+.icon-hover-primary:hover i {
+    color: #3b71ca !important;
+}
+
+/* Icon hover effects - danger */
+.icon-hover-danger:hover {
+    border-color: #dc4c64 !important;
+    background-color: white !important;
+}
+
+.icon-hover-danger:hover i {
+    color: #dc4c64 !important;
+}
+
+/* Pointer cursor for interactive elements */
+.nav-link-pointer,
+.edit-icon {
+    cursor: pointer;
+}
+
+/* Avatar sizing */
+.avatar-sm {
+    height: 60px;
+    width: 60px;
+}
+
+.avatar-lg {
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
+}
+
+/* Footer link hover effect */
+.footer-link-hover:hover {
+    color: white !important;
+    transition: color 0.2s ease;
+}
 }

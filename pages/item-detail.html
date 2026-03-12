@@ -267,24 +267,20 @@
 
     <script>
         function changeImage(src) {
-            // Buscamos la imagen principal por su ID y cambiamos su fuente
             document.getElementById('mainImage').src = src;
         }
     </script>
 
     <script>
-        // --- CARGA DEL HEADER (Tu código actual) ---
         document.addEventListener("DOMContentLoaded", function () {
-            // Comprobamos si el usuario está logueado
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             const isInPagesFolder = window.location.pathname.includes('/pages/');
             const basePath = isInPagesFolder ? 'headers/' : 'pages/headers/';
             const headerFile = isLoggedIn ? basePath + 'loged_header.html' : basePath + 'unloged_header.html';
 
-            // Cargamos el archivo y lo metemos en el contenedor
             fetch(headerFile)
                 .then(response => {
-                    if (!response.ok) throw new Error("No se pudo cargar el header");
+                    if (!response.ok) throw new Error("Failed to load header");
                     return response.text();
                 })
                 .then(html => {
@@ -295,42 +291,27 @@
                         if (adminBtn) adminBtn.classList.remove('d-none');
                     }
 
-                    // Lógica de Cerrar Sesión
                     const btnSalir = document.getElementById('btnCerrarSesion');
                     if (btnSalir) {
                         btnSalir.addEventListener('click', function (e) {
                             e.preventDefault();
                             localStorage.removeItem('isLoggedIn');
-                            localStorage.removeItem('userRole'); // Limpiamos también el rol
+                            localStorage.removeItem('userRole');
                             window.location.href = isInPagesFolder ? '../index.html' : 'index.html';
                         });
                     }
 
-                    // Corregir rutas de enlaces si estamos en el index
                     if (!isInPagesFolder) {
                         const links = document.querySelectorAll('#header-container a');
                         links.forEach(link => {
                             const href = link.getAttribute('href');
-                            // Si el enlace no es un link externo (http) y no empieza por "pages/"
                             if (href && !href.startsWith('http') && !href.startsWith('pages/') && href !== '#') {
                                 link.setAttribute('href', 'pages/' + href);
                             }
                         });
                     }
-
-                    // --- BONUS: AÑADIR FUNCIÓN CERRAR SESIÓN ---
-                    // Si cargamos el loged_header, le damos vida al botón de Salir (si lo añades)
-                    if (isLoggedIn) {
-                        const btnSalir = document.getElementById('btnCerrarSesion');
-                        if (btnSalir) {
-                            btnSalir.addEventListener('click', function () {
-                                localStorage.removeItem('isLoggedIn');
-                                window.location.reload(); // Recarga la página
-                            });
-                        }
-                    }
                 })
-                .catch(error => console.error('Error cargando la cabecera:', error));
+                .catch(error => console.error('Error loading header:', error));
         });
         fetch('footer.html')
             .then(response => {

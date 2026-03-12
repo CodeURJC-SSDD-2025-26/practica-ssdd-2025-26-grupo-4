@@ -121,9 +121,9 @@
         stars.forEach(star => {
             star.addEventListener('click', function () {
                 const value = this.getAttribute('data-value');
-                ratingInput.value = value; // Guardamos el valor en el input oculto
+                ratingInput.value = value; // Store value on hidden input
 
-                // Actualizamos visualmente las estrellas
+                // Update stars
                 stars.forEach(s => {
                     if (s.getAttribute('data-value') <= value) {
                         s.classList.replace('bi-star', 'bi-star-fill');
@@ -140,14 +140,14 @@
         const previewContainer = document.getElementById('preview-container');
 
         photoInput.addEventListener('change', function () {
-            // No borramos las anteriores por si el usuario añade más
+            // We don't delete the previous ones in case the user adds more
             const files = Array.from(this.files);
 
             files.forEach(file => {
                 const reader = new FileReader();
 
                 reader.onload = function (e) {
-                    // Creamos el elemento de la imagen
+                    // Create the image element
                     const imgWrapper = document.createElement('div');
                     imgWrapper.style.position = 'relative';
 
@@ -167,22 +167,22 @@
 
     <script>
         function changeImage(src) {
-            // Buscamos la imagen principal por su ID y cambiamos su fuente
+            // Find the main image by ID and change its source
             document.getElementById('mainImage').src = src;
         }
     </script>
 
     <script>
         document.querySelector('form').addEventListener('submit', function (event) {
-            // Obtenemos los valores actuales
+            // Get current values
             const rating = document.getElementById('rating-value').value;
             const titulo = document.getElementById('titulo').value.trim();
             const comentario = document.getElementById('comentario').value.trim();
 
-            // Comprobamos si falta algo
+            // Check if something is missing
             if (rating === "0") {
                 alert("Por favor, selecciona una puntuación con las estrellas.");
-                event.preventDefault(); // Evita que el formulario se envíe
+                event.preventDefault(); // Prevent form submission
                 return;
             }
 
@@ -198,24 +198,24 @@
                 return;
             }
 
-            // Si todo está bien, mostramos un mensaje de éxito
+            // If everything is fine, show a success message
             alert("¡Gracias! Tu opinión se ha publicado correctamente.");
         });
     </script>
 
     <script>
-        // --- CARGA DEL HEADER (Tu código actual) ---
+        // --- HEADER LOADING (Current code) ---
         document.addEventListener("DOMContentLoaded", function () {
-            // Comprobamos si el usuario está logueado
+            // Check if user is logged in
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             const isInPagesFolder = window.location.pathname.includes('/pages/');
             const basePath = isInPagesFolder ? 'headers/' : 'pages/headers/';
             const headerFile = isLoggedIn ? basePath + 'loged_header.html' : basePath + 'unloged_header.html';
 
-            // Cargamos el archivo y lo metemos en el contenedor
+            // Load the file and insert it in the container
             fetch(headerFile)
                 .then(response => {
-                    if (!response.ok) throw new Error("No se pudo cargar el header");
+                    if (!response.ok) throw new Error("Could not load header");
                     return response.text();
                 })
                 .then(html => {
@@ -226,46 +226,46 @@
                         if (adminBtn) adminBtn.classList.remove('d-none');
                     }
 
-                    // Lógica de Cerrar Sesión
+                    // Logout logic
                     const btnSalir = document.getElementById('btnCerrarSesion');
                     if (btnSalir) {
                         btnSalir.addEventListener('click', function (e) {
                             e.preventDefault();
                             localStorage.removeItem('isLoggedIn');
-                            localStorage.removeItem('userRole'); // Limpiamos también el rol
+                            localStorage.removeItem('userRole'); // Also clean up the role
                             window.location.href = isInPagesFolder ? '../index.html' : 'index.html';
                         });
                     }
 
-                    // Corregir rutas de enlaces si estamos en el index
+                    // Fix link paths if we are in the index
                     if (!isInPagesFolder) {
                         const links = document.querySelectorAll('#header-container a');
                         links.forEach(link => {
                             const href = link.getAttribute('href');
-                            // Si el enlace no es un link externo (http) y no empieza por "pages/"
+                            // If the link is not an external link (http) and does not start with "pages/"
                             if (href && !href.startsWith('http') && !href.startsWith('pages/') && href !== '#') {
                                 link.setAttribute('href', 'pages/' + href);
                             }
                         });
                     }
 
-                    // --- BONUS: AÑADIR FUNCIÓN CERRAR SESIÓN ---
-                    // Si cargamos el loged_header, le damos vida al botón de Salir (si lo añades)
+                    // --- BONUS: ADD LOGOUT FUNCTION ---
+                    // If we load the loged_header, we give life to the Logout button (if you add it)
                     if (isLoggedIn) {
                         const btnSalir = document.getElementById('btnCerrarSesion');
                         if (btnSalir) {
                             btnSalir.addEventListener('click', function () {
                                 localStorage.removeItem('isLoggedIn');
-                                window.location.reload(); // Recarga la página
+                                window.location.reload(); // Reload the page
                             });
                         }
                     }
                 })
-                .catch(error => console.error('Error cargando la cabecera:', error));
+                .catch(error => console.error('Error loading header:', error));
         });
         fetch('footer.html')
             .then(response => {
-                if (!response.ok) throw new Error("Error al cargar el footer");
+                if (!response.ok) throw new Error("Error loading footer");
                 return response.text();
             })
             .then(data => {

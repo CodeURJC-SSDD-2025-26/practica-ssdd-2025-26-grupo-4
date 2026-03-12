@@ -1,8 +1,3 @@
-<!--
-Archivo: item-edit.html
-Descripción: Formulario de edición de un producto existente para el administrador.
-Cubre rúbrica: formulario editar entidad, campos pre-rellenados, galería de imágenes, uso correcto Bootstrap.
--->
 <!DOCTYPE html>
 <html lang="es">
 
@@ -19,7 +14,7 @@ Cubre rúbrica: formulario editar entidad, campos pre-rellenados, galería de im
 <body>
     <div id="navbar-placeholder"></div>
     <main class="container my-5 pt-4">
-        <!-- Navegación de Administración -->
+        <!-- Navigation of Administration -->
         <nav class="nav nav-pills mb-4">
             <a class="nav-link" href="admin-dashboard.html"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
             <a class="nav-link active" href="item-list.html"><i class="bi bi-box-seam me-1"></i>Productos</a>
@@ -27,7 +22,7 @@ Cubre rúbrica: formulario editar entidad, campos pre-rellenados, galería de im
             <a class="nav-link" href="review-list.html"><i class="bi bi-chat-left-text me-1"></i>Reseñas</a>
             <a class="nav-link" href="order-list.html"><i class="bi bi-cart-check me-1"></i>Pedidos</a>
         </nav>
-        <!-- Titulo y Acción Principal -->
+        <!-- Title and Main Action -->
         <header class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h2 class="mb-1"><i class="bi bi-pencil-square me-2"></i>Editar Producto</h2>
@@ -36,12 +31,12 @@ Cubre rúbrica: formulario editar entidad, campos pre-rellenados, galería de im
             </div>
             <span class="badge bg-secondary">ID: #P001</span>
         </header>
-        <!-- Formulario de Edición -->
+        <!-- Edit Form -->
         <section class="card shadow-sm border-0">
             <div class="card-body p-4">
                 <form action="#" id="editForm" method="POST">
                     <div class="row g-4">
-                        <!-- Datos Principales -->
+                        <!-- Principal data -->
                         <div class="col-lg-8">
                             <div class="mb-3">
                                 <label class="form-label small fw-bold">Nombre del Producto</label>
@@ -77,7 +72,7 @@ Cubre rúbrica: formulario editar entidad, campos pre-rellenados, galería de im
                                 </div>
                             </div>
                         </div>
-                        <!-- Panel Multimedia -->
+                        <!-- Multimedia Panel -->
                         <div class="col-lg-4">
                             <div class="card bg-light border-0">
                                 <div class="card-body">
@@ -117,7 +112,7 @@ Cubre rúbrica: formulario editar entidad, campos pre-rellenados, galería de im
     <div id="footer-placeholder"></div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Manejo de Previsualización
+        // Image preview handler
         document.getElementById('imgInput').addEventListener('change', e => {
             const preview = document.getElementById('preview');
             preview.innerHTML = '';
@@ -134,13 +129,13 @@ Cubre rúbrica: formulario editar entidad, campos pre-rellenados, galería de im
             });
         });
 
-        // Simulación de Envío
+        // Form submission handler
         document.getElementById('editForm').onsubmit = e => {
             e.preventDefault();
             location.href = 'item-list.html';
         };
 
-        // Carga de Componentes
+        // Load components
         const loadComp = (url, id, cb) => {
             fetch(url)
                 .then(r => r.text())
@@ -150,7 +145,7 @@ Cubre rúbrica: formulario editar entidad, campos pre-rellenados, galería de im
                 });
         };
 
-        // Carga del Header dependiendo del estado de sesión almacenado
+        // Load Header based on stored session state
         loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header.html' : '../headers/unloged_header.html', 'navbar-placeholder', nav => {
             nav.querySelectorAll('a, form').forEach(el => {
                 const a = el.tagName === 'FORM' ? 'action' : 'href';

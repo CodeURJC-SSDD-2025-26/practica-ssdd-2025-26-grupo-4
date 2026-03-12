@@ -502,32 +502,32 @@
         const rango = document.getElementById('rangoPrecio');
         const numero = document.getElementById('numeroPrecio');
 
-        // Actualiza el número cuando mueves la barra
+        // Update number when you move the slider
         rango.oninput = function () {
             numero.value = this.value;
         }
 
-        // Actualiza la barra cuando escribes en el número
+        // Update slider when you type in the number
         numero.oninput = function () {
-            if (this.value > 2000) this.value = 2000; // Límite de seguridad
+            if (this.value > 2000) this.value = 2000; // Security limit
             rango.value = this.value;
         }
     </script>
 
     <script>
-        // --- CARGA DEL HEADER (Tu código actual) ---
+        // --- HEADER LOADING (Current code) ---
         document.addEventListener("DOMContentLoaded", function () {
-            // Comprobamos si el usuario está logueado
+            // Check if user is logged in
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-            // Comprobamos paths
+            // Check paths
             const isInPagesFolder = window.location.pathname.includes('/pages/');
             const basePath = isInPagesFolder ? 'headers/' : 'pages/headers/';
             const headerFile = isLoggedIn ? basePath + 'loged_header.html' : basePath + 'unloged_header.html';
 
-            // Cargamos el archivo y lo metemos en el contenedor
+            // Load the file and insert it in the container
             fetch(headerFile)
                 .then(response => {
-                    if (!response.ok) throw new Error("No se pudo cargar el header");
+                    if (!response.ok) throw new Error("Could not load header");
                     return response.text();
                 })
                 .then(html => {
@@ -538,41 +538,41 @@
                         if (adminBtn) adminBtn.classList.remove('d-none');
                     }
 
-                    // Lógica de Cerrar Sesión
+                    // Logout logic
                     const btnSalir = document.getElementById('btnCerrarSesion');
                     if (btnSalir) {
                         btnSalir.addEventListener('click', function (e) {
                             e.preventDefault();
                             localStorage.removeItem('isLoggedIn');
-                            localStorage.removeItem('userRole'); // Limpiamos también el rol
+                            localStorage.removeItem('userRole'); // Also clean up the role
                             window.location.href = isInPagesFolder ? '../index.html' : 'index.html';
                         });
                     }
 
-                    // Corregir rutas de enlaces si estamos en el index
+                    // Fix link paths if we are in the index
                     if (!isInPagesFolder) {
                         const links = document.querySelectorAll('#header-container a');
                         links.forEach(link => {
                             const href = link.getAttribute('href');
-                            // Si el enlace no es un link externo (http) y no empieza por "pages/"
+                            // If the link is not an external link (http) and does not start with "pages/"
                             if (href && !href.startsWith('http') && !href.startsWith('pages/') && href !== '#') {
                                 link.setAttribute('href', 'pages/' + href);
                             }
                         });
                     }
 
-                    // --- FUNCIÓN CERRAR SESIÓN ---
+                    // --- LOGOUT FUNCTION ---
                     if (isLoggedIn) {
                         const btnSalir = document.getElementById('btnCerrarSesion');
                         if (btnSalir) {
                             btnSalir.addEventListener('click', function () {
                                 localStorage.removeItem('isLoggedIn');
-                                window.location.reload(); // Recarga la página
+                                window.location.reload(); // Reload the page
                             });
                         }
                     }
                 })
-                .catch(error => console.error('Error cargando la cabecera:', error));
+                .catch(error => console.error('Error loading header:', error));
         });
         fetch('footer.html')
             .then(response => {

@@ -319,7 +319,7 @@
 
     fetch(headerFile)
       .then(response => {
-        if (!response.ok) throw new Error("Error al cargar " + headerFile);
+        if (!response.ok) throw new Error("Error loading " + headerFile);
         return response.text();
       })
       .then(data => {
