@@ -39,4 +39,19 @@ public class WebController {
     public String paymentCorrect() {
         return "pages/payment_correct";
     }
+
+    @GetMapping("/user-registration")
+    public String userRegistration() {
+        return "pages/user_registration";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "pages/login";
+    }
+
+    @GetMapping("/profile")
+    public String profile() {
+        return "pages/profile";
+    }
 }
