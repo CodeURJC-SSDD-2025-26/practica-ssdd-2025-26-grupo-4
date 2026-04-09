@@ -14,7 +14,13 @@
 </head>
 
 <body>
-    <div id="header-container"></div>
+    {{#isLoggedIn}}
+    {{> partials/headers/loged_header}}
+    {{/isLoggedIn}}
+    
+    {{^isLoggedIn}}
+        {{> partials/headers/unloged_header}}
+    {{/isLoggedIn}}
 
     <main class="container mt-5 pt-4">
         <nav aria-label="breadcrumb" class="mb-4">

@@ -13,7 +13,13 @@
 </head>
 
 <body>
-    <div id='header-container'></div>
+    {{#isLoggedIn}}
+    {{> partials/headers/loged_header}}
+    {{/isLoggedIn}}
+    
+    {{^isLoggedIn}}
+        {{> partials/headers/unloged_header}}
+    {{/isLoggedIn}}
 
     <div class="container-fluid" style="margin-top: 80px;">
         <div class="row">

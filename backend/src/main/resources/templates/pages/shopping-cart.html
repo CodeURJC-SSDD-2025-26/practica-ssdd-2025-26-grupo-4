@@ -15,7 +15,13 @@
 </head>
 
 <body style="padding-top: 90px;">
-  <div id="navbar-placeholder"></div>
+  {{#isLoggedIn}}
+    {{> partials/headers/loged_header}}
+  {{/isLoggedIn}}
+  
+  {{^isLoggedIn}}
+    {{> partials/headers/unloged_header}}
+  {{/isLoggedIn}}
 
   <section class="bg-light pb-4">
     <div class="container">
