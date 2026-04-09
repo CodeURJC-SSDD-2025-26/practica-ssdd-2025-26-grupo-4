@@ -143,8 +143,8 @@
               </div>
 
               <div class="mt-3">
-                <a href="payment.html" class="btn btn-success w-100 shadow-0 mb-2">Finalizar compra </a>
-                <a href="../index.html" class="btn btn-light w-100 border mt-2"> Seguir comprando </a>
+                <a href="payment" class="btn btn-success w-100 shadow-0 mb-2">Finalizar compra </a>
+                <a href="/" class="btn btn-light w-100 border mt-2"> Seguir comprando </a>
               </div>
             </div>
           </div>
@@ -341,7 +341,7 @@
                   btnSalir.addEventListener('click', function() {
                       localStorage.removeItem('isLoggedIn');
                       localStorage.removeItem('userRole'); // Don't forget to clean up the role
-                      window.location.href = "../index.html";
+                      window.location.href = "/";
                   });
               }
 

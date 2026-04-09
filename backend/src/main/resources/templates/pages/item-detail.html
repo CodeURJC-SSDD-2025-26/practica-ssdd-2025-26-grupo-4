@@ -85,7 +85,7 @@
 
                         <div class="d-grid gap-2">
                             <button class="btn btn-primary btn-lg fw-bold py-3">
-                                <i class="fas fa-shopping-cart me-2"></i> <a href="shopping-cart.html"
+                                <i class="fas fa-shopping-cart me-2"></i> <a href="shopping-cart"
                                     class="text-white text-decoration-none">Añadir al carrito</a>
                             </button>
                         </div>
@@ -180,7 +180,7 @@
                             </div>
                         </div>
 
-                        <a href="create-review.html" class="btn btn-outline-primary mt-4 fw-bold">
+                        <a href="create-review" class="btn btn-outline-primary mt-4 fw-bold">
                             Escribir opinión
                         </a>
                     </div>
@@ -297,7 +297,7 @@
                             e.preventDefault();
                             localStorage.removeItem('isLoggedIn');
                             localStorage.removeItem('userRole');
-                            window.location.href = isInPagesFolder ? '../index.html' : 'index.html';
+                            window.location.href = isInPagesFolder ? '/' : '/';
                         });
                     }
 

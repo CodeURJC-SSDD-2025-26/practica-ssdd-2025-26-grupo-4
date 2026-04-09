@@ -13,7 +13,7 @@
 
 <nav class="navbar navbar-light bg-white shadow-sm">
     <div class="container justify-content-center">
-        <a class="navbar-brand fw-bold" href="../index.html">
+        <a class="navbar-brand fw-bold" href="/">
             <i class="fas fa-lock text-success me-2"></i>Pago Seguro | <span class="text-primary">PC</span>BuilderShop
         </a>
     </div>
@@ -137,7 +137,7 @@
                         <span class="fw-bold">Total (EUR)</span>
                         <strong class="fs-4">764€</strong>
                     </li>
-                    <a href="../pages/shopping-cart.html" class="btn btn-danger w-100 border mt-2"> Cancelar </a>
+                    <a href="shopping-cart" class="btn btn-danger w-100 border mt-2"> Cancelar </a>
                 </ul>
             </div>
         </div>
@@ -164,7 +164,7 @@
             event.stopPropagation();
         } else {
             event.preventDefault();
-            window.location.href = "payment_correct.html";
+            window.location.href = "payment-correct";
         }
 
         form.classList.add('was-validated');

@@ -21,8 +21,8 @@
             <div class="col-lg-10">
                 <nav aria-label="breadcrumb" class="mb-4">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="../index.html" class="text-decoration-none">Inicio</a></li>
-                        <li class="breadcrumb-item"><a href="search-result.html"
+                        <li class="breadcrumb-item"><a href="/" class="text-decoration-none">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="search-result"
                                 class="text-decoration-none">Procesadores</a></li>
                         <li class="breadcrumb-item active">Escribir opinión</li>
                     </ol>
@@ -98,7 +98,7 @@
                                     <button type="submit" class="btn btn-primary px-4 py-2 fw-bold">
                                         Publicar opinión
                                     </button>
-                                    <a href="item-detail.html" class="btn btn-outline-secondary px-4 py-2">
+                                    <a href="item-detail" class="btn btn-outline-secondary px-4 py-2">
                                         Cancelar
                                     </a>
                                 </div>
@@ -233,7 +233,7 @@
                             e.preventDefault();
                             localStorage.removeItem('isLoggedIn');
                             localStorage.removeItem('userRole'); // Also clean up the role
-                            window.location.href = isInPagesFolder ? '../index.html' : 'index.html';
+                            window.location.href = isInPagesFolder ? '/' : '/';
                         });
                     }
 
