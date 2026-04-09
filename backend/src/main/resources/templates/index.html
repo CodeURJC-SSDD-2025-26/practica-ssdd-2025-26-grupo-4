@@ -19,7 +19,13 @@
 
 <body>
 
-  {{> partials/headers/unloged_header}}
+  {{#isLoggedIn}}
+    {{> partials/headers/loged_header}}
+  {{/isLoggedIn}}
+  
+  {{^isLoggedIn}}
+    {{> partials/headers/unloged_header}}
+  {{/isLoggedIn}}
 
   <section>
     <div class="container pt-5">
