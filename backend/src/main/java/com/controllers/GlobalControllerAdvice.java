@@ -1,4 +1,4 @@
-package com.example.backend;
+package com.controllers;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
