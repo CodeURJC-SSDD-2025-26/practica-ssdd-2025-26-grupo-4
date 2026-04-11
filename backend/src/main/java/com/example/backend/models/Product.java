@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,6 +33,8 @@ public class Product {
 
     private boolean image;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductImage> additionalImages = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews;

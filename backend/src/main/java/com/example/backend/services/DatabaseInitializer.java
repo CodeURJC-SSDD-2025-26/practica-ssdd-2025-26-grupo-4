@@ -31,6 +31,12 @@ public class DatabaseInitializer {
 
     @PostConstruct
     public void init() {
+
+        reviewRepository.deleteAll();
+        orderRepository.deleteAll();
+        productRepository.deleteAll();
+        userRepository.deleteAll();
+
         // 1. Create Users (Admin and Customer)
         User admin = new User();
         admin.setUsername("admin");
