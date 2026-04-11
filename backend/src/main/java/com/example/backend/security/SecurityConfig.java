@@ -20,27 +20,24 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/css/**", "/js/**", "/icons/**", "/images/**").permitAll()
-                .requestMatchers("/", "/index", "/producto/**", "/login", "/user_registration").permitAll()
-                
-                .requestMatchers("/perfil", "/carrito/**", "/comprar").hasAnyRole("USER", "ADMIN")
-                
-                .requestMatchers("/admin/**", "/producto/nuevo", "/producto/editar/**").hasRole("ADMIN")
-                
+                .requestMatchers("/css/**", "/js/**", "/images/**").permitAll() //PÚBLICO
+                .requestMatchers("/", "/index", "/item/detail/**", "/login", "/user_registration","/search/results").permitAll()//PUBLICO
+                .requestMatchers("/profile", "/shopping/cart/**", "/payment/**", "/payment_correct/**", "/create/review/**").hasAnyRole("USER", "ADMIN") //USUARIOS Y ADMINS
+                .requestMatchers("/admin/**", "/item/create", "/item/edit/**").hasRole("ADMIN") //SOLO ADMINS
                 .anyRequest().authenticated()
         );
 
         http.formLogin(formLogin -> formLogin
                 .loginPage("/login") 
                 .loginProcessingUrl("/login") 
-                .defaultSuccessUrl("/", true) 
+                .defaultSuccessUrl("/index", true) 
                 .failureUrl("/login?error=true")
                 .permitAll()
         );
 
         http.logout(logout -> logout
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
+                .logoutSuccessUrl("/index")
                 .permitAll()
         );
 
