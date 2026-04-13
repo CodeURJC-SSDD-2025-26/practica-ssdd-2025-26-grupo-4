@@ -16,28 +16,22 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder(); // Encripta las contraseñas
     }
 
-    @Bean
+   @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/css/**", "/js/**", "/images/**").permitAll() //PÚBLICO
-                .requestMatchers("/", "/index", "/item/detail/**", "/login", "/user_registration","/search/results").permitAll()//PUBLICO
-                .requestMatchers("/profile", "/shopping/cart/**", "/payment/**", "/payment_correct/**", "/create/review/**").hasAnyRole("USER", "ADMIN") //USUARIOS Y ADMINS
-                .requestMatchers("/admin/**", "/item/create", "/item/edit/**").hasRole("ADMIN") //SOLO ADMINS
-                .anyRequest().authenticated()
+                .requestMatchers("/css/**", "/assets/images/**", "/js/**").permitAll()// PÚBLICO
+                .requestMatchers("/", "/index", "/item-detail", "/search-result", "/user-registration", "/login").permitAll() //PÚBLICO
+                .requestMatchers("/shopping-cart", "/create-review", "/payment", "/payment-correct", "/profile").hasAnyRole("USER", "ADMIN") //USUARIOS Y ADMINS
+                .requestMatchers("/admin/**").hasRole("ADMIN")// SOLO ADMINS
+                 .anyRequest().authenticated()
         );
 
+        // CONFIGURACIÓN DEL LOGIN 
         http.formLogin(formLogin -> formLogin
                 .loginPage("/login") 
                 .loginProcessingUrl("/login") 
-                .defaultSuccessUrl("/index", true) 
-                .failureUrl("/login?error=true")
-                .permitAll()
-        );
-
-        http.logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/index")
+                .defaultSuccessUrl("/", true) 
                 .permitAll()
         );
 
