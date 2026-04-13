@@ -21,7 +21,7 @@
                 </ul>
 
                 <form class="d-flex me-3" role="search" action="/search-result" method="GET">
-                    <input class="form-control me-2" type="search" placeholder="Buscar componente (ej: RTX 4060)">
+                    <input class="form-control me-2" type="search" name="query" placeholder="Buscar componente (ej: RTX 4060)">
                     <button class="btn btn-outline-primary" type="submit">Buscar</button>
                 </form>
 
@@ -29,9 +29,11 @@
                     <i class="bi bi-cart3 me-1"></i> <span class="d-none d-xl-inline">Mi Cesta</span>
                 </a>
 
+                {{#isLoggedIn}}
                 <div class="dropdown">
                     <button class="btn btn-outline-light dropdown-toggle d-flex align-items-center" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-circle me-1"></i> <span class="d-none d-xl-inline">Mi Cuenta</span>
+                        <i class="bi bi-person-circle me-1"></i> 
+                        <span class="d-none d-xl-inline">Mi Cuenta</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="userMenu">
                         <li><a class="dropdown-item" href="/profile"><i class="bi bi-person me-2"></i>Perfil</a></li>
@@ -46,12 +48,22 @@
 
                         <li><hr class="dropdown-divider"></li>
                         <li>
-                            <button id="btnCerrarSesion" class="dropdown-item text-danger">
+                            <form action="/logout" method="post" id="logoutForm" style="display:none;">
+                                <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+                            </form>
+                            <a href="javascript:void(0)" class="dropdown-item text-danger" onclick="document.getElementById('logoutForm').submit();">
                                 <i class="bi bi-box-arrow-right me-2"></i>Salir
-                            </button>
+                            </a>
                         </li>
                     </ul>
                 </div>
+                {{/isLoggedIn}}
+
+                {{^isLoggedIn}}
+                <a href="/login" class="btn btn-outline-light d-flex align-items-center">
+                    <i class="bi bi-box-arrow-in-right me-1"></i> Iniciar Sesión
+                </a>
+                {{/isLoggedIn}}
             </div>
         </div>
     </nav>
@@ -65,34 +77,13 @@
         </div>
         <div class="offcanvas-body">
             <div class="list-group list-group-flush">
-                <a href="#" class="list-group-item list-group-item-action">
-                    <i class="bi bi-cpu me-2"></i>
-                    Procesadores
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    <i class="bi bi-gpu-card me-2"></i>
-                    Tarjetas Gráficas
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    <i class="bi bi-motherboard me-2"></i>
-                    Placas base
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    <i class="bi bi-memory me-2"></i>
-                    Memoria RAM
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    <i class="bi bi-device-hdd me-2"></i>
-                    Discos duros
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    <i class="bi bi-lightning-charge me-2"></i>
-                    Fuentes de alimentación
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    <i class="bi bi-snow me-2"></i>
-                    Refrigeración
-                </a>
+                <a href="/search-result?category=CPU" class="list-group-item list-group-item-action"><i class="bi bi-cpu me-2"></i>Procesadores</a>
+                <a href="/search-result?category=GPU" class="list-group-item list-group-item-action"><i class="bi bi-gpu-card me-2"></i>Tarjetas Gráficas</a>
+                <a href="/search-result?category=Motherboard" class="list-group-item list-group-item-action"><i class="bi bi-motherboard me-2"></i>Placas base</a>
+                <a href="/search-result?category=RAM" class="list-group-item list-group-item-action"><i class="bi bi-memory me-2"></i>Memoria RAM</a>
+                <a href="/search-result?category=SSD" class="list-group-item list-group-item-action"><i class="bi bi-device-hdd me-2"></i>Discos duros</a>
+                <a href="/search-result?category=PowerSupply" class="list-group-item list-group-item-action"><i class="bi bi-lightning-charge me-2"></i>Fuentes</a>
+                <a href="/search-result?category=Cooling" class="list-group-item list-group-item-action"><i class="bi bi-snow me-2"></i>Refrigeración</a>
             </div>
         </div>
     </div>

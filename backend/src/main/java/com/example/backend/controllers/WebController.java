@@ -61,15 +61,11 @@ public class WebController {
         return "pages/user_registration";
     }
 
-    @GetMapping("/login")
-    public String login(HttpServletRequest request, Model model) {
-        CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
-        if (csrfToken != null) {
-            model.addAttribute("_csrf", csrfToken);
-        }
+   @GetMapping("/login")
+    public String login() {
         return "pages/login";
     }
-
+    
     @GetMapping("/profile")
     public String profile() {
         return "pages/profile";
