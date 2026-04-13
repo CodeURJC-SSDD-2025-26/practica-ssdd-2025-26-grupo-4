@@ -2,6 +2,7 @@ package com.example.backend.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -62,10 +63,14 @@ public class WebController {
     }
 
    @GetMapping("/login")
-    public String login() {
+    public String login(@RequestParam(value = "error", required = false) String error, Model model) {        
+        if (error != null) {
+            model.addAttribute("loginError", true);
+        }
+
         return "pages/login";
     }
-    
+
     @GetMapping("/profile")
     public String profile() {
         return "pages/profile";
