@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.core.io.Resource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -29,6 +30,9 @@ public class DatabaseInitializer {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostConstruct
     public void init() {
 
@@ -40,14 +44,16 @@ public class DatabaseInitializer {
         // 1. Create Users (Admin and Customer)
         User admin = new User();
         admin.setUsername("admin");
-        admin.setEncodedPassword("password"); // Will be encoded later with Security
-        admin.setRoles(Arrays.asList("USER", "ADMIN"));
+        admin.setEmail("admin@gmail.com");
+        admin.setEncodedPassword(passwordEncoder.encode("password")); // Will be encoded later with Security
+        admin.setRoles(Arrays.asList("ROLE_USER", "ROLE_ADMIN"));
         userRepository.save(admin);
 
         User customer = new User();
         customer.setUsername("user");
-        customer.setEncodedPassword("password");
-        customer.setRoles(Arrays.asList("USER"));
+        customer.setEmail("user@gmail.com");
+        customer.setEncodedPassword(passwordEncoder.encode("password"));
+        customer.setRoles(Arrays.asList("ROLE_USER"));
         userRepository.save(customer);
 
         // 2. Create Products (Sample Components)

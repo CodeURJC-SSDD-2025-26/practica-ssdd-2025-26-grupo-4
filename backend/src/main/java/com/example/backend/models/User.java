@@ -28,7 +28,7 @@ public class User {
     private String lastName;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles = new ArrayList<>(); // Example: ["USER", "ADMIN"]
+    private List<String> roles = new ArrayList<>(); // Example: ["ROLE_USER ", "ROLE_ADMIN"]
 
     @Lob
     private Blob profilePicture; // Requirement: store images in DB
