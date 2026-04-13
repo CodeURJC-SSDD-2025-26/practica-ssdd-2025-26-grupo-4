@@ -3,12 +3,23 @@ package com.example.backend.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import jakarta.servlet.http.HttpServletRequest;
+
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.ui.Model;
+
 @Controller
 public class WebController {
     @GetMapping("/")
+    public String root() {
+        return "index";
+    }
+
+    @GetMapping("/index")
     public String index() {
         return "index";
     }
+
 
     @GetMapping("/item-detail")
     public String itemDetail() {
@@ -45,8 +56,17 @@ public class WebController {
         return "pages/user_registration";
     }
 
+    @GetMapping("/user_registration")
+    public String userRegistration2() {
+        return "pages/user_registration";
+    }
+
     @GetMapping("/login")
-    public String login() {
+    public String login(HttpServletRequest request, Model model) {
+        CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
+        if (csrfToken != null) {
+            model.addAttribute("_csrf", csrfToken);
+        }
         return "pages/login";
     }
 

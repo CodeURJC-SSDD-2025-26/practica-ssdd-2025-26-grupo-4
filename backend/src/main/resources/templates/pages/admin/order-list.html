@@ -11,16 +11,21 @@
 </head>
 
 <body>
-    <div id="navbar-placeholder"></div>
-
+   {{#isLoggedIn}}
+        {{> partials/headers/loged_header}}
+    {{/isLoggedIn}}
+    
+    {{^isLoggedIn}}
+        {{> partials/headers/unloged_header}}
+    {{/isLoggedIn}} 
     <main class="container my-5 pt-4">
         <!-- Navigation of Administration -->
         <nav class="nav nav-pills mb-4">
-            <a class="nav-link" href="admin-dashboard.html"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
-            <a class="nav-link" href="item-list.html"><i class="bi bi-box-seam me-1"></i>Productos</a>
-            <a class="nav-link" href="user-list.html"><i class="bi bi-people me-1"></i>Usuarios</a>
-            <a class="nav-link" href="review-list.html"><i class="bi bi-chat-left-text me-1"></i>Reseñas</a>
-            <a class="nav-link active" href="order-list.html"><i class="bi bi-cart-check me-1"></i>Pedidos</a>
+            <a class="nav-link" href="admin-dashboard"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
+            <a class="nav-link" href="item-list"><i class="bi bi-box-seam me-1"></i>Productos</a>
+            <a class="nav-link" href="user-list"><i class="bi bi-people me-1"></i>Usuarios</a>
+            <a class="nav-link" href="review-list"><i class="bi bi-chat-left-text me-1"></i>Reseñas</a>
+            <a class="nav-link active" href="order-list"><i class="bi bi-cart-check me-1"></i>Pedidos</a>
         </nav>
 
         <!-- Title and Main Action -->
@@ -29,7 +34,7 @@
                 <h2 class="mb-1"><i class="bi bi-truck me-2"></i>Gestión de Pedidos</h2>
                 <p class="text-muted mb-0 small">Control de pedidos de clientes, facturación y estados de envío.</p>
             </div>
-            <a href="order-management.html" class="btn btn-outline-primary btn-sm">
+            <a href="order-management" class="btn btn-outline-primary btn-sm">
                 <i class="bi bi-boxes me-1"></i>Reabastecimiento
             </a>
         </header>
@@ -122,10 +127,10 @@
                             <h6 class="fw-bold text-uppercase x-small text-muted mb-2">
                                 <i class="bi bi-lightning me-1"></i>Acciones Rápidas
                             </h6>
-                            <a href="order-management.html" class="btn btn-sm btn-outline-primary w-100 mb-2">
+                            <a href="order-management" class="btn btn-sm btn-outline-primary w-100 mb-2">
                                 <i class="bi bi-boxes me-1"></i>Ir a Reabastecimiento
                             </a>
-                            <a href="item-list.html" class="btn btn-sm btn-outline-secondary w-100">
+                            <a href="item-list" class="btn btn-sm btn-outline-secondary w-100">
                                 <i class="bi bi-box-seam me-1"></i>Gestionar Productos
                             </a>
                         </div>
@@ -198,7 +203,7 @@
                             <td><span class="badge bg-success">Entregado</span></td>
                             <td class="text-end pe-4">
                                 <div class="btn-group btn-group-sm">
-                                    <a href="order-edit.html?id=O7721" class="btn btn-outline-primary"
+                                    <a href="order-edit?id=O7721" class="btn btn-outline-primary"
                                         title="Ver / Editar">
                                         <i class="bi bi-pencil"></i>
                                     </a>
@@ -223,7 +228,7 @@
                             <td><span class="badge bg-warning text-dark">Enviado</span></td>
                             <td class="text-end pe-4">
                                 <div class="btn-group btn-group-sm">
-                                    <a href="order-edit.html?id=O7725" class="btn btn-outline-primary"
+                                    <a href="order-edit?id=O7725" class="btn btn-outline-primary"
                                         title="Ver / Editar">
                                         <i class="bi bi-pencil"></i>
                                     </a>
@@ -248,7 +253,7 @@
                             <td><span class="badge bg-info text-dark">Procesando</span></td>
                             <td class="text-end pe-4">
                                 <div class="btn-group btn-group-sm">
-                                    <a href="order-edit.html?id=O7728" class="btn btn-outline-primary"
+                                    <a href="order-edit?id=O7728" class="btn btn-outline-primary"
                                         title="Ver / Editar">
                                         <i class="bi bi-pencil"></i>
                                     </a>
@@ -273,7 +278,7 @@
                             <td><span class="badge bg-secondary">Pendiente</span></td>
                             <td class="text-end pe-4">
                                 <div class="btn-group btn-group-sm">
-                                    <a href="order-edit.html?id=O7729" class="btn btn-outline-primary"
+                                    <a href="order-edit?id=O7729" class="btn btn-outline-primary"
                                         title="Ver / Editar">
                                         <i class="bi bi-pencil"></i>
                                     </a>
@@ -298,7 +303,7 @@
                             <td><span class="badge bg-danger">Cancelado</span></td>
                             <td class="text-end pe-4">
                                 <div class="btn-group btn-group-sm">
-                                    <a href="order-edit.html?id=O7601" class="btn btn-outline-primary"
+                                    <a href="order-edit?id=O7601" class="btn btn-outline-primary"
                                         title="Ver / Editar">
                                         <i class="bi bi-pencil"></i>
                                     </a>
@@ -358,7 +363,7 @@
         </div>
     </div>
 
-    <div id="footer-placeholder"></div>
+    {{> partials/footer}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // --- Dynamic Component Loading ---
@@ -372,7 +377,7 @@
         };
 
         // Load header based on stored session state
-        loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header.html' : '../headers/unloged_header.html', 'navbar-placeholder', nav => {
+        loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header' : '../headers/unloged_header', 'navbar-placeholder', nav => {
             nav.querySelectorAll('a, form').forEach(el => {
                 const a = el.tagName === 'FORM' ? 'action' : 'href';
                 const v = el.getAttribute(a);
@@ -382,12 +387,12 @@
             });
             const b = document.getElementById('btnAdminPanel');
             if (b) {
-                b.href = 'admin-dashboard.html';
+                b.href = 'admin-dashboard';
                 b.classList.remove('d-none');
             }
         });
 
-        loadComp('../footer.html', 'footer-placeholder');
+        loadComp('../footer', 'footer-placeholder');
     </script>
 </body>
 

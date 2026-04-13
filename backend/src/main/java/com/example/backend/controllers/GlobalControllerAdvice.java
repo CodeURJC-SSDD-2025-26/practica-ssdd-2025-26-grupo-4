@@ -11,5 +11,6 @@ public class GlobalControllerAdvice {
     @ModelAttribute
     public void globalAttributes(Model model, HttpServletRequest request) {
         model.addAttribute("isLoggedIn", request.getUserPrincipal() != null);
+        model.addAttribute("isAdmin", request.isUserInRole("ADMIN"));
     }
 }
