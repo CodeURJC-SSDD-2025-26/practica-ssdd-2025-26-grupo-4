@@ -73,7 +73,7 @@ public class WebController {
     }
 
     @GetMapping("/shopping-cart")
-    public String shoppingCart(Model model, Principal principal) {
+    public String shoppingCart(Model model, Principal principal, jakarta.servlet.http.HttpSession session) {
         if (principal != null) {
             userRepository.findByUsername(principal.getName()).ifPresent(user -> {
                 Optional<Order> currentOrder = orderRepository.findByUserId(user.getId())
@@ -94,11 +94,18 @@ public class WebController {
                 }
             });
         } else {
-            // Anonymous cart (not implemented with persistence, just show empty)
-            model.addAttribute("precioBase", "0,00");
+            // Anonymous cart using session
+            List<Product> sessionCart = (List<Product>) session.getAttribute("cart");
+            if (sessionCart == null) {
+                sessionCart = new ArrayList<>();
+            }
+            model.addAttribute("productosCarrito", sessionCart);
+            double realTotal = sessionCart.stream().mapToDouble(Product::getPrice).sum();
+            model.addAttribute("precioBase", String.format("%.2f", realTotal).replace('.', ','));
             model.addAttribute("precioDescuento", "0,00");
-            model.addAttribute("precioTotal", "0,00");
+            model.addAttribute("precioTotal", String.format("%.2f", realTotal).replace('.', ','));
         }
+
         
         // Also show some recommendations from the database
         List<Product> allProducts = productRepository.findAll();
@@ -109,6 +116,82 @@ public class WebController {
         }
         
         return "pages/shopping-cart";
+    }
+
+    @PostMapping("/cart/add")
+    public String addToCart(@RequestParam Long productId, Principal principal, jakarta.servlet.http.HttpSession session) {
+        if (principal != null) {
+            userRepository.findByUsername(principal.getName()).ifPresent(user -> {
+                Optional<Order> currentOrderOpt = orderRepository.findByUserId(user.getId())
+                        .stream().filter(o -> "EN PROCESO".equals(o.getStatus())).findFirst();
+                Order order;
+                if (currentOrderOpt.isPresent()) {
+                    order = currentOrderOpt.get();
+                } else {
+                    order = new Order();
+                    order.setUser(user);
+                    order.setStatus("EN PROCESO");
+                    order.setOrderDate(java.time.LocalDateTime.now());
+                    order.setProducts(new ArrayList<>());
+                    order.setTotalPrice(0.0);
+                }
+                productRepository.findById(productId).ifPresent(product -> {
+                    order.getProducts().add(product);
+                    order.setTotalPrice(order.getTotalPrice() + product.getPrice());
+                    orderRepository.save(order);
+                });
+            });
+        } else {
+            // Anonymous session cart
+            List<Product> sessionCart = (List<Product>) session.getAttribute("cart");
+            if (sessionCart == null) {
+                sessionCart = new ArrayList<>();
+            }
+            Optional<Product> pOpt = productRepository.findById(productId);
+            if(pOpt.isPresent()){
+                sessionCart.add(pOpt.get());
+                session.setAttribute("cart", sessionCart);
+            }
+        }
+        return "redirect:/shopping-cart";
+    }
+
+    @PostMapping("/cart/remove")
+    public String removeFromCart(@RequestParam Long productId, Principal principal, jakarta.servlet.http.HttpSession session) {
+        if (principal != null) {
+            userRepository.findByUsername(principal.getName()).ifPresent(user -> {
+                Optional<Order> currentOrderOpt = orderRepository.findByUserId(user.getId())
+                        .stream().filter(o -> "EN PROCESO".equals(o.getStatus())).findFirst();
+                if (currentOrderOpt.isPresent()) {
+                    Order order = currentOrderOpt.get();
+                    productRepository.findById(productId).ifPresent(product -> {
+                        // Remove only one instance of the product
+                        List<Product> products = order.getProducts();
+                        for (int i = 0; i < products.size(); i++) {
+                            if (products.get(i).getId().equals(productId)) {
+                                products.remove(i);
+                                order.setTotalPrice(Math.max(0, order.getTotalPrice() - product.getPrice()));
+                                break;
+                            }
+                        }
+                        orderRepository.save(order);
+                    });
+                }
+            });
+        } else {
+            // Anonymous session cart
+            List<Product> sessionCart = (List<Product>) session.getAttribute("cart");
+            if (sessionCart != null) {
+                for (int i = 0; i < sessionCart.size(); i++) {
+                    if (sessionCart.get(i).getId().equals(productId)) {
+                        sessionCart.remove(i);
+                        break;
+                    }
+                }
+                session.setAttribute("cart", sessionCart);
+            }
+        }
+        return "redirect:/shopping-cart";
     }
 
     @GetMapping("/create-review")
@@ -123,8 +206,13 @@ public class WebController {
     }
 
     @GetMapping("/search-result")
-    public String searchResult(Model model) {
-        model.addAttribute("productos", productRepository.findAll());
+    public String searchResult(@RequestParam(value = "category", required = false) String category, Model model) {
+        if (category != null && !category.isBlank()) {
+            model.addAttribute("productos", productRepository.findByCategory(category));
+            model.addAttribute("categoryName", category);
+        } else {
+            model.addAttribute("productos", productRepository.findAll());
+        }
         return "pages/search-result";
     }
 
@@ -471,6 +559,17 @@ public class WebController {
         if (optReview.isPresent()) {
             Review review = optReview.get();
             review.setAdminReply(reply);
+            reviewRepository.save(review);
+        }
+        return "redirect:/admin/review-list";
+    }
+
+    @PostMapping("/admin/review-reply-delete")
+    public String deleteReviewReply(@RequestParam Long id) {
+        Optional<Review> optReview = reviewRepository.findById(id);
+        if (optReview.isPresent()) {
+            Review review = optReview.get();
+            review.setAdminReply(null);
             reviewRepository.save(review);
         }
         return "redirect:/admin/review-list";

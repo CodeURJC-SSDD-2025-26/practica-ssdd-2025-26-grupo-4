@@ -70,12 +70,15 @@
                             <p class="text-muted small">IVA incluido</p>
                         </div>
 
-                        <div class="d-grid gap-2">
-                            <button class="btn btn-primary btn-lg fw-bold py-3">
-                                <i class="fas fa-shopping-cart me-2"></i> <a href="shopping-cart"
-                                    class="text-white text-decoration-none">Añadir al carrito</a>
+                        <form action="/cart/add" method="POST" class="d-grid gap-2">
+                            {{#_csrf}}
+                            <input type="hidden" name="_csrf" value="{{token}}" />
+                            {{/_csrf}}
+                            <input type="hidden" name="productId" value="{{id}}">
+                            <button type="submit" class="btn btn-primary btn-lg fw-bold py-3 text-white">
+                                <i class="fas fa-shopping-cart me-2"></i> Añadir al carrito
                             </button>
-                        </div>
+                        </form>
 
                         <ul class="list-unstyled mt-4 small border-top pt-3">
                             <li class="mb-2"><i class="fas fa-truck text-success me-2"></i> Recíbelo mañana gratis</li>

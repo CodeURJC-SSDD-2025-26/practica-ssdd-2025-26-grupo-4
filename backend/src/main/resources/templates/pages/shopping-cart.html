@@ -66,7 +66,15 @@
                 </div>
                 <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
                   <div class="float-md-end">
-                    <a href="#" class="btn btn-light border text-danger icon-hover-danger"><i class="bi bi-trash"></i> Quitar</a>
+                    <form action="/cart/remove" method="POST">
+                      {{#_csrf}}
+                      <input type="hidden" name="_csrf" value="{{token}}" />
+                      {{/_csrf}}
+                      <input type="hidden" name="productId" value="{{id}}">
+                      <button type="submit" class="btn btn-light border text-danger icon-hover-danger">
+                        <i class="bi bi-trash"></i> Quitar
+                      </button>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -139,7 +147,13 @@
               <strong>{{price}}€</strong>
             </div>
             <div class="mt-auto">
-              <a href="#" class="btn btn-outline-primary w-100">Añadir al carrito</a>
+              <form action="/cart/add" method="POST">
+                {{#_csrf}}
+                <input type="hidden" name="_csrf" value="{{token}}" />
+                {{/_csrf}}
+                <input type="hidden" name="productId" value="{{id}}">
+                <button type="submit" class="btn btn-outline-primary w-100">Añadir al carrito</button>
+              </form>
             </div>
           </div>
         </div>
