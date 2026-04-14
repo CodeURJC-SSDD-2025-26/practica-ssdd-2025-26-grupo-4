@@ -74,7 +74,7 @@ public class DatabaseInitializer {
         p2.setName("AMD Ryzen 7 7800X3D 4.2 GHz/5 GHz");
         p2.setDescription(
                 "Saca el máximo provecho de tu setup gaming y creativo gracias al AMD Ryzen 7 7800X3D, el procesador que redefine el rendimiento en juegos y cargas profesionales exigentes.");
-        p2.setPrice(349.90);
+        p2.setPrice(349.95);
         p2.setStock(10);
         p2.setCategory("CPU");
         setProductImage(p2, "static/assets/images/products/2/main.jpg");
@@ -84,7 +84,7 @@ public class DatabaseInitializer {
         p3.setName("Intel Core i7-14700K 3.4/5.6GHz Box");
         p3.setDescription(
                 "Ofrece un total de 8 núcleos P-Core y 12 núcleos E-Core, con una frecuencia base de 3,40 GHz para los P-Core y una impresionante frecuencia máxima de 5,60 GHz.");
-        p3.setPrice(390.90);
+        p3.setPrice(390.99);
         p3.setStock(15);
         p3.setCategory("CPU");
         setProductImage(p3, "static/assets/images/products/3/main.jpg");
@@ -96,7 +96,7 @@ public class DatabaseInitializer {
         p4.setName("Tarjeta Gráfica ASUS TUF Gaming GeForce RTX 4070 Ti OC Edition 12GB GDDR6X DLSS3");
         p4.setDescription(
                 "Cuentan con la tecnología de la arquitectura ultra eficiente NVIDIA Ada Lovelace, que ofrece un salto espectacular tanto en rendimiento como en gráficos con tecnología de IA.");
-        p4.setPrice(749.00);
+        p4.setPrice(749.99);
         p4.setStock(4);
         p4.setCategory("GPU");
         setProductImage(p4, "static/assets/images/products/4/main.jpg");
@@ -106,7 +106,7 @@ public class DatabaseInitializer {
         p5.setName("ASUS PRIME AMD Radeon RX 9070 XT OC 16GB GDDR6 FSR 4");
         p5.setDescription(
                 "Rendimiento de alto nivel para gaming 4K, edición profesional y tareas de IA, gracias a sus 16GB GDDR6 y arquitectura AMD RDNA 3.");
-        p5.setPrice(699.00);
+        p5.setPrice(699.99);
         p5.setStock(30);
         p5.setCategory("GPU");
         setProductImage(p5, "static/assets/images/products/5/main.jpg");
@@ -116,7 +116,7 @@ public class DatabaseInitializer {
         p6.setName("MSI GeForce RTX 5080 VENTUS 3X OC 16GB GDDR7 Reflex 2 RTX AI DLSS4");
         p6.setDescription(
                 "Su eficiente solución térmica está envuelta en una carcasa resistente con una estética neutra, lo que permite que esta elegante tarjeta gráfica se integre perfectamente en cualquier sistema.");
-        p6.setPrice(1329.90);
+        p6.setPrice(1329.95);
         p6.setStock(8);
         p6.setCategory("GPU");
         setProductImage(p6, "static/assets/images/products/6/main.jpg");
@@ -138,7 +138,7 @@ public class DatabaseInitializer {
         p8.setName("MSI B850 GAMING PLUS WIFI");
         p8.setDescription(
                 "Soporta procesadores AMD Ryzen 9000/8000/7000 en zócalo AM5 y hasta 256 GB DDR5, permitiéndote equipar tu equipo con lo último en rendimiento computacional y memoria de alta frecuencia compatible con overclocking para gaming avanzado y cargas profesionales intensivas.");
-        p8.setPrice(189.90);
+        p8.setPrice(189.95);
         p8.setStock(2);
         p8.setCategory("Motherboard");
         setProductImage(p8, "static/assets/images/products/8/main.jpg");
@@ -150,7 +150,7 @@ public class DatabaseInitializer {
         p9.setName("Corsair NAUTILUS 240 RS ARGB Kit Refrigeración Líquida 240mm Negro");
         p9.setDescription(
                 "Ofrece un enfriamiento eficiente y silencioso con una conectividad sencilla: no requiere controlador, se conecta directamente a la placa base.");
-        p9.setPrice(89.90);
+        p9.setPrice(89.95);
         p9.setStock(24);
         p9.setCategory("Cooling");
         setProductImage(p9, "static/assets/images/products/9/main.jpg");
