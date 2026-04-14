@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.hibernate.engine.jdbc.proxy.BlobProxy;
 
 import com.example.backend.models.Order;
@@ -82,7 +83,7 @@ public class WebController {
                     Order order = currentOrder.get();
                     model.addAttribute("pedido", order);
                     model.addAttribute("productosCarrito", order.getProducts());
-                    
+
                     double realTotal = order.getProducts().stream().mapToDouble(Product::getPrice).sum();
                     model.addAttribute("precioBase", String.format("%.2f", realTotal).replace('.', ','));
                     model.addAttribute("precioDescuento", "0,00");
@@ -106,7 +107,6 @@ public class WebController {
             model.addAttribute("precioTotal", String.format("%.2f", realTotal).replace('.', ','));
         }
 
-        
         // Also show some recommendations from the database
         List<Product> allProducts = productRepository.findAll();
         if (allProducts.size() > 4) {
@@ -114,12 +114,13 @@ public class WebController {
         } else {
             model.addAttribute("recomendados", allProducts);
         }
-        
+
         return "pages/shopping-cart";
     }
 
     @PostMapping("/cart/add")
-    public String addToCart(@RequestParam Long productId, Principal principal, jakarta.servlet.http.HttpSession session) {
+    public String addToCart(@RequestParam Long productId, Principal principal,
+            jakarta.servlet.http.HttpSession session) {
         if (principal != null) {
             userRepository.findByUsername(principal.getName()).ifPresent(user -> {
                 Optional<Order> currentOrderOpt = orderRepository.findByUserId(user.getId())
@@ -148,7 +149,7 @@ public class WebController {
                 sessionCart = new ArrayList<>();
             }
             Optional<Product> pOpt = productRepository.findById(productId);
-            if(pOpt.isPresent()){
+            if (pOpt.isPresent()) {
                 sessionCart.add(pOpt.get());
                 session.setAttribute("cart", sessionCart);
             }
@@ -157,7 +158,8 @@ public class WebController {
     }
 
     @PostMapping("/cart/remove")
-    public String removeFromCart(@RequestParam Long productId, Principal principal, jakarta.servlet.http.HttpSession session) {
+    public String removeFromCart(@RequestParam Long productId, Principal principal,
+            jakarta.servlet.http.HttpSession session) {
         if (principal != null) {
             userRepository.findByUsername(principal.getName()).ifPresent(user -> {
                 Optional<Order> currentOrderOpt = orderRepository.findByUserId(user.getId())
@@ -216,6 +218,47 @@ public class WebController {
         return "pages/search-result";
     }
 
+    @GetMapping("/search")
+    public String searchProducts(Model model,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String brand,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false) String sort,
+            HttpServletRequest request) {
+
+        // Lógica de limpieza de nulos (la que ya tenías)
+        String searchName = (name != null && !name.isEmpty()) ? name : null;
+        String searchCategory = (category != null && !category.isEmpty()) ? category : null;
+        String searchBrand = (brand != null && !brand.isEmpty()) ? brand : null;
+
+        // Lógica de ordenación
+        Sort sortOrder = Sort.unsorted(); // Por defecto: Relevancia (orden de inserción)
+        if ("priceAsc".equals(sort)) {
+            sortOrder = Sort.by(Sort.Direction.ASC, "price");
+        } else if ("priceDesc".equals(sort)) {
+            sortOrder = Sort.by(Sort.Direction.DESC, "price");
+        }
+
+        List<Product> results = productRepository.findWithFilters(searchName, searchCategory, searchBrand, minPrice,
+                maxPrice, sortOrder);
+
+        model.addAttribute("productos", results);
+        model.addAttribute("query", name != null ? name : "");
+        model.addAttribute("category", category != null ? category : "");
+        model.addAttribute("brand", brand != null ? brand : "");
+        model.addAttribute("currentSort", sort != null ? sort : "");
+
+        model.addAttribute("isLoggedIn", request.getUserPrincipal() != null);
+        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+        if (token != null) {
+            model.addAttribute("_csrf", token);
+        }
+
+        return "pages/search-result";
+    }
+
     @GetMapping("/payment")
     public String payment() {
         return "pages/payment";
@@ -236,8 +279,8 @@ public class WebController {
         return "pages/user_registration";
     }
 
-   @GetMapping("/login")
-    public String login(@RequestParam(value = "error", required = false) String error, Model model) {        
+    @GetMapping("/login")
+    public String login(@RequestParam(value = "error", required = false) String error, Model model) {
         if (error != null) {
             model.addAttribute("loginError", true);
         }
@@ -335,7 +378,7 @@ public class WebController {
     public String orderList(Model model) {
         List<Order> orders = orderRepository.findAll();
         model.addAttribute("pedidos", orders);
-        
+
         long totalOrders = orders.size();
         double totalIncome = orders.stream()
                 .filter(o -> "ENTREGADO".equals(o.getStatus()) || "ENVIADO".equals(o.getStatus()))
@@ -347,12 +390,12 @@ public class WebController {
         long cancelledOrders = orders.stream()
                 .filter(o -> "CANCELADO".equals(o.getStatus()))
                 .count();
-                
+
         model.addAttribute("totalOrders", totalOrders);
         model.addAttribute("totalIncome", String.format("%.2f", totalIncome));
         model.addAttribute("pendingOrders", pendingOrders);
         model.addAttribute("cancelledOrders", cancelledOrders);
-        
+
         return "pages/admin/order-list";
     }
 
@@ -365,8 +408,6 @@ public class WebController {
         }
         return "pages/admin/order-edit";
     }
-
-
 
     @GetMapping("/admin/review-list")
     public String reviewList(Model model) {
@@ -401,11 +442,11 @@ public class WebController {
 
     @PostMapping("/admin/item-create")
     public String createProduct(@RequestParam String nombre,
-                                @RequestParam String descripcion,
-                                @RequestParam String categoria,
-                                @RequestParam double precio,
-                                @RequestParam int stock,
-                                @RequestParam(required = false) MultipartFile imageFile) throws IOException {
+            @RequestParam String descripcion,
+            @RequestParam String categoria,
+            @RequestParam double precio,
+            @RequestParam int stock,
+            @RequestParam(required = false) MultipartFile imageFile) throws IOException {
         Product product = new Product();
         product.setName(nombre);
         product.setDescription(descripcion);
@@ -424,12 +465,12 @@ public class WebController {
 
     @PostMapping("/admin/item-edit")
     public String editProduct(@RequestParam Long id,
-                              @RequestParam String nombre,
-                              @RequestParam String descripcion,
-                              @RequestParam String categoria,
-                              @RequestParam double precio,
-                              @RequestParam int stock,
-                              @RequestParam(required = false) MultipartFile imageFile) throws IOException {
+            @RequestParam String nombre,
+            @RequestParam String descripcion,
+            @RequestParam String categoria,
+            @RequestParam double precio,
+            @RequestParam int stock,
+            @RequestParam(required = false) MultipartFile imageFile) throws IOException {
         Optional<Product> optProduct = productRepository.findById(id);
         if (optProduct.isPresent()) {
             Product product = optProduct.get();
@@ -459,10 +500,10 @@ public class WebController {
 
     @PostMapping("/admin/user-create")
     public String createUser(@RequestParam String username,
-                             @RequestParam String email,
-                             @RequestParam String password,
-                             @RequestParam(required = false) String rol,
-                             @RequestParam(required = false) MultipartFile imageFile) throws IOException {
+            @RequestParam String email,
+            @RequestParam String password,
+            @RequestParam(required = false) String rol,
+            @RequestParam(required = false) MultipartFile imageFile) throws IOException {
         User user = new User();
         user.setUsername(username);
         user.setEmail(email);
@@ -486,11 +527,11 @@ public class WebController {
 
     @PostMapping("/admin/user-edit")
     public String editUser(@RequestParam Long id,
-                           @RequestParam String nombre,
-                           @RequestParam String email,
-                           @RequestParam(required = false) String contrasena,
-                           @RequestParam(required = false) String rol,
-                           @RequestParam(required = false) MultipartFile imageFile) throws IOException {
+            @RequestParam String nombre,
+            @RequestParam String email,
+            @RequestParam(required = false) String contrasena,
+            @RequestParam(required = false) String rol,
+            @RequestParam(required = false) MultipartFile imageFile) throws IOException {
         Optional<User> optUser = userRepository.findById(id);
         if (optUser.isPresent()) {
             User user = optUser.get();
@@ -527,10 +568,10 @@ public class WebController {
     // --- ORDERS ---
 
     @PostMapping("/admin/order-edit")
-    public String updateOrderStatus(@RequestParam Long id, 
-                                    @RequestParam String status,
-                                    @RequestParam(required = false) String emailMsg,
-                                    @RequestParam(required = false) Boolean notifyClient) {
+    public String updateOrderStatus(@RequestParam Long id,
+            @RequestParam String status,
+            @RequestParam(required = false) String emailMsg,
+            @RequestParam(required = false) Boolean notifyClient) {
         orderRepository.findById(id).ifPresent(order -> {
             order.setStatus(status.toUpperCase());
             // In a real app, we would send an email here if notifyClient is true
@@ -577,9 +618,9 @@ public class WebController {
 
     @PostMapping("/create-review")
     public String submitReview(@RequestParam Long productId,
-                               @RequestParam int score,
-                               @RequestParam String comment,
-                               Principal principal) {
+            @RequestParam int score,
+            @RequestParam String comment,
+            Principal principal) {
         if (principal != null) {
             userRepository.findByUsername(principal.getName()).ifPresent(user -> {
                 productRepository.findById(productId).ifPresent(product -> {
@@ -600,9 +641,9 @@ public class WebController {
 
     @PostMapping("/profile/update")
     public String updateProfile(@RequestParam String username,
-                                @RequestParam String email,
-                                @RequestParam(required = false) MultipartFile imageFile,
-                                Principal principal) throws IOException {
+            @RequestParam String email,
+            @RequestParam(required = false) MultipartFile imageFile,
+            Principal principal) throws IOException {
         if (principal != null) {
             userRepository.findByUsername(principal.getName()).ifPresent(user -> {
                 user.setUsername(username);
@@ -610,7 +651,8 @@ public class WebController {
 
                 if (imageFile != null && !imageFile.isEmpty()) {
                     try {
-                        user.setProfilePicture(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+                        user.setProfilePicture(
+                                BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
                         user.setHasPicture(true);
                     } catch (IOException e) {
                         // Ignore image upload errors
