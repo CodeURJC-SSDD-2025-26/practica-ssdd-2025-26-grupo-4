@@ -33,7 +33,7 @@
         <!-- Dashboard header -->
         <div class="mb-4">
             <h2 class="mb-1"><i class="bi bi-speedometer2 me-2"></i>Panel de Administración</h2>
-            <p class="text-muted mb-0">Bienvenido, admin_pc. Resumen general de la tienda.</p>
+            <p class="text-muted mb-0">Bienvenido, administrador. Resumen general de la tienda.</p>
         </div>
 
         <!-- Summary cards -->
@@ -44,7 +44,7 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <p class="text-muted small mb-1">PRODUCTOS</p>
-                            <h3 class="mb-0">16</h3>
+                            <h3 class="mb-0">{{totalProductos}}</h3>
                         </div>
                         <i class="bi bi-box-seam fs-1 text-primary"></i>
                     </div>
@@ -57,7 +57,7 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <p class="text-muted small mb-1">USUARIOS</p>
-                            <h3 class="mb-0">7</h3>
+                            <h3 class="mb-0">{{totalUsuarios}}</h3>
                         </div>
                         <i class="bi bi-people fs-1 text-success"></i>
                     </div>
@@ -70,7 +70,7 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <p class="text-muted small mb-1">PEDIDOS</p>
-                            <h3 class="mb-0">5</h3>
+                            <h3 class="mb-0">{{totalPedidos}}</h3>
                         </div>
                         <i class="bi bi-truck fs-1 text-warning"></i>
                     </div>
@@ -83,7 +83,7 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <p class="text-muted small mb-1">INGRESOS</p>
-                            <h3 class="mb-0">3.762,75€</h3>
+                            <h3 class="mb-0">{{totalIngresos}}€</h3>
                         </div>
                         <i class="bi bi-currency-euro fs-1 text-danger"></i>
                     </div>
@@ -101,11 +101,11 @@
                         <ul class="nav nav-tabs card-header-tabs" role="tablist">
                             <li class="nav-item">
                                 <button class="nav-link active small fw-bold" data-bs-toggle="tab"
-                                    data-bs-target="#ventas-cat">Ventas Categoría</button>
+                                    data-bs-target="#ventas-cat">Ventas por Categoría</button>
                             </li>
                             <li class="nav-item">
                                 <button class="nav-link small fw-bold" data-bs-toggle="tab"
-                                    data-bs-target="#ventas-mes">Ventas Mensuales</button>
+                                    data-bs-target="#ventas-mes">Productos por Categoría</button>
                             </li>
                             <li class="nav-item">
                                 <button class="nav-link small fw-bold" data-bs-toggle="tab"
@@ -143,7 +143,7 @@
                         <a href="review-list" class="btn btn-outline-info text-start">
                             <i class="bi bi-chat-left-dots me-2"></i> Gestionar Reseñas
                         </a>
-                        <a href="order-list." class="btn btn-outline-warning text-start">
+                        <a href="order-list" class="btn btn-outline-warning text-start">
                             <i class="bi bi-cart-check me-2"></i> Gestionar Pedidos
                         </a>
                     </div>
@@ -163,51 +163,19 @@
                         <tr class="text-muted">
                             <th>ID</th>
                             <th>Cliente</th>
-                            <th>Producto</th>
                             <th>Importe</th>
                             <th>Estado</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Order 1 -->
+                        {{#pedidosRecientes}}
                         <tr>
-                            <td><strong>#ORD001</strong></td>
-                            <td>John Dominguez</td>
-                            <td>AMD Ryzen 7 9800X3D</td>
-                            <td>464,95€</td>
-                            <td><span class="badge bg-success">Entregado</span></td>
+                            <td><strong>#ORD{{id}}</strong></td>
+                            <td>{{user.displayName}}</td>
+                            <td>{{formattedPrice}}€</td>
+                            <td><span class="badge {{statusBadgeClass}}">{{status}}</span></td>
                         </tr>
-                        <!-- Order 2 -->
-                        <tr>
-                            <td><strong>#ORD002</strong></td>
-                            <td>David Martin</td>
-                            <td>MSI GeForce RTX 5080</td>
-                            <td>1.190,00€</td>
-                            <td><span class="badge bg-primary">Enviado</span></td>
-                        </tr>
-                        <!-- Order 3 -->
-                        <tr>
-                            <td><strong>#ORD003</strong></td>
-                            <td>Gave Newell</td>
-                            <td>Corsair Vengeance RGB DDR5</td>
-                            <td>459,95€</td>
-                            <td><span class="badge bg-warning text-dark">Procesando</span></td>
-                        </tr>
-                        <!-- Order 4 -->
-                        <tr>
-                            <td><strong>#ORD004</strong></td>
-                            <td>Laura Rodriguez</td>
-                            <td>MSI B850 GAMING PLUS</td>
-                            <td>187,90€</td>
-                            <td><span class="badge bg-success">Entregado</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>#ORD005</strong></td>
-                            <td>Marta Nuñez</td>
-                            <td>WD BLACK SN7100 2TB</td>
-                            <td>269,95€</td>
-                            <td><span class="badge bg-info text-dark">Pendiente</span></td>
-                        </tr>
+                        {{/pedidosRecientes}}
                     </tbody>
                 </table>
             </div>
@@ -220,15 +188,14 @@
     <script>
         // --- 1. CHART CONFIGURATION (Chart.js) ---
 
-        // Chart Configuration: Sales by Category (Bar Chart)
-        // Shows sales volume segmented by product family
+        // Chart: Sales Revenue by Category (from ENTREGADO + ENVIADO orders)
         new Chart(document.getElementById('graficaVentasCat'), {
             type: 'bar',
             data: {
-                labels: ['Procesadores', 'Tarjetas Gráficas', 'Placas Base', 'Memoria RAM', 'Almacenamiento'],
+                labels: [{{{chartSalesLabels}}}],
                 datasets: [{
-                    label: 'Ventas',
-                    data: [18, 12, 9, 15, 11],
+                    label: 'Ingresos (€)',
+                    data: [{{{chartSalesData}}}],
                     backgroundColor: '#0d6efd99',
                     borderRadius: 5
                 }]
@@ -236,31 +203,28 @@
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
         });
 
-        // Chart Configuration: Monthly Sales (Line Chart with area)
-        // Represents revenue evolution over the last months
+        // Chart: Products count by Category
         new Chart(document.getElementById('graficaVentasMes'), {
-            type: 'line',
+            type: 'bar',
             data: {
-                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+                labels: [{{{chartCategoryLabels}}}],
                 datasets: [{
-                    label: 'Ventas (€)', data: [2100, 3500, 2800, 4200, 3100, 3762],
-                    borderColor: '#198754',
-                    backgroundColor: '#19875433',
-                    fill: true,
-                    tension: 0.3
+                    label: 'Productos',
+                    data: [{{{chartCategoryData}}}],
+                    backgroundColor: '#19875499',
+                    borderRadius: 5
                 }]
             },
-            options: { responsive: true, maintainAspectRatio: false }
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
         });
 
         // Chart Configuration: Inventory Status (Doughnut/Pie Chart)
-        // Shows percentage distribution of warehouse by availability
         new Chart(document.getElementById('graficaInventario'), {
             type: 'doughnut',
             data: {
-                labels: ['En Stock', 'Bajo Stock', 'Agotado'],
+                labels: ['En Stock (>10)', 'Bajo Stock (1-10)', 'Agotado (0)'],
                 datasets: [{
-                    data: [12, 3, 1],
+                    data: [{{stockInStock}}, {{stockLowStock}}, {{stockOutOfStock}}],
                     backgroundColor: ['#198754', '#ffc107', '#dc3545'],
                     borderWidth: 2,
                     borderColor: '#fff'
@@ -268,16 +232,6 @@
             },
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, cutout: '60%' }
         });
-
-        // --- 2. DYNAMIC COMPONENT LOADING ---
-        // Reusable utility for injecting HTML fragments (modified to adapt admin routes)
-        const loadComp = (url, id, cb) =>
-            fetch(url)
-                .then(r => r.text())
-                .then(h => {
-                    document.getElementById(id).innerHTML = h;
-                    if (cb) cb(document.getElementById(id));
-                });
     </script>
 </body>
 

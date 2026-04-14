@@ -43,4 +43,33 @@ public class User {
     // 1:N relationship - One user can write multiple reviews
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Review> reviews;
+
+    // --- Mustache helpers ---
+
+    /** Returns true if this user has the ROLE_ADMIN role */
+    public boolean getIsAdmin() {
+        return roles != null && roles.contains("ROLE_ADMIN");
+    }
+
+    /** Returns the display name: firstName + lastName if available, otherwise username */
+    public String getDisplayName() {
+        if (firstName != null && !firstName.isBlank()) {
+            String name = firstName;
+            if (lastName != null && !lastName.isBlank()) {
+                name += " " + lastName;
+            }
+            return name;
+        }
+        return username;
+    }
+
+    /** Returns the role label for display (Admin / Cliente) */
+    public String getRoleLabel() {
+        return getIsAdmin() ? "Admin" : "Cliente";
+    }
+
+    /** Returns the CSS badge class for the role */
+    public String getRoleBadgeClass() {
+        return getIsAdmin() ? "bg-danger" : "bg-info text-dark";
+    }
 }

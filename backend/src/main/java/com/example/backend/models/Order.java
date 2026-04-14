@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Entity
@@ -44,4 +45,30 @@ public class Order {
         inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private List<Product> products;
+
+    // --- Mustache helpers ---
+
+    /** Returns the order date formatted as dd/MM/yyyy for display */
+    public String getFormattedDate() {
+        if (orderDate == null) return "";
+        return orderDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+
+    /** Returns the CSS badge class based on the order status */
+    public String getStatusBadgeClass() {
+        if (status == null) return "bg-secondary";
+        switch (status.toUpperCase()) {
+            case "ENTREGADO": return "bg-success";
+            case "ENVIADO": return "bg-primary";
+            case "EN PROCESO": return "bg-warning text-dark";
+            case "PENDIENTE": return "bg-info text-dark";
+            case "CANCELADO": return "bg-danger";
+            default: return "bg-secondary";
+        }
+    }
+
+    /** Returns the formatted total price with comma as decimal separator */
+    public String getFormattedPrice() {
+        return String.format("%.2f", totalPrice).replace('.', ',');
+    }
 }

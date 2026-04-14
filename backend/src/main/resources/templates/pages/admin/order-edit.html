@@ -31,8 +31,8 @@
         <!-- Order Header -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <h2 class="fw-bold mb-0"><i class="bi bi-receipt me-2"></i>Pedido #O7721</h2>
-                <p class="text-muted mb-0 small">Realizado el 02/03/2026 a las 14:32h</p>
+                <h2 class="fw-bold mb-0"><i class="bi bi-receipt me-2"></i>Pedido #O{{pedido.id}}</h2>
+                <p class="text-muted mb-0 small">Realizado el {{pedido.getFormattedDate}}</p>
             </div>
             <div class="d-flex gap-2">
                 <a href="order-list" class="btn btn-outline-secondary btn-sm">
@@ -44,55 +44,6 @@
                 </button>
             </div>
         </div>
-
-        <!-- Status Progress Line -->
-        <section class="card shadow-sm border-0 mb-4">
-            <div class="card-body py-3">
-                <div class="d-flex justify-content-between align-items-center position-relative px-4">
-                    <!-- Background Line -->
-                    <div class="position-absolute top-50 start-0 end-0 mx-4"
-                        style="height: 3px; background: #dee2e6; z-index: 0;"></div>
-                    <div class="position-absolute top-50 start-0 mx-4"
-                        style="height: 3px; background: #0d6efd; z-index: 0; width: 75%;"></div>
-
-                    <!-- Step 1: Pending -->
-                    <div class="text-center position-relative" style="z-index: 1;">
-                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-1"
-                            style="width: 32px; height: 32px;">
-                            <i class="bi bi-check"></i>
-                        </div>
-                        <small class="fw-bold d-block" style="font-size: .7rem;">Pendiente</small>
-                    </div>
-
-                    <!-- Step 2: Processing -->
-                    <div class="text-center position-relative" style="z-index: 1;">
-                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-1"
-                            style="width: 32px; height: 32px;">
-                            <i class="bi bi-check"></i>
-                        </div>
-                        <small class="fw-bold d-block" style="font-size: .7rem;">Procesando</small>
-                    </div>
-
-                    <!-- Step 3: Sent -->
-                    <div class="text-center position-relative" style="z-index: 1;">
-                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-1"
-                            style="width: 32px; height: 32px;">
-                            <i class="bi bi-check"></i>
-                        </div>
-                        <small class="fw-bold d-block" style="font-size: .7rem;">Enviado</small>
-                    </div>
-
-                    <!-- Step 4: Delivered (active) -->
-                    <div class="text-center position-relative" style="z-index: 1;">
-                        <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center mx-auto mb-1 border border-3 border-success"
-                            style="width: 36px; height: 36px;">
-                            <i class="bi bi-check-lg"></i>
-                        </div>
-                        <small class="fw-bold text-success d-block" style="font-size: .7rem;">Entregado</small>
-                    </div>
-                </div>
-            </div>
-        </section>
 
         <div class="row g-4">
             <!-- Left Column: Client Info and Products -->
@@ -109,26 +60,18 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label text-muted x-small text-uppercase">Cliente</label>
-                                <p class="fw-bold mb-0">John Dominguez Encinas</p>
-                                <p class="text-muted small mb-0">john.doe@email.com</p>
-                                <p class="text-muted small mb-0">+34 612 345 678</p>
+                                <p class="fw-bold mb-0">{{pedido.user.username}}</p>
+                                <p class="text-muted small mb-0">{{pedido.user.email}}</p>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label text-muted x-small text-uppercase">Dirección de Envío</label>
-                                <p class="mb-0">Calle de Sagasta, 13, Chamberí</p>
-                                <p class="text-muted small mb-0">28004 Madrid, España</p>
+                                <p class="mb-0">{{pedido.shippingAddress}}</p>
+                                <p class="text-muted small mb-0">{{pedido.postalCode}} {{pedido.city}}, {{pedido.country}}</p>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label text-muted x-small text-uppercase">Método de Pago</label>
                                 <p class="mb-0">
-                                    <i class="bi bi-credit-card me-1"></i>Visa **** 4242
-                                </p>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label text-muted x-small text-uppercase">Método de Envío</label>
-                                <p class="mb-0">
-                                    <i class="bi bi-truck me-1"></i>Express 24h — <span
-                                        class="text-success fw-bold">Gratis</span>
+                                    <i class="bi bi-credit-card me-1"></i>{{pedido.paymentMethod}}
                                 </p>
                             </div>
                         </div>
@@ -148,48 +91,34 @@
                                 <thead class="bg-light">
                                     <tr class="small text-muted">
                                         <th class="ps-4">Producto</th>
-                                        <th class="text-center">Cantidad</th>
-                                        <th class="text-end">Precio Unit.</th>
-                                        <th class="text-end pe-4">Subtotal</th>
+                                        <th class="text-center">Categoría</th>
+                                        <th class="text-end pe-4">Precio</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Product 1 -->
+                                    {{#pedido.products}}
                                     <tr>
                                         <td class="ps-4">
                                             <div class="d-flex align-items-center">
-                                                <img src="../../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg"
-                                                    alt="CPU" class="rounded me-3"
+                                                {{#image}}
+                                                <img src="/product/{{id}}/image"
+                                                    alt="{{name}}" class="rounded me-3"
                                                     style="width: 48px; height: 48px; object-fit: contain;" />
+                                                {{/image}}
+                                                {{^image}}
+                                                <div class="rounded me-3 bg-light d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                                    <i class="bi bi-image text-muted"></i>
+                                                </div>
+                                                {{/image}}
                                                 <div>
-                                                    <p class="mb-0 fw-bold">AMD Ryzen 7 9800X3D</p>
-                                                    <small class="text-muted">Socket AM5 - Sin disipador |
-                                                        SKU: CPU-9800X3D</small>
+                                                    <p class="mb-0 fw-bold">{{name}}</p>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="text-center">1</td>
-                                        <td class="text-end">464,95 €</td>
-                                        <td class="text-end pe-4 fw-bold">464,95 €</td>
+                                        <td class="text-center">{{category}}</td>
+                                        <td class="text-end pe-4 fw-bold">{{price}} €</td>
                                     </tr>
-                                    <!-- Product 2 -->
-                                    <tr>
-                                        <td class="ps-4">
-                                            <div class="d-flex align-items-center">
-                                                <img src="../../assets/images/asus-tuf-gaming-geforce-rtx-4070-ti-oc-edition.jpg"
-                                                    alt="GPU" class="rounded me-3"
-                                                    style="width: 48px; height: 48px; object-fit: contain;" />
-                                                <div>
-                                                    <p class="mb-0 fw-bold">ASUS TUF Gaming RTX 4070</p>
-                                                    <small class="text-muted">OC Edition - 12GB GDDR6X |
-                                                        SKU: GPU-4070TUF</small>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">1</td>
-                                        <td class="text-end">649,00 €</td>
-                                        <td class="text-end pe-4 fw-bold">649,00 €</td>
-                                    </tr>
+                                    {{/pedido.products}}
                                 </tbody>
                             </table>
                         </div>
@@ -208,71 +137,46 @@
                         </h5>
                     </div>
                     <div class="card-body">
-                        <!-- Status Selector -->
-                        <label class="form-label fw-bold small">Estado Actual</label>
-                        <select class="form-select mb-3" id="orderStatus">
-                            <option value="pendiente">⏳ Pendiente</option>
-                            <option value="procesando">🔄 Procesando</option>
-                            <option value="enviado">📦 Enviado</option>
-                            <option value="entregado" selected>✅ Entregado</option>
-                            <option value="cancelado">❌ Cancelado</option>
-                        </select>
+                        <form action="/admin/order-edit" method="POST">
+                            {{#_csrf}}
+                            <input type="hidden" name="_csrf" value="{{token}}" />
+                            {{/_csrf}}
+                            <input type="hidden" name="id" value="{{pedido.id}}" />
+                            
+                            <!-- Status Selector -->
+                            <label class="form-label fw-bold small">Estado Actual</label>
+                            <select class="form-select mb-3" name="status" id="orderStatus">
+                                <option value="PENDIENTE">⏳ Pendiente</option>
+                                <option value="EN PROCESO">🔄 Procesando</option>
+                                <option value="ENVIADO">📦 Enviado</option>
+                                <option value="ENTREGADO">✅ Entregado</option>
+                                <option value="CANCELADO">❌ Cancelado</option>
+                            </select>
 
-                        <!-- Notification to Client -->
-                        <div class="form-check form-switch mb-3">
-                            <input class="form-check-input" type="checkbox" id="notifyClient" checked />
-                            <label class="form-check-label small" for="notifyClient">
-                                Notificar al cliente por email
-                            </label>
-                        </div>
+                            <!-- Notification to Client -->
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" name="notifyClient" id="notifyClient" value="true" checked />
+                                <label class="form-check-label small" for="notifyClient">
+                                    Notificar al cliente por email
+                                </label>
+                            </div>
 
-                        <!-- Notification Message -->
-                        <div class="mb-3" id="emailMsgContainer">
-                            <label class="form-label small fw-bold">Mensaje para el cliente</label>
-                            <textarea class="form-control form-control-sm" rows="3" id="emailMsg"
-                                placeholder="Escribe un mensaje personalizado (opcional)...">Su pedido #O7721 ha sido entregado con éxito. ¡Gracias por su compra!</textarea>
-                        </div>
+                            <!-- Notification Message -->
+                            <div class="mb-3" id="emailMsgContainer">
+                                <label class="form-label small fw-bold">Mensaje para el cliente</label>
+                                <textarea class="form-control form-control-sm" rows="3" name="emailMsg" id="emailMsg"
+                                    placeholder="Escribe un mensaje personalizado (opcional)...">Su pedido #O{{pedido.id}} ha sido actualizado a {{pedido.status}}. ¡Gracias por su compra!</textarea>
+                            </div>
 
-                        <!-- Internal Notes -->
-                        <div class="mb-3">
-                            <label class="form-label small fw-bold">Notas Internas</label>
-                            <textarea class="form-control form-control-sm" rows="2"
-                                placeholder="Notas visibles solo para administradores..."></textarea>
-                        </div>
-
-                        <!-- Update Button -->
-                        <button class="btn btn-primary w-100" id="btnUpdateOrder">
-                            <i class="bi bi-save me-1"></i>Actualizar Pedido
-                        </button>
-
-                        <!-- History of States -->
-                        <div class="mt-4 pt-3 border-top">
-                            <h6 class="x-small fw-bold text-uppercase text-muted mb-2">
-                                <i class="bi bi-clock-history me-1"></i>Historial de Estados
-                            </h6>
-                            <ul class="list-unstyled small mb-0">
-                                <li class="d-flex justify-content-between mb-1">
-                                    <span><span class="badge bg-success me-1">Entregado</span></span>
-                                    <span class="text-muted">11/03/2026 09:15</span>
-                                </li>
-                                <li class="d-flex justify-content-between mb-1">
-                                    <span><span class="badge bg-warning text-dark me-1">Enviado</span></span>
-                                    <span class="text-muted">08/03/2026 16:42</span>
-                                </li>
-                                <li class="d-flex justify-content-between mb-1">
-                                    <span><span class="badge bg-info text-dark me-1">Procesando</span></span>
-                                    <span class="text-muted">03/03/2026 10:20</span>
-                                </li>
-                                <li class="d-flex justify-content-between">
-                                    <span><span class="badge bg-secondary me-1">Pendiente</span></span>
-                                    <span class="text-muted">02/03/2026 14:32</span>
-                                </li>
-                            </ul>
-                        </div>
+                            <!-- Update Button -->
+                            <button type="submit" class="btn btn-primary w-100" id="btnUpdateOrder">
+                                <i class="bi bi-save me-1"></i>Actualizar Pedido
+                            </button>
+                        </form>
                     </div>
                 </section>
 
-                <!-- Economic Summary with Taxes -->
+                <!-- Economic Summary -->
                 <section class="card shadow-sm border-0">
                     <div class="card-header bg-white py-3 border-0">
                         <h5 class="mb-0 fw-bold small text-uppercase">
@@ -280,39 +184,10 @@
                         </h5>
                     </div>
                     <div class="card-body">
-                        <!-- Subtotal -->
-                        <div class="d-flex justify-content-between mb-2 small">
-                            <span class="text-muted">Subtotal (2 productos)</span>
-                            <span>1.113,95 €</span>
-                        </div>
-                        <!-- Shipping -->
-                        <div class="d-flex justify-content-between mb-2 small">
-                            <span class="text-muted">Envío (Express 24h)</span>
-                            <span class="text-success fw-bold">Gratis</span>
-                        </div>
-                        <!-- Discounts -->
-                        <div class="d-flex justify-content-between mb-2 small">
-                            <span class="text-muted">Descuentos / Cupones</span>
-                            <span>0,00 €</span>
-                        </div>
-                        <hr class="my-2" />
-
-                        <!-- Base Imponible -->
-                        <div class="d-flex justify-content-between mb-2 small">
-                            <span class="text-muted">Base Imponible</span>
-                            <span>1.113,95 €</span>
-                        </div>
-                        <!-- IVA -->
-                        <div class="d-flex justify-content-between mb-2 small">
-                            <span class="text-muted">IVA (21%)</span>
-                            <span>233,93 €</span>
-                        </div>
-                        <hr class="my-2" />
-
                         <!-- Total -->
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="fw-bold fs-6">TOTAL</span>
-                            <span class="fw-bold fs-5 text-primary">1.347,88 €</span>
+                            <span class="fw-bold fs-5 text-primary">{{pedido.getFormattedPrice}} €</span>
                         </div>
                     </div>
                 </section>
@@ -331,18 +206,17 @@
                 <div class="modal-body text-center py-4">
                     <i class="bi bi-exclamation-triangle text-danger fs-1 mb-2 d-block"></i>
                     <p class="mb-1 small">Se cancelará permanentemente el pedido:</p>
-                    <strong class="d-block mt-1 fs-5">#O7721</strong>
-                    <div class="form-check form-switch mt-3 d-flex justify-content-center gap-2">
-                        <input class="form-check-input" type="checkbox" id="notifyCancelModal" checked />
-                        <label class="form-check-label small" for="notifyCancelModal">Notificar al cliente</label>
-                    </div>
+                    <strong class="d-block mt-1 fs-5">#O{{pedido.id}}</strong>
                 </div>
                 <div class="modal-footer border-0 p-2 justify-content-center">
                     <button type="button" class="btn btn-sm btn-light px-3" data-bs-dismiss="modal">No, volver</button>
-                    <button type="button" class="btn btn-sm btn-danger px-3"
-                        onclick="alert('Pedido #O7721 cancelado correctamente.'); location.href='order-list'">
-                        Sí, cancelar pedido
-                    </button>
+                    <form action="/admin/order-delete" method="POST" style="display:inline">
+                        {{#_csrf}}
+                        <input type="hidden" name="_csrf" value="{{token}}" />
+                        {{/_csrf}}
+                        <input type="hidden" name="id" value="{{pedido.id}}" />
+                        <button type="submit" class="btn btn-sm btn-danger px-3">Sí, cancelar pedido</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -351,7 +225,8 @@
     {{> partials/footer}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // --- 1. STATE MANAGEMENT LOGIC ---
+        // Set current status in selector
+        document.getElementById('orderStatus').value = "{{pedido.status}}";
 
         // Toggle visibility of email message field
         const notifyCheckbox = document.getElementById('notifyClient');
@@ -359,44 +234,6 @@
         notifyCheckbox.addEventListener('change', () => {
             emailContainer.style.display = notifyCheckbox.checked ? 'block' : 'none';
         });
-
-        // Order update (mock)
-        document.getElementById('btnUpdateOrder').addEventListener('click', () => {
-            const status = document.getElementById('orderStatus');
-            const statusText = status.options[status.selectedIndex].text;
-            const notify = notifyCheckbox.checked;
-            const msg = notify ? `\nMensaje enviado al cliente: "${document.getElementById('emailMsg').value}"` : '';
-            alert(`Estado actualizado a: ${statusText}${notify ? '\n✉️ Cliente notificado por email.' : ''}${msg}`);
-            location.reload();
-        });
-
-        // --- 2. DYNAMIC COMPONENT LOADING ---
-        const loadComp = (url, id, cb) => {
-            fetch(url)
-                .then(r => r.text())
-                .then(h => {
-                    document.getElementById(id).innerHTML = h;
-                    if (cb) cb(document.getElementById(id));
-                });
-        };
-
-        // Load header based on stored session state
-        loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header' : '../headers/unloged_header', 'navbar-placeholder', nav => {
-            nav.querySelectorAll('a, form').forEach(el => {
-                const a = el.tagName === 'FORM' ? 'action' : 'href';
-                const v = el.getAttribute(a);
-                if (v?.startsWith('../') && !v.startsWith('http')) {
-                    el.setAttribute(a, '../' + v);
-                }
-            });
-            const b = document.getElementById('btnAdminPanel');
-            if (b) {
-                b.href = 'admin-dashboard';
-                b.classList.remove('d-none');
-            }
-        });
-
-        loadComp('../footer', 'footer-placeholder');
     </script>
 </body>
 

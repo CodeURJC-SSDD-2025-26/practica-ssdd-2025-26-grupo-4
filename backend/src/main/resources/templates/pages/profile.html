@@ -48,15 +48,26 @@
 
             <div class="tab-content" id="myTabContent">
 
+              <!-- Tab: Perfil -->
               <div class="tab-pane fade show active" id="account-pane" role="tabpanel" aria-labelledby="account-tab"
                 tabindex="0">
                 <div class="content-body">
                   <div class="text-center mb-5">
-                    <img src="../assets/images/profile_photo_example.jpeg" 
+                    {{#usuario}}
+                    {{#hasPicture}}
+                    <img src="/user/{{id}}/image" 
                          class="rounded-circle border shadow-sm mb-3" 
                          style="width: 150px; height: 150px; object-fit: cover;" />
-                    <h3 class="fw-bold">Juan José García Gómez</h3>
-                    <p class="text-muted">Cliente desde 2024</p>
+                    {{/hasPicture}}
+                    {{^hasPicture}}
+                    <div class="rounded-circle border shadow-sm mb-3 mx-auto bg-primary text-white d-flex align-items-center justify-content-center"
+                         style="width: 150px; height: 150px; font-size: 3rem;">
+                      <i class="bi bi-person-fill"></i>
+                    </div>
+                    {{/hasPicture}}
+                    <h3 class="fw-bold">{{displayName}}</h3>
+                    <p class="text-muted">{{email}}</p>
+                    {{/usuario}}
                   </div>
 
                   <hr />
@@ -64,29 +75,28 @@
                   <div class="mt-4">
                     <h5 class="fw-bold mb-4">Opiniones recientes</h5>
 
+                    {{#reviews}}
                     <div class="card border-0 border-bottom rounded-0 mb-4 pb-4 bg-transparent">
                       <div class="d-flex align-items-center mb-3">
-                        <img src="../assets/images/profile_photo_example.jpeg" class="rounded-circle me-2" alt="Usuario"
-                          style="width: 35px; height: 35px; object-fit: cover;">
-                        <span class="fw-bold small">Juan José García Gómez</span>
-                        <span class="text-muted small ms-auto">08/02/2026</span>
+                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2"
+                             style="width: 35px; height: 35px;">
+                          <i class="bi bi-person-fill"></i>
+                        </div>
+                        <span class="fw-bold small">{{user.displayName}}</span>
+                        <span class="text-muted small ms-auto">{{formattedDate}}</span>
                       </div>
 
                       <div class="d-flex align-items-center mb-2 p-2 bg-light rounded-2">
-                        <img src="../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg" 
-                             class="rounded border me-2" style="width: 45px; height: 45px; object-fit: cover;">
                         <div>
-                            <span class="d-block small fw-bold">AMD Ryzen 7 9800X3D</span>
+                            <span class="d-block small fw-bold">{{product.name}}</span>
                             <div class="stars-outer small">
-                                <div class="stars-inner" style="width: 100%;"></div>
+                                <div class="stars-inner" style="width: {{starsWidth}}%;"></div>
                             </div>
                         </div>
                       </div>
 
-                      <h6 class="fw-bold text-primary mt-2">"Rendimiento top, precio algo elevado"</h6>
                       <p class="text-secondary small mb-2">
-                        "Es el rey del gaming, de eso no hay duda. Lo único malo es el precio de salida y que
-                        necesitas sí o sí una placa AM5 decente. Por lo demás, nada que reprochar."
+                        "{{comment}}"
                       </p>
 
                       <div class="d-flex align-items-center">
@@ -95,140 +105,93 @@
                         </span>
                       </div>
                     </div>
+                    {{/reviews}}
+
+                    {{^reviews}}
+                    <p class="text-muted">No has escrito ninguna opinión todavía.</p>
+                    {{/reviews}}
                   </div>
                 </div>
               </div>
 
+              <!-- Tab: Pedidos -->
               <div class="tab-pane fade" id="orders-pane" role="tabpanel" aria-labelledby="orders-tab" tabindex="0">
                 <h5 class="mb-3">Tus pedidos</h5>
 
-                <div class="card border border-primary mb-4 shadow-0">
+                {{#pedidos}}
+                <div class="card border mb-4 shadow-0">
                   <div class="card-body pb-0">
                     <header class="d-lg-flex">
                       <div class="flex-grow-1">
-                        <h6 class="mb-0">ID de pedido: 8924 <i class="dot"></i>
-                          <span class="text-success">Enviado</span>
+                        <h6 class="mb-0">ID de pedido: {{id}} <i class="dot"></i>
+                          <span class="badge {{statusBadgeClass}}">{{status}}</span>
                         </h6>
-                        <span class="text-muted">Fecha: 15 Febrero 2026</span>
+                        <span class="text-muted">Fecha: {{formattedDate}}</span>
                       </div>
                     </header>
                     <hr />
                     <div class="row">
                       <div class="col-lg-6 border-start">
-                        <p class="mb-0 text-muted">Dirección de envío</p>
-                        <p class="m-0">Calle de Sagasta, 13, Chamberí, 28004 Madrid</p>
-                      </div>
-                      <div class="col-lg-6 border-start">
                         <p class="mb-0 text-muted">Pago</p>
-                        <p class="m-0">Coste de envío: 31,36€ <br />Total: 496,31€</p>
+                        <p class="m-0">Total: {{formattedPrice}}€</p>
                       </div>
                     </div>
                     <hr />
                     <ul class="row list-unstyled">
+                      {{#products}}
                       <li class="col-xl-4 col-lg-6">
                         <div class="d-flex mb-3 mb-xl-0">
-                          <div class="me-3">
-                            <img width="72" height="72" src="../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg" class="img-sm rounded border" />
-                          </div>
                           <div>
-                            <p class="mb-0">AMD Ryzen 7 9800X3D 4.7/5.2GHz</p>
-                            <strong> 1x = 464,95€</strong>
+                            <p class="mb-0">{{name}}</p>
+                            <strong>{{price}}€</strong>
                           </div>
                         </div>
                       </li>
+                      {{/products}}
                     </ul>
                   </div>
                 </div>
+                {{/pedidos}}
 
-                <div class="card border border-danger mb-4 shadow-0">
-                    <div class="card-body pb-0">
-                      <header class="d-lg-flex">
-                        <div class="flex-grow-1">
-                          <h6 class="mb-0">ID de pedido: 8920 <i class="dot"></i>  
-                            <span class="text-danger">Pendiente</span>
-                          </h6>
-                          <span class="text-muted">Fecha: 13 Febrero 2026</span>
-                        </div>
-                      </header>
-                      <hr />
-                      <div class="row">
-                        <div class="col-lg-6 border-start">
-                          <p class="mb-0 text-muted">Dirección de envío</p>
-                          <p class="m-0">Calle de Sagasta, 13, Chamberí, 28004 Madrid</p>
-                        </div>
-                        <div class="col-lg-6 border-start">
-                          <p class="mb-0 text-muted">Pago</p>
-                          <p class="m-0">Coste de envío: 31,36€ <br />Total: 496,31€</p>
-                        </div>
-                      </div>
-                      <hr />
-                      <ul class="row list-unstyled">
-                        <li class="col-xl-4 col-lg-6">
-                          <div class="d-flex mb-3 mb-xl-0">
-                            <div class="me-3">
-                              <img width="72" height="72" src="../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg" class="img-sm rounded border" />
-                            </div>
-                            <div>
-                              <p class="mb-0">AMD Ryzen 7 9800X3D 4.7/5.2GHz</p>
-                              <strong> 1x = 464,95€ </strong>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
+                {{^pedidos}}
+                <p class="text-muted">No tienes ningún pedido todavía.</p>
+                {{/pedidos}}
               </div>
 
+              <!-- Tab: Modificar cuenta -->
               <div class="tab-pane fade" id="modify-pane" role="tabpanel" aria-labelledby="modify-tab" tabindex="0">
                 <h5 class="mb-4">Modificar cuenta</h5>
-                <form>
+                <form action="/profile/update" method="POST" enctype="multipart/form-data">
+                  {{#_csrf}}
+                  <input type="hidden" name="_csrf" value="{{token}}" />
+                  {{/_csrf}}
                   <div class="mb-4 d-flex align-items-center">
-                    <img src="../assets/images/profile_photo_example.jpeg"
-                      class="rounded-circle border me-3 avatar-lg" alt="Avatar actual" />
+                    <div class="rounded-circle border me-3 bg-primary text-white d-flex align-items-center justify-content-center"
+                         style="width: 80px; height: 80px; font-size: 2rem;">
+                      <i class="bi bi-person-fill"></i>
+                    </div>
                     <div>
                       <label for="profilePic" class="form-label mb-1 fw-bold">Cambiar foto de perfil</label>
-                      <input class="form-control form-control-sm" id="profilePic" type="file" accept="image/*">
+                      <input class="form-control form-control-sm" id="profilePic" name="imageFile" type="file" accept="image/*">
                       <div class="form-text">Formatos permitidos: JPG, PNG o GIF.</div>
                     </div>
                   </div>
 
+                  {{#usuario}}
                   <div class="row g-3 mb-4">
                     <div class="col-md-12">
-                      <label for="userName" class="form-label fw-bold">Nombre completo</label>
-                      <input type="text" class="form-control" id="userName" value="Juan José García Gómez">
+                      <label for="userName" class="form-label fw-bold">Nombre de usuario</label>
+                      <input type="text" class="form-control" id="userName" name="username" value="{{username}}">
                     </div>
 
                     <div class="col-md-6">
                       <label for="userEmail" class="form-label fw-bold">Correo electrónico</label>
-                      <input type="email" class="form-control" id="userEmail" value="juanjosereal67@gmail.com">
+                      <input type="email" class="form-control" id="userEmail" name="email" value="{{email}}">
                     </div>
-
-                    <div class="col-md-6">
-                      <label for="userPhone" class="form-label fw-bold">Número de teléfono</label>
-                      <input type="tel" class="form-control" id="userPhone" value="+34 600 50 04 00">
-                    </div>
-
-                    <hr class="my-4" />
-
-                    <div class="row g-2 mb-3">
-                      <div class="col-md-6">
-                        <div class="border p-3 rounded-3 bg-light">
-                          <b class="mx-2 text-muted"><i class="fa fa-map-marker-alt"></i></b>
-                          Calle de Sagasta, 13, Chamberí, 28004 Madrid
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="border p-3 rounded-3 bg-light">
-                          <b class="mx-2 text-muted"><i class="fa fa-map-marker-alt"></i></b>
-                          Carrer del Pare Perera, 2, L'Eixample, 46006 València, Valencia
-                        </div>
-                      </div>
-                    </div>
-
-                    <a href="#" class="btn btn-light border"> <i class="me-2 fa fa-plus"></i>Añadir dirección</a>
 
                     <hr class="my-4" />
                   </div>
+                  {{/usuario}}
 
                   <div class="d-flex justify-content-between align-items-center pt-4 border-top">
                     <button type="submit" class="btn btn-primary px-4">Guardar cambios</button>
@@ -247,36 +210,6 @@
   {{> partials/footer}}
 
   <script>
-    const userIsLogged = localStorage.getItem('isLoggedIn');
-    const headerFile = userIsLogged ? 'headers/loged_header.html' : 'headers/unloged_header.html';
-
-    fetch(headerFile)
-      .then(response => {
-        if (!response.ok) throw new Error("Error loading " + headerFile);
-        return response.text();
-      })
-      .then(data => {
-        document.getElementById('navbar-placeholder').innerHTML = data;
-        if (userIsLogged) {
-          const btnSalir = document.getElementById('btnCerrarSesion');
-          if (btnSalir) {
-            btnSalir.addEventListener('click', function () {
-              localStorage.removeItem('isLoggedIn');
-              localStorage.removeItem('userRole');
-              window.location.href = "/";
-            });
-          }
-          const userRole = localStorage.getItem('userRole');
-          const adminBtn = document.getElementById('btnAdminPanel');
-          if (userRole === 'admin' && adminBtn) {
-            adminBtn.classList.remove('d-none');
-          } else if (adminBtn) {
-            adminBtn.classList.add('d-none');
-          }
-        }
-      })
-      .catch(error => console.error("Error:", error));
-
     document.addEventListener('DOMContentLoaded', function () {
       const btnModificar = document.getElementById('btn-ir-a-modificar');
       const tabModificar = document.getElementById('modify-tab');

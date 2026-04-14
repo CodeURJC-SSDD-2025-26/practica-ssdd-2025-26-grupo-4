@@ -27,7 +27,7 @@
             <a class="nav-link" href="review-list"><i class="bi bi-chat-left-text me-1"></i>Reseñas</a>
             <a class="nav-link" href="order-list"><i class="bi bi-cart-check me-1"></i>Pedidos</a>
         </nav>
-        <!-- Title and Primary Action -->
+        <!-- Title -->
         <header class="mb-4">
             <h2 class="mb-1"><i class="bi bi-person-plus me-2"></i>Crear Nuevo Usuario</h2>
             <p class="text-muted mb-0 small">Registra una nueva cuenta.</p>
@@ -36,9 +36,11 @@
             <div class="col-lg-7">
                 <div class="card shadow-sm border-0">
                     <div class="card-body p-4">
-                        <form id="userForm">
-                            <!-- 1. Avatar section with direct preview -->
-                            <!-- Hidden input field with label styled as button -->
+                        <form action="/admin/user-create" method="POST" enctype="multipart/form-data" id="userForm">
+                            {{#_csrf}}
+                            <input type="hidden" name="_csrf" value="{{token}}" />
+                            {{/_csrf}}
+                            <!-- Avatar section -->
                             <div class="text-center mb-4">
                                 <div class="position-relative d-inline-block shadow-sm rounded-circle p-1 bg-white">
                                     <img class="rounded-circle" id="avatar"
@@ -50,23 +52,30 @@
                                         <i class="bi bi-camera shadow"></i>
                                     </label>
                                 </div>
-                                <input accept="image/*" class="d-none" id="imgInput" required="" type="file" />
+                                <input accept="image/*" class="d-none" id="imgInput" name="imageFile" type="file" />
                                 <p class="text-muted x-small mt-2">Formatos: JPG o PNG</p>
                             </div>
-                            <!-- 2. Visible input field -->
+                            <!-- Fields -->
                             <div class="row g-3">
                                 <div class="col-12">
-                                    <label class="form-label small fw-bold">NombreCompleto</label>
-                                    <input class="form-control" placeholder="Ej: Maria Lopez" required="" type="text" />
+                                    <label class="form-label small fw-bold">Nombre de usuario</label>
+                                    <input class="form-control" name="username" placeholder="Ej: maria_lopez" required="" type="text" />
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label small fw-bold">Email</label>
-                                    <input class="form-control" placeholder="usuario@email.com" required=""
+                                    <input class="form-control" name="email" placeholder="usuario@email.com" required=""
                                         type="email" />
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label small fw-bold">Password</label>
-                                    <input class="form-control" placeholder="••••••••" required="" type="password" />
+                                    <input class="form-control" name="password" placeholder="••••••••" required="" type="password" />
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label small fw-bold">Rol</label>
+                                    <select class="form-select" name="rol">
+                                        <option selected>Cliente</option>
+                                        <option>Administrador</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="mt-4 pt-4 border-top d-flex gap-2">
@@ -95,26 +104,6 @@
                 r.readAsDataURL(f);
             }
         });
-
-        // Form submission handler
-        document.getElementById('userForm').onsubmit = e => {
-            e.preventDefault();
-            location.href = 'user-list';
-        };
-
-        // Load dynamic components
-        loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header' : '../headers/unloged_header', 'navbar-placeholder', nav => {
-            nav.querySelectorAll('a, form').forEach(el => {
-                const a = el.tagName === 'FORM' ? 'action' : 'href', v = el.getAttribute(a);
-                if (v?.startsWith('../') && !v.startsWith('http')) el.setAttribute(a, '../' + v);
-            });
-            const b = document.getElementById('btnAdminPanel');
-            if (b) {
-                b.href = 'admin-dashboard';
-                b.classList.remove('d-none');
-            }
-        });
-        loadComp('../footer', 'footer-placeholder');
     </script>
 </body>
 

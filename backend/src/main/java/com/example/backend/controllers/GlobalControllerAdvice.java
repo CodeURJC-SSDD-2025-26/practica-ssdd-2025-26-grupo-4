@@ -19,12 +19,9 @@ public class GlobalControllerAdvice {
                             !"anonymousUser".equals(auth.getName());
         
         model.addAttribute("isLoggedIn", isLoggedIn);
+        model.addAttribute("isAdmin", request.isUserInRole("ADMIN"));
 
-        if (isLoggedIn) {
-            model.addAttribute("isAdmin", request.isUserInRole("ADMIN"));
-        }
-
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+        CsrfToken token = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
         if (token != null) {
             model.addAttribute("_csrf", token);
         }
