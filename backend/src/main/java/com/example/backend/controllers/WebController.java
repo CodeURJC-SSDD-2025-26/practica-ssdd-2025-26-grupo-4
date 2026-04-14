@@ -84,11 +84,20 @@ public class WebController {
                     model.addAttribute("productosCarrito", order.getProducts());
                     
                     double realTotal = order.getProducts().stream().mapToDouble(Product::getPrice).sum();
-                    model.addAttribute("precioBase", String.format("%.2f", realTotal));
+                    model.addAttribute("precioBase", String.format("%.2f", realTotal).replace('.', ','));
                     model.addAttribute("precioDescuento", "0,00");
-                    model.addAttribute("precioTotal", String.format("%.2f", realTotal));
+                    model.addAttribute("precioTotal", String.format("%.2f", realTotal).replace('.', ','));
+                } else {
+                    model.addAttribute("precioBase", "0,00");
+                    model.addAttribute("precioDescuento", "0,00");
+                    model.addAttribute("precioTotal", "0,00");
                 }
             });
+        } else {
+            // Anonymous cart (not implemented with persistence, just show empty)
+            model.addAttribute("precioBase", "0,00");
+            model.addAttribute("precioDescuento", "0,00");
+            model.addAttribute("precioTotal", "0,00");
         }
         
         // Also show some recommendations from the database
@@ -425,6 +434,27 @@ public class WebController {
     public String deleteUser(@RequestParam Long id) {
         userRepository.deleteById(id);
         return "redirect:/admin/user-list";
+    }
+
+    // --- ORDERS ---
+
+    @PostMapping("/admin/order-edit")
+    public String updateOrderStatus(@RequestParam Long id, 
+                                    @RequestParam String status,
+                                    @RequestParam(required = false) String emailMsg,
+                                    @RequestParam(required = false) Boolean notifyClient) {
+        orderRepository.findById(id).ifPresent(order -> {
+            order.setStatus(status.toUpperCase());
+            // In a real app, we would send an email here if notifyClient is true
+            orderRepository.save(order);
+        });
+        return "redirect:/admin/order-edit?id=" + id;
+    }
+
+    @PostMapping("/admin/order-delete")
+    public String deleteOrder(@RequestParam Long id) {
+        orderRepository.deleteById(id);
+        return "redirect:/admin/order-list";
     }
 
     // --- REVIEWS ---

@@ -38,12 +38,19 @@
 
                 <div class="row g-4">
                     <div class="col-md-4">
-                        <div class="card shadow-sm border-0" style="top: 100px;">
-                            <img src="../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg"
-                                class="card-img-top p-4" alt="Producto">
+                        <div class="card shadow-sm border-0" style="position: sticky; top: 100px;">
+                            {{#producto.image}}
+                            <img src="/product/{{producto.id}}/image"
+                                class="card-img-top p-4" alt="{{producto.name}}">
+                            {{/producto.image}}
+                            {{^producto.image}}
+                            <div class="card-img-top p-4 text-center">
+                                <i class="bi bi-image text-muted fs-1"></i>
+                            </div>
+                            {{/producto.image}}
                             <div class="card-body text-center border-top">
-                                <h6 class="fw-bold mb-1">AMD Ryzen 7 9800X3D</h6>
-                                <p class="text-primary fw-bold mb-0">464,95€</p>
+                                <h6 class="fw-bold mb-1">{{producto.name}}</h6>
+                                <p class="text-primary fw-bold mb-0">{{producto.price}}€</p>
                             </div>
                         </div>
                     </div>
@@ -51,7 +58,9 @@
                     <div class="col-md-8">
                         <div class="card shadow-sm border-0 p-4">
                             <form action="/create-review" method="POST">
-                                <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+                                {{#_csrf}}
+                                <input type="hidden" name="_csrf" value="{{token}}"/>
+                                {{/_csrf}}
                                 <input type="hidden" name="productId" value="{{producto.id}}"/>
                                 <div class="mb-4">
                                     <label class="form-label fw-bold d-block">¿Qué puntuación le das?</label>
@@ -68,7 +77,7 @@
 
                                 <div class="mb-3">
                                     <label for="titulo" class="form-label fw-bold">Título de tu opinión</label>
-                                    <input type="text" class="form-control form-control-lg" id="titulo"
+                                    <input type="text" class="form-control form-control-lg" id="titulo" name="title"
                                         placeholder="Ej: Increíble rendimiento para gaming">
                                 </div>
 
@@ -78,35 +87,11 @@
                                         placeholder="Cuéntanos qué te ha parecido el producto, su instalación, temperaturas..."></textarea>
                                 </div>
 
-                                <div class="row mb-4">
-                                    <div class="col-md-6">
-                                        <label class="form-label fw-bold text-success"><i
-                                                class="bi bi-plus-circle me-1"></i> Pros</label>
-                                        <input type="text" class="form-control mb-2" placeholder="Ej: Muy potente">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label fw-bold text-danger"><i
-                                                class="bi bi-dash-circle me-1"></i> Contras</label>
-                                        <input type="text" class="form-control mb-2" placeholder="Ej: Precio elevado">
-                                    </div>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label class="form-label fw-bold">Añadir fotos a tu opinión</label>
-                                    <div class="d-flex flex-wrap gap-2 mb-2" id="preview-container">
-                                    </div>
-                                    <label for="upload-photo" class="btn btn-outline-primary btn-sm">
-                                        <i class="bi bi-camera me-1"></i> Seleccionar imágenes
-                                    </label>
-                                    <input type="file" id="upload-photo" multiple accept="image/*"
-                                        style="display: none;">
-                                </div>
-
                                 <div class="d-flex gap-2">
                                     <button type="submit" class="btn btn-primary px-4 py-2 fw-bold">
                                         Publicar opinión
                                     </button>
-                                    <a href="/" class="btn btn-outline-secondary px-4 py-2">
+                                    <a href="/item-detail?id={{producto.id}}" class="btn btn-outline-secondary px-4 py-2">
                                         Cancelar
                                     </a>
                                 </div>
@@ -129,9 +114,8 @@
         stars.forEach(star => {
             star.addEventListener('click', function () {
                 const value = this.getAttribute('data-value');
-                ratingInput.value = value; // Store value on hidden input
+                ratingInput.value = value;
 
-                // Update stars
                 stars.forEach(s => {
                     if (s.getAttribute('data-value') <= value) {
                         s.classList.replace('bi-star', 'bi-star-fill');
@@ -141,145 +125,23 @@
                 });
             });
         });
-    </script>
 
-    <script>
-        const photoInput = document.getElementById('upload-photo');
-        const previewContainer = document.getElementById('preview-container');
-
-        photoInput.addEventListener('change', function () {
-            // We don't delete the previous ones in case the user adds more
-            const files = Array.from(this.files);
-
-            files.forEach(file => {
-                const reader = new FileReader();
-
-                reader.onload = function (e) {
-                    // Create the image element
-                    const imgWrapper = document.createElement('div');
-                    imgWrapper.style.position = 'relative';
-
-                    imgWrapper.innerHTML = `
-                <img src="${e.target.result}" class="img-thumbnail" style="width: 80px; height: 80px; object-fit: cover;">
-                <span class="badge bg-danger position-absolute top-0 end-0 rounded-circle" 
-                      style="cursor:pointer; transform: translate(30%, -30%);" 
-                      onclick="this.parentElement.remove()">×</span>
-            `;
-                    previewContainer.appendChild(imgWrapper);
-                }
-
-                reader.readAsDataURL(file);
-            });
-        });
-    </script>
-
-    <script>
-        function changeImage(src) {
-            // Find the main image by ID and change its source
-            document.getElementById('mainImage').src = src;
-        }
-    </script>
-
-    <script>
         document.querySelector('form').addEventListener('submit', function (event) {
-            // Get current values
             const rating = document.getElementById('rating-value').value;
-            const titulo = document.getElementById('titulo').value.trim();
             const comentario = document.getElementById('comentario').value.trim();
 
-            // Check if something is missing
             if (rating === "0") {
                 alert("Por favor, selecciona una puntuación con las estrellas.");
-                event.preventDefault(); // Prevent form submission
-                return;
-            }
-
-            if (titulo === "") {
-                alert("El título de la opinión no puede estar vacío.");
                 event.preventDefault();
                 return;
             }
 
-            if (comentario.length < 15) {
-                alert("Tu comentario es demasiado corto. Cuéntanos un poco más sobre tu experiencia.");
+            if (comentario.length < 5) {
+                alert("Tu comentario es demasiado corto.");
                 event.preventDefault();
                 return;
             }
-
-            // If everything is fine, show a success message
-            alert("¡Gracias! Tu opinión se ha publicado correctamente.");
         });
-    </script>
-
-    <script>
-        // --- HEADER LOADING (Current code) ---
-        document.addEventListener("DOMContentLoaded", function () {
-            // Check if user is logged in
-            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-            const isInPagesFolder = window.location.pathname.includes('/pages/');
-            const basePath = isInPagesFolder ? 'headers/' : 'pages/headers/';
-            const headerFile = isLoggedIn ? basePath + 'loged_header.html' : basePath + 'unloged_header.html';
-
-            // Load the file and insert it in the container
-            fetch(headerFile)
-                .then(response => {
-                    if (!response.ok) throw new Error("Could not load header");
-                    return response.text();
-                })
-                .then(html => {
-                    document.getElementById('header-container').innerHTML = html;
-
-                    if (localStorage.getItem('userRole') === 'admin') {
-                        const adminBtn = document.getElementById('btnAdminPanel');
-                        if (adminBtn) adminBtn.classList.remove('d-none');
-                    }
-
-                    // Logout logic
-                    const btnSalir = document.getElementById('btnCerrarSesion');
-                    if (btnSalir) {
-                        btnSalir.addEventListener('click', function (e) {
-                            e.preventDefault();
-                            localStorage.removeItem('isLoggedIn');
-                            localStorage.removeItem('userRole'); // Also clean up the role
-                            window.location.href = isInPagesFolder ? '/' : '/';
-                        });
-                    }
-
-                    // Fix link paths if we are in the index
-                    if (!isInPagesFolder) {
-                        const links = document.querySelectorAll('#header-container a');
-                        links.forEach(link => {
-                            const href = link.getAttribute('href');
-                            // If the link is not an external link (http) and does not start with "pages/"
-                            if (href && !href.startsWith('http') && !href.startsWith('pages/') && href !== '#') {
-                                link.setAttribute('href', 'pages/' + href);
-                            }
-                        });
-                    }
-
-                    // --- BONUS: ADD LOGOUT FUNCTION ---
-                    // If we load the loged_header, we give life to the Logout button (if you add it)
-                    if (isLoggedIn) {
-                        const btnSalir = document.getElementById('btnCerrarSesion');
-                        if (btnSalir) {
-                            btnSalir.addEventListener('click', function () {
-                                localStorage.removeItem('isLoggedIn');
-                                window.location.reload(); // Reload the page
-                            });
-                        }
-                    }
-                })
-                .catch(error => console.error('Error loading header:', error));
-        });
-        fetch('footer.html')
-            .then(response => {
-                if (!response.ok) throw new Error("Error loading footer");
-                return response.text();
-            })
-            .then(data => {
-                document.getElementById('footer-placeholder').innerHTML = data;
-            })
-            .catch(error => console.error("Error en footer:", error));
     </script>
 </body>
 

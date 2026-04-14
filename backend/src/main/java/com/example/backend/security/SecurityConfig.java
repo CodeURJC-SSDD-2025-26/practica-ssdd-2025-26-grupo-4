@@ -20,11 +20,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/css/**", "/assets/images/**", "/js/**").permitAll()// PÚBLICO
-                .requestMatchers("/", "/index", "/item-detail", "/search-result", "/user-registration", "/login", "/shopping-cart").permitAll() //PÚBLICO
-                .requestMatchers("/create-review", "/payment", "/payment-correct", "/profile").hasAnyRole("USER", "ADMIN") //USUARIOS Y ADMINS
-                .requestMatchers("/admin/**").hasRole("ADMIN")// SOLO ADMINS
-                 .anyRequest().authenticated()
+                .requestMatchers("/css/**", "/assets/**", "/js/**", "/product/**", "/user/**").permitAll() // PÚBLICO
+                .requestMatchers("/", "/index", "/item-detail", "/search-result", "/user-registration", "/login", "/shopping-cart").permitAll() // PÚBLICO
+                .requestMatchers("/create-review", "/payment", "/profile/**").hasAnyRole("USER", "ADMIN") // USUARIOS Y ADMINS
+                .requestMatchers("/admin/**").hasRole("ADMIN") // SOLO ADMINS
+                .anyRequest().authenticated()
         );
 
         // CONFIGURACIÓN DEL LOGIN 
