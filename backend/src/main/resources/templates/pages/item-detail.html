@@ -23,11 +23,12 @@
     {{/isLoggedIn}}
 
     <main class="container mt-5 pt-4">
+        {{#producto}}
         <nav aria-label="breadcrumb" class="mb-4">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                <li class="breadcrumb-item"><a href="#">Procesadores</a></li>
-                <li class="breadcrumb-item active" aria-current="page">AMD Ryzen 7 9800X3D</li>
+                <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="/search-result">{{category}}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{name}}</li>
             </ol>
         </nav>
 
@@ -35,57 +36,37 @@
             <div class="col-lg-7">
                 <div class="card border-0">
                     <div class="text-center p-4">
+                        {{#image}}
                         <img id="mainImage" style="max-width: 100%; max-height: 100vh; margin: auto;"
                             class="rounded-4 fit"
-                            src="../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg" />
+                            src="/product/{{id}}/image" />
+                        {{/image}}
+                        {{^image}}
+                        <div class="bg-light d-flex align-items-center justify-content-center rounded-4" 
+                             style="height: 400px;">
+                            <i class="bi bi-image text-muted" style="font-size: 5rem;"></i>
+                        </div>
+                        {{/image}}
                     </div>
-
-                    <div class="d-flex justify-content-center mb-3">
-                        <a data-fslightbox="mygalley" class="border mx-1 rounded-2" href="#"
-                            onclick="changeImage('../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg')">
-                            <img width="60" height="60" class="rounded-2"
-                                src="../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg" />
-                        </a>
-
-                        <a data-fslightbox="mygalley" class="border mx-1 rounded-2" href="#"
-                            onclick="changeImage('../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-front.jpg')">
-                            <img width="60" height="60" class="rounded-2"
-                                src="../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-front.jpg" />
-                        </a>
-
-                        <a data-fslightbox="mygalley" class="border mx-1 rounded-2" href="#"
-                            onclick="changeImage('../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-side.jpg')">
-                            <img width="60" height="60" class="rounded-2"
-                                src="../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-side.jpg" />
-                        </a>
-
-                        <a data-fslightbox="mygalley" class="border mx-1 rounded-2" href="#"
-                            onclick="changeImage('../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-cpu.jpg')">
-                            <img width="60" height="60" class="rounded-2"
-                                src="../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-cpu.jpg" />
-                        </a>
-
-                    </div>
-
                 </div>
             </div>
 
             <div class="col-lg-5">
                 <div class="ps-lg-4">
-                    <h1 class="h3 fw-bold">AMD Ryzen 7 9800X3D 4.7/5.2GHz</h1>
+                    <h1 class="h3 fw-bold">{{name}}</h1>
 
                     <div class="d-flex align-items-center mb-3">
-                        <div class="stars-outer">
-                            <div class="stars-inner" style="width: 92%;"></div>
-                        </div>
-                        <a href="#reviews" class="ms-2 small text-primary text-decoration-none">48 opiniones</a>
-                        <span class="mx-2 text-muted">|</span>
-                        <span class="small text-success fw-bold"><i class="fas fa-check-circle"></i> En stock</span>
+                        <span class="badge bg-secondary me-2">{{category}}</span>
+                        {{#stock}}
+                        <span class="small text-success fw-bold"><i class="fas fa-check-circle"></i> En stock ({{stock}} uds.)</span>
+                        {{/stock}}
                     </div>
+
+                    <p class="text-muted">{{description}}</p>
 
                     <div class="bg-light p-4 rounded-4 shadow-sm border">
                         <div class="mb-3">
-                            <span class="display-5 fw-bold text-primary">464,95€</span>
+                            <span class="display-5 fw-bold text-primary">{{price}}€</span>
                             <p class="text-muted small">IVA incluido</p>
                         </div>
 
@@ -110,33 +91,11 @@
 
         <section class="row mt-5">
             <div class="col-12">
-                <h3 class="fw-bold mb-4 border-bottom pb-2">Especificaciones técnicas</h3>
-                <table class="table table-striped">
-                    <tbody>
-                        <tr>
-                            <th class="w-25">Socket</th>
-                            <td>AM5</td>
-                        </tr>
-                        <tr>
-                            <th>Núcleos / Hilos</th>
-                            <td>8 núcleos / 16 hilos</td>
-                        </tr>
-                        <tr>
-                            <th>Frecuencia Base / Turbo</th>
-                            <td>4.7 GHz / 5.2 GHz</td>
-                        </tr>
-                        <tr>
-                            <th>Caché L3</th>
-                            <td>96 MB (3D V-Cache)</td>
-                        </tr>
-                        <tr>
-                            <th>TDP</th>
-                            <td>120W</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <h3 class="fw-bold mb-4 border-bottom pb-2">Descripción del producto</h3>
+                <p>{{description}}</p>
             </div>
         </section>
+        {{/producto}}
 
         <section id="reviews" class="mt-5 pb-5">
             <h3 class="fw-bold mb-4">Opiniones de los usuarios</h3>
@@ -144,124 +103,49 @@
             <div class="row g-4">
                 <div class="col-md-4">
                     <div class="card border-0 bg-light p-4 rounded-4 h-100">
-                        <div class="rating-container">
-                            <div class="rating-number">4.8</div>
-                            <div class="stars-outer">
-                                <div class="stars-inner" style="width: 96%;">
-                                </div>
-                            </div>
-                            <div class="rating-count">48 valoraciones</div>
-                        </div>
-
-                        <div class="stars-distribution">
-                            <div class="d-flex align-items-center mb-1">
-                                <span class="small me-2" style="width: 20px;">5</span>
-                                <div class="progress flex-grow-1" style="height: 8px;">
-                                    <div class="progress-bar bg-warning" style="width: 85%"></div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center mb-1">
-                                <span class="small me-2" style="width: 20px;">4</span>
-                                <div class="progress flex-grow-1" style="height: 8px;">
-                                    <div class="progress-bar bg-warning" style="width: 10%"></div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center mb-1">
-                                <span class="small me-2" style="width: 20px;">3</span>
-                                <div class="progress flex-grow-1" style="height: 8px;">
-                                    <div class="progress-bar bg-warning" style="width: 5%"></div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center mb-1">
-                                <span class="small me-2" style="width: 20px;">2</span>
-                                <div class="progress flex-grow-1" style="height: 8px;">
-                                    <div class="progress-bar bg-warning" style="width: 0%"></div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center mb-1">
-                                <span class="small me-2" style="width: 20px;">1</span>
-                                <div class="progress flex-grow-1" style="height: 8px;">
-                                    <div class="progress-bar bg-warning" style="width: 0%"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <a href="create-review" class="btn btn-outline-primary mt-4 fw-bold">
+                        {{#producto}}
+                        <a href="create-review?productId={{id}}" class="btn btn-outline-primary mt-4 fw-bold">
                             Escribir opinión
                         </a>
+                        {{/producto}}
                     </div>
                 </div>
 
                 <div class="col-md-8">
+                    {{#reviews}}
                     <div class="card border-0 border-bottom rounded-0 mb-4 pb-4">
                         <div class="d-flex align-items-center mb-3">
-                            <img src="https://i.redd.it/who-would-win-gordon-or-tf2-mercs-all-weapons-and-no-gman-v0-cbsahrncb9ef1.jpg?width=250&format=pjpg&auto=webp&s=9a899e90372830ac6eced4c8157772b9278ec435"
-                                class="rounded-circle me-2" alt="Usuario"
-                                style="width: 40px; height: 40px; object-fit: cover;">
-                            <div class="d-flex flex-column">
-                                <span class="fw-bold small lh-1">Manolo Freeman</span>
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2"
+                                 style="width: 40px; height: 40px;">
+                                <i class="bi bi-person-fill"></i>
                             </div>
-                            <span class="text-muted small ms-auto">22/01/2026</span>
+                            <div class="d-flex flex-column">
+                                <span class="fw-bold small lh-1">{{user.displayName}}</span>
+                            </div>
+                            <span class="text-muted small ms-auto">{{formattedDate}}</span>
                         </div>
 
                         <div class="mb-2">
                             <div class="stars-outer small">
-                                <div class="stars-inner" style="width: 100%;"></div>
+                                <div class="stars-inner" style="width: {{starsWidth}}%;"></div>
                             </div>
-                            <span class="fw-bold ms-2">Bestial para jugar</span>
                         </div>
 
                         <p class="text-secondary small mb-2">
-                            "Vengo de un 5800X y el salto es increíble. Las temperaturas son más estables de lo que
-                            esperaba con una líquida de
-                            240mm. En juegos como Cyberpunk o Flight Simulator se nota muchísimo la caché extra."
+                            "{{comment}}"
                         </p>
 
                         <div class="d-flex align-items-center">
                             <span class="badge bg-success-subtle text-success me-3">
                                 <i class="fas fa-check me-1"></i> Compra verificada
                             </span>
-                            <div class="text-muted small">
-                                ¿Te ha sido útil?
-                                <a href="#" class="text-primary text-decoration-none ms-1">Sí (7)</a> /
-                                <a href="#" class="text-primary text-decoration-none">No</a>
-                            </div>
                         </div>
                     </div>
+                    {{/reviews}}
 
-                    <div class="card border-0 border-bottom rounded-0 mb-4 pb-4">
-                        <div class="d-flex align-items-center mb-3">
-                            <img src="../assets/images/profile_photo_example.jpeg" class="rounded-circle me-2"
-                                alt="Usuario" style="width: 40px; height: 40px; object-fit: cover;">
-                            <div class="d-flex flex-column">
-                                <span class="fw-bold small lh-1">Juan José García Gómez</span>
-                            </div>
-                            <span class="text-muted small ms-auto">08/02/2026</span>
-                        </div>
-
-                        <div class="mb-2">
-                            <div class="stars-outer small">
-                                <div class="stars-inner" style="width: 100%;"></div>
-                            </div>
-                            <span class="fw-bold ms-2">Rendimiento top, precio algo elevado</span>
-                        </div>
-
-                        <p class="text-secondary small mb-2">
-                            "Es el rey del gaming, de eso no hay duda. Lo único malo es el precio de salida y que
-                            necesitas sí o sí una placa AM5 decente. Por lo demás, nada que reprochar."
-                        </p>
-
-                        <div class="d-flex align-items-center">
-                            <span class="badge bg-success-subtle text-success me-3">
-                                <i class="fas fa-check me-1"></i> Compra verificada
-                            </span>
-                            <div class="text-muted small">
-                                ¿Te ha sido útil?
-                                <a href="#" class="text-primary text-decoration-none ms-1">Sí (3)</a> /
-                                <a href="#" class="text-primary text-decoration-none">No</a>
-                            </div>
-                        </div>
-                    </div>
+                    {{^reviews}}
+                    <p class="text-muted">Este producto aún no tiene opiniones. ¡Sé el primero en opinar!</p>
+                    {{/reviews}}
                 </div>
             </div>
         </section>
@@ -275,59 +159,6 @@
         function changeImage(src) {
             document.getElementById('mainImage').src = src;
         }
-    </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-            const isInPagesFolder = window.location.pathname.includes('/pages/');
-            const basePath = isInPagesFolder ? 'headers/' : 'pages/headers/';
-            const headerFile = isLoggedIn ? basePath + 'loged_header.html' : basePath + 'unloged_header.html';
-
-            fetch(headerFile)
-                .then(response => {
-                    if (!response.ok) throw new Error("Failed to load header");
-                    return response.text();
-                })
-                .then(html => {
-                    document.getElementById('header-container').innerHTML = html;
-
-                    if (localStorage.getItem('userRole') === 'admin') {
-                        const adminBtn = document.getElementById('btnAdminPanel');
-                        if (adminBtn) adminBtn.classList.remove('d-none');
-                    }
-
-                    const btnSalir = document.getElementById('btnCerrarSesion');
-                    if (btnSalir) {
-                        btnSalir.addEventListener('click', function (e) {
-                            e.preventDefault();
-                            localStorage.removeItem('isLoggedIn');
-                            localStorage.removeItem('userRole');
-                            window.location.href = isInPagesFolder ? '/' : '/';
-                        });
-                    }
-
-                    if (!isInPagesFolder) {
-                        const links = document.querySelectorAll('#header-container a');
-                        links.forEach(link => {
-                            const href = link.getAttribute('href');
-                            if (href && !href.startsWith('http') && !href.startsWith('pages/') && href !== '#') {
-                                link.setAttribute('href', 'pages/' + href);
-                            }
-                        });
-                    }
-                })
-                .catch(error => console.error('Error loading header:', error));
-        });
-        fetch('footer.html')
-            .then(response => {
-                if (!response.ok) throw new Error("Error al cargar el footer");
-                return response.text();
-            })
-            .then(data => {
-                document.getElementById('footer-placeholder').innerHTML = data;
-            })
-            .catch(error => console.error("Error en footer:", error));
     </script>
 
 </body>

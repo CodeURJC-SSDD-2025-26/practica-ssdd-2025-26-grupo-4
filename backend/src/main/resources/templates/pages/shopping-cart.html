@@ -30,14 +30,24 @@
           <div class="card border shadow-0">
             <div class="m-4">
               <h4 class="card-title mb-4">Tu carrito de compra</h4>
+              {{#productosCarrito}}
               <div class="row gy-3 mb-4">
                 <div class="col-lg-5">
                   <div class="me-lg-5">
                     <div class="d-flex">
-                      <img src="../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg" class="border rounded me-3" style="width: 96px; height: 96px;" />
+                      <a href="item-detail?id={{id}}">
+                        {{#image}}
+                        <img src="/product/{{id}}/image" class="border rounded me-3" style="width: 96px; height: 96px; object-fit: contain;" />
+                        {{/image}}
+                        {{^image}}
+                        <div class="border rounded me-3 bg-light d-flex align-items-center justify-content-center" style="width: 96px; height: 96px;">
+                          <i class="bi bi-image text-muted fs-3"></i>
+                        </div>
+                        {{/image}}
+                      </a>
                       <div class="">
-                        <a href="#" class="nav-link">AMD Ryzen 7 9800X3D 4.7/5.2GHz</a>
-                        <p class="text-muted">ADM Socket AM5 - Sin disipador</p>
+                        <a href="item-detail?id={{id}}" class="nav-link fw-bold">{{name}}</a>
+                        <p class="text-muted small">{{category}}</p>
                       </div>
                     </div>
                   </div>
@@ -45,89 +55,29 @@
                 <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
                   <div class="">
                     <select style="width: 100px;" class="form-select me-4">
-                      <option>1</option>
+                      <option selected>1</option>
                       <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
                     </select>
                   </div>
                   <div class="">
-                    <span class="h6">464,95€</span> <br />
-                    <small class="text-muted text-nowrap"> 464,95€ / por unidad </small>
+                    <span class="h6">{{price}}€</span> <br />
+                    <small class="text-muted text-nowrap"> {{price}}€ / por unidad </small>
                   </div>
                 </div>
                 <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
                   <div class="float-md-end">
-                    <a href="#" class="btn btn-light border text-danger icon-hover-danger"> Quitar</a>
+                    <a href="#" class="btn btn-light border text-danger icon-hover-danger"><i class="bi bi-trash"></i> Quitar</a>
                   </div>
                 </div>
               </div>
-
-              <div class="row gy-3 mb-4">
-                <div class="col-lg-5">
-                  <div class="me-lg-5">
-                    <div class="d-flex">
-                      <img src="../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg" class="border rounded me-3" style="width: 96px; height: 96px;" />
-                      <div class="">
-                        <a href="#" class="nav-link">AMD Ryzen 7 9800X3D 4.7/5.2GHz</a>
-                        <p class="text-muted">ADM Socket AM5 - Sin disipador</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
-                  <div class="">
-                    <select style="width: 100px;" class="form-select me-4">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                    </select>
-                  </div>
-                  <div class="">
-                    <span class="h6">464,95€</span> <br />
-                    <small class="text-muted text-nowrap"> 464,95€ / por unidad </small>
-                  </div>
-                </div>
-                <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
-                  <div class="float-md-end">
-                    <a href="#" class="btn btn-light border text-danger icon-hover-danger"> Quitar</a>
-                  </div>
-                </div>
+              {{/productosCarrito}}
+              {{^productosCarrito}}
+              <div class="text-center py-5">
+                <i class="bi bi-cart-x text-muted mb-3" style="font-size: 3rem;"></i>
+                <h5 class="text-muted">Tu carrito está vacío</h5>
+                <a href="/" class="btn btn-primary mt-3">Ir a comprar</a>
               </div>
-
-              <div class="row gy-3">
-                <div class="col-lg-5">
-                  <div class="me-lg-5">
-                    <div class="d-flex">
-                      <img src="../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg" class="border rounded me-3" style="width: 96px; height: 96px;" />
-                      <div class="">
-                        <a href="#" class="nav-link">AMD Ryzen 7 7800X3D 4.2 GHz/5 GHz</a>
-                        <p class="text-muted">AMD Socket AM5 - Sin disipador</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
-                  <div class="">
-                    <select style="width: 100px;" class="form-select me-4">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                    </select>
-                  </div>
-                  <div class="">
-                    <span class="h6">464,95€</span> <br />
-                    <small class="text-muted text-nowrap"> 464,95€ / por unidad </small>
-                  </div>
-                </div>
-                <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
-                  <div class="float-md-end">
-                    <a href="#" class="btn btn-light border text-danger icon-hover-danger"> Quitar</a>
-                  </div>
-                </div>
-              </div>
+              {{/productosCarrito}}
             </div>
           </div>
         </div>
@@ -136,16 +86,16 @@
             <div class="card-body">
               <div class="d-flex justify-content-between">
                 <p class="mb-2">Precio de los productos:</p>
-                <p class="mb-2">1394,85€</p>
+                <p class="mb-2">{{precioBase}}€</p>
               </div>
               <div class="d-flex justify-content-between">
                 <p class="mb-2">Descuento:</p>
-                <p class="mb-2 text-success">-60,00€</p>
+                <p class="mb-2 text-success">-{{precioDescuento}}€</p>
               </div>
               <hr />
               <div class="d-flex justify-content-between">
                 <p class="mb-2">Precio total:</p>
-                <p class="mb-2 fw-bold">1394,85€</p>
+                <p class="mb-2 fw-bold">{{precioTotal}}€</p>
               </div>
 
               <div class="mt-3">
@@ -165,21 +115,28 @@
     </header>
 
     <div class="row">
+      {{#recomendados}}
       <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
         <div class="card px-4 border shadow-0 h-100">
           <div class="mask px-2" style="height: 50px;">
             <div class="d-flex justify-content-between">
-              <h6><span class="badge bg-danger pt-1 mt-3 ms-2">New</span></h6>
+              <h6><span class="badge bg-danger pt-1 mt-3 ms-2">Recomendado</span></h6>
             </div>
           </div>
-          <a href="#">
-            <img src="../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg" class="card-img-top rounded-2" alt="AMD"/>
+          <a href="item-detail?id={{id}}">
+            {{#image}}
+            <img src="/product/{{id}}/image" class="card-img-top rounded-2" style="object-fit: contain; aspect-ratio: 1/1;" />
+            {{/image}}
+            {{^image}}
+            <div class="card-img-top rounded-2 bg-light d-flex align-items-center justify-content-center" style="aspect-ratio: 1/1;">
+              <i class="bi bi-image text-muted fs-3"></i>
+            </div>
+            {{/image}}
           </a>
           <div class="card-body d-flex flex-column pt-3 border-top">
-            <a href="#" class="nav-link text-dark">AMD Ryzen 7 9800X3D 4.7/5.2GHz</a>
+            <a href="item-detail?id={{id}}" class="nav-link text-dark">{{name}}</a>
             <div class="price-wrap mb-3">
-              <strong>404,95€</strong>
-              <del class="text-muted ms-2">464,95€</del>
+              <strong>{{price}}€</strong>
             </div>
             <div class="mt-auto">
               <a href="#" class="btn btn-outline-primary w-100">Añadir al carrito</a>
@@ -187,60 +144,7 @@
           </div>
         </div>
       </div>
-
-      <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
-        <div class="card px-4 border shadow-0 h-100">
-          <div class="mask px-2" style="height: 50px;"></div>
-          <a href="#">
-            <img src="../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg" class="card-img-top rounded-2" alt="AMD"/>
-          </a>
-          <div class="card-body d-flex flex-column pt-3 border-top">
-            <a href="#" class="nav-link text-dark">AMD Ryzen 7 9800X3D 4.7/5.2GHz</a>
-            <div class="price-wrap mb-3">
-              <strong>464,95€</strong>
-            </div>
-            <div class="mt-auto">
-              <a href="#" class="btn btn-outline-primary w-100">Añadir al carrito</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
-        <div class="card px-4 border shadow-0 h-100">
-          <div class="mask px-2" style="height: 50px;"></div>
-          <a href="#">
-            <img src="../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg" class="card-img-top rounded-2" alt="AMD"/>
-          </a>
-          <div class="card-body d-flex flex-column pt-3 border-top">
-            <a href="#" class="nav-link text-dark">AMD Ryzen 7 9800X3D 4.7/5.2GHz</a>
-            <div class="price-wrap mb-3">
-              <strong>464,95€</strong>
-            </div>
-            <div class="mt-auto">
-              <a href="#" class="btn btn-outline-primary w-100">Añadir al carrito</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
-        <div class="card px-4 border shadow-0 h-100">
-          <div class="mask px-2" style="height: 50px;"></div>
-          <a href="#">
-            <img src="../assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-main.jpg" class="card-img-top rounded-2" alt="AMD"/>
-          </a>
-          <div class="card-body d-flex flex-column pt-3 border-top">
-            <a href="#" class="nav-link text-dark">AMD Ryzen 7 9800X3D 4.7/5.2GHz</a>
-            <div class="price-wrap mb-3">
-              <strong>464,95€</strong>
-            </div>
-            <div class="mt-auto">
-              <a href="#" class="btn btn-outline-primary w-100">Añadir al carrito</a>
-            </div>
-          </div>
-        </div>
-      </div>
+      {{/recomendados}}
 
     </div>
   </div>
@@ -248,44 +152,7 @@
 
   {{> partials/footer}}
 
-  <script>
-      const userIsLogged = localStorage.getItem('isLoggedIn');
-  const headerFile = userIsLogged ? 'headers/loged_header.html' : 'headers/unloged_header.html';
 
-  fetch(headerFile)
-      .then(response => {
-          if (!response.ok) throw new Error("Error al cargar " + headerFile);
-          return response.text();
-      })
-      .then(data => {
-          // 1. Inject HTML
-          document.getElementById('navbar-placeholder').innerHTML = data;
-
-          // 2. Now that the button EXISTS in the DOM, we search for it
-          if (userIsLogged) {
-              // Logout logic
-              const btnSalir = document.getElementById('btnCerrarSesion');
-              if (btnSalir) {
-                  btnSalir.addEventListener('click', function() {
-                      localStorage.removeItem('isLoggedIn');
-                      localStorage.removeItem('userRole'); // Don't forget to clean up the role
-                      window.location.href = "/";
-                  });
-              }
-
-              // Admin button logic (Moving it here is key)
-              const userRole = localStorage.getItem('userRole');
-              const adminBtn = document.getElementById('btnAdminPanel');
-              
-              if (userRole === 'admin' && adminBtn) {
-                  adminBtn.classList.remove('d-none');
-              } else if (adminBtn) {
-                  // Just in case, make sure it's hidden if not admin
-                  adminBtn.classList.add('d-none');
-              }
-          }
-      })
-      .catch(error => console.error("Fatal error:", error));
 
   // Keep DOMContentLoaded only for things that are in the main HTML
   document.addEventListener('DOMContentLoaded', function () {

@@ -31,13 +31,15 @@
         <!-- Title and Main Action -->
         <header class="mb-4">
             <h2 class="mb-1"><i class="bi bi-plus-circle me-2"></i>Crear Nuevo Producto</h2>
-            <p class="text-muted mb-0 small">Añade un nuevo artículo al catálogo con detalles técnicos, precio y stock.
-            </p>
+            <p class="text-muted mb-0 small">Añade un nuevo artículo al catálogo con detalles técnicos, precio y stock.</p>
         </header>
         <!-- Creation Form -->
         <section class="card shadow-sm border-0">
             <div class="card-body p-4">
-                <form action="#" id="createForm" method="POST">
+                <form action="/admin/item-create" id="createForm" method="POST" enctype="multipart/form-data">
+                    {{#_csrf}}
+                    <input type="hidden" name="_csrf" value="{{token}}" />
+                    {{/_csrf}}
                     <div class="row g-4">
                         <!-- Principal data -->
                         <div class="col-lg-8">
@@ -56,10 +58,13 @@
                                     <label class="form-label small fw-bold">Categoría</label>
                                     <select class="form-select" name="categoria" required="">
                                         <option disabled="" selected="" value="">Elegir...</option>
-                                        <option>Procesadores</option>
-                                        <option>Gráficas</option>
-                                        <option>Placas Base</option>
-                                        <option>RAM</option>
+                                        <option value="CPU">CPU</option>
+                                        <option value="GPU">GPU</option>
+                                        <option value="Motherboard">Motherboard</option>
+                                        <option value="RAM">RAM</option>
+                                        <option value="SSD">SSD</option>
+                                        <option value="PowerSupply">PowerSupply</option>
+                                        <option value="Cooling">Cooling</option>
                                     </select>
                                 </div>
                                 <div class="col-md-4">
@@ -81,12 +86,11 @@
                         <div class="col-lg-4">
                             <div class="card bg-light border-0">
                                 <div class="card-body">
-                                    <label class="form-label small fw-bold">Imágenes del Producto</label>
+                                    <label class="form-label small fw-bold">Imagen del Producto</label>
                                     <input accept="image/*" class="form-control form-control-sm" id="imgInput"
-                                        multiple="" required="" type="file" />
+                                        name="imageFile" type="file" />
                                     <p class="text-muted x-small mt-2 mb-0"><i
-                                            class="bi bi-info-circle me-1"></i>Formatos: JPG, PNG, WEBP. Máximo 4MB cada
-                                        una.</p>
+                                            class="bi bi-info-circle me-1"></i>Formatos: JPG, PNG, WEBP. Máximo 4MB.</p>
                                     <div class="d-flex flex-wrap gap-2 mt-3" id="preview"></div>
                                 </div>
                             </div>
@@ -120,37 +124,6 @@
                 reader.readAsDataURL(file);
             });
         });
-
-        // Submission Simulation
-        document.getElementById('createForm').onsubmit = e => { e.preventDefault(); location.href = 'item-list'; };
-
-        // Component Loading
-        const loadComp = (url, id, cb) => {
-            fetch(url)
-                .then(r => r.text())
-                .then(h => {
-                    document.getElementById(id).innerHTML = h;
-                    if (cb) cb(document.getElementById(id));
-                });
-        };
-
-        // Load header based on stored session state
-        loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header' : '../headers/unloged_header', 'navbar-placeholder', nav => {
-            nav.querySelectorAll('a, form').forEach(el => {
-                const a = el.tagName === 'FORM' ? 'action' : 'href';
-                const v = el.getAttribute(a);
-                if (v?.startsWith('../') && !v.startsWith('http')) {
-                    el.setAttribute(a, '../' + v);
-                }
-            });
-            const b = document.getElementById('btnAdminPanel');
-            if (b) {
-                b.href = 'admin-dashboard';
-                b.classList.remove('d-none');
-            }
-        });
-
-        loadComp('../footer', 'footer-placeholder');
     </script>
 </body>
 

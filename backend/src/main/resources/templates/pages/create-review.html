@@ -50,7 +50,9 @@
 
                     <div class="col-md-8">
                         <div class="card shadow-sm border-0 p-4">
-                            <form action="#" method="POST">
+                            <form action="/create-review" method="POST">
+                                <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+                                <input type="hidden" name="productId" value="{{producto.id}}"/>
                                 <div class="mb-4">
                                     <label class="form-label fw-bold d-block">¿Qué puntuación le das?</label>
                                     <div id="star-container" class="text-warning fs-3">
@@ -60,7 +62,7 @@
                                         <i class="bi bi-star star-btn" data-value="4" style="cursor:pointer;"></i>
                                         <i class="bi bi-star star-btn" data-value="5" style="cursor:pointer;"></i>
                                     </div>
-                                    <input type="hidden" name="rating" id="rating-value" value="0">
+                                    <input type="hidden" name="score" id="rating-value" value="0">
                                     <small class="text-muted">Haz clic para puntuar</small>
                                 </div>
 
@@ -72,7 +74,7 @@
 
                                 <div class="mb-4">
                                     <label for="comentario" class="form-label fw-bold">Tu comentario</label>
-                                    <textarea class="form-control" id="comentario" rows="6"
+                                    <textarea class="form-control" id="comentario" name="comment" rows="6"
                                         placeholder="Cuéntanos qué te ha parecido el producto, su instalación, temperaturas..."></textarea>
                                 </div>
 
@@ -104,7 +106,7 @@
                                     <button type="submit" class="btn btn-primary px-4 py-2 fw-bold">
                                         Publicar opinión
                                     </button>
-                                    <a href="item-detail" class="btn btn-outline-secondary px-4 py-2">
+                                    <a href="/" class="btn btn-outline-secondary px-4 py-2">
                                         Cancelar
                                     </a>
                                 </div>

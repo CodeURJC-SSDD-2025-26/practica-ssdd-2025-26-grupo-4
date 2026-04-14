@@ -67,7 +67,7 @@ public class DatabaseInitializer {
         p1.setPrice(464.95);
         p1.setStock(24);
         p1.setCategory("CPU");
-        setProductImage(p1, "../resources/static/assets/images/amd-ryzen-7-9800x3d/amd-ryzen-7-9800x3d-side.jpg");
+        setProductImage(p1, "static/assets/images/products/1/main.jpg");
         productRepository.save(p1);
 
         Product p2 = new Product();
@@ -77,6 +77,7 @@ public class DatabaseInitializer {
         p2.setPrice(349.90);
         p2.setStock(10);
         p2.setCategory("CPU");
+        setProductImage(p2, "static/assets/images/products/2/main.jpg");
         productRepository.save(p2);
 
         Product p3 = new Product();
@@ -86,6 +87,7 @@ public class DatabaseInitializer {
         p3.setPrice(390.90);
         p3.setStock(15);
         p3.setCategory("CPU");
+        setProductImage(p3, "static/assets/images/products/3/main.jpg");
         productRepository.save(p3);
 
         // GPUs
@@ -97,6 +99,7 @@ public class DatabaseInitializer {
         p4.setPrice(749.00);
         p4.setStock(4);
         p4.setCategory("GPU");
+        setProductImage(p4, "static/assets/images/products/4/main.jpg");
         productRepository.save(p4);
 
         Product p5 = new Product();
@@ -106,6 +109,7 @@ public class DatabaseInitializer {
         p5.setPrice(699.00);
         p5.setStock(30);
         p5.setCategory("GPU");
+        setProductImage(p5, "static/assets/images/products/5/main.jpg");
         productRepository.save(p5);
 
         Product p6 = new Product();
@@ -115,6 +119,7 @@ public class DatabaseInitializer {
         p6.setPrice(1329.90);
         p6.setStock(8);
         p6.setCategory("GPU");
+        setProductImage(p6, "static/assets/images/products/6/main.jpg");
         productRepository.save(p6);
 
         // Motherboards
@@ -126,6 +131,7 @@ public class DatabaseInitializer {
         p7.setPrice(109.99);
         p7.setStock(12);
         p7.setCategory("Motherboard");
+        setProductImage(p7, "static/assets/images/products/7/main.jpg");
         productRepository.save(p7);
 
         Product p8 = new Product();
@@ -135,6 +141,7 @@ public class DatabaseInitializer {
         p8.setPrice(189.90);
         p8.setStock(2);
         p8.setCategory("Motherboard");
+        setProductImage(p8, "static/assets/images/products/8/main.jpg");
         productRepository.save(p8);
 
         // Cooling
@@ -146,6 +153,7 @@ public class DatabaseInitializer {
         p9.setPrice(89.90);
         p9.setStock(24);
         p9.setCategory("Cooling");
+        setProductImage(p9, "static/assets/images/products/9/main.jpg");
         productRepository.save(p9);
 
         Product p10 = new Product();
@@ -155,6 +163,7 @@ public class DatabaseInitializer {
         p10.setPrice(34.99);
         p10.setStock(37);
         p10.setCategory("Cooling");
+        setProductImage(p10, "static/assets/images/products/10/main.jpg");
         productRepository.save(p10);
 
         // RAM
@@ -166,6 +175,7 @@ public class DatabaseInitializer {
         p11.setPrice(151.99);
         p11.setStock(11);
         p11.setCategory("RAM");
+        setProductImage(p11, "static/assets/images/products/11/main.jpg");
         productRepository.save(p11);
 
         Product p12 = new Product();
@@ -175,6 +185,7 @@ public class DatabaseInitializer {
         p12.setPrice(419.99);
         p12.setStock(21);
         p12.setCategory("RAM");
+        setProductImage(p12, "static/assets/images/products/12/main.jpg");
         productRepository.save(p12);
 
         // PowerSupply
@@ -186,6 +197,7 @@ public class DatabaseInitializer {
         p13.setPrice(57.99);
         p13.setStock(34);
         p13.setCategory("PowerSupply");
+        setProductImage(p13, "static/assets/images/products/13/main.jpg");
         productRepository.save(p13);
 
         Product p14 = new Product();
@@ -195,6 +207,7 @@ public class DatabaseInitializer {
         p14.setPrice(137.99);
         p14.setStock(9);
         p14.setCategory("PowerSupply");
+        setProductImage(p14, "static/assets/images/products/14/main.jpg");
         productRepository.save(p14);
 
         // SSD
@@ -206,6 +219,7 @@ public class DatabaseInitializer {
         p15.setPrice(174.95);
         p15.setStock(23);
         p15.setCategory("SSD");
+        setProductImage(p15, "static/assets/images/products/15/main.jpg");
         productRepository.save(p15);
 
         Product p16 = new Product();
@@ -215,6 +229,7 @@ public class DatabaseInitializer {
         p16.setPrice(269.95);
         p16.setStock(11);
         p16.setCategory("SSD");
+        setProductImage(p16, "static/assets/images/products/16/main.jpg");
         productRepository.save(p16);
 
         // 3. Reviews for products

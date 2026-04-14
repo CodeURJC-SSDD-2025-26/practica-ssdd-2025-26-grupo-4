@@ -34,110 +34,45 @@
                 <h2 class="mb-1"><i class="bi bi-truck me-2"></i>Gestión de Pedidos</h2>
                 <p class="text-muted mb-0 small">Control de pedidos de clientes, facturación y estados de envío.</p>
             </div>
-            <a href="order-management" class="btn btn-outline-primary btn-sm">
-                <i class="bi bi-boxes me-1"></i>Reabastecimiento
-            </a>
         </header>
 
-        <!-- Metrics / Inventory Tabs -->
-        <ul class="nav nav-tabs mb-4" id="orderTabs" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="metrics-tab" data-bs-toggle="tab" data-bs-target="#metricsPanel"
-                    type="button" role="tab">
-                    <i class="bi bi-graph-up me-1"></i>Métricas
-                </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="inventory-tab" data-bs-toggle="tab" data-bs-target="#inventoryPanel"
-                    type="button" role="tab">
-                    <i class="bi bi-boxes me-1"></i>Gestión Inventario
-                </button>
-            </li>
-        </ul>
-
-        <!-- Tab Content -->
-        <div class="tab-content mb-4" id="orderTabsContent">
-
-            <!-- Tab 1: Global Metrics -->
-            <div class="tab-pane fade show active" id="metricsPanel" role="tabpanel">
-                <div class="row g-3 mb-4">
-                    <!-- Orders total -->
-                    <div class="col-md-3">
-                        <div class="card border-0 shadow-sm text-center p-3">
-                            <div class="text-primary mb-1"><i class="bi bi-receipt fs-3"></i></div>
-                            <h4 class="fw-bold mb-0">156</h4>
-                            <small class="text-muted">Pedidos Totales</small>
-                        </div>
+        <!-- Global Metrics -->
+        <section class="mb-4">
+            <div class="row g-3">
+                <!-- Orders total -->
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm text-center p-3">
+                        <div class="text-primary mb-1"><i class="bi bi-receipt fs-3"></i></div>
+                        <h4 class="fw-bold mb-0">{{totalOrders}}</h4>
+                        <small class="text-muted">Pedidos Totales</small>
                     </div>
-                    <!-- Income -->
-                    <div class="col-md-3">
-                        <div class="card border-0 shadow-sm text-center p-3">
-                            <div class="text-success mb-1"><i class="bi bi-currency-euro fs-3"></i></div>
-                            <h4 class="fw-bold mb-0">48.320€</h4>
-                            <small class="text-muted">Ingresos Totales</small>
-                        </div>
+                </div>
+                <!-- Income -->
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm text-center p-3">
+                        <div class="text-success mb-1"><i class="bi bi-currency-euro fs-3"></i></div>
+                        <h4 class="fw-bold mb-0">{{totalIncome}}€</h4>
+                        <small class="text-muted">Ingresos Totales</small>
                     </div>
-                    <!-- Pending -->
-                    <div class="col-md-3">
-                        <div class="card border-0 shadow-sm text-center p-3">
-                            <div class="text-warning mb-1"><i class="bi bi-clock-history fs-3"></i></div>
-                            <h4 class="fw-bold mb-0">12</h4>
-                            <small class="text-muted">Pendientes</small>
-                        </div>
+                </div>
+                <!-- Pending -->
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm text-center p-3">
+                        <div class="text-warning mb-1"><i class="bi bi-clock-history fs-3"></i></div>
+                        <h4 class="fw-bold mb-0">{{pendingOrders}}</h4>
+                        <small class="text-muted">Pendientes</small>
                     </div>
-                    <!-- Cancelled -->
-                    <div class="col-md-3">
-                        <div class="card border-0 shadow-sm text-center p-3">
-                            <div class="text-danger mb-1"><i class="bi bi-x-circle fs-3"></i></div>
-                            <h4 class="fw-bold mb-0">3</h4>
-                            <small class="text-muted">Cancelados</small>
-                        </div>
+                </div>
+                <!-- Cancelled -->
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm text-center p-3">
+                        <div class="text-danger mb-1"><i class="bi bi-x-circle fs-3"></i></div>
+                        <h4 class="fw-bold mb-0">{{cancelledOrders}}</h4>
+                        <small class="text-muted">Cancelados</small>
                     </div>
                 </div>
             </div>
-
-            <!-- Tab 2: Inventory Management -->
-            <div class="tab-pane fade" id="inventoryPanel" role="tabpanel">
-                <div class="row g-3 mb-4">
-                    <!-- Low Stock -->
-                    <div class="col-md-4">
-                        <div class="card border-0 shadow-sm border-start border-warning border-4 p-3">
-                            <h6 class="fw-bold text-uppercase x-small text-muted mb-2">
-                                <i class="bi bi-exclamation-triangle me-1"></i>Stock Bajo
-                            </h6>
-                            <p class="mb-1 small"><strong>AMD Ryzen 7 9800X3D</strong> — 3 uds.</p>
-                            <p class="mb-1 small"><strong>MSI RTX 5080 Ventus</strong> — 2 uds.</p>
-                            <p class="mb-0 small"><strong>Corsair DDR5 32GB</strong> — 5 uds.</p>
-                        </div>
-                    </div>
-                    <!-- Best-Selling Products -->
-                    <div class="col-md-4">
-                        <div class="card border-0 shadow-sm border-start border-success border-4 p-3">
-                            <h6 class="fw-bold text-uppercase x-small text-muted mb-2">
-                                <i class="bi bi-star me-1"></i>Más Vendidos este Mes
-                            </h6>
-                            <p class="mb-1 small"><strong>AMD Ryzen 7 9800X3D</strong> — 24 ventas</p>
-                            <p class="mb-1 small"><strong>ASUS TUF RTX 4070</strong> — 18 ventas</p>
-                            <p class="mb-0 small"><strong>WD Black SN7100 1TB</strong> — 15 ventas</p>
-                        </div>
-                    </div>
-                    <!-- Quick Actions -->
-                    <div class="col-md-4">
-                        <div class="card border-0 shadow-sm border-start border-primary border-4 p-3">
-                            <h6 class="fw-bold text-uppercase x-small text-muted mb-2">
-                                <i class="bi bi-lightning me-1"></i>Acciones Rápidas
-                            </h6>
-                            <a href="order-management" class="btn btn-sm btn-outline-primary w-100 mb-2">
-                                <i class="bi bi-boxes me-1"></i>Ir a Reabastecimiento
-                            </a>
-                            <a href="item-list" class="btn btn-sm btn-outline-secondary w-100">
-                                <i class="bi bi-box-seam me-1"></i>Gestionar Productos
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </section>
 
         <!-- Filter Panel -->
         <section class="card shadow-sm border-0 mb-4 bg-light">
@@ -191,131 +126,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Order 1 - Delivered -->
+                        {{#pedidos}}
                         <tr>
-                            <td class="ps-4 fw-bold">#O7721</td>
+                            <td class="ps-4 fw-bold">#O{{id}}</td>
                             <td>
-                                <div class="fw-bold">John Dominguez Encinas</div>
-                                <div class="small text-muted">john.doe@email.com</div>
+                                <div class="fw-bold">{{user.username}}</div>
+                                <div class="small text-muted">{{user.email}}</div>
                             </td>
-                            <td>02/03/2026</td>
-                            <td>1.347,88 €</td>
-                            <td><span class="badge bg-success">Entregado</span></td>
+                            <td>{{orderDate}}</td>
+                            <td>{{totalPrice}} €</td>
+                            <td><span class="badge bg-secondary">{{status}}</span></td>
                             <td class="text-end pe-4">
                                 <div class="btn-group btn-group-sm">
-                                    <a href="order-edit?id=O7721" class="btn btn-outline-primary"
+                                    <a href="order-edit?id={{id}}" class="btn btn-outline-primary"
                                         title="Ver / Editar">
                                         <i class="bi bi-pencil"></i>
                                     </a>
-                                    <button class="btn btn-outline-danger" data-bs-toggle="modal"
-                                        data-bs-target="#modalCancelar"
-                                        onclick="document.getElementById('orderIdText').textContent='#O7721'"
-                                        title="Cancelar">
-                                        <i class="bi bi-x-circle"></i>
-                                    </button>
                                 </div>
                             </td>
                         </tr>
-                        <!-- Order 2 - Sent -->
-                        <tr>
-                            <td class="ps-4 fw-bold">#O7725</td>
-                            <td>
-                                <div class="fw-bold">David Martin Díaz</div>
-                                <div class="small text-muted">david.md98@gmail.com</div>
-                            </td>
-                            <td>04/03/2026</td>
-                            <td>108,78 €</td>
-                            <td><span class="badge bg-warning text-dark">Enviado</span></td>
-                            <td class="text-end pe-4">
-                                <div class="btn-group btn-group-sm">
-                                    <a href="order-edit?id=O7725" class="btn btn-outline-primary"
-                                        title="Ver / Editar">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <button class="btn btn-outline-danger" data-bs-toggle="modal"
-                                        data-bs-target="#modalCancelar"
-                                        onclick="document.getElementById('orderIdText').textContent='#O7725'"
-                                        title="Cancelar">
-                                        <i class="bi bi-x-circle"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <!-- Order 3 - Processing -->
-                        <tr>
-                            <td class="ps-4 fw-bold">#O7728</td>
-                            <td>
-                                <div class="fw-bold">Marta Nuñez Calvo</div>
-                                <div class="small text-muted">mañuca03@gmail.com</div>
-                            </td>
-                            <td>05/03/2026</td>
-                            <td>2.541,61 €</td>
-                            <td><span class="badge bg-info text-dark">Procesando</span></td>
-                            <td class="text-end pe-4">
-                                <div class="btn-group btn-group-sm">
-                                    <a href="order-edit?id=O7728" class="btn btn-outline-primary"
-                                        title="Ver / Editar">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <button class="btn btn-outline-danger" data-bs-toggle="modal"
-                                        data-bs-target="#modalCancelar"
-                                        onclick="document.getElementById('orderIdText').textContent='#O7728'"
-                                        title="Cancelar">
-                                        <i class="bi bi-x-circle"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <!-- Order 4 - Pending -->
-                        <tr>
-                            <td class="ps-4 fw-bold">#O7729</td>
-                            <td>
-                                <div class="fw-bold">Laura Rodriguez Lopez</div>
-                                <div class="small text-muted">piplupShiny06@gmail.com</div>
-                            </td>
-                            <td>01/01/2026</td>
-                            <td>54,45 €</td>
-                            <td><span class="badge bg-secondary">Pendiente</span></td>
-                            <td class="text-end pe-4">
-                                <div class="btn-group btn-group-sm">
-                                    <a href="order-edit?id=O7729" class="btn btn-outline-primary"
-                                        title="Ver / Editar">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <button class="btn btn-outline-danger" data-bs-toggle="modal"
-                                        data-bs-target="#modalCancelar"
-                                        onclick="document.getElementById('orderIdText').textContent='#O7729'"
-                                        title="Cancelar">
-                                        <i class="bi bi-x-circle"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <!-- Order 5 - Cancelled -->
-                        <tr>
-                            <td class="ps-4 fw-bold">#O7601</td>
-                            <td>
-                                <div class="fw-bold">Gave Newell</div>
-                                <div class="small text-muted">gave_newell@gmail.com</div>
-                            </td>
-                            <td>28/02/2026</td>
-                            <td>387,20 €</td>
-                            <td><span class="badge bg-danger">Cancelado</span></td>
-                            <td class="text-end pe-4">
-                                <div class="btn-group btn-group-sm">
-                                    <a href="order-edit?id=O7601" class="btn btn-outline-primary"
-                                        title="Ver / Editar">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <button class="btn btn-outline-danger" data-bs-toggle="modal"
-                                        data-bs-target="#modalCancelar"
-                                        onclick="document.getElementById('orderIdText').textContent='#O7601'"
-                                        title="Cancelar" disabled>
-                                        <i class="bi bi-x-circle"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                        {{/pedidos}}
                     </tbody>
                 </table>
             </div>
@@ -365,35 +195,6 @@
 
     {{> partials/footer}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // --- Dynamic Component Loading ---
-        const loadComp = (url, id, cb) => {
-            fetch(url)
-                .then(r => r.text())
-                .then(h => {
-                    document.getElementById(id).innerHTML = h;
-                    if (cb) cb(document.getElementById(id));
-                });
-        };
-
-        // Load header based on stored session state
-        loadComp(localStorage.getItem('isLoggedIn') ? '../headers/loged_header' : '../headers/unloged_header', 'navbar-placeholder', nav => {
-            nav.querySelectorAll('a, form').forEach(el => {
-                const a = el.tagName === 'FORM' ? 'action' : 'href';
-                const v = el.getAttribute(a);
-                if (v?.startsWith('../') && !v.startsWith('http')) {
-                    el.setAttribute(a, '../' + v);
-                }
-            });
-            const b = document.getElementById('btnAdminPanel');
-            if (b) {
-                b.href = 'admin-dashboard';
-                b.classList.remove('d-none');
-            }
-        });
-
-        loadComp('../footer', 'footer-placeholder');
-    </script>
 </body>
 
 </html>
