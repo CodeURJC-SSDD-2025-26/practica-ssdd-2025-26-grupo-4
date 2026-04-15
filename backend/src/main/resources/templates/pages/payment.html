@@ -24,43 +24,78 @@
         
         <div class="col-md-7 col-lg-8">
             <h4 class="mb-3">Dirección de Envío</h4>
-            
-            <form id="formPago" class="needs-validation" novalidate>
-                <div class="row g-2 mb-3">
-                    <div class="col-md-6">
-                        <label class="w-100" style="cursor: pointer;">
-                            <div class="border p-3 rounded-3 bg-white d-flex align-items-center">
-                                <input class="form-check-input me-3" type="radio" name="shipAddress" value="dir_1" checked required>
-                                <div>
-                                    <b class="text-muted"><i class="fa fa-map-marker-alt me-2"></i></b>
-                                    Calle de Sagasta, 13, Chamberí, 28004 Madrid
-                                </div>
-                            </div>
-                        </label>
-                    </div>
 
+                <div class="row g-2 mb-3">
+                    {{#direcciones}}
                     <div class="col-md-6">
                         <label class="w-100" style="cursor: pointer;">
                             <div class="border p-3 rounded-3 bg-white d-flex align-items-center">
-                                <input class="form-check-input me-3" type="radio" name="shipAddress" value="dir_2" required>
+                                <input class="form-check-input me-3" type="radio" name="shipAddress" value="{{id}}" required>
                                 <div>
                                     <b class="text-muted"><i class="fa fa-map-marker-alt me-2"></i></b>
-                                    Carrer del Pare Perera, 2, L'Eixample, 46006 València, Valencia
+                                    {{street}}, {{city}}, {{postalCode}}, {{country}}
                                 </div>
                             </div>
                         </label>
                     </div>
+                    {{/direcciones}}
+                    {{^direcciones}}
+                    <div class="col-12">
+                        <p class="text-muted">No tienes direcciones guardadas.</p>
+                    </div>
+                    {{/direcciones}}
                 </div>
 
-                <a href="#" class="btn btn-light border"> <i class="me-2 fa fa-plus"></i>Añadir dirección</a>
+                <!-- Add address button (opens modal) -->
+                <button type="button" class="btn btn-light border mt-2" data-bs-toggle="modal" data-bs-target="#addAddressModal">
+                    <i class="me-2 fa fa-plus"></i>Añadir dirección
+                </button>
 
+                <!-- Modal -->
+                <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="addAddressModalLabel">Añadir dirección</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <form action="/address/add" method="POST">
+                        {{#_csrf}}
+                        <input type="hidden" name="_csrf" value="{{token}}" />
+                        {{/_csrf}}
+                        <div class="modal-body">
+                          <div class="mb-2">
+                            <input name="street" class="form-control" placeholder="Calle y número" required />
+                          </div>
+                          <div class="row g-2 mb-2">
+                            <div class="col">
+                              <input name="city" class="form-control" placeholder="Ciudad" required />
+                            </div>
+                            <div class="col">
+                              <input name="postalCode" class="form-control" placeholder="Código postal" required />
+                            </div>
+                          </div>
+                          <div class="mb-2">
+                            <input name="country" class="form-control" placeholder="País" required />
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                          <button type="submit" class="btn btn-primary">Guardar dirección</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
 
                 <hr class="my-4">
 
+                <!-- Payment form: separate from address form -->
+                <form id="formPago" class="needs-validation" novalidate>
                 <h4 class="mb-3">Método de Pago</h4>
                 <div class="my-3">
                     <div class="form-check">
-                        <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
+                        <input id="credit" name="paymentMethod" type="radio" class="form-check-input" value="card" checked required>
                         <label class="form-check-label" for="credit">Tarjeta de Crédito / Débito</label>
                         <div class="text-muted small mt-1">
                             <i class="fab fa-cc-visa fa-lg me-1"></i>
@@ -68,32 +103,29 @@
                             <i class="fab fa-cc-amex fa-lg"></i>
                         </div>
                     </div>
-                    <div class="form-check">
-                        <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
-                        <label class="form-check-label" for="paypal">PayPal</label>
-                    </div>
+
                 </div>
 
                 <div class="row gy-3">
                     <div class="col-md-6">
                         <label class="form-label">Nombre en la tarjeta</label>
-                        <input type="text" class="form-control" required>
+                        <input name="cardName" type="text" class="form-control" required>
                         <small class="text-muted">Como aparece en el plástico</small>
                         <div class="invalid-feedback">Nombre de tarjeta requerido.</div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Número de tarjeta</label>
-                        <input type="text" class="form-control" placeholder="0000 0000 0000 0000" required>
+                        <input name="cardNumber" type="text" inputmode="numeric" pattern="[0-9 ]{13,19}" class="form-control" placeholder="0000 0000 0000 0000" required>
                         <div class="invalid-feedback">Número inválido.</div>
                     </div>
                     <div class="col-md-3">
                         <label class="form-label">Caducidad</label>
-                        <input type="text" class="form-control" placeholder="MM/YY" required>
-                        <div class="invalid-feedback">Fecha requerida.</div>
+                        <input id="cardExpiry" name="cardExpiry" type="text" inputmode="numeric" pattern="^(0[1-9]|1[0-2])([\\/\\-]?)([0-9]{2})$" class="form-control" placeholder="MM/YY" required>
+                        <div class="invalid-feedback">Fecha requerida (MM/YY).</div>
                     </div>
                     <div class="col-md-3">
                         <label class="form-label">CVV</label>
-                        <input type="text" class="form-control" placeholder="123" required>
+                        <input name="cardCvv" type="text" inputmode="numeric" pattern="[0-9]{3,4}" class="form-control" placeholder="123" required>
                         <div class="invalid-feedback">Código requerido.</div>
                     </div>
                 </div>
@@ -103,7 +135,7 @@
                 <button class="w-100 btn btn-primary btn-lg p-3 fw-bold" type="submit">
                     Pagar Ahora <i class="fas fa-arrow-right ms-2"></i>
                 </button>
-            </form>
+                </form>
         </div>
 
         <div class="col-md-5 col-lg-4">
@@ -158,17 +190,82 @@
 <script>
     const form = document.getElementById('formPago');
 
-    form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
-        } else {
+    if (form) {
+        form.addEventListener('submit', function (event) {
+            // Clear previous custom validity
+            const expiryInput = document.getElementById('cardExpiry');
+            if (expiryInput) expiryInput.setCustomValidity('');
+
+            // Check that a shipping address is selected (radios are outside the payment form)
+            const selectedAddress = document.querySelector('input[name="shipAddress"]:checked');
+            const addrFeedbackId = 'shipAddressFeedback';
+            const addrContainer = document.querySelector('.row.g-2.mb-3');
+            let fb = document.getElementById(addrFeedbackId);
+            if (!selectedAddress) {
+                event.preventDefault();
+                event.stopPropagation();
+                if (!fb) {
+                    fb = document.createElement('div');
+                    fb.id = addrFeedbackId;
+                    fb.className = 'text-danger small mt-2';
+                    fb.innerText = 'Por favor selecciona una dirección de envío o añádela.';
+                    if (addrContainer) addrContainer.after(fb);
+                } else {
+                    fb.style.display = 'block';
+                }
+                return;
+            } else if (fb) {
+                fb.style.display = 'none';
+            }
+
+            // Basic HTML5 validation
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+                form.classList.add('was-validated');
+                return;
+            }
+
+            // Additional expiry validation for card
+            if (expiryInput) {
+                const val = expiryInput.value.trim();
+                const m = val.match(/^(\d{2})[\/\-]?(\d{2})$/);
+                if (!m) {
+                    expiryInput.setCustomValidity('Formato inválido. Usa MM/YY');
+                    event.preventDefault();
+                    event.stopPropagation();
+                    expiryInput.reportValidity();
+                    form.classList.add('was-validated');
+                    return;
+                }
+                const month = parseInt(m[1], 10);
+                const year = parseInt(m[2], 10);
+                const now = new Date();
+                const currentYear = now.getFullYear() % 100;
+                const currentMonth = now.getMonth() + 1;
+                if (month < 1 || month > 12 || year < 0) {
+                    expiryInput.setCustomValidity('Fecha inválida');
+                    event.preventDefault();
+                    event.stopPropagation();
+                    expiryInput.reportValidity();
+                    form.classList.add('was-validated');
+                    return;
+                }
+                if (year < currentYear || (year === currentYear && month < currentMonth)) {
+                    expiryInput.setCustomValidity('Tarjeta caducada');
+                    event.preventDefault();
+                    event.stopPropagation();
+                    expiryInput.reportValidity();
+                    form.classList.add('was-validated');
+                    return;
+                }
+            }
+
+            // All good -> simulate success (replace with real payment processing later)
             event.preventDefault();
             window.location.href = "payment-correct";
-        }
-
-        form.classList.add('was-validated');
-    }, false);
+        }, false);
+    }
 </script>
 
 </body>

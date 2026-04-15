@@ -18,10 +18,12 @@ import com.example.backend.models.Order;
 import com.example.backend.models.Product;
 import com.example.backend.models.Review;
 import com.example.backend.models.User;
+import com.example.backend.models.Address;
 import com.example.backend.repositories.ProductRepository;
 import com.example.backend.repositories.UserRepository;
 import com.example.backend.repositories.ReviewRepository;
 import com.example.backend.repositories.OrderRepository;
+import com.example.backend.repositories.AddressRepository;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -44,6 +46,9 @@ public class WebController {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private AddressRepository addressRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -266,13 +271,42 @@ public class WebController {
     }
 
     @GetMapping("/payment")
-    public String payment() {
+    public String payment(Model model, Principal principal, HttpServletRequest request) {
+        if (principal != null) {
+            userRepository.findByUsername(principal.getName()).ifPresent(user -> {
+                model.addAttribute("direcciones", addressRepository.findByUserId(user.getId()));
+            });
+        }
+        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+        if (token != null) {
+            model.addAttribute("_csrf", token);
+        }
         return "pages/payment";
     }
 
     @GetMapping("/payment-correct")
     public String paymentCorrect() {
         return "pages/payment_correct";
+    }
+
+    @PostMapping("/address/add")
+    public String addAddress(@RequestParam String street,
+                             @RequestParam String city,
+                             @RequestParam String postalCode,
+                             @RequestParam String country,
+                             Principal principal) {
+        if (principal != null) {
+            userRepository.findByUsername(principal.getName()).ifPresent(user -> {
+                Address a = new Address();
+                a.setStreet(street);
+                a.setCity(city);
+                a.setPostalCode(postalCode);
+                a.setCountry(country);
+                a.setUser(user);
+                addressRepository.save(a);
+            });
+        }
+        return "redirect:/payment";
     }
 
     @GetMapping("/user-registration")
