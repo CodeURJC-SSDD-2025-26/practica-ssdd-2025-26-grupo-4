@@ -250,6 +250,12 @@ public class WebController {
         model.addAttribute("brand", brand != null ? brand : "");
         model.addAttribute("currentSort", sort != null ? sort : "");
 
+        if (name != null && !name.trim().isEmpty()) {
+            model.addAttribute("searchTerm", name);
+        } else {
+            model.addAttribute("searchTerm", null);
+        }
+
         model.addAttribute("isLoggedIn", request.getUserPrincipal() != null);
         CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
         if (token != null) {

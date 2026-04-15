@@ -98,7 +98,16 @@
 
             <main class="col-md-9 col-lg-10">
                 <div class="d-flex justify-content-between align-items-center mb-3 p-2 border-bottom">
-                    <span class="fw-bold">Todos los productos</span>
+
+                    <h3>
+                        {{#searchTerm}}
+                            Resultados de: "{{searchTerm}}"
+                        {{/searchTerm}}
+                        {{^searchTerm}}
+                            Todos los productos
+                        {{/searchTerm}}
+                    </h3>
+
                     <div class="dropdown">
                         <button class="btn btn-outline-secondary dropdown-toggle btn-sm" type="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
