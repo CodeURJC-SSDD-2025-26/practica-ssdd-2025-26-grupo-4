@@ -27,7 +27,7 @@ public class Product {
     private double price;
     private String category;
     private int stock;
-
+    private String brand;
     @Lob
     private Blob imageFile;
 

@@ -21,7 +21,7 @@ public class SecurityConfig {
         
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/css/**", "/assets/**", "/js/**", "/product/**", "/user/**").permitAll() // PÚBLICO
-                .requestMatchers("/", "/index", "/item-detail", "/search-result", "/user-registration", "/login", "/shopping-cart").permitAll() // PÚBLICO
+                .requestMatchers("/", "/index", "/item-detail", "/search","/search-result", "/user-registration", "/login", "/shopping-cart").permitAll() // PÚBLICO
                 .requestMatchers("/create-review", "/payment", "/profile/**").hasAnyRole("USER", "ADMIN") // USUARIOS Y ADMINS
                 .requestMatchers("/admin/**").hasRole("ADMIN") // SOLO ADMINS
                 .anyRequest().authenticated()

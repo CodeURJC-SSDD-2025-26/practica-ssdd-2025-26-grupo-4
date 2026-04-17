@@ -44,6 +44,10 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Review> reviews;
 
+    // 1:N relationship - One user can have multiple saved addresses
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Address> addresses = new ArrayList<>();
+
     // --- Mustache helpers ---
 
     /** Returns true if this user has the ROLE_ADMIN role */
