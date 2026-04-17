@@ -59,14 +59,66 @@ public class WebController {
     // ===================== PAGE ROUTES (GET) =====================
 
     @GetMapping("/")
-    public String root(Model model) {
-        model.addAttribute("productos", productRepository.findAll());
-        return "index";
+    public String root(Model model,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String brand,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false) String sort,
+            HttpServletRequest request) {
+        return loadIndex(model, name, category, brand, minPrice, maxPrice, sort, request);
     }
 
     @GetMapping("/index")
-    public String index(Model model) {
-        model.addAttribute("productos", productRepository.findAll());
+    public String index(Model model,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String brand,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false) String sort,
+            HttpServletRequest request) {
+        return loadIndex(model, name, category, brand, minPrice, maxPrice, sort, request);
+    }
+
+    private String loadIndex(Model model, String name, String category, String brand,
+            Double minPrice, Double maxPrice, String sort, HttpServletRequest request) {
+
+        String searchName = (name != null && !name.isEmpty()) ? name : null;
+        String searchCategory = (category != null && !category.isEmpty()) ? category : null;
+        String searchBrand = (brand != null && !brand.isEmpty()) ? brand : null;
+
+        Sort sortOrder = Sort.unsorted();
+        if ("priceAsc".equals(sort)) {
+            sortOrder = Sort.by(Sort.Direction.ASC, "price");
+        } else if ("priceDesc".equals(sort)) {
+            sortOrder = Sort.by(Sort.Direction.DESC, "price");
+        }
+
+        boolean hasFilters = searchName != null || searchCategory != null || searchBrand != null
+                || minPrice != null || maxPrice != null;
+
+        List<Product> results = productRepository.findWithFilters(
+                searchName, searchCategory, searchBrand, minPrice, maxPrice, sortOrder);
+
+        model.addAttribute("productos", results);
+        model.addAttribute("query", name != null ? name : "");
+        model.addAttribute("category", category != null ? category : "");
+        model.addAttribute("brand", brand != null ? brand : "");
+        model.addAttribute("currentSort", sort != null ? sort : "");
+        model.addAttribute("hasFilters", hasFilters);
+
+        if (name != null && !name.trim().isEmpty()) {
+            model.addAttribute("searchTerm", name);
+        }
+
+        model.addAttribute("isLoggedIn", request.getUserPrincipal() != null);
+        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+        if (token != null) {
+            model.addAttribute("_csrf", token);
+        }
+
         return "index";
     }
 
