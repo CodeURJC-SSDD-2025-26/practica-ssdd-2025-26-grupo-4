@@ -9,6 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -233,41 +236,75 @@ public class WebController {
             @RequestParam(required = false) String sort,
             HttpServletRequest request) {
 
-        // Lógica de limpieza de nulos (la que ya tenías)
-        String searchName = (name != null && !name.isEmpty()) ? name : null;
-        String searchCategory = (category != null && !category.isEmpty()) ? category : null;
-        String searchBrand = (brand != null && !brand.isEmpty()) ? brand : null;
+        try {
+            // Lógica de limpieza de nulos
+            String searchName = (name != null && !name.trim().isEmpty()) ? name.trim().toLowerCase() : null;
+            String searchCategory = (category != null && !category.trim().isEmpty()) ? category.trim() : null;
+            String searchBrand = (brand != null && !brand.trim().isEmpty()) ? brand.trim() : null;
 
-        // Lógica de ordenación
-        Sort sortOrder = Sort.unsorted(); // Por defecto: Relevancia (orden de inserción)
-        if ("priceAsc".equals(sort)) {
-            sortOrder = Sort.by(Sort.Direction.ASC, "price");
-        } else if ("priceDesc".equals(sort)) {
-            sortOrder = Sort.by(Sort.Direction.DESC, "price");
+            // Procesamiento inteligente de la búsqueda (ej: "procesadores intel")
+            if (searchName != null) {
+                if (searchName.contains("procesador") || searchName.contains("cpu")) {
+                    searchCategory = "CPU";
+                    searchName = searchName.replaceAll("procesadores|procesador|cpu", "").trim();
+                } else if (searchName.contains("grafica") || searchName.contains("gráfica") || searchName.contains("gpu") || searchName.contains("tarjeta")) {
+                    searchCategory = "GPU";
+                    searchName = searchName.replaceAll("tarjetas?|gráficas?|graficas?|gpu|de|video", "").trim();
+                } else if (searchName.contains("placa") || searchName.contains("base") || searchName.contains("motherboard")) {
+                    searchCategory = "Motherboard";
+                    searchName = searchName.replaceAll("placas?|bases?|motherboards?", "").trim();
+                } else if (searchName.contains("ram") || searchName.contains("memoria")) {
+                    searchCategory = "RAM";
+                    searchName = searchName.replaceAll("memorias?|ram", "").trim();
+                } else if (searchName.contains("disco") || searchName.contains("duro") || searchName.contains("ssd") || searchName.contains("almacenamiento")) {
+                    searchCategory = "SSD";
+                    searchName = searchName.replaceAll("discos?|duros?|almacenamiento|ssd", "").trim();
+                } else if (searchName.contains("fuente") || searchName.contains("alimentacion") || searchName.contains("alimentación") || searchName.contains("powersupply")) {
+                    searchCategory = "PowerSupply";
+                    searchName = searchName.replaceAll("fuentes?|de|alimentación|alimentacion|powersupply", "").trim();
+                } else if (searchName.contains("refrigeracion") || searchName.contains("refrigeración") || searchName.contains("cooling") || searchName.contains("ventilador") || searchName.contains("disipador")) {
+                    searchCategory = "Cooling";
+                    searchName = searchName.replaceAll("refrigeración|refrigeracion|cooling|ventiladores?|disipadores?", "").trim();
+                }
+                
+                if (searchName.isEmpty()) {
+                    searchName = null;
+                }
+            }
+
+            // Lógica de ordenación
+            Sort sortOrder = Sort.unsorted();
+            if ("priceAsc".equals(sort)) {
+                sortOrder = Sort.by(Sort.Direction.ASC, "price");
+            } else if ("priceDesc".equals(sort)) {
+                sortOrder = Sort.by(Sort.Direction.DESC, "price");
+            }
+
+            List<Product> results = productRepository.findWithFilters(searchName, searchCategory, searchBrand, minPrice,
+                    maxPrice, sortOrder);
+
+            model.addAttribute("productos", results);
+            model.addAttribute("query", name != null ? name : "");
+            model.addAttribute("category", category != null ? category : "");
+            model.addAttribute("brand", brand != null ? brand : "");
+            model.addAttribute("currentSort", sort != null ? sort : "");
+
+            if (name != null && !name.trim().isEmpty()) {
+                model.addAttribute("searchTerm", name);
+            } else {
+                model.addAttribute("searchTerm", null);
+            }
+
+            model.addAttribute("isLoggedIn", request.getUserPrincipal() != null);
+            CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+            if (token != null) {
+                model.addAttribute("_csrf", token);
+            }
+
+            return "pages/search-result";
+        } catch (Exception e) {
+            return "redirect:/?error=true";
         }
-
-        List<Product> results = productRepository.findWithFilters(searchName, searchCategory, searchBrand, minPrice,
-                maxPrice, sortOrder);
-
-        model.addAttribute("productos", results);
-        model.addAttribute("query", name != null ? name : "");
-        model.addAttribute("category", category != null ? category : "");
-        model.addAttribute("brand", brand != null ? brand : "");
-        model.addAttribute("currentSort", sort != null ? sort : "");
-
-        if (name != null && !name.trim().isEmpty()) {
-            model.addAttribute("searchTerm", name);
-        } else {
-            model.addAttribute("searchTerm", null);
-        }
-
-        model.addAttribute("isLoggedIn", request.getUserPrincipal() != null);
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        if (token != null) {
-            model.addAttribute("_csrf", token);
-        }
-
-        return "pages/search-result";
     }
 
     @GetMapping("/payment")
@@ -685,7 +722,9 @@ public class WebController {
             @RequestParam(required = false) MultipartFile imageFile,
             Principal principal) throws IOException {
         if (principal != null) {
-            userRepository.findByUsername(principal.getName()).ifPresent(user -> {
+            Optional<User> optUser = userRepository.findByUsername(principal.getName());
+            if (optUser.isPresent()) {
+                User user = optUser.get();
                 user.setUsername(username);
                 user.setEmail(email);
 
@@ -700,7 +739,13 @@ public class WebController {
                 }
 
                 userRepository.save(user);
-            });
+
+                // Re-authenticate with the new username so the SecurityContext is up-to-date
+                Authentication currentAuth = SecurityContextHolder.getContext().getAuthentication();
+                Authentication newAuth = new UsernamePasswordAuthenticationToken(
+                        username, currentAuth.getCredentials(), currentAuth.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(newAuth);
+            }
         }
         return "redirect:/profile";
     }

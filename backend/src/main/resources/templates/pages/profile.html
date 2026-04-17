@@ -165,10 +165,19 @@
                   <input type="hidden" name="_csrf" value="{{token}}" />
                   {{/_csrf}}
                   <div class="mb-4 d-flex align-items-center">
+                    {{#usuario}}
+                    {{#hasPicture}}
+                    <img src="/user/{{id}}/image" 
+                         class="rounded-circle border shadow-sm me-3" 
+                         style="width: 80px; height: 80px; object-fit: cover;" />
+                    {{/hasPicture}}
+                    {{^hasPicture}}
                     <div class="rounded-circle border me-3 bg-primary text-white d-flex align-items-center justify-content-center"
                          style="width: 80px; height: 80px; font-size: 2rem;">
                       <i class="bi bi-person-fill"></i>
                     </div>
+                    {{/hasPicture}}
+                    {{/usuario}}
                     <div>
                       <label for="profilePic" class="form-label mb-1 fw-bold">Cambiar foto de perfil</label>
                       <input class="form-control form-control-sm" id="profilePic" name="imageFile" type="file" accept="image/*">

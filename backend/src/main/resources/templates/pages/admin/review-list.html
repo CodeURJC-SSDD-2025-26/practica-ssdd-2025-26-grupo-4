@@ -40,42 +40,43 @@
                 <h5 class="mb-0 small fw-bold"><i class="bi bi-funnel me-2"></i>Filtros de Búsqueda</h5>
             </div>
             <div class="card-body">
-                <form class="row g-3">
+                <form class="row g-3" onsubmit="return false;">
                     <div class="col-md-3">
                         <label class="form-label small">Categoría</label>
-                        <select class="form-select form-select-sm">
+                        <select class="form-select form-select-sm" id="filterReviewCategory">
                             <option value="">Todas</option>
-                            <option>Procesadores</option>
-                            <option>Tarjetas Gráficas</option>
-                            <option>Placas Base</option>
-                            <option>Memoria RAM</option>
-                            <option>Almacenamiento</option>
+                            <option value="CPU">Procesadores</option>
+                            <option value="GPU">Tarjetas Gráficas</option>
+                            <option value="Motherboard">Placas Base</option>
+                            <option value="RAM">Memoria RAM</option>
+                            <option value="SSD">Almacenamiento</option>
+                            <option value="PowerSupply">Fuentes de Alimentación</option>
+                            <option value="Cooling">Refrigeración</option>
                         </select>
                     </div>
                     <div class="col-md-3">
                         <label class="form-label small">Producto específico</label>
-                        <input class="form-select-sm form-control" placeholder="Ej: Ryzen 7..." type="text" />
+                        <input class="form-select-sm form-control" placeholder="Ej: Ryzen 7..." type="text" id="filterReviewProduct" />
                     </div>
                     <div class="col-md-2">
                         <label class="form-label small">Valoración</label>
-                        <select class="form-select form-select-sm">
+                        <select class="form-select form-select-sm" id="filterReviewRating">
                             <option value="">Todas</option>
-                            <option>5 Estrellas</option>
-                            <option>4 Estrellas</option>
-                            <option>3 o menos</option>
+                            <option value="5">5 Estrellas</option>
+                            <option value="4">4 Estrellas</option>
+                            <option value="3">3 o menos</option>
                         </select>
                     </div>
                     <div class="col-md-2">
                         <label class="form-label small">Contenido</label>
-                        <select class="form-select form-select-sm">
+                        <select class="form-select form-select-sm" id="filterReviewContent">
                             <option selected="" value="">Cualquiera</option>
-                            <option value="sin">Sin Texto</option>
-                            <option value="text">Con Texto</option>
-                            <option value="image">Con Texto e Imagen</option>
+                            <option value="replied">Con respuesta</option>
+                            <option value="noreplied">Sin respuesta</option>
                         </select>
                     </div>
                     <div class="col-md-2 d-flex align-items-end">
-                        <button class="btn btn-sm btn-primary w-100" onclick="location.reload()" type="button"><i
+                        <button class="btn btn-sm btn-primary w-100" type="button" id="btnFilterReviews"><i
                                 class="bi bi-search me-1"></i>Filtrar</button>
                     </div>
                 </form>
@@ -84,7 +85,11 @@
         <!-- Review Gallery -->
         <div class="row g-3" id="reviewContainer">
             {{#reviews}}
-            <article class="col-12">
+            <article class="col-12 review-card"
+                     data-product="{{product.name}}"
+                     data-category="{{product.category}}"
+                     data-score="{{score}}"
+                     data-hasreply="{{hasAdminReply}}">
                 <div class="card shadow-sm border-0">
                     <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center pt-3">
                         <div class="d-flex align-items-center">
@@ -205,6 +210,55 @@
             document.getElementById('deleteReviewId').value = id;
             document.getElementById('delUserName').innerText = user;
         }
+
+        // Client-side filtering
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterCategory = document.getElementById('filterReviewCategory');
+            const filterProduct = document.getElementById('filterReviewProduct');
+            const filterRating = document.getElementById('filterReviewRating');
+            const filterContent = document.getElementById('filterReviewContent');
+            const btnFilter = document.getElementById('btnFilterReviews');
+            const cards = document.querySelectorAll('.review-card');
+
+            function applyFilters() {
+                const categoryQuery = filterCategory.value.toLowerCase();
+                const productQuery = filterProduct.value.toLowerCase().trim();
+                const ratingQuery = filterRating.value;
+                const contentQuery = filterContent.value;
+
+                cards.forEach(card => {
+                    const product = (card.getAttribute('data-product') || '').toLowerCase();
+                    const category = (card.getAttribute('data-category') || '').toLowerCase();
+                    const score = parseInt(card.getAttribute('data-score') || '0');
+                    const hasReply = card.getAttribute('data-hasreply') === 'true';
+
+                    // Category filter
+                    let categoryMatch = !categoryQuery || category === categoryQuery;
+
+                    // Product name filter
+                    let productMatch = !productQuery || product.includes(productQuery);
+
+                    // Rating filter
+                    let ratingMatch = true;
+                    if (ratingQuery === '5') ratingMatch = score === 5;
+                    else if (ratingQuery === '4') ratingMatch = score === 4;
+                    else if (ratingQuery === '3') ratingMatch = score <= 3;
+
+                    // Content filter (replied / not replied)
+                    let contentMatch = true;
+                    if (contentQuery === 'replied') contentMatch = hasReply;
+                    else if (contentQuery === 'noreplied') contentMatch = !hasReply;
+
+                    card.style.display = (categoryMatch && productMatch && ratingMatch && contentMatch) ? '' : 'none';
+                });
+            }
+
+            btnFilter.addEventListener('click', applyFilters);
+            filterCategory.addEventListener('change', applyFilters);
+            filterProduct.addEventListener('input', applyFilters);
+            filterRating.addEventListener('change', applyFilters);
+            filterContent.addEventListener('change', applyFilters);
+        });
     </script>
 </body>
 

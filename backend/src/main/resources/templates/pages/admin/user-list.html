@@ -40,22 +40,22 @@
         <!-- Filter Panel -->
         <section class="card shadow-sm border-0 mb-4 bg-light">
             <div class="card-body">
-                <form class="row g-3 align-items-end">
+                <form class="row g-3 align-items-end" onsubmit="return false;">
                     <div class="col-md-5">
                         <label class="form-label small fw-bold">Buscar Usuario</label>
-                        <input class="form-control form-control-sm" placeholder="Nombre o email..." type="text" />
+                        <input class="form-control form-control-sm" placeholder="Nombre o email..." type="text" id="filterUser" />
                     </div>
                     <div class="col-md-3">
                         <label class="form-label small fw-bold">Rol</label>
-                        <select class="form-select form-select-sm">
+                        <select class="form-select form-select-sm" id="filterRole">
                             <option value="">Todos</option>
-                            <option>Administrador</option>
-                            <option>Cliente</option>
+                            <option value="Admin">Administrador</option>
+                            <option value="Cliente">Cliente</option>
                         </select>
                     </div>
                     <div class="col-md-2">
                         <label class="form-label small fw-bold">Estado</label>
-                        <select class="form-select form-select-sm">
+                        <select class="form-select form-select-sm" id="filterStatus">
                             <option value="">Todos</option>
                             <option>Online</option>
                             <option>Offline</option>
@@ -63,7 +63,7 @@
                         </select>
                     </div>
                     <div class="col-md-2 d-flex align-items-end">
-                        <button class="btn btn-sm btn-primary w-100" onclick="location.reload()" type="button">
+                        <button class="btn btn-sm btn-primary w-100" type="button" id="btnFilterUsers">
                             <i class="bi bi-search me-1"></i>Filtrar
                         </button>
                     </div>
@@ -83,9 +83,9 @@
                             <th class="text-end pe-4">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="userTableBody">
                         {{#usuarios}}
-                        <tr>
+                        <tr data-name="{{displayName}}" data-email="{{email}}" data-role="{{roleLabel}}">
                             <td class="ps-4">#U{{id}}</td>
                             <td>
                                 <strong>{{displayName}}</strong>
@@ -144,6 +144,34 @@
             document.getElementById('deleteUserId').value = id;
             document.getElementById('delUserName').textContent = name;
         }
+
+        // Client-side filtering
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterUser = document.getElementById('filterUser');
+            const filterRole = document.getElementById('filterRole');
+            const btnFilter = document.getElementById('btnFilterUsers');
+            const rows = document.querySelectorAll('#userTableBody tr');
+
+            function applyFilters() {
+                const userQuery = filterUser.value.toLowerCase().trim();
+                const roleQuery = filterRole.value;
+
+                rows.forEach(row => {
+                    const name = (row.getAttribute('data-name') || '').toLowerCase();
+                    const email = (row.getAttribute('data-email') || '').toLowerCase();
+                    const role = row.getAttribute('data-role') || '';
+
+                    let userMatch = !userQuery || name.includes(userQuery) || email.includes(userQuery);
+                    let roleMatch = !roleQuery || role === roleQuery;
+
+                    row.style.display = (userMatch && roleMatch) ? '' : 'none';
+                });
+            }
+
+            btnFilter.addEventListener('click', applyFilters);
+            filterUser.addEventListener('input', applyFilters);
+            filterRole.addEventListener('change', applyFilters);
+        });
     </script>
 </body>
 
