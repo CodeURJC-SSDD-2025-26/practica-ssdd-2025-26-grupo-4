@@ -39,33 +39,35 @@
         <!-- Filter panel for granular catalog searches -->
         <section class="card shadow-sm border-0 mb-4 bg-light">
             <div class="card-body">
-                <form class="row g-3 align-items-end">
+                <form class="row g-3 align-items-end" onsubmit="return false;">
                     <div class="col-md-4">
                         <label class="form-label small fw-bold">Buscar Producto</label>
-                        <input class="form-control form-control-sm" placeholder="Nombre o SKU..." type="text" />
+                        <input class="form-control form-control-sm" placeholder="Nombre o SKU..." type="text" id="filterName" />
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label small fw-bold">Category</label>
-                        <select class="form-select form-select-sm">
+                        <label class="form-label small fw-bold">Categoría</label>
+                        <select class="form-select form-select-sm" id="filterCategory">
                             <option value="">Todas</option>
-                            <option>Procesadores</option>
-                            <option>Graphics Cards</option>
-                            <option>Placas Base</option>
-                            <option>Memoria RAM</option>
-                            <option>Fuentes de Alimentación</option>
+                            <option value="CPU">Procesadores</option>
+                            <option value="GPU">Tarjetas Gráficas</option>
+                            <option value="Motherboard">Placas Base</option>
+                            <option value="RAM">Memoria RAM</option>
+                            <option value="PowerSupply">Fuentes de Alimentación</option>
+                            <option value="SSD">Almacenamiento</option>
+                            <option value="Cooling">Refrigeración</option>
                         </select>
                     </div>
                     <div class="col-md-3">
                         <label class="form-label small fw-bold">Disponibilidad</label>
-                        <select class="form-select form-select-sm">
+                        <select class="form-select form-select-sm" id="filterStock">
                             <option value="">Todos</option>
-                            <option>En Stock</option>
-                            <option>Bajo Stock</option>
-                            <option>Agotado</option>
+                            <option value="instock">En Stock (+10)</option>
+                            <option value="low">Bajo Stock (1-10)</option>
+                            <option value="out">Agotado (0)</option>
                         </select>
                     </div>
                     <div class="col-md-2 d-flex align-items-end">
-                        <button class="btn btn-sm btn-primary w-100" onclick="location.reload()" type="button"><i
+                        <button class="btn btn-sm btn-primary w-100" type="button" id="btnFilterProducts"><i
                                 class="bi bi-search me-1"></i>Filtrar</button>
                     </div>
                 </form>
@@ -86,9 +88,9 @@
                             <th class="text-end pe-4">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="productTableBody">
                         {{#productos}}
-                        <tr>
+                        <tr data-name="{{name}}" data-category="{{category}}" data-stock="{{stock}}">
                             <td class="ps-4">#P{{id}}</td>
                             <td>
                                 {{#image}}
@@ -161,6 +163,41 @@
             document.getElementById('deleteProductId').value = id;
             document.getElementById('pName').textContent = name;
         }
+
+        // Client-side filtering
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterName = document.getElementById('filterName');
+            const filterCategory = document.getElementById('filterCategory');
+            const filterStock = document.getElementById('filterStock');
+            const btnFilter = document.getElementById('btnFilterProducts');
+            const rows = document.querySelectorAll('#productTableBody tr');
+
+            function applyFilters() {
+                const nameQuery = filterName.value.toLowerCase().trim();
+                const categoryQuery = filterCategory.value;
+                const stockQuery = filterStock.value;
+
+                rows.forEach(row => {
+                    const name = (row.getAttribute('data-name') || '').toLowerCase();
+                    const category = row.getAttribute('data-category') || '';
+                    const stock = parseInt(row.getAttribute('data-stock') || '0');
+
+                    let nameMatch = !nameQuery || name.includes(nameQuery);
+                    let categoryMatch = !categoryQuery || category.toLowerCase() === categoryQuery.toLowerCase();
+                    let stockMatch = true;
+                    if (stockQuery === 'instock') stockMatch = stock > 10;
+                    else if (stockQuery === 'low') stockMatch = stock >= 1 && stock <= 10;
+                    else if (stockQuery === 'out') stockMatch = stock === 0;
+
+                    row.style.display = (nameMatch && categoryMatch && stockMatch) ? '' : 'none';
+                });
+            }
+
+            btnFilter.addEventListener('click', applyFilters);
+            filterName.addEventListener('input', applyFilters);
+            filterCategory.addEventListener('change', applyFilters);
+            filterStock.addEventListener('change', applyFilters);
+        });
     </script>
 </body>
 

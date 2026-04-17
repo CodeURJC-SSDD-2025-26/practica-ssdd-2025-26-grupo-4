@@ -9,6 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.hibernate.engine.jdbc.proxy.BlobProxy;
@@ -604,7 +607,9 @@ public class WebController {
                                 @RequestParam(required = false) MultipartFile imageFile,
                                 Principal principal) throws IOException {
         if (principal != null) {
-            userRepository.findByUsername(principal.getName()).ifPresent(user -> {
+            Optional<User> optUser = userRepository.findByUsername(principal.getName());
+            if (optUser.isPresent()) {
+                User user = optUser.get();
                 user.setUsername(username);
                 user.setEmail(email);
 
@@ -618,7 +623,13 @@ public class WebController {
                 }
 
                 userRepository.save(user);
-            });
+
+                // Re-authenticate with the new username so the SecurityContext is up-to-date
+                Authentication currentAuth = SecurityContextHolder.getContext().getAuthentication();
+                Authentication newAuth = new UsernamePasswordAuthenticationToken(
+                        username, currentAuth.getCredentials(), currentAuth.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(newAuth);
+            }
         }
         return "redirect:/profile";
     }
