@@ -41,4 +41,23 @@ public class Product {
 
     @ManyToMany(mappedBy = "products")
     private List<Order> orders;
+
+    public double getAverageScore() {
+        if (reviews == null || reviews.isEmpty()) {
+            return 0.0;
+        }
+        double sum = 0;
+        for (Review review : reviews) {
+            sum += review.getScore();
+        }
+        return Math.round((sum / reviews.size()) * 10.0) / 10.0;
+    }
+
+    public int getReviewCount() {
+        return (reviews != null) ? reviews.size() : 0;
+    }
+
+    public double getAverageStarsWidth() {
+        return getAverageScore() * 20;
+    }
 }

@@ -24,13 +24,15 @@
     <div class="container-fluid" style="margin-top: 80px;">
         <div class="row">
             <aside class="col-md-3 col-lg-2">
-                <form id="filterForm" class="p-3 bg-light border rounded shadow-sm sticky-top" style="top: 80px;" onsubmit="return false;">
+                <form id="filterForm" class="p-3 bg-light border rounded shadow-sm sticky-top" style="top: 80px;"
+                    onsubmit="return false;">
 
                     <h5 class="border-bottom pb-3">Filtros</h5>
 
                     <div class="mb-3">
                         <label class="fw-bold small d-block mb-2">Buscar producto</label>
-                        <input class="form-control form-control-sm" placeholder="Nombre..." type="text" id="filterName" value="{{query}}">
+                        <input class="form-control form-control-sm" placeholder="Nombre..." type="text" id="filterName"
+                            value="{{query}}">
                     </div>
 
                     <div class="mb-3">
@@ -76,7 +78,8 @@
                             <label class="form-check-label" for="m10">Samsung</label>
                         </div>
                         <div class="form-check small">
-                            <input class="form-check-input brand-filter" type="checkbox" value="Western Digital" id="m11">
+                            <input class="form-check-input brand-filter" type="checkbox" value="Western Digital"
+                                id="m11">
                             <label class="form-check-label" for="m11">Western Digital</label>
                         </div>
 
@@ -91,8 +94,10 @@
                             </div>
                         </div>
 
-                        <button type="button" class="btn btn-primary btn-sm w-100 mt-3" id="btnApplyFilters">Aplicar Filtros</button>
-                        <button type="reset" class="btn btn-outline-secondary btn-sm w-100 mt-2" id="btnClearFilters">Limpiar</button>
+                        <button type="button" class="btn btn-primary btn-sm w-100 mt-3" id="btnApplyFilters">Aplicar
+                            Filtros</button>
+                        <button type="reset" class="btn btn-outline-secondary btn-sm w-100 mt-2"
+                            id="btnClearFilters">Limpiar</button>
                 </form>
             </aside>
 
@@ -101,10 +106,10 @@
 
                     <h3 id="searchResultsTitle">
                         {{#searchTerm}}
-                            Resultados de: "{{searchTerm}}"
+                        Resultados de: "{{searchTerm}}"
                         {{/searchTerm}}
                         {{^searchTerm}}
-                            Todos los productos
+                        Todos los productos
                         {{/searchTerm}}
                     </h3>
 
@@ -115,8 +120,10 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item sort-option" href="#" data-sort="relevance">Relevancia</a></li>
-                            <li><a class="dropdown-item sort-option" href="#" data-sort="priceAsc">Precio: menor a mayor</a></li>
-                            <li><a class="dropdown-item sort-option" href="#" data-sort="priceDesc">Precio: mayor a menor</a></li>
+                            <li><a class="dropdown-item sort-option" href="#" data-sort="priceAsc">Precio: menor a
+                                    mayor</a></li>
+                            <li><a class="dropdown-item sort-option" href="#" data-sort="priceDesc">Precio: mayor a
+                                    menor</a></li>
                         </ul>
                     </div>
                 </div>
@@ -125,10 +132,8 @@
                     <div class="container my-5">
                         <div class="row gy-4" id="productGrid">
                             {{#productos}}
-                            <div class="col-lg-3 col-md-6 col-sm-6 product-card"
-                                 data-name="{{name}}"
-                                 data-price="{{price}}"
-                                 data-category="{{category}}">
+                            <div class="col-lg-3 col-md-6 col-sm-6 product-card" data-name="{{name}}"
+                                data-price="{{price}}" data-category="{{category}}">
                                 <div class="card my-2 shadow-0 h-100">
                                     <a href="item-detail?id={{id}}">
                                         <div class="mask" style="height: 50px;">
@@ -145,6 +150,13 @@
                                         {{/image}}
                                     </a>
                                     <div class="card-body p-3">
+                                        <div class="mb-2">
+                                            <div class="stars-outer">
+                                                <div class="stars-inner" style="width: {{averageStarsWidth}}%;"></div>
+                                            </div>
+                                            <span class="small text-muted">({{reviewCount}})</span>
+                                        </div>
+
                                         <h5 class="card-title text-primary">{{price}}€</h5>
                                         <p class="card-text mb-0 fw-bold">{{name}}</p>
                                         <p class="text-muted small">
@@ -164,7 +176,7 @@
     {{> partials/footer}}
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const cards = document.querySelectorAll('.product-card');
             const brandCheckboxes = document.querySelectorAll('.brand-filter');
             const filterName = document.getElementById('filterName');
@@ -188,7 +200,7 @@
                 // Get price range
                 const minPrice = filterMinPrice.value ? parseFloat(filterMinPrice.value) : 0;
                 const maxPrice = filterMaxPrice.value ? parseFloat(filterMaxPrice.value) : Infinity;
-                
+
                 // Parse name query smartly
                 const rawNameQuery = filterName.value.toLowerCase().trim();
                 const nameWords = rawNameQuery.split(/\s+/).filter(w => w.length > 0);
@@ -204,7 +216,7 @@
                     if (nameWords.length > 0) {
                         for (const word of nameWords) {
                             let isCategorySynonym = false;
-                            
+
                             // Check category synonyms
                             if ((word.startsWith('procesador') || word === 'cpu') && category === 'cpu') isCategorySynonym = true;
                             if ((word.startsWith('grafic') || word.startsWith('gráfic') || word === 'gpu' || word === 'tarjeta' || word === 'video') && category === 'gpu') isCategorySynonym = true;
@@ -226,9 +238,9 @@
                     let brandMatch = selectedBrands.length === 0;
                     if (!brandMatch) {
                         for (const brand of selectedBrands) {
-                            if (name.includes(brand)) { 
-                                brandMatch = true; 
-                                break; 
+                            if (name.includes(brand)) {
+                                brandMatch = true;
+                                break;
                             }
                         }
                     }
@@ -252,8 +264,8 @@
             filterMinPrice.addEventListener('input', applyFilters);
             filterMaxPrice.addEventListener('input', applyFilters);
             btnApplyFilters.addEventListener('click', applyFilters);
-            
-            btnClearFilters.addEventListener('click', function(e) {
+
+            btnClearFilters.addEventListener('click', function (e) {
                 e.preventDefault();
                 filterForm.reset();
                 applyFilters();
@@ -261,7 +273,7 @@
 
             // Client side Sorting logic
             sortOptions.forEach(option => {
-                option.addEventListener('click', function(e) {
+                option.addEventListener('click', function (e) {
                     e.preventDefault();
                     const sortType = this.getAttribute('data-sort');
                     sortDropdownBtn.innerHTML = '<i class="bi bi-sort-down me-1"></i> ' + this.textContent;
@@ -273,14 +285,14 @@
                         if (sortType === 'priceAsc') return priceA - priceB;
                         if (sortType === 'priceDesc') return priceB - priceA;
                         // For relevance, we'd need original DOM order, but let's just keep as is
-                        return 0; 
+                        return 0;
                     });
 
                     // Re-append to DOM in sorted order
                     cardArray.forEach(card => productGrid.appendChild(card));
                 });
             });
-            
+
             // Initial filter run in case of cached inputs
             applyFilters();
         });
