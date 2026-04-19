@@ -24,6 +24,7 @@ import com.example.backend.models.User;
 import com.example.backend.models.Address;
 import com.example.backend.repositories.ProductRepository;
 import com.example.backend.repositories.UserRepository;
+import com.example.backend.services.RecommendationService;
 import com.example.backend.repositories.ReviewRepository;
 import com.example.backend.repositories.OrderRepository;
 import com.example.backend.repositories.AddressRepository;
@@ -56,11 +57,46 @@ public class WebController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private RecommendationService recommendationService;
+
     // ===================== PAGE ROUTES (GET) =====================
 
     @GetMapping("/")
-    public String root(Model model) {
-        model.addAttribute("productos", productRepository.findAll());
+    public String index(Model model, HttpServletRequest request) {
+        // Get the principal (logged user)
+        Principal principal = request.getUserPrincipal();
+        boolean isLoggedIn = principal != null;
+        model.addAttribute("isLoggedIn", isLoggedIn);
+
+        // 1. Hardware News Section
+        // Your HTML expects 'productos' for this section
+        List<Product> hardwareNews = productRepository.findAll(Sort.by(Sort.Direction.DESC, "id")).stream()
+                .limit(8)
+                .collect(Collectors.toList());
+        model.addAttribute("productos", hardwareNews);
+
+        // 2. Recommendations Section ("Te podría interesar")
+        if (isLoggedIn) {
+            Optional<User> userOpt = userRepository.findByUsername(principal.getName());
+            if (userOpt.isPresent()) {
+                List<Product> recommendations = recommendationService.getRecommendedProducts(userOpt.get());
+                model.addAttribute("recomendados", recommendations);
+                // Useful for showing/hiding the section if empty
+                model.addAttribute("hasRecommendations", !recommendations.isEmpty());
+            }
+        } else {
+            // Fallback for guests: show the same hardware news or a random selection
+            model.addAttribute("recomendados", hardwareNews);
+            model.addAttribute("hasRecommendations", true);
+        }
+
+        // CSRF Token (needed for forms in the index if any)
+        CsrfToken token = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
+        if (token != null) {
+            model.addAttribute("_csrf", token);
+        }
+
         return "index";
     }
 
@@ -247,26 +283,33 @@ public class WebController {
                 if (searchName.contains("procesador") || searchName.contains("cpu")) {
                     searchCategory = "CPU";
                     searchName = searchName.replaceAll("procesadores|procesador|cpu", "").trim();
-                } else if (searchName.contains("grafica") || searchName.contains("gráfica") || searchName.contains("gpu") || searchName.contains("tarjeta")) {
+                } else if (searchName.contains("grafica") || searchName.contains("gráfica")
+                        || searchName.contains("gpu") || searchName.contains("tarjeta")) {
                     searchCategory = "GPU";
                     searchName = searchName.replaceAll("tarjetas?|gráficas?|graficas?|gpu|de|video", "").trim();
-                } else if (searchName.contains("placa") || searchName.contains("base") || searchName.contains("motherboard")) {
+                } else if (searchName.contains("placa") || searchName.contains("base")
+                        || searchName.contains("motherboard")) {
                     searchCategory = "Motherboard";
                     searchName = searchName.replaceAll("placas?|bases?|motherboards?", "").trim();
                 } else if (searchName.contains("ram") || searchName.contains("memoria")) {
                     searchCategory = "RAM";
                     searchName = searchName.replaceAll("memorias?|ram", "").trim();
-                } else if (searchName.contains("disco") || searchName.contains("duro") || searchName.contains("ssd") || searchName.contains("almacenamiento")) {
+                } else if (searchName.contains("disco") || searchName.contains("duro") || searchName.contains("ssd")
+                        || searchName.contains("almacenamiento")) {
                     searchCategory = "SSD";
                     searchName = searchName.replaceAll("discos?|duros?|almacenamiento|ssd", "").trim();
-                } else if (searchName.contains("fuente") || searchName.contains("alimentacion") || searchName.contains("alimentación") || searchName.contains("powersupply")) {
+                } else if (searchName.contains("fuente") || searchName.contains("alimentacion")
+                        || searchName.contains("alimentación") || searchName.contains("powersupply")) {
                     searchCategory = "PowerSupply";
                     searchName = searchName.replaceAll("fuentes?|de|alimentación|alimentacion|powersupply", "").trim();
-                } else if (searchName.contains("refrigeracion") || searchName.contains("refrigeración") || searchName.contains("cooling") || searchName.contains("ventilador") || searchName.contains("disipador")) {
+                } else if (searchName.contains("refrigeracion") || searchName.contains("refrigeración")
+                        || searchName.contains("cooling") || searchName.contains("ventilador")
+                        || searchName.contains("disipador")) {
                     searchCategory = "Cooling";
-                    searchName = searchName.replaceAll("refrigeración|refrigeracion|cooling|ventiladores?|disipadores?", "").trim();
+                    searchName = searchName
+                            .replaceAll("refrigeración|refrigeracion|cooling|ventiladores?|disipadores?", "").trim();
                 }
-                
+
                 if (searchName.isEmpty()) {
                     searchName = null;
                 }
@@ -328,10 +371,10 @@ public class WebController {
 
     @PostMapping("/address/add")
     public String addAddress(@RequestParam String street,
-                             @RequestParam String city,
-                             @RequestParam String postalCode,
-                             @RequestParam String country,
-                             Principal principal) {
+            @RequestParam String city,
+            @RequestParam String postalCode,
+            @RequestParam String country,
+            Principal principal) {
         if (principal != null) {
             userRepository.findByUsername(principal.getName()).ifPresent(user -> {
                 Address a = new Address();

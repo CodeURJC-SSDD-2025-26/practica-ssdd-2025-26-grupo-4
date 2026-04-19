@@ -125,3 +125,30 @@
     color: white !important;
     transition: color 0.2s ease;
 }
+
+/* Horizontal carousel layout */
+.product-carousel-row {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    scrollbar-width: none;
+    /* Hide scrollbar for Firefox */
+}
+
+.product-carousel-row::-webkit-scrollbar {
+    display: none;
+    /* Hide scrollbar for Chrome/Safari */
+}
+
+.product-card-wrapper {
+    flex: 0 0 auto;
+    width: 280px;
+    /* Adjust according to your design */
+}
+
+.carousel-controls button {
+    width: 40px;
+    height: 40px;
+}
