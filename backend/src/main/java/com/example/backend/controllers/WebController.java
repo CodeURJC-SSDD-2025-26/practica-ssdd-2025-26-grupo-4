@@ -434,13 +434,65 @@ public class WebController {
         if (principal != null) {
             userRepository.findByUsername(principal.getName()).ifPresent(user -> {
                 model.addAttribute("direcciones", addressRepository.findByUserId(user.getId()));
+
+                Optional<Order> currentOrder = orderRepository.findByUserId(user.getId())
+                        .stream().filter(o -> "EN PROCESO".equals(o.getStatus())).findFirst();
+                if (currentOrder.isPresent()) {
+                    Order order = currentOrder.get();
+                    List<Map<String, Object>> items = buildCartItems(order.getProducts());
+                    model.addAttribute("productosCarrito", items);
+                    double realTotal = items.stream().mapToDouble(i -> (Double) i.get("lineTotal")).sum();
+                    model.addAttribute("precioTotal", String.format("%.2f", realTotal).replace('.', ','));
+                } else {
+                    model.addAttribute("productosCarrito", new ArrayList<>());
+                    model.addAttribute("precioTotal", "0,00");
+                }
             });
+        } else {
+            model.addAttribute("productosCarrito", new ArrayList<>());
+            model.addAttribute("precioTotal", "0,00");
         }
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+        CsrfToken token = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
         if (token != null) {
             model.addAttribute("_csrf", token);
         }
         return "pages/payment";
+    }
+
+    @PostMapping("/payment")
+    public String processPayment(@RequestParam(required = false) Long shipAddress,
+                                 @RequestParam(required = false) String paymentMethod,
+                                 Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+        Optional<User> userOpt = userRepository.findByUsername(principal.getName());
+        if (userOpt.isEmpty()) return "redirect:/login";
+        User user = userOpt.get();
+        Optional<Order> orderOpt = orderRepository.findByUserId(user.getId()).stream()
+                .filter(o -> "EN PROCESO".equals(o.getStatus())).findFirst();
+        if (orderOpt.isEmpty()) return "redirect:/shopping-cart";
+        Order order = orderOpt.get();
+        if (order.getProducts() == null || order.getProducts().isEmpty()) return "redirect:/shopping-cart";
+
+        order.setPaymentMethod(paymentMethod != null ? paymentMethod : "card");
+        if (shipAddress != null) {
+            Optional<Address> addrOpt = addressRepository.findById(shipAddress);
+            if (addrOpt.isPresent() && addrOpt.get().getUser() != null && addrOpt.get().getUser().getId().equals(user.getId())) {
+                Address a = addrOpt.get();
+                order.setShippingAddress(a.getStreet());
+                order.setCity(a.getCity());
+                order.setPostalCode(a.getPostalCode());
+                order.setCountry(a.getCountry());
+            }
+        }
+        order.setStatus("PENDIENTE");
+        order.setOrderDate(java.time.LocalDateTime.now());
+        double total = order.getProducts().stream().mapToDouble(Product::getPrice).sum();
+        order.setTotalPrice(total);
+        orderRepository.save(order);
+
+        return "redirect:/payment-correct";
     }
 
     @GetMapping("/payment-correct")

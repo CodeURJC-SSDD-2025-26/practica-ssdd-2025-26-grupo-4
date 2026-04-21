@@ -25,6 +25,11 @@
         <div class="col-md-7 col-lg-8">
             <h4 class="mb-3">Dirección de Envío</h4>
 
+                <form id="formPago" action="/payment" method="POST" class="needs-validation" novalidate>
+                {{#_csrf}}
+                <input type="hidden" name="_csrf" value="{{token}}" />
+                {{/_csrf}}
+
                 <div class="row g-2 mb-3">
                     {{#direcciones}}
                     <div class="col-md-6">
@@ -51,47 +56,8 @@
                     <i class="me-2 fa fa-plus"></i>Añadir dirección
                 </button>
 
-                <!-- Modal -->
-                <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="addAddressModalLabel">Añadir dirección</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <form action="/address/add" method="POST">
-                        {{#_csrf}}
-                        <input type="hidden" name="_csrf" value="{{token}}" />
-                        {{/_csrf}}
-                        <div class="modal-body">
-                          <div class="mb-2">
-                            <input name="street" class="form-control" placeholder="Calle y número" required />
-                          </div>
-                          <div class="row g-2 mb-2">
-                            <div class="col">
-                              <input name="city" class="form-control" placeholder="Ciudad" required />
-                            </div>
-                            <div class="col">
-                              <input name="postalCode" class="form-control" placeholder="Código postal" required />
-                            </div>
-                          </div>
-                          <div class="mb-2">
-                            <input name="country" class="form-control" placeholder="País" required />
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                          <button type="submit" class="btn btn-primary">Guardar dirección</button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-
                 <hr class="my-4">
 
-                <!-- Payment form: separate from address form -->
-                <form id="formPago" class="needs-validation" novalidate>
                 <h4 class="mb-3">Método de Pago</h4>
                 <div class="my-3">
                     <div class="form-check">
@@ -136,6 +102,44 @@
                     Pagar Ahora <i class="fas fa-arrow-right ms-2"></i>
                 </button>
                 </form>
+
+                <!-- Modal (moved outside the payment form to avoid nested forms) -->
+                <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="addAddressModalLabel">Añadir dirección</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <form action="/address/add" method="POST">
+                        {{#_csrf}}
+                        <input type="hidden" name="_csrf" value="{{token}}" />
+                        {{/_csrf}}
+                        <div class="modal-body">
+                          <div class="mb-2">
+                            <input name="street" class="form-control" placeholder="Calle y número" required />
+                          </div>
+                          <div class="row g-2 mb-2">
+                            <div class="col">
+                              <input name="city" class="form-control" placeholder="Ciudad" required />
+                            </div>
+                            <div class="col">
+                              <input name="postalCode" class="form-control" placeholder="Código postal" required />
+                            </div>
+                          </div>
+                          <div class="mb-2">
+                            <input name="country" class="form-control" placeholder="País" required />
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                          <button type="submit" class="btn btn-primary">Guardar dirección</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
         </div>
 
         <div class="col-md-5 col-lg-4">
@@ -144,30 +148,18 @@
                     <h5 class="mb-0 text-primary">Resumen del Pedido</h5>
                 </div>
                 <ul class="list-group list-group-flush">
+                    {{#productosCarrito}}
                     <li class="list-group-item d-flex justify-content-between lh-sm">
                         <div>
-                            <h6 class="my-0">ASUS TUF Gaming RTX 4070</h6>
-                            <small class="text-muted">Hardware</small>
+                            <h6 class="my-0">{{name}} x{{quantity}}</h6>
+                            <small class="text-muted">{{category}}</small>
                         </div>
-                        <span class="text-muted">649€</span>
+                        <span class="text-muted">{{lineTotalStr}}€</span>
                     </li>
-                    <li class="list-group-item d-flex justify-content-between lh-sm">
-                        <div>
-                            <h6 class="my-0">Corsair RAM 32GB</h6>
-                            <small class="text-muted">Hardware</small>
-                        </div>
-                        <span class="text-muted">125€</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between bg-light">
-                        <div class="text-success">
-                            <h6 class="my-0">Código Promocional</h6>
-                            <small>GAMER2024</small>
-                        </div>
-                        <span class="text-success">−10€</span>
-                    </li>
+                    {{/productosCarrito}}
                     <li class="list-group-item d-flex justify-content-between py-4">
                         <span class="fw-bold">Total (EUR)</span>
-                        <strong class="fs-4">764€</strong>
+                        <strong class="fs-4">{{precioTotal}}€</strong>
                     </li>
                     <a href="shopping-cart" class="btn btn-danger w-100 border mt-2"> Cancelar </a>
                 </ul>
@@ -196,7 +188,7 @@
             const expiryInput = document.getElementById('cardExpiry');
             if (expiryInput) expiryInput.setCustomValidity('');
 
-            // Check that a shipping address is selected (radios are outside the payment form)
+            // Check that a shipping address is selected
             const selectedAddress = document.querySelector('input[name="shipAddress"]:checked');
             const addrFeedbackId = 'shipAddressFeedback';
             const addrContainer = document.querySelector('.row.g-2.mb-3');
@@ -261,9 +253,8 @@
                 }
             }
 
-            // All good -> simulate success (replace with real payment processing later)
-            event.preventDefault();
-            window.location.href = "payment-correct";
+            // All good -> allow form to submit to server for processing
+            // form will be submitted normally
         }, false);
     }
 </script>
