@@ -1,40 +1,44 @@
 package com.example.backend.controllers;
 
+import java.io.IOException;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.hibernate.engine.jdbc.proxy.BlobProxy;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.servlet.http.HttpServletRequest;
-
-import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.ui.Model;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.hibernate.engine.jdbc.proxy.BlobProxy;
-
+import com.example.backend.models.Address;
 import com.example.backend.models.Order;
 import com.example.backend.models.Product;
 import com.example.backend.models.Review;
 import com.example.backend.models.User;
-import com.example.backend.models.Address;
+import com.example.backend.repositories.AddressRepository;
+import com.example.backend.repositories.OrderRepository;
 import com.example.backend.repositories.ProductRepository;
+import com.example.backend.repositories.ReviewRepository;
 import com.example.backend.repositories.UserRepository;
 import com.example.backend.services.RecommendationService;
-import com.example.backend.repositories.ReviewRepository;
-import com.example.backend.repositories.OrderRepository;
-import com.example.backend.repositories.AddressRepository;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.io.IOException;
-import java.security.Principal;
-import java.util.*;
-import java.util.stream.Collectors;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class WebController {
@@ -792,4 +796,12 @@ public class WebController {
         }
         return "redirect:/profile";
     }
+    @ModelAttribute("isLoggedIn")
+    public boolean isLoggedIn(HttpServletRequest request) {
+        return request.getUserPrincipal() != null;
+    }
+    @GetMapping("/error/403")
+    public String accessDenied() {
+          return "error-403";
+}
 }

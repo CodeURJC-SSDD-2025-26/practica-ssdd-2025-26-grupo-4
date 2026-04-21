@@ -35,7 +35,13 @@ public class SecurityConfig {
                 .permitAll()
         );
 
+        http.exceptionHandling(exception -> exception
+                 .accessDeniedPage("/error/403")
+        );
+
         return http.build();
+
+
     }
 
 }
