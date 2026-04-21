@@ -529,6 +529,31 @@ public class WebController {
     public String userRegistration2() {
         return "pages/user_registration";
     }
+     @PostMapping("/user-registration")
+    public String registerUser(
+        @RequestParam String username,
+        @RequestParam String email,
+        @RequestParam String password,
+        @RequestParam String repeatPassword,
+        Model model) {
+    if (!password.equals(repeatPassword)) {
+        model.addAttribute("error", "Las contraseñas no coinciden");
+        return "user_registration"; 
+    }
+    if (userRepository.findByUsername(username).isPresent()) {
+        model.addAttribute("error", "El usuario ya existe");
+        return "user_registration";
+    }
+    User user = new User();
+    user.setUsername(username);
+    user.setEmail(email);
+    user.setEncodedPassword(passwordEncoder.encode(password)); 
+    user.setRoles(Arrays.asList("ROLE_USER"));
+
+    userRepository.save(user);
+
+    return "redirect:/login";
+    }
 
     @GetMapping("/login")
     public String login(@RequestParam(value = "error", required = false) String error, Model model) {
