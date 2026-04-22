@@ -19,7 +19,6 @@
         {{> partials/headers/unloged_header}}
     {{/isLoggedIn}} 
     <main class="container my-5 pt-4">
-        <!-- Navigation of Administration -->
         <nav class="nav nav-pills mb-4">
             <a class="nav-link" href="admin-dashboard"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
             <a class="nav-link" href="item-list"><i class="bi bi-box-seam me-1"></i>Productos</a>
@@ -28,7 +27,6 @@
             <a class="nav-link active" href="order-list"><i class="bi bi-cart-check me-1"></i>Pedidos</a>
         </nav>
 
-        <!-- Order Header -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h2 class="fw-bold mb-0"><i class="bi bi-receipt me-2"></i>Pedido #O{{pedido.id}}</h2>
@@ -46,10 +44,8 @@
         </div>
 
         <div class="row g-4">
-            <!-- Left Column: Client Info and Products -->
             <div class="col-lg-8">
 
-                <!-- Client Information -->
                 <section class="card shadow-sm border-0 mb-4">
                     <div class="card-header bg-white py-3 border-0">
                         <h5 class="mb-0 fw-bold small text-uppercase">
@@ -78,7 +74,6 @@
                     </div>
                 </section>
 
-                <!-- Orders Details -->
                 <section class="card shadow-sm border-0">
                     <div class="card-header bg-white py-3 border-0">
                         <h5 class="mb-0 fw-bold small text-uppercase">
@@ -126,10 +121,8 @@
                 </section>
             </div>
 
-            <!-- Right Column: Status + Economic Summary -->
             <div class="col-lg-4">
 
-                <!-- State Management Panel -->
                 <section class="card shadow-sm border-0 mb-4 border-start border-primary border-4">
                     <div class="card-header bg-primary text-white py-3 border-0">
                         <h5 class="mb-0 fw-bold small text-uppercase">
@@ -143,9 +136,8 @@
                             {{/_csrf}}
                             <input type="hidden" name="id" value="{{pedido.id}}" />
                             
-                            <!-- Status Selector -->
-                            <label class="form-label fw-bold small">Estado Actual</label>
-                            <select class="form-select mb-3" name="status" id="orderStatus">
+                            <label class="form-label fw-bold small mb-2">Estado Actual</label>
+                            <select class="form-select mb-4" name="status" id="orderStatus">
                                 <option value="PENDIENTE">⏳ Pendiente</option>
                                 <option value="EN PROCESO">🔄 Procesando</option>
                                 <option value="ENVIADO">📦 Enviado</option>
@@ -153,22 +145,6 @@
                                 <option value="CANCELADO">❌ Cancelado</option>
                             </select>
 
-                            <!-- Notification to Client -->
-                            <div class="form-check form-switch mb-3">
-                                <input class="form-check-input" type="checkbox" name="notifyClient" id="notifyClient" value="true" checked />
-                                <label class="form-check-label small" for="notifyClient">
-                                    Notificar al cliente por email
-                                </label>
-                            </div>
-
-                            <!-- Notification Message -->
-                            <div class="mb-3" id="emailMsgContainer">
-                                <label class="form-label small fw-bold">Mensaje para el cliente</label>
-                                <textarea class="form-control form-control-sm" rows="3" name="emailMsg" id="emailMsg"
-                                    placeholder="Escribe un mensaje personalizado (opcional)...">Su pedido #O{{pedido.id}} ha sido actualizado a {{pedido.status}}. ¡Gracias por su compra!</textarea>
-                            </div>
-
-                            <!-- Update Button -->
                             <button type="submit" class="btn btn-primary w-100" id="btnUpdateOrder">
                                 <i class="bi bi-save me-1"></i>Actualizar Pedido
                             </button>
@@ -176,7 +152,6 @@
                     </div>
                 </section>
 
-                <!-- Economic Summary -->
                 <section class="card shadow-sm border-0">
                     <div class="card-header bg-white py-3 border-0">
                         <h5 class="mb-0 fw-bold small text-uppercase">
@@ -184,7 +159,6 @@
                         </h5>
                     </div>
                     <div class="card-body">
-                        <!-- Total -->
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="fw-bold fs-6">TOTAL</span>
                             <span class="fw-bold fs-5 text-primary">{{pedido.getFormattedPrice}} €</span>
@@ -195,7 +169,6 @@
         </div>
     </main>
 
-    <!-- Order Cancellation Modal -->
     <div class="modal fade" id="modalCancelarPedido" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content border-0 shadow">
@@ -227,13 +200,6 @@
     <script>
         // Set current status in selector
         document.getElementById('orderStatus').value = "{{pedido.status}}";
-
-        // Toggle visibility of email message field
-        const notifyCheckbox = document.getElementById('notifyClient');
-        const emailContainer = document.getElementById('emailMsgContainer');
-        notifyCheckbox.addEventListener('change', () => {
-            emailContainer.style.display = notifyCheckbox.checked ? 'block' : 'none';
-        });
     </script>
 </body>
 
