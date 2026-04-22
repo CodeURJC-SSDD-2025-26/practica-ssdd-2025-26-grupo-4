@@ -595,30 +595,46 @@ public class WebController {
     public String userRegistration2() {
         return "pages/user_registration";
     }
-     @PostMapping("/user-registration")
+
+    @PostMapping("/user-registration")
     public String registerUser(
         @RequestParam String username,
         @RequestParam String email,
         @RequestParam String password,
         @RequestParam String repeatPassword,
         Model model) {
-    if (!password.equals(repeatPassword)) {
-        model.addAttribute("error", "Las contraseñas no coinciden");
-        return "user_registration"; 
-    }
-    if (userRepository.findByUsername(username).isPresent()) {
-        model.addAttribute("error", "El usuario ya existe");
-        return "user_registration";
-    }
-    User user = new User();
-    user.setUsername(username);
-    user.setEmail(email);
-    user.setEncodedPassword(passwordEncoder.encode(password)); 
-    user.setRoles(Arrays.asList("ROLE_USER"));
+        
+        if (username == null || username.trim().isEmpty() || 
+            email == null || email.trim().isEmpty() || 
+            password == null || password.trim().isEmpty()) {
+            model.addAttribute("error", "Todos los campos son obligatorios.");
+            return "pages/user_registration"; // 
+        }
 
-    userRepository.save(user);
+        if (!email.contains("@") || !email.contains(".")) {
+            model.addAttribute("error", "Por favor, introduce un correo electrónico válido.");
+            return "pages/user_registration";
+        }
 
-    return "redirect:/login";
+        if (!password.equals(repeatPassword)) {
+            model.addAttribute("error", "Las contraseñas no coinciden.");
+            return "pages/user_registration"; 
+        }
+        
+        if (userRepository.findByUsername(username).isPresent()) {
+            model.addAttribute("error", "El usuario ya existe.");
+            return "pages/user_registration";
+        }
+
+        User user = new User();
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setEncodedPassword(passwordEncoder.encode(password)); 
+        user.setRoles(Arrays.asList("ROLE_USER"));
+
+        userRepository.save(user);
+
+        return "redirect:/login";
     }
 
     @GetMapping("/login")
