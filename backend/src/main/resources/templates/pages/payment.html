@@ -45,6 +45,15 @@
                                     <b class="text-muted"><i class="fa fa-map-marker-alt me-2"></i></b>
                                     {{street}}, {{city}}, {{postalCode}}, {{country}}
                                 </div>
+                                <div class="ms-auto">
+                                    <form action="/address/delete" method="POST" class="owner-only" style="display:inline">
+                                        {{#_csrf}}
+                                        <input type="hidden" name="_csrf" value="{{token}}" />
+                                        {{/_csrf}}
+                                        <input type="hidden" name="id" value="{{id}}" />
+                                        <button type="submit" class="btn btn-sm btn-link text-danger p-0">Eliminar</button>
+                                    </form>
+                                </div>
                             </div>
                         </label>
                     </div>
