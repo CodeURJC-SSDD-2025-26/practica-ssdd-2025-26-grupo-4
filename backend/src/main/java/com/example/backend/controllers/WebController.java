@@ -494,15 +494,16 @@ public class WebController {
             // 3. Update order with shipping address information
             if (shipAddressId != null) {
                 Optional<Address> addressOpt = addressRepository.findById(shipAddressId);
-                if (addressOpt.isPresent()) {
+                if (addressOpt.isPresent() && addressOpt.get().getUser() != null && addressOpt.get().getUser().getId().equals(user.getId())) {
                     Address addr = addressOpt.get();
                     order.setShippingAddress(addr.getStreet());
                     order.setCity(addr.getCity());
                     order.setPostalCode(addr.getPostalCode());
                     order.setCountry(addr.getCountry());
+                } else {
+                    return "redirect:/error/403"; 
                 }
             }
-
             // 4. Update payment method and order status
             order.setPaymentMethod(cardName != null ? "Card ending in " + cardNumber.substring(Math.max(0, cardNumber.length() - 4)) : "Card");
             order.setStatus("PENDIENTE");
