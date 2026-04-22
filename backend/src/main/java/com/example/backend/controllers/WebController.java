@@ -2,6 +2,7 @@ package com.example.backend.controllers;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 import org.hibernate.engine.jdbc.proxy.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,9 +24,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 import com.example.backend.models.Address;
 import com.example.backend.models.Order;
@@ -36,6 +41,7 @@ import com.example.backend.repositories.OrderRepository;
 import com.example.backend.repositories.ProductRepository;
 import com.example.backend.repositories.ReviewRepository;
 import com.example.backend.repositories.UserRepository;
+import com.example.backend.services.EmailService;
 import com.example.backend.services.RecommendationService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -63,6 +69,9 @@ public class WebController {
 
     @Autowired
     private RecommendationService recommendationService;
+
+    @Autowired
+    private EmailService emailService;
 
     // ===================== PAGE ROUTES (GET) =====================
 
@@ -368,9 +377,72 @@ public class WebController {
         return "pages/payment";
     }
 
+    // Add these to your WebController.java
+
+    @PostMapping("/process-payment")
+    public String processPayment(
+            @RequestParam(required = false) Long shipAddressId,
+            @RequestParam(required = false) String cardName,
+            @RequestParam(required = false) String cardNumber,
+            Model model, Principal principal) {
+        
+        try {
+            // 1. Get the logged-in user
+            User user = userRepository.findByUsername(principal.getName()).orElseThrow();
+
+            // 2. Get the user's current order in progress
+            Optional<Order> currentOrderOpt = orderRepository.findByUserId(user.getId())
+                    .stream().filter(o -> "EN PROCESO".equals(o.getStatus())).findFirst();
+
+            if (!currentOrderOpt.isPresent()) {
+                return "redirect:/shopping-cart?error=noorder";
+            }
+
+            Order order = currentOrderOpt.get();
+
+            // 3. Update order with shipping address information
+            if (shipAddressId != null) {
+                Optional<Address> addressOpt = addressRepository.findById(shipAddressId);
+                if (addressOpt.isPresent()) {
+                    Address addr = addressOpt.get();
+                    order.setShippingAddress(addr.getStreet());
+                    order.setCity(addr.getCity());
+                    order.setPostalCode(addr.getPostalCode());
+                    order.setCountry(addr.getCountry());
+                }
+            }
+
+            // 4. Update payment method and order status
+            order.setPaymentMethod(cardName != null ? "Card ending in " + cardNumber.substring(Math.max(0, cardNumber.length() - 4)) : "Card");
+            order.setStatus("PENDIENTE");
+            order.setOrderDate(LocalDateTime.now());
+
+            // 5. Save the updated order
+            orderRepository.save(order);
+
+            // 6. Send email in background (using @Async)
+            emailService.sendInvoiceEmail(order);
+
+            // 7. Redirect to success page with order ID
+            return "redirect:/payment-correct?orderId=" + order.getId();
+        } catch (Exception e) {
+            return "redirect:/shopping-cart?error=payment";
+        }
+    }
+
     @GetMapping("/payment-correct")
-    public String paymentCorrect() {
-        return "pages/payment_correct";
+    public String showSuccessPage(@RequestParam(required = false) Long orderId, Model model) {
+        if (orderId != null) {
+            Optional<Order> orderOpt = orderRepository.findById(orderId);
+            if (orderOpt.isPresent()) {
+                Order order = orderOpt.get();
+                model.addAttribute("order", order);
+                model.addAttribute("orderId", orderId);
+                model.addAttribute("totalPrice", String.format("%.2f", order.getTotalPrice()).replace('.', ','));
+                model.addAttribute("productCount", order.getProducts() != null ? order.getProducts().size() : 0);
+            }
+        }
+        return "pages/payment-correct";
     }
 
     @PostMapping("/address/add")
@@ -391,6 +463,35 @@ public class WebController {
             });
         }
         return "redirect:/payment";
+    }
+
+    @GetMapping("/download-invoice/{id}")
+    public ResponseEntity<byte[]> downloadInvoice(@PathVariable Long id, Principal principal) {
+        // 1. Buscar el pedido por ID
+        Optional<Order> orderOpt = orderRepository.findById(id);
+
+        if (orderOpt.isPresent()) {
+            Order order = orderOpt.get();
+
+            // 2. Seguridad: Comprobar que el pedido pertenece al usuario logueado
+            if (!order.getUser().getUsername().equals(principal.getName())) {
+                return ResponseEntity.status(403).build();
+            }
+
+            try {
+                // 3. Generar el PDF
+                byte[] pdfBytes = emailService.generatePdfInvoice(order);
+
+                // 4. Configurar la respuesta para que el navegador lo descargue
+                return ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Factura_" + id + ".pdf")
+                        .contentType(MediaType.APPLICATION_PDF)
+                        .body(pdfBytes);
+            } catch (Exception e) {
+                return ResponseEntity.internalServerError().build();
+            }
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/user-registration")
@@ -796,12 +897,14 @@ public class WebController {
         }
         return "redirect:/profile";
     }
+
     @ModelAttribute("isLoggedIn")
     public boolean isLoggedIn(HttpServletRequest request) {
         return request.getUserPrincipal() != null;
     }
+
     @GetMapping("/error/403")
     public String accessDenied() {
-          return "error-403";
-}
+        return "error-403";
+    }
 }
