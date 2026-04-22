@@ -355,9 +355,7 @@ Diagrama mostrando las entidades, sus campos y relaciones:
 
 Diagrama de clases de la aplicación con diferenciación por colores o secciones:
 
-![Diagrama de Clases](images/classes-diagram.png)
-
-> [Descripción opcional del diagrama y relaciones principales]
+![Diagrama de Clases](assets\images\DiagramaTemplates_PcBuilderShop.png)
 
 ### **Participación de Miembros en la Práctica 2**
 
