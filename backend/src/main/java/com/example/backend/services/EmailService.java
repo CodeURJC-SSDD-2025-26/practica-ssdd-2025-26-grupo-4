@@ -84,9 +84,9 @@ public class EmailService {
 
         // Products Table
         Table table = new Table(3);
-        table.addCell("Product");
-        table.addCell("Quantity");
-        table.addCell("Price");
+        table.addCell(" Product\n");
+        table.addCell(" Quantity\n");
+        table.addCell("  Price\n");
 
         if (order.getProducts() != null && !order.getProducts().isEmpty()) {
             for (Product p : order.getProducts()) {

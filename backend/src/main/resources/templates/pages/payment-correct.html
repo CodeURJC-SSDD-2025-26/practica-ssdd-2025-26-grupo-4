@@ -48,18 +48,16 @@
                     <strong class="text-primary fs-5">{{totalPrice}}€</strong>
                 </div>
                 <hr>
-                
+
                 {{#order}}
-                {{#order.products}}
                 <div class="mb-2">
                     <small class="text-muted d-block">Artículos:</small>
-                    {{#order.products}}
+                    {{#products}}
                     <small>• {{name}} - {{price}}€</small><br>
-                    {{/order.products}}
+                    {{/products}}
                 </div>
-                {{/order.products}}
                 {{/order}}
-                
+
                 <hr>
                 <div class="d-flex align-items-center text-success">
                     <i class="bi bi-truck me-2 fs-4"></i>
