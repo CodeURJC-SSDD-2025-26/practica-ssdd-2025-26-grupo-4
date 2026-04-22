@@ -468,7 +468,6 @@ public class WebController {
         return "pages/payment";
     }
 
-<<<<<<< HEAD
     // Add these to your WebController.java
 
     @PostMapping("/process-payment")
@@ -520,42 +519,6 @@ public class WebController {
         } catch (Exception e) {
             return "redirect:/shopping-cart?error=payment";
         }
-=======
-    @PostMapping("/payment")
-    public String processPayment(@RequestParam(required = false) Long shipAddress,
-                                 @RequestParam(required = false) String paymentMethod,
-                                 Principal principal) {
-        if (principal == null) {
-            return "redirect:/login";
-        }
-        Optional<User> userOpt = userRepository.findByUsername(principal.getName());
-        if (userOpt.isEmpty()) return "redirect:/login";
-        User user = userOpt.get();
-        Optional<Order> orderOpt = orderRepository.findByUserId(user.getId()).stream()
-                .filter(o -> "EN PROCESO".equals(o.getStatus())).findFirst();
-        if (orderOpt.isEmpty()) return "redirect:/shopping-cart";
-        Order order = orderOpt.get();
-        if (order.getProducts() == null || order.getProducts().isEmpty()) return "redirect:/shopping-cart";
-
-        order.setPaymentMethod(paymentMethod != null ? paymentMethod : "card");
-        if (shipAddress != null) {
-            Optional<Address> addrOpt = addressRepository.findById(shipAddress);
-            if (addrOpt.isPresent() && addrOpt.get().getUser() != null && addrOpt.get().getUser().getId().equals(user.getId())) {
-                Address a = addrOpt.get();
-                order.setShippingAddress(a.getStreet());
-                order.setCity(a.getCity());
-                order.setPostalCode(a.getPostalCode());
-                order.setCountry(a.getCountry());
-            }
-        }
-        order.setStatus("PENDIENTE");
-        order.setOrderDate(java.time.LocalDateTime.now());
-        double total = order.getProducts().stream().mapToDouble(Product::getPrice).sum();
-        order.setTotalPrice(total);
-        orderRepository.save(order);
-
-        return "redirect:/payment-correct";
->>>>>>> 17168bf01887607474dc56d3b2c9f6ab225efe12
     }
 
     @GetMapping("/payment-correct")
@@ -1051,8 +1014,6 @@ public class WebController {
         return "redirect:/profile";
     }
 
-<<<<<<< HEAD
-=======
     // Allow users (owner) or admins to delete their own reviews
     @PostMapping("/review/delete")
     public String deleteReviewByUser(@RequestParam Long id, Principal principal) {
@@ -1094,17 +1055,11 @@ public class WebController {
         return "redirect:/error/403";
     }
 
->>>>>>> 46938b821995fcb591ffbba340d0044dc9c4fbef
     @ModelAttribute("isLoggedIn")
     public boolean isLoggedIn(HttpServletRequest request) {
         return request.getUserPrincipal() != null;
     }
 
-<<<<<<< HEAD
-    @GetMapping("/error/403")
-    public String accessDenied() {
-        return "error-403";
-=======
     // Convenience attribute available to all templates: current logged user id (or null)
     @ModelAttribute("currentUserId")
     public Long currentUserId(Principal principal) {
@@ -1116,6 +1071,5 @@ public class WebController {
     @GetMapping("/error/403")
     public String accessDenied() {
           return "error-403";
->>>>>>> 46938b821995fcb591ffbba340d0044dc9c4fbef
     }
 }
