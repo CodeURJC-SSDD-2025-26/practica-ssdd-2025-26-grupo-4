@@ -30,176 +30,181 @@
                 <h4 class="mb-3">Dirección de Envío</h4>
 
                 <form id="formPago" action="/payment" method="POST" class="needs-validation" novalidate>
-                {{#_csrf}}
-                <input type="hidden" name="_csrf" value="{{token}}" />
-                {{/_csrf}}
-
-                <div class="row g-2 mb-3">
-                    {{#direcciones}}
-                    <div class="col-md-6">
-                        <label class="w-100" style="cursor: pointer;">
-                            <div class="border p-3 rounded-3 bg-white d-flex align-items-center">
-                                <input class="form-check-input me-3" type="radio" name="shipAddress" value="{{id}}"
-                                    required>
-                                <div>
-                                    <b class="text-muted"><i class="fa fa-map-marker-alt me-2"></i></b>
-                                    {{street}}, {{city}}, {{postalCode}}, {{country}}
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    {{/direcciones}}
-                    {{^direcciones}}
-                    <div class="col-12">
-                        <p class="text-muted">No tienes direcciones guardadas.</p>
-                    </div>
-                    {{/direcciones}}
-                </div>
-
-                <!-- Add address button (opens modal) -->
-                <button type="button" class="btn btn-light border mt-2" data-bs-toggle="modal"
-                    data-bs-target="#addAddressModal">
-                    <i class="me-2 fa fa-plus"></i>Añadir dirección
-                </button>
-
-                <!-- Modal -->
-                <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="addAddressModalLabel">Añadir dirección</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <form action="/address/add" method="POST">
-                                {{#_csrf}}
-                                <input type="hidden" name="_csrf" value="{{token}}" />
-                                {{/_csrf}}
-                                <div class="modal-body">
-                                    <div class="mb-2">
-                                        <input name="street" class="form-control" placeholder="Calle y número"
-                                            required />
-                                    </div>
-                                    <div class="row g-2 mb-2">
-                                        <div class="col">
-                                            <input name="city" class="form-control" placeholder="Ciudad" required />
-                                        </div>
-                                        <div class="col">
-                                            <input name="postalCode" class="form-control" placeholder="Código postal"
-                                                required />
-                                        </div>
-                                    </div>
-                                    <div class="mb-2">
-                                        <input name="country" class="form-control" placeholder="País" required />
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-primary">Guardar dirección</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <hr class="my-4">
-
-                <!-- Payment form: separate from address form -->
-                <form id="formPago" class="needs-validation" action="/process-payment" method="POST" novalidate>
                     {{#_csrf}}
                     <input type="hidden" name="_csrf" value="{{token}}" />
                     {{/_csrf}}
-                    <input type="hidden" id="shipAddressId" name="shipAddressId" value="">
-                    <h4 class="mb-3">Método de Pago</h4>
-                    <div class="my-3">
-                        <div class="form-check">
-                            <input id="credit" name="paymentMethod" type="radio" class="form-check-input" value="card"
-                                checked required>
-                            <label class="form-check-label" for="credit">Tarjeta de Crédito / Débito</label>
-                            <div class="text-muted small mt-1">
-                                <i class="fab fa-cc-visa fa-lg me-1"></i>
-                                <i class="fab fa-cc-mastercard fa-lg me-1"></i>
-                                <i class="fab fa-cc-amex fa-lg"></i>
-                            </div>
-                        </div>
 
+                    <div class="row g-2 mb-3">
+                        {{#direcciones}}
+                        <div class="col-md-6">
+                            <label class="w-100" style="cursor: pointer;">
+                                <div class="border p-3 rounded-3 bg-white d-flex align-items-center">
+                                    <input class="form-check-input me-3" type="radio" name="shipAddress" value="{{id}}"
+                                        required>
+                                    <div>
+                                        <b class="text-muted"><i class="fa fa-map-marker-alt me-2"></i></b>
+                                        {{street}}, {{city}}, {{postalCode}}, {{country}}
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        {{/direcciones}}
+                        {{^direcciones}}
+                        <div class="col-12">
+                            <p class="text-muted">No tienes direcciones guardadas.</p>
+                        </div>
+                        {{/direcciones}}
                     </div>
 
-                    <div class="row gy-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Nombre en la tarjeta</label>
-                            <input name="cardName" type="text" class="form-control" required>
-                            <small class="text-muted">Como aparece en el plástico</small>
-                            <div class="invalid-feedback">Nombre de tarjeta requerido.</div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Número de tarjeta</label>
-                            <input name="cardNumber" type="text" inputmode="numeric" pattern="[0-9 ]{13,19}"
-                                class="form-control" placeholder="0000 0000 0000 0000" required>
-                            <div class="invalid-feedback">Número inválido.</div>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">Caducidad</label>
-                            <input id="cardExpiry" name="cardExpiry" type="text" inputmode="numeric"
-                                pattern="^(0[1-9]|1[0-2])([\\/\\-]?)([0-9]{2})$" class="form-control"
-                                placeholder="MM/YY" required>
-                            <div class="invalid-feedback">Fecha requerida (MM/YY).</div>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">CVV</label>
-                            <input name="cardCvv" type="text" inputmode="numeric" pattern="[0-9]{3,4}"
-                                class="form-control" placeholder="123" required>
-                            <div class="invalid-feedback">Código requerido.</div>
+                    <!-- Add address button (opens modal) -->
+                    <button type="button" class="btn btn-light border mt-2" data-bs-toggle="modal"
+                        data-bs-target="#addAddressModal">
+                        <i class="me-2 fa fa-plus"></i>Añadir dirección
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addAddressModalLabel">Añadir dirección</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form action="/address/add" method="POST">
+                                    {{#_csrf}}
+                                    <input type="hidden" name="_csrf" value="{{token}}" />
+                                    {{/_csrf}}
+                                    <div class="modal-body">
+                                        <div class="mb-2">
+                                            <input name="street" class="form-control" placeholder="Calle y número"
+                                                required />
+                                        </div>
+                                        <div class="row g-2 mb-2">
+                                            <div class="col">
+                                                <input name="city" class="form-control" placeholder="Ciudad" required />
+                                            </div>
+                                            <div class="col">
+                                                <input name="postalCode" class="form-control"
+                                                    placeholder="Código postal" required />
+                                            </div>
+                                        </div>
+                                        <div class="mb-2">
+                                            <input name="country" class="form-control" placeholder="País" required />
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cerrar</button>
+                                        <button type="submit" class="btn btn-primary">Guardar dirección</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
 
                     <hr class="my-4">
 
-                    <button class="w-100 btn btn-primary btn-lg p-3 fw-bold" type="submit">
-                        Pagar Ahora <i class="fas fa-arrow-right ms-2"></i>
-                    </button>
-                </form>
-
-                <!-- Modal (moved outside the payment form to avoid nested forms) -->
-                <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="addAddressModalLabel">Añadir dirección</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <form action="/address/add" method="POST">
+                    <!-- Payment form: separate from address form -->
+                    <form id="formPago" class="needs-validation" action="/process-payment" method="POST" novalidate>
                         {{#_csrf}}
                         <input type="hidden" name="_csrf" value="{{token}}" />
                         {{/_csrf}}
-                        <div class="modal-body">
-                          <div class="mb-2">
-                            <input name="street" class="form-control" placeholder="Calle y número" required />
-                          </div>
-                          <div class="row g-2 mb-2">
-                            <div class="col">
-                              <input name="city" class="form-control" placeholder="Ciudad" required />
+                        <input type="hidden" id="shipAddressId" name="shipAddressId" value="">
+                        <h4 class="mb-3">Método de Pago</h4>
+                        <div class="my-3">
+                            <div class="form-check">
+                                <input id="credit" name="paymentMethod" type="radio" class="form-check-input"
+                                    value="card" checked required>
+                                <label class="form-check-label" for="credit">Tarjeta de Crédito / Débito</label>
+                                <div class="text-muted small mt-1">
+                                    <i class="fab fa-cc-visa fa-lg me-1"></i>
+                                    <i class="fab fa-cc-mastercard fa-lg me-1"></i>
+                                    <i class="fab fa-cc-amex fa-lg"></i>
+                                </div>
                             </div>
-                            <div class="col">
-                              <input name="postalCode" class="form-control" placeholder="Código postal" required />
-                            </div>
-                          </div>
-                          <div class="mb-2">
-                            <input name="country" class="form-control" placeholder="País" required />
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                          <button type="submit" class="btn btn-primary">Guardar dirección</button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
 
-        </div>
+                        </div>
+
+                        <div class="row gy-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Nombre en la tarjeta</label>
+                                <input name="cardName" type="text" class="form-control" required>
+                                <small class="text-muted">Como aparece en el plástico</small>
+                                <div class="invalid-feedback">Nombre de tarjeta requerido.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Número de tarjeta</label>
+                                <input name="cardNumber" type="text" inputmode="numeric" pattern="[0-9 ]{13,19}"
+                                    class="form-control" placeholder="0000 0000 0000 0000" required>
+                                <div class="invalid-feedback">Número inválido.</div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Caducidad</label>
+                                <input id="cardExpiry" name="cardExpiry" type="text" inputmode="numeric"
+                                    pattern="^(0[1-9]|1[0-2])([\\/\\-]?)([0-9]{2})$" class="form-control"
+                                    placeholder="MM/YY" required>
+                                <div class="invalid-feedback">Fecha requerida (MM/YY).</div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">CVV</label>
+                                <input name="cardCvv" type="text" inputmode="numeric" pattern="[0-9]{3,4}"
+                                    class="form-control" placeholder="123" required>
+                                <div class="invalid-feedback">Código requerido.</div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <button class="w-100 btn btn-primary btn-lg p-3 fw-bold" type="submit">
+                            Pagar Ahora <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </form>
+
+                    <!-- Modal (moved outside the payment form to avoid nested forms) -->
+                    <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addAddressModalLabel">Añadir dirección</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form action="/address/add" method="POST">
+                                    {{#_csrf}}
+                                    <input type="hidden" name="_csrf" value="{{token}}" />
+                                    {{/_csrf}}
+                                    <div class="modal-body">
+                                        <div class="mb-2">
+                                            <input name="street" class="form-control" placeholder="Calle y número"
+                                                required />
+                                        </div>
+                                        <div class="row g-2 mb-2">
+                                            <div class="col">
+                                                <input name="city" class="form-control" placeholder="Ciudad" required />
+                                            </div>
+                                            <div class="col">
+                                                <input name="postalCode" class="form-control"
+                                                    placeholder="Código postal" required />
+                                            </div>
+                                        </div>
+                                        <div class="mb-2">
+                                            <input name="country" class="form-control" placeholder="País" required />
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cerrar</button>
+                                        <button type="submit" class="btn btn-primary">Guardar dirección</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
 
             <div class="col-md-5 col-lg-4">
                 <div class="card shadow-sm border-0 sticky-top" style="top: 20px; z-index: 1;">
@@ -207,50 +212,23 @@
                         <h5 class="mb-0 text-primary">Resumen del Pedido</h5>
                     </div>
                     <ul class="list-group list-group-flush">
+                        {{#productosCarrito}}
                         <li class="list-group-item d-flex justify-content-between lh-sm">
                             <div>
-                                <h6 class="my-0">ASUS TUF Gaming RTX 4070</h6>
-                                <small class="text-muted">Hardware</small>
+                                <h6 class="my-0">{{name}} x{{quantity}}</h6>
+                                <small class="text-muted">{{category}}</small>
                             </div>
-                            <span class="text-muted">649€</span>
+                            <span class="text-muted">{{lineTotalStr}}€</span>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between lh-sm">
-                            <div>
-                                <h6 class="my-0">Corsair RAM 32GB</h6>
-                                <small class="text-muted">Hardware</small>
-                            </div>
-                            <span class="text-muted">125€</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between bg-light">
-                            <div class="text-success">
-                                <h6 class="my-0">Código Promocional</h6>
-                                <small>GAMER2024</small>
-                            </div>
-                            <span class="text-success">−10€</span>
-                        </li>
+                        {{/productosCarrito}}
                         <li class="list-group-item d-flex justify-content-between py-4">
                             <span class="fw-bold">Total (EUR)</span>
-                            <strong class="fs-4">764€</strong>
+                            <strong class="fs-4">{{precioTotal}}€</strong>
                         </li>
                         <a href="shopping-cart" class="btn btn-danger w-100 border mt-2"> Cancelar </a>
                     </ul>
                 </div>
-                <ul class="list-group list-group-flush">
-                    {{#productosCarrito}}
-                    <li class="list-group-item d-flex justify-content-between lh-sm">
-                        <div>
-                            <h6 class="my-0">{{name}} x{{quantity}}</h6>
-                            <small class="text-muted">{{category}}</small>
-                        </div>
-                        <span class="text-muted">{{lineTotalStr}}€</span>
-                    </li>
-                    {{/productosCarrito}}
-                    <li class="list-group-item d-flex justify-content-between py-4">
-                        <span class="fw-bold">Total (EUR)</span>
-                        <strong class="fs-4">{{precioTotal}}€</strong>
-                    </li>
-                    <a href="shopping-cart" class="btn btn-danger w-100 border mt-2"> Cancelar </a>
-                </ul>
+
             </div>
         </div>
     </div>
