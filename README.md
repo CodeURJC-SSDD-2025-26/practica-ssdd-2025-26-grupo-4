@@ -266,8 +266,60 @@ Principal responsable de las páginas de perfil y carrito de compra, además de 
 Solo si ha cambiado.
 
 #### **Capturas de Pantalla Actualizadas**
+#### **1. Página Principal / Home**
 
-Solo si han cambiado.
+![Página Principal](assets/images/images-update/index-update.png)
+
+#### **RESTO DE PÁGINAS**
+
+#### **TODOS LOS USUARIOS**
+
+#### **2. Pagina de busqueda:**
+
+![Pagina de busqueda](assets/images/images-update/paginabusqueda-update.png)
+
+#### **3. Pagina de Producto:**
+
+![Pagina de producto](assets/images/images-update/productpage-update.png)
+
+#### **4. Pagina de Login:**
+
+![Pagina de Login](assets/images/images-update/login-update.png)
+
+#### **5. Pagina de Registro:**
+
+![Pagina de Registro](assets/images/images-update/registration-update.png)
+
+#### **USUARIOS REGISTRADOS**
+
+#### **6. Pagina de Perfil:**
+
+![Pagina de Perfil-Perfil](assets/images/images-update/profile-update.png)
+![Pagina de Perfil-Pedidos](assets/images/images-update/pedidos-update.png)
+![Pagina de Perfil-Modificar cuenta](assets/images/images-update/modificarcuenta-update.png)
+
+#### **7. Pagina de Carrito:**
+
+![Pagina de Carrito](assets/images/images-update/carrito-update.png)
+
+#### **8. Pagina de Pago Correcto:**
+
+![Pagina de Pago correcto](assets/images/images-update/payment-correct-update.png)
+
+#### **9. Pagina de Crear Review:**
+
+![Pagina de Crear Review](assets/images/images-update/review-update.png)
+
+#### **ADMINISTRADOR**
+
+#### **10. Pagina de Lista Pedidos:**
+
+![Pagina de Lista Pedidos](assets/images/images-update/order-list-update.png)
+
+### **11. Pagina de Editar Pedidos:**
+
+![Pagina de Editar Pedidos](assets/images/images-update/editarpedidos-update.png)
+
 
 ### **Instrucciones de Ejecución**
 
@@ -303,9 +355,9 @@ Diagrama mostrando las entidades, sus campos y relaciones:
 
 Diagrama de clases de la aplicación con diferenciación por colores o secciones:
 
-![Diagrama de Clases](assets\images\DiagramaTemplates_PcBuilderShop.png)
+![Diagrama de Clases](images/classes-diagram.png)
 
-> [Este diagrama representa la arquitectura MVC de PCBuilderShop, donde el WebController gestiona el flujo entre las Vistas (Mustache) y la lógica de negocio. Los Servicios especializados (Email y Recomendaciones) y la capa de Seguridad interactúan con los Repositorios para acceder a las entidades del Modelo.]
+> [Descripción opcional del diagrama y relaciones principales]
 
 ### **Participación de Miembros en la Práctica 2**
 
