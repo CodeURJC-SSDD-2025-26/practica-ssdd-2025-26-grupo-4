@@ -288,16 +288,16 @@ Solo si han cambiado.
 2. **AQUÍ INDICAR LO SIGUIENTES PASOS**
 
 #### **Credenciales de prueba**
-- **Usuario Admin**: usuario: `admin`, contraseña: `admin`
-- **Usuario Registrado**: usuario: `user`, contraseña: `user`
+- **Usuario Admin**: usuario: `admin`, contraseña: `password`
+- **Usuario Registrado**: usuario: `user`, contraseña: `password`
 
 ### **Diagrama de Entidades de Base de Datos**
 
 Diagrama mostrando las entidades, sus campos y relaciones:
 
-![Diagrama Entidad-Relación](images/database-diagram.png)
+![Diagrama Entidad-Relación](assets\images\DiagramaEntidades_PcBuilderShop.png)
 
-> [Descripción opcional: Ej: "El diagrama muestra las 4 entidades principales: Usuario, Producto, Pedido y Categoría, con sus respectivos atributos y relaciones 1:N y N:M."]
+> [Este modelo relacional organiza la plataforma mediante las entidades User (clientes y roles), Product (catálogo e imágenes) y Order (ventas y envíos). Se establecen relaciones 1:N entre usuarios y sus direcciones (Address), pedidos y reseñas (Review), mientras que la tabla intermedia order_products gestiona la relación N:M entre pedidos y productos.]
 
 ### **Diagrama de Clases y Templates**
 
