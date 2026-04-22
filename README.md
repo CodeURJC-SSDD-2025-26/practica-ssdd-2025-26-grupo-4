@@ -337,7 +337,34 @@ Solo si ha cambiado.
    cd [nombre-repositorio]
    ```
 
-2. **AQUÍ INDICAR LO SIGUIENTES PASOS**
+2. **Configura la Base de Datos(MySQL)**
+   1. Abre MySQL Workbench
+   2. Ejecuta el siguiente comando SQL para crear la base de datos necesaria:
+   ```bash
+   CREATE DATABASE pc_builder_db;
+   ```
+   3. Dirígete al archivo de configuración en el código fuente: src/main/resources/application.properties
+   4. Asegúrate de que las credenciales coincidan con las de tu servidor MySQL local:
+   ```bash
+   spring.datasource.url=jdbc:mysql://localhost:3306/pc_builder_db
+   spring.datasource.username=TU_USUARIO_AQUI
+   spring.datasource.password=TU_CONTRASEÑA_AQUI
+   ```
+3. **Ejecutar el servidor**
+   
+   Se puede ejecutar la aplicación de dos maneras distintas:
+   
+   Opción A: Desde el IDE 
+   Localiza el archivo principal src/main/java/com/example/backend/BackendApplication.java y ejecútalo (botón de Run o Play).
+
+   Opción B: Desde la Terminal usando Maven
+   instalado en tu sistema, asegúrate de estar en el directorio raíz del proyecto y ejecuta:
+   ```bash
+   mvn clean install
+   mvn spring-boot:run
+   ```
+4. **Acceder a la web**
+   Cuando el servidor este arrancando y lo sabras porque veras el mensaje "Started BackendApplication in ... seconds" en la consola, abre tu navegador web y dirigete a : https://localhost:8443
 
 #### **Credenciales de prueba**
 - **Usuario Admin**: usuario: `admin`, contraseña: `password`
