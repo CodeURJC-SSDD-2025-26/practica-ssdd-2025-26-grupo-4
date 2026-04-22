@@ -65,3 +65,22 @@
         transition: color 0.2s ease;
     }
 </style>
+
+<script>
+    (function(){
+        var currentUserId = null;
+        try {
+            currentUserId = {{#currentUserId}}{{currentUserId}}{{/currentUserId}}{{^currentUserId}}null{{/currentUserId}};
+        } catch(e) { currentUserId = null; }
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.owner-only').forEach(function(el) {
+                var parent = el.closest('[data-user-id]');
+                if (!parent) { el.style.display = 'none'; return; }
+                var ownerId = parent.getAttribute('data-user-id');
+                if (!currentUserId || ownerId !== String(currentUserId)) {
+                    el.style.display = 'none';
+                }
+            });
+        });
+    })();
+</script>

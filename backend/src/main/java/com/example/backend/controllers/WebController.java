@@ -948,12 +948,63 @@ public class WebController {
         }
         return "redirect:/profile";
     }
+
+    // Allow users (owner) or admins to delete their own reviews
+    @PostMapping("/review/delete")
+    public String deleteReviewByUser(@RequestParam Long id, Principal principal) {
+        if (principal == null) return "redirect:/login";
+        Optional<Review> optReview = reviewRepository.findById(id);
+        if (optReview.isEmpty()) return "redirect:/";
+        Review review = optReview.get();
+
+        Optional<User> currentUserOpt = userRepository.findByUsername(principal.getName());
+        boolean isAdmin = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        if (isAdmin || (review.getUser() != null && currentUserOpt.isPresent()
+                && review.getUser().getId().equals(currentUserOpt.get().getId()))) {
+            Long productId = review.getProduct() != null ? review.getProduct().getId() : null;
+            reviewRepository.deleteById(id);
+            return productId != null ? "redirect:/item-detail?id=" + productId : "redirect:/";
+        }
+        return "redirect:/error/403";
+    }
+
+    // Allow users (owner) or admins to delete/edit their own addresses
+    @PostMapping("/address/delete")
+    public String deleteAddress(@RequestParam Long id, Principal principal) {
+        if (principal == null) return "redirect:/login";
+        Optional<Address> optAddr = addressRepository.findById(id);
+        if (optAddr.isEmpty()) return "redirect:/payment";
+        Address addr = optAddr.get();
+
+        Optional<User> currentUserOpt = userRepository.findByUsername(principal.getName());
+        boolean isAdmin = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        if (isAdmin || (addr.getUser() != null && currentUserOpt.isPresent()
+                && addr.getUser().getId().equals(currentUserOpt.get().getId()))) {
+            addressRepository.deleteById(id);
+            return "redirect:/payment";
+        }
+        return "redirect:/error/403";
+    }
+
     @ModelAttribute("isLoggedIn")
     public boolean isLoggedIn(HttpServletRequest request) {
         return request.getUserPrincipal() != null;
     }
+
+    // Convenience attribute available to all templates: current logged user id (or null)
+    @ModelAttribute("currentUserId")
+    public Long currentUserId(Principal principal) {
+        if (principal == null) return null;
+        Optional<User> u = userRepository.findByUsername(principal.getName());
+        return u.map(User::getId).orElse(null);
+    }
+
     @GetMapping("/error/403")
     public String accessDenied() {
           return "error-403";
-}
+    }
 }
