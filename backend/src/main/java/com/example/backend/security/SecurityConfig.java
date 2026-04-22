@@ -1,4 +1,6 @@
 package com.example.backend.security;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,37 +13,38 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(); // Encripta las contraseñas
     }
 
-   @Bean
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        
+
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/css/**", "/assets/**", "/js/**", "/product/**", "/user/**").permitAll() // PÚBLICO
-                .requestMatchers("/", "/index", "/item-detail", "/search","/search-result", "/user-registration", "/login", "/shopping-cart").permitAll() // PÚBLICO
-                .requestMatchers("/create-review", "/payment", "/profile/**").hasAnyRole("USER", "ADMIN") // USUARIOS Y ADMINS
-                .requestMatchers("/admin/**").hasRole("ADMIN") // SOLO ADMINS
-                .anyRequest().authenticated()
-        );
+                .requestMatchers("/css/**", "/assets/**", "/js/**", "/product/**", "/user/**").permitAll()
+                .requestMatchers("/", "/index", "/item-detail", "/search", "/search-result","/user_registration",
+                        "/user-registration", "/login", "/shopping-cart").permitAll()
+                .requestMatchers("/create-review", "/payment", "/profile/**").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated());
 
-        // CONFIGURACIÓN DEL LOGIN 
+        http.userDetailsService(userDetailsService);
+
+        // LOGIN
         http.formLogin(formLogin -> formLogin
-                .loginPage("/login") 
-                .loginProcessingUrl("/login") 
-                .defaultSuccessUrl("/", true) 
-                .permitAll()
-        );
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/", true)
+                .permitAll());
 
+        // ERROR 403
         http.exceptionHandling(exception -> exception
-                 .accessDeniedPage("/error/403")
-        );
+                .accessDeniedPage("/error/403"));
 
         return http.build();
-
-
     }
-
 }

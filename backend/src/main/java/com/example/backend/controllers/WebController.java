@@ -139,16 +139,17 @@ public class WebController {
                 if (currentOrder.isPresent()) {
                     Order order = currentOrder.get();
                     model.addAttribute("pedido", order);
-                    model.addAttribute("productosCarrito", order.getProducts());
 
-                    double realTotal = order.getProducts().stream().mapToDouble(Product::getPrice).sum();
-                    model.addAttribute("precioBase", String.format("%.2f", realTotal).replace('.', ','));
-                    model.addAttribute("precioDescuento", "0,00");
+                    List<Map<String, Object>> items = buildCartItems(order.getProducts());
+                    model.addAttribute("productosCarrito", items);
+                    model.addAttribute("hasProductosCarrito", !items.isEmpty());
+
+                    double realTotal = items.stream().mapToDouble(i -> (Double) i.get("lineTotal")).sum();
                     model.addAttribute("precioTotal", String.format("%.2f", realTotal).replace('.', ','));
                 } else {
-                    model.addAttribute("precioBase", "0,00");
-                    model.addAttribute("precioDescuento", "0,00");
                     model.addAttribute("precioTotal", "0,00");
+                    model.addAttribute("productosCarrito", new ArrayList<>());
+                    model.addAttribute("hasProductosCarrito", false);
                 }
             });
         } else {
@@ -157,10 +158,10 @@ public class WebController {
             if (sessionCart == null) {
                 sessionCart = new ArrayList<>();
             }
-            model.addAttribute("productosCarrito", sessionCart);
-            double realTotal = sessionCart.stream().mapToDouble(Product::getPrice).sum();
-            model.addAttribute("precioBase", String.format("%.2f", realTotal).replace('.', ','));
-            model.addAttribute("precioDescuento", "0,00");
+            List<Map<String, Object>> items = buildCartItems(sessionCart);
+            model.addAttribute("productosCarrito", items);
+            model.addAttribute("hasProductosCarrito", !items.isEmpty());
+            double realTotal = items.stream().mapToDouble(i -> (Double) i.get("lineTotal")).sum();
             model.addAttribute("precioTotal", String.format("%.2f", realTotal).replace('.', ','));
         }
 
@@ -173,6 +174,36 @@ public class WebController {
         }
 
         return "pages/shopping-cart";
+    }
+
+    // Helper to aggregate products into items with quantities and formatted strings
+    private List<Map<String, Object>> buildCartItems(List<Product> products) {
+        Map<Long, Integer> counts = new LinkedHashMap<>();
+        Map<Long, Product> prodById = new LinkedHashMap<>();
+        for (Product p : products) {
+            counts.merge(p.getId(), 1, Integer::sum);
+            prodById.putIfAbsent(p.getId(), p);
+        }
+
+        List<Map<String, Object>> items = new ArrayList<>();
+        for (Map.Entry<Long, Integer> e : counts.entrySet()) {
+            Product p = prodById.get(e.getKey());
+            int qty = e.getValue();
+            double lineTotal = p.getPrice() * qty;
+            Map<String, Object> m = new LinkedHashMap<>();
+            m.put("id", p.getId());
+            m.put("name", p.getName());
+            m.put("image", p.isImage());
+            m.put("price", p.getPrice());
+            m.put("priceStr", String.format("%.2f", p.getPrice()).replace('.', ','));
+            m.put("category", p.getCategory());
+            m.put("quantity", qty);
+            m.put("lineTotal", lineTotal);
+            m.put("lineTotalStr", String.format("%.2f", lineTotal).replace('.', ','));
+            m.put("stock", p.getStock());
+            items.add(m);
+        }
+        return items;
     }
 
     @PostMapping("/cart/add")
@@ -246,6 +277,50 @@ public class WebController {
                         sessionCart.remove(i);
                         break;
                     }
+                }
+                session.setAttribute("cart", sessionCart);
+            }
+        }
+        return "redirect:/shopping-cart";
+    }
+
+    @PostMapping("/cart/update")
+    public String updateCartQuantity(@RequestParam Long productId, @RequestParam int quantity, Principal principal,
+            jakarta.servlet.http.HttpSession session) {
+        int safeQuantity = Math.max(0, quantity);
+        final int qty = safeQuantity;
+        final Long pid = productId;
+        if (principal != null) {
+            userRepository.findByUsername(principal.getName()).ifPresent(user -> {
+                Optional<Order> currentOrderOpt = orderRepository.findByUserId(user.getId())
+                        .stream().filter(o -> "EN PROCESO".equals(o.getStatus())).findFirst();
+                if (currentOrderOpt.isPresent()) {
+                    Order order = currentOrderOpt.get();
+                    // remove all instances of the product
+                    List<Product> products = order.getProducts();
+                    products.removeIf(p -> p.getId().equals(pid));
+                    // add 'qty' copies
+                    productRepository.findById(pid).ifPresent(product -> {
+                        for (int i = 0; i < qty; i++) {
+                            products.add(product);
+                        }
+                    });
+                    double total = products.stream().mapToDouble(Product::getPrice).sum();
+                    order.setTotalPrice(total);
+                    orderRepository.save(order);
+                }
+            });
+        } else {
+            List<Product> sessionCart = (List<Product>) session.getAttribute("cart");
+            if (sessionCart == null) {
+                sessionCart = new ArrayList<>();
+            }
+            // remove all instances
+            sessionCart.removeIf(p -> p.getId().equals(pid));
+            Optional<Product> pOpt = productRepository.findById(pid);
+            if (pOpt.isPresent()) {
+                for (int i = 0; i < qty; i++) {
+                    sessionCart.add(pOpt.get());
                 }
                 session.setAttribute("cart", sessionCart);
             }
@@ -368,15 +443,32 @@ public class WebController {
         if (principal != null) {
             userRepository.findByUsername(principal.getName()).ifPresent(user -> {
                 model.addAttribute("direcciones", addressRepository.findByUserId(user.getId()));
+
+                Optional<Order> currentOrder = orderRepository.findByUserId(user.getId())
+                        .stream().filter(o -> "EN PROCESO".equals(o.getStatus())).findFirst();
+                if (currentOrder.isPresent()) {
+                    Order order = currentOrder.get();
+                    List<Map<String, Object>> items = buildCartItems(order.getProducts());
+                    model.addAttribute("productosCarrito", items);
+                    double realTotal = items.stream().mapToDouble(i -> (Double) i.get("lineTotal")).sum();
+                    model.addAttribute("precioTotal", String.format("%.2f", realTotal).replace('.', ','));
+                } else {
+                    model.addAttribute("productosCarrito", new ArrayList<>());
+                    model.addAttribute("precioTotal", "0,00");
+                }
             });
+        } else {
+            model.addAttribute("productosCarrito", new ArrayList<>());
+            model.addAttribute("precioTotal", "0,00");
         }
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+        CsrfToken token = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
         if (token != null) {
             model.addAttribute("_csrf", token);
         }
         return "pages/payment";
     }
 
+<<<<<<< HEAD
     // Add these to your WebController.java
 
     @PostMapping("/process-payment")
@@ -428,6 +520,42 @@ public class WebController {
         } catch (Exception e) {
             return "redirect:/shopping-cart?error=payment";
         }
+=======
+    @PostMapping("/payment")
+    public String processPayment(@RequestParam(required = false) Long shipAddress,
+                                 @RequestParam(required = false) String paymentMethod,
+                                 Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+        Optional<User> userOpt = userRepository.findByUsername(principal.getName());
+        if (userOpt.isEmpty()) return "redirect:/login";
+        User user = userOpt.get();
+        Optional<Order> orderOpt = orderRepository.findByUserId(user.getId()).stream()
+                .filter(o -> "EN PROCESO".equals(o.getStatus())).findFirst();
+        if (orderOpt.isEmpty()) return "redirect:/shopping-cart";
+        Order order = orderOpt.get();
+        if (order.getProducts() == null || order.getProducts().isEmpty()) return "redirect:/shopping-cart";
+
+        order.setPaymentMethod(paymentMethod != null ? paymentMethod : "card");
+        if (shipAddress != null) {
+            Optional<Address> addrOpt = addressRepository.findById(shipAddress);
+            if (addrOpt.isPresent() && addrOpt.get().getUser() != null && addrOpt.get().getUser().getId().equals(user.getId())) {
+                Address a = addrOpt.get();
+                order.setShippingAddress(a.getStreet());
+                order.setCity(a.getCity());
+                order.setPostalCode(a.getPostalCode());
+                order.setCountry(a.getCountry());
+            }
+        }
+        order.setStatus("PENDIENTE");
+        order.setOrderDate(java.time.LocalDateTime.now());
+        double total = order.getProducts().stream().mapToDouble(Product::getPrice).sum();
+        order.setTotalPrice(total);
+        orderRepository.save(order);
+
+        return "redirect:/payment-correct";
+>>>>>>> 17168bf01887607474dc56d3b2c9f6ab225efe12
     }
 
     @GetMapping("/payment-correct")
@@ -502,6 +630,31 @@ public class WebController {
     @GetMapping("/user_registration")
     public String userRegistration2() {
         return "pages/user_registration";
+    }
+     @PostMapping("/user-registration")
+    public String registerUser(
+        @RequestParam String username,
+        @RequestParam String email,
+        @RequestParam String password,
+        @RequestParam String repeatPassword,
+        Model model) {
+    if (!password.equals(repeatPassword)) {
+        model.addAttribute("error", "Las contraseñas no coinciden");
+        return "user_registration"; 
+    }
+    if (userRepository.findByUsername(username).isPresent()) {
+        model.addAttribute("error", "El usuario ya existe");
+        return "user_registration";
+    }
+    User user = new User();
+    user.setUsername(username);
+    user.setEmail(email);
+    user.setEncodedPassword(passwordEncoder.encode(password)); 
+    user.setRoles(Arrays.asList("ROLE_USER"));
+
+    userRepository.save(user);
+
+    return "redirect:/login";
     }
 
     @GetMapping("/login")

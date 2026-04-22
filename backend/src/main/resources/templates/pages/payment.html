@@ -29,6 +29,11 @@
             <div class="col-md-7 col-lg-8">
                 <h4 class="mb-3">Dirección de Envío</h4>
 
+                <form id="formPago" action="/payment" method="POST" class="needs-validation" novalidate>
+                {{#_csrf}}
+                <input type="hidden" name="_csrf" value="{{token}}" />
+                {{/_csrf}}
+
                 <div class="row g-2 mb-3">
                     {{#direcciones}}
                     <div class="col-md-6">
@@ -57,6 +62,7 @@
                     <i class="me-2 fa fa-plus"></i>Añadir dirección
                 </button>
 
+<<<<<<< HEAD
                 <!-- Modal -->
                 <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel"
                     aria-hidden="true">
@@ -147,6 +153,19 @@
                             <input name="cardCvv" type="text" inputmode="numeric" pattern="[0-9]{3,4}"
                                 class="form-control" placeholder="123" required>
                             <div class="invalid-feedback">Código requerido.</div>
+=======
+                <hr class="my-4">
+
+                <h4 class="mb-3">Método de Pago</h4>
+                <div class="my-3">
+                    <div class="form-check">
+                        <input id="credit" name="paymentMethod" type="radio" class="form-check-input" value="card" checked required>
+                        <label class="form-check-label" for="credit">Tarjeta de Crédito / Débito</label>
+                        <div class="text-muted small mt-1">
+                            <i class="fab fa-cc-visa fa-lg me-1"></i>
+                            <i class="fab fa-cc-mastercard fa-lg me-1"></i>
+                            <i class="fab fa-cc-amex fa-lg"></i>
+>>>>>>> 17168bf01887607474dc56d3b2c9f6ab225efe12
                         </div>
                     </div>
 
@@ -156,7 +175,49 @@
                         Pagar Ahora <i class="fas fa-arrow-right ms-2"></i>
                     </button>
                 </form>
+<<<<<<< HEAD
             </div>
+=======
+
+                <!-- Modal (moved outside the payment form to avoid nested forms) -->
+                <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="addAddressModalLabel">Añadir dirección</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <form action="/address/add" method="POST">
+                        {{#_csrf}}
+                        <input type="hidden" name="_csrf" value="{{token}}" />
+                        {{/_csrf}}
+                        <div class="modal-body">
+                          <div class="mb-2">
+                            <input name="street" class="form-control" placeholder="Calle y número" required />
+                          </div>
+                          <div class="row g-2 mb-2">
+                            <div class="col">
+                              <input name="city" class="form-control" placeholder="Ciudad" required />
+                            </div>
+                            <div class="col">
+                              <input name="postalCode" class="form-control" placeholder="Código postal" required />
+                            </div>
+                          </div>
+                          <div class="mb-2">
+                            <input name="country" class="form-control" placeholder="País" required />
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                          <button type="submit" class="btn btn-primary">Guardar dirección</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+        </div>
+>>>>>>> 17168bf01887607474dc56d3b2c9f6ab225efe12
 
             <div class="col-md-5 col-lg-4">
                 <div class="card shadow-sm border-0 sticky-top" style="top: 20px; z-index: 1;">
@@ -192,6 +253,25 @@
                         <a href="shopping-cart" class="btn btn-danger w-100 border mt-2"> Cancelar </a>
                     </ul>
                 </div>
+<<<<<<< HEAD
+=======
+                <ul class="list-group list-group-flush">
+                    {{#productosCarrito}}
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div>
+                            <h6 class="my-0">{{name}} x{{quantity}}</h6>
+                            <small class="text-muted">{{category}}</small>
+                        </div>
+                        <span class="text-muted">{{lineTotalStr}}€</span>
+                    </li>
+                    {{/productosCarrito}}
+                    <li class="list-group-item d-flex justify-content-between py-4">
+                        <span class="fw-bold">Total (EUR)</span>
+                        <strong class="fs-4">{{precioTotal}}€</strong>
+                    </li>
+                    <a href="shopping-cart" class="btn btn-danger w-100 border mt-2"> Cancelar </a>
+                </ul>
+>>>>>>> 17168bf01887607474dc56d3b2c9f6ab225efe12
             </div>
         </div>
     </div>
@@ -216,6 +296,7 @@
                 const expiryInput = document.getElementById('cardExpiry');
                 if (expiryInput) expiryInput.setCustomValidity('');
 
+<<<<<<< HEAD
                 // Check that a shipping address is selected
                 const selectedAddress = document.querySelector('input[name="shipAddress"]:checked');
                 const addrFeedbackId = 'shipAddressFeedback';
@@ -243,12 +324,51 @@
 
                 // Basic HTML5 validation
                 if (!form.checkValidity()) {
+=======
+            // Check that a shipping address is selected
+            const selectedAddress = document.querySelector('input[name="shipAddress"]:checked');
+            const addrFeedbackId = 'shipAddressFeedback';
+            const addrContainer = document.querySelector('.row.g-2.mb-3');
+            let fb = document.getElementById(addrFeedbackId);
+            if (!selectedAddress) {
+                event.preventDefault();
+                event.stopPropagation();
+                if (!fb) {
+                    fb = document.createElement('div');
+                    fb.id = addrFeedbackId;
+                    fb.className = 'text-danger small mt-2';
+                    fb.innerText = 'Por favor selecciona una dirección de envío o añádela.';
+                    if (addrContainer) addrContainer.after(fb);
+                } else {
+                    fb.style.display = 'block';
+                }
+                return;
+            } else if (fb) {
+                fb.style.display = 'none';
+            }
+
+            // Basic HTML5 validation
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+                form.classList.add('was-validated');
+                return;
+            }
+
+            // Additional expiry validation for card
+            if (expiryInput) {
+                const val = expiryInput.value.trim();
+                const m = val.match(/^(\d{2})[\/\-]?(\d{2})$/);
+                if (!m) {
+                    expiryInput.setCustomValidity('Formato inválido. Usa MM/YY');
+>>>>>>> 17168bf01887607474dc56d3b2c9f6ab225efe12
                     event.preventDefault();
                     event.stopPropagation();
                     form.classList.add('was-validated');
                     return;
                 }
 
+<<<<<<< HEAD
                 // Additional expiry validation for card
                 if (expiryInput) {
                     const val = expiryInput.value.trim();
@@ -289,6 +409,13 @@
             }, false);
         }
     </script>
+=======
+            // All good -> allow form to submit to server for processing
+            // form will be submitted normally
+        }, false);
+    }
+</script>
+>>>>>>> 17168bf01887607474dc56d3b2c9f6ab225efe12
 
 </body>
 
