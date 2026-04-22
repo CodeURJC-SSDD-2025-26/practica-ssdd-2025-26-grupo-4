@@ -303,9 +303,9 @@ Diagrama mostrando las entidades, sus campos y relaciones:
 
 Diagrama de clases de la aplicación con diferenciación por colores o secciones:
 
-![Diagrama de Clases](images/classes-diagram.png)
+![Diagrama de Clases](assets\images\DiagramaTemplates_PcBuilderShop.png)
 
-> [Descripción opcional del diagrama y relaciones principales]
+> [Este diagrama representa la arquitectura MVC de PCBuilderShop, donde el WebController gestiona el flujo entre las Vistas (Mustache) y la lógica de negocio. Los Servicios especializados (Email y Recomendaciones) y la capa de Seguridad interactúan con los Repositorios para acceder a las entidades del Modelo.]
 
 ### **Participación de Miembros en la Práctica 2**
 
