@@ -143,7 +143,7 @@ public class EmailService {
             helper.setText(body);
 
             byte[] pdfBytes = generatePdfInvoice(order);
-            helper.addAttachment("Invoice_" + order.getId() + ".pdf", new ByteArrayResource(pdfBytes));
+            helper.addAttachment("Factura" + order.getId() + ".pdf", new ByteArrayResource(pdfBytes));
 
             mailSender.send(message);
             logger.info("Invoice email sent successfully for order ID: {} to {}", order.getId(), order.getUser().getEmail());
