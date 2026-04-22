@@ -420,17 +420,17 @@ Responsable de la gestión integral de productos, desde el diseño del modelo de
 |11| [Generar pdfs + enviar email con pdf adjunto](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/7ea1a82a4715b1c76de74e95a113cab3d6c0abe5)  | [pom.xml](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/7ea1a82a4715b1c76de74e95a113cab3d6c0abe5/backend/pom.xml), [WebController.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/7ea1a82a4715b1c76de74e95a113cab3d6c0abe5/backend/src/main/java/com/example/backend/controllers/WebController.java), [EmailService.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/7ea1a82a4715b1c76de74e95a113cab3d6c0abe5/backend/src/main/java/com/example/backend/services/EmailService.java), [application.properties](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/7ea1a82a4715b1c76de74e95a113cab3d6c0abe5/backend/src/main/resources/application.properties), [payment-correct.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/7ea1a82a4715b1c76de74e95a113cab3d6c0abe5/backend/src/main/resources/templates/pages/payment-correct.html), [payment.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/7ea1a82a4715b1c76de74e95a113cab3d6c0abe5/backend/src/main/resources/templates/pages/payment.html)
 ---
 
-#### **Alumno 3 - [Nombre Completo]**
+#### **Alumno 3 - Jonay Sebastián Ortiz Armas**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+Principal responsable de la navegación entre páginas con el WebController y del control de acceso por dueño en los endpoints, además de pequeños ajustes en la página de carrito, de pago y de registro.
 
-| Nº    | Commits      | Files      |
-|:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |git
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+| Nº | Commits | Files |
+|:---:|:---|:---|
+| 1 | [Añadir páginas básicas al Controller e implementar navegación](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/70b9a5b91a99fe5f9cb0dc0ddb87e998f3e3cda1) | [WebController.java](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/blob/70b9a5b91a99fe5f9cb0dc0ddb87e998f3e3cda1/backend/src/main/java/com/example/backend/WebController.java) |
+| 2 | [Añadir funcionalidad de direcciones a la página de pago](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/47ffc0394bdd3af9b3eea7b6e17ff3531fca0c04) | [payment.html](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/blob/47ffc0394bdd3af9b3eea7b6e17ff3531fca0c04/backend/src/main/resources/templates/pages/payment.html) |
+| 3 | [Arreglar shopping-cart (nº de unidades de cada producto, actualizar precio, checkear que haya algún producto seleccionado antes de iniciar el pago)](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/5f6d2fc9ca1dd38771fbb92273a85f577090260e) | [WebController.java](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/blob/70b9a5b91a99fe5f9cb0dc0ddb87e998f3e3cda1/backend/src/main/java/com/example/backend/WebController.java) |
+| 4 | [Añadir control de acceso por dueño del objeto](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/46938b821995fcb591ffbba340d0044dc9c4fbef) | [WebController.java](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/blob/70b9a5b91a99fe5f9cb0dc0ddb87e998f3e3cda1/backend/src/main/java/com/example/backend/WebController.java) |
+| 5 | [Añadir revisión en backend en el registro](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/02a0df780ec91780f551b4d7c48caa5753bc2292) | [WebController.java](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/blob/70b9a5b91a99fe5f9cb0dc0ddb87e998f3e3cda1/backend/src/main/java/com/example/backend/WebController.java) |
 
 ---
 
