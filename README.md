@@ -387,17 +387,17 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 
 ### **Participación de Miembros en la Práctica 2**
 
-#### **Alumno 1 - [Nombre Completo]**
+#### **Alumno 1 - Ramiro Daniel Flores Aquino**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+Me encargue de la implementación de la instalacion de la arquitectura base de la aplicación(backend) junto con el sistema de seguridad central (security), también fui responsanle de las pantallas de error (404y 403) y la persistencia de usuarios incluyendo la integración con MySQL cifrando contraseñas.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Implementación de la arquitectura base y estructura del backend](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/4fac3a156e215943d28061bbb8f06e055bc9d43e)  | [pom.xml](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/backend/pom.xml)   , [BackendApplication.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/backend/src/main/java/com/example/backend/BackendApplication.java)
+|2| [Configuración de Spring Security y enrutado de accesos públicos/privados](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/00b1d55306fc963153645121c918cbbe5f28ce8a2)  | [SecurityConfig.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/backend/src/main/java/com/example/backend/security/SecurityConfig.java)   | 
+|3| [Desarrollo del sistema de registro de usuarios y validación en base de datos](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/b5269b1b53e0c05bf36dd8a968af7901fbe6f411)  | [User.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/backend/src/main/java/com/example/backend/models/User.java) ,[UserRepository.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/backend/src/main/java/com/example/backend/repositories/UserRepository.java)   , [CustomUserDetailsService.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/backend/src/main/java/com/example/backend/security/CustomUserDetailsService.java)
+|4| [Implementación de controladores y vistas personalizadas para errores HTTP](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/6b2bd966af8e3b3a5ed3eb18ed79f85c65f18334)  | [WebController.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/backend/src/main/java/com/example/backend/controllers/WebController.java)   , [error.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/backend/src/main/resources/templates/error.html) , [error-403.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/backend/src/main/resources/templates/error-403.html)
+|5| [Configuración de la persistencia de datos y conexión con MySQL local](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/f1f2c551cbddd223db737a3df08a8a90b30eed6a#diff-b357bac448d6dbc289cd88013dbf9cc867b6f020f90752c84719856323bb6c0a)  | [application.properties](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/backend/src/main/resources/application.properties)   |
 
 ---
 
