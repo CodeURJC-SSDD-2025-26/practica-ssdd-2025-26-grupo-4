@@ -375,7 +375,7 @@ Solo si ha cambiado.
 
 Diagrama mostrando las entidades, sus campos y relaciones:
 
-![Diagrama Entidad-Relación](assets\images\DiagramaEntidades_PcBuilderShop.png)
+![Diagrama Entidad-Relación](assets/images/DiagramaEntidades_PcBuilderShop.png)
 
 > Este modelo relacional organiza la plataforma mediante las entidades User (clientes y roles), Product (catálogo e imágenes) y Order (ventas y envíos). Se establecen relaciones 1:N entre usuarios y sus direcciones (Address), pedidos y reseñas (Review), mientras que la tabla intermedia order_products gestiona la relación N:M entre pedidos y productos.
 
@@ -383,7 +383,7 @@ Diagrama mostrando las entidades, sus campos y relaciones:
 
 Diagrama de clases de la aplicación con diferenciación por colores o secciones:
 
-![Diagrama de Clases](assets\images\DiagramaTemplates_PcBuilderShop.png)
+![Diagrama de Clases](assets/images/DiagramaTemplates_PcBuilderShop.png)
 
 ### **Participación de Miembros en la Práctica 2**
 
