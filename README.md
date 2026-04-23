@@ -434,17 +434,17 @@ Principal responsable de la navegación entre páginas con el WebController y de
 
 ---
 
-#### **Alumno 4 - [Nombre Completo]**
+#### **Alumno 4 - Joel Domené Álvaro**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+Principal responsable de la gestión dinámica del contenido, vinculación de los botones y acciones del panel de administración con modificaciones a la base de datos y del sistema de búsqueda y filtros de productos.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Generación del contenido dinámico](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/compare/4ba1a49c23016ec193cc12d251b058220fb90af6...b4b37c52b9bb8432fcccf50aa3cd9a944c110234)  | [WebController.java](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/blob/70b9a5b91a99fe5f9cb0dc0ddb87e998f3e3cda1/backend/src/main/java/com/example/backend/WebController.java)  |
+|2| [Sistema de filtros y búsqueda y generación de contenido dinámico del carrito y del usuario](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/compare/6abd459e8ae2603c1a4fa0d5282652d8f5dd8ac8...134ce59cf3c7390606cb466a3421eb37a08f1d08))  | [shopping-cart.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/backend/src/main/resources/templates/pages/shopping-cart.html)   |
+|1/2|  | [search-result.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/backend/src/main/resources/templates/pages/search-result.html)   |
+|1/2|  | [index.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/index.html)  |
+|1/2| [Varias páginas de administrador] | [pages/admin](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/tree/main/backend/src/main/resources/templates/pages/admin)   |
 
 ---
 
