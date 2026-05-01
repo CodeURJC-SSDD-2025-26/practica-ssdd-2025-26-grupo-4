@@ -45,29 +45,23 @@ public class AdminController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
     @GetMapping("/admin/admin-dashboard")
     public String adminDashboard(Model model) {
         List<Product> allProducts = productRepository.findAll();
         List<User> allUsers = userRepository.findAll();
         List<Order> allOrders = orderRepository.findAll();
 
-        // Sales = orders with status ENTREGADO or ENVIADO
         List<Order> salesOrders = orderRepository.findByStatusIn(Arrays.asList("ENTREGADO", "ENVIADO"));
 
-        // Summary counters
         model.addAttribute("totalProductos", allProducts.size());
         model.addAttribute("totalUsuarios", allUsers.size());
         model.addAttribute("totalPedidos", allOrders.size());
 
-        // Revenue only from completed sales (ENTREGADO + ENVIADO)
         double totalIngresos = salesOrders.stream().mapToDouble(Order::getTotalPrice).sum();
         model.addAttribute("totalIngresos", String.format("%.2f", totalIngresos).replace('.', ','));
 
-        // Recent orders (all)
         model.addAttribute("pedidosRecientes", allOrders);
 
-        // Chart data: products per category
         Map<String, Long> productsByCategory = allProducts.stream()
                 .collect(Collectors.groupingBy(Product::getCategory, Collectors.counting()));
         model.addAttribute("chartCategoryLabels", String.join(",",
@@ -75,7 +69,6 @@ public class AdminController {
         model.addAttribute("chartCategoryData", String.join(",",
                 productsByCategory.values().stream().map(String::valueOf).collect(Collectors.toList())));
 
-        // Chart data: sales revenue per category (from ENTREGADO + ENVIADO orders)
         Map<String, Double> salesByCategory = new LinkedHashMap<>();
         for (Order order : salesOrders) {
             if (order.getProducts() != null) {
@@ -89,7 +82,6 @@ public class AdminController {
         model.addAttribute("chartSalesData", String.join(",",
                 salesByCategory.values().stream().map(v -> String.format("%.2f", v)).collect(Collectors.toList())));
 
-        // Chart data: inventory status
         long inStock = allProducts.stream().filter(p -> p.getStock() > 10).count();
         long lowStock = allProducts.stream().filter(p -> p.getStock() > 0 && p.getStock() <= 10).count();
         long outOfStock = allProducts.stream().filter(p -> p.getStock() == 0).count();
@@ -117,7 +109,8 @@ public class AdminController {
 
     @GetMapping("/admin/item-list")
     public String itemList(Model model) {
-        model.addAttribute("productos", productRepository.findAll());
+        // AQUÍ USAMOS EL FILTRO PARA QUE NO SALGAN LOS BORRADOS EN EL FRONTEND
+        model.addAttribute("productos", productRepository.findByActiveTrue());
         return "pages/admin/item-list";
     }
 
@@ -185,8 +178,6 @@ public class AdminController {
 
     // ===================== CRUD ENDPOINTS (POST) =====================
 
-    // --- PRODUCTS ---
-
     @PostMapping("/admin/item-create")
     public String createProduct(@RequestParam String nombre,
             @RequestParam String descripcion,
@@ -237,13 +228,15 @@ public class AdminController {
         return "redirect:/admin/item-list";
     }
 
+    // EL SOFT DELETE CORREGIDO
     @PostMapping("/admin/item-delete")
     public String deleteProduct(@RequestParam Long id) {
-        productRepository.deleteById(id);
+        productRepository.findById(id).ifPresent(product -> {
+            product.setActive(false);
+            productRepository.save(product);
+        });
         return "redirect:/admin/item-list";
     }
-
-    // --- USERS ---
 
     @PostMapping("/admin/user-create")
     public String createUser(@RequestParam String username,
@@ -312,8 +305,6 @@ public class AdminController {
         return "redirect:/admin/user-list";
     }
 
-    // --- ORDERS ---
-
     @PostMapping("/admin/order-edit")
     public String updateOrderStatus(@RequestParam Long id,
             @RequestParam String status,
@@ -321,7 +312,6 @@ public class AdminController {
             @RequestParam(required = false) Boolean notifyClient) {
         orderRepository.findById(id).ifPresent(order -> {
             order.setStatus(status.toUpperCase());
-            // In a real app, we would send an email here if notifyClient is true
             orderRepository.save(order);
         });
         return "redirect:/admin/order-edit?id=" + id;
@@ -332,8 +322,6 @@ public class AdminController {
         orderRepository.deleteById(id);
         return "redirect:/admin/order-list";
     }
-
-    // --- REVIEWS ---
 
     @PostMapping("/admin/review-delete")
     public String deleteReview(@RequestParam Long id) {

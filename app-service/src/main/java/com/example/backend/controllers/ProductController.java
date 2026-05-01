@@ -39,10 +39,10 @@ public class ProductController {
     @GetMapping("/search-result")
     public String searchResult(@RequestParam(value = "category", required = false) String category, Model model) {
         if (category != null && !category.isBlank()) {
-            model.addAttribute("productos", productRepository.findByCategory(category));
+            model.addAttribute("productos", productRepository.findByCategoryAndActiveTrue(category));
             model.addAttribute("categoryName", category);
         } else {
-            model.addAttribute("productos", productRepository.findAll());
+            model.addAttribute("productos", productRepository.findByActiveTrue());
         }
         return "pages/search-result";
     }
@@ -58,12 +58,10 @@ public class ProductController {
             HttpServletRequest request) {
 
         try {
-            // Lógica de limpieza de nulos
             String searchName = (name != null && !name.trim().isEmpty()) ? name.trim().toLowerCase() : null;
             String searchCategory = (category != null && !category.trim().isEmpty()) ? category.trim() : null;
             String searchBrand = (brand != null && !brand.trim().isEmpty()) ? brand.trim() : null;
 
-            // Procesamiento inteligente de la búsqueda (ej: "procesadores intel")
             if (searchName != null) {
                 if (searchName.contains("procesador") || searchName.contains("cpu")) {
                     searchCategory = "CPU";
@@ -100,7 +98,6 @@ public class ProductController {
                 }
             }
 
-            // Lógica de ordenación
             Sort sortOrder = Sort.unsorted();
             if ("priceAsc".equals(sort)) {
                 sortOrder = Sort.by(Sort.Direction.ASC, "price");

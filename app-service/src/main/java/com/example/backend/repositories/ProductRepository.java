@@ -15,9 +15,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT i FROM ProductImage i WHERE i.id = :imageId")
     Optional<ProductImage> findImageById(@Param("imageId") Long imageId);
 
-    List<Product> findByCategory(String category);
+    // Métodos nuevos para filtrar los que están borrados lógicamente
+    List<Product> findByActiveTrue();
+    List<Product> findByCategoryAndActiveTrue(String category);
 
-    @Query("SELECT p FROM Product p WHERE " +
+    // La query customizada con el p.active = true
+    @Query("SELECT p FROM Product p WHERE p.active = true AND " +
             "(:name IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))) AND " +
             "(:category IS NULL OR p.category = :category) AND " +
             "(:brand IS NULL OR p.brand = :brand) AND " +

@@ -138,7 +138,8 @@
             });
         });
 
-        // Pre-select current category
+        // Pre-select current category solucionado por el tito botharuh (✧ω✧)
+        {{#producto}}
         const currentCategory = '{{category}}';
         const selectEl = document.querySelector('select[name="categoria"]');
         if (selectEl && currentCategory) {
@@ -149,6 +150,7 @@
                 }
             }
         }
+        {{/producto}}
     </script>
 </body>
 
