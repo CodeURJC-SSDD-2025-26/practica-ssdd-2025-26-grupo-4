@@ -2,22 +2,15 @@ package com.example.backend.controllers;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-
 import com.example.backend.models.Product;
-import com.example.backend.models.User;
-import com.example.backend.repositories.ProductRepository;
-import com.example.backend.repositories.UserRepository;
-import com.example.backend.services.RecommendationService;
+import com.example.backend.services.MainService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -25,44 +18,33 @@ import jakarta.servlet.http.HttpServletRequest;
 public class MainController {
 
     @Autowired
-    private ProductRepository productRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private RecommendationService recommendationService;
+    private MainService mainService;
 
     @GetMapping("/")
     public String index(Model model, HttpServletRequest request) {
-        // Get the principal (logged user)
+
         Principal principal = request.getUserPrincipal();
         boolean isLoggedIn = principal != null;
         model.addAttribute("isLoggedIn", isLoggedIn);
 
-        // 1. Hardware News Section
-        // Your HTML expects 'productos' for this section
-        List<Product> hardwareNews = productRepository.findAll(Sort.by(Sort.Direction.DESC, "id")).stream()
-                .limit(8)
-                .collect(Collectors.toList());
+        // Productos (hardware news)
+        List<Product> hardwareNews = mainService.getLatestProducts();
         model.addAttribute("productos", hardwareNews);
 
-        // 2. Recommendations Section ("Te podría interesar")
+        // Recomendaciones
+        List<Product> recommendations;
+
         if (isLoggedIn) {
-            Optional<User> userOpt = userRepository.findByUsername(principal.getName());
-            if (userOpt.isPresent()) {
-                List<Product> recommendations = recommendationService.getRecommendedProducts(userOpt.get());
-                model.addAttribute("recomendados", recommendations);
-                // Useful for showing/hiding the section if empty
-                model.addAttribute("hasRecommendations", !recommendations.isEmpty());
-            }
+            recommendations = mainService.getRecommendations(principal.getName());
         } else {
-            // Fallback for guests: show the same hardware news or a random selection
-            model.addAttribute("recomendados", hardwareNews);
-            model.addAttribute("hasRecommendations", true);
+            recommendations = hardwareNews;
         }
 
-        // CSRF Token (needed for forms in the index if any)
+        model.addAttribute("recomendados", recommendations);
+        model.addAttribute("hasRecommendations",
+                mainService.hasRecommendations(recommendations));
+
+        // CSRF
         CsrfToken token = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
         if (token != null) {
             model.addAttribute("_csrf", token);
@@ -72,8 +54,8 @@ public class MainController {
     }
 
     @GetMapping("/index")
-    public String index(Model model) {
-        model.addAttribute("productos", productRepository.findAll());
+    public String indexAlt(Model model) {
+        model.addAttribute("productos", mainService.getAllProducts());
         return "index";
     }
 
