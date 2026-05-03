@@ -10,14 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.backend.models.Product;
-import com.example.backend.services.ProductService; // IMPORTAMOS EL SERVICIO
+import com.example.backend.services.ProductService; 
 
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class ProductController {
 
-    // ADIÓS A LOS REPOSITORIOS, HOLA AL SERVICIO
     @Autowired
     private ProductService productService;
 
@@ -52,7 +51,6 @@ public class ProductController {
             HttpServletRequest request) {
 
         try {
-            // AHORA EL SERVICIO HACE TODO EL TRABAJO SUCIO
             List<Product> results = productService.advancedSearch(name, category, brand, minPrice, maxPrice, sort);
 
             model.addAttribute("productos", results);

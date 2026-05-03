@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.example.backend.models.Address;
 import com.example.backend.models.Order;
 import com.example.backend.models.Product;
+import com.example.backend.models.ProductImage;
 import com.example.backend.models.User;
 import com.example.backend.repositories.AddressRepository;
 import com.example.backend.repositories.OrderRepository;
@@ -37,6 +38,9 @@ public class OrderService {
         return userRepository.findByUsername(username)
                 .flatMap(user -> orderRepository.findByUserId(user.getId()).stream()
                         .filter(o -> "EN PROCESO".equals(o.getStatus())).findFirst());
+    }
+    public Optional<ProductImage> getProductImageById(Long imageId) {
+        return productRepository.findImageById(imageId);
     }
 
     public Optional<Order> getOrderById(Long id) {
