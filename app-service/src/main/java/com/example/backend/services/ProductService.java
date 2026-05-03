@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.backend.models.Product;
+import com.example.backend.models.ProductImage; // IMPORTANTE: Añadir este
 import com.example.backend.models.Review;
 import com.example.backend.repositories.ProductRepository;
 import com.example.backend.repositories.ReviewRepository;
@@ -15,21 +16,25 @@ import com.example.backend.repositories.ReviewRepository;
 @Service
 public class ProductService {
 
-    // Los repositorios AHORA viven aquí, no en el Controller
     @Autowired
     private ProductRepository productRepository;
 
     @Autowired
     private ReviewRepository reviewRepository;
 
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
     public Optional<Product> getProductById(Long id) {
         return productRepository.findById(id);
+    }
+    public Optional<ProductImage> getProductImageById(Long imageId) {
+        return productRepository.findImageById(imageId);
     }
 
     public List<Review> getReviewsByProductId(Long id) {
         return reviewRepository.findByProductId(id);
     }
-
     public List<Product> getProductsByCategory(String category) {
         if (category != null && !category.isBlank()) {
             return productRepository.findByCategoryAndActiveTrue(category);
@@ -37,7 +42,6 @@ public class ProductService {
         return productRepository.findByActiveTrue();
     }
 
-    // AQUÍ MUDAMOS TODA LA LÓGICA PESADA DEL CONTROLADOR
     public List<Product> advancedSearch(String name, String category, String brand, Double minPrice, Double maxPrice, String sort) {
         String searchName = (name != null && !name.trim().isEmpty()) ? name.trim().toLowerCase() : null;
         String searchCategory = (category != null && !category.trim().isEmpty()) ? category.trim() : null;
