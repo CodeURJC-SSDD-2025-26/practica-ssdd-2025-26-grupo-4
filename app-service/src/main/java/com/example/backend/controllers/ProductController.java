@@ -3,7 +3,6 @@ package com.example.backend.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,26 +10,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.backend.models.Product;
-import com.example.backend.repositories.ProductRepository;
-import com.example.backend.repositories.ReviewRepository;
+import com.example.backend.services.ProductService; // IMPORTAMOS EL SERVICIO
 
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class ProductController {
 
+    // ADIÓS A LOS REPOSITORIOS, HOLA AL SERVICIO
     @Autowired
-    private ProductRepository productRepository;
-
-    @Autowired
-    private ReviewRepository reviewRepository;
+    private ProductService productService;
 
     @GetMapping("/item-detail")
     public String itemDetail(@RequestParam(value = "id", required = false) Long id, Model model) {
         if (id != null) {
-            productRepository.findById(id).ifPresent(product -> {
+            productService.getProductById(id).ifPresent(product -> {
                 model.addAttribute("producto", product);
-                model.addAttribute("reviews", reviewRepository.findByProductId(id));
+                model.addAttribute("reviews", productService.getReviewsByProductId(id));
             });
         }
         return "pages/item-detail";
@@ -38,11 +34,9 @@ public class ProductController {
 
     @GetMapping("/search-result")
     public String searchResult(@RequestParam(value = "category", required = false) String category, Model model) {
+        model.addAttribute("productos", productService.getProductsByCategory(category));
         if (category != null && !category.isBlank()) {
-            model.addAttribute("productos", productRepository.findByCategoryAndActiveTrue(category));
             model.addAttribute("categoryName", category);
-        } else {
-            model.addAttribute("productos", productRepository.findByActiveTrue());
         }
         return "pages/search-result";
     }
@@ -58,67 +52,15 @@ public class ProductController {
             HttpServletRequest request) {
 
         try {
-            String searchName = (name != null && !name.trim().isEmpty()) ? name.trim().toLowerCase() : null;
-            String searchCategory = (category != null && !category.trim().isEmpty()) ? category.trim() : null;
-            String searchBrand = (brand != null && !brand.trim().isEmpty()) ? brand.trim() : null;
-
-            if (searchName != null) {
-                if (searchName.contains("procesador") || searchName.contains("cpu")) {
-                    searchCategory = "CPU";
-                    searchName = searchName.replaceAll("procesadores|procesador|cpu", "").trim();
-                } else if (searchName.contains("grafica") || searchName.contains("gráfica")
-                        || searchName.contains("gpu") || searchName.contains("tarjeta")) {
-                    searchCategory = "GPU";
-                    searchName = searchName.replaceAll("tarjetas?|gráficas?|graficas?|gpu|de|video", "").trim();
-                } else if (searchName.contains("placa") || searchName.contains("base")
-                        || searchName.contains("motherboard")) {
-                    searchCategory = "Motherboard";
-                    searchName = searchName.replaceAll("placas?|bases?|motherboards?", "").trim();
-                } else if (searchName.contains("ram") || searchName.contains("memoria")) {
-                    searchCategory = "RAM";
-                    searchName = searchName.replaceAll("memorias?|ram", "").trim();
-                } else if (searchName.contains("disco") || searchName.contains("duro") || searchName.contains("ssd")
-                        || searchName.contains("almacenamiento")) {
-                    searchCategory = "SSD";
-                    searchName = searchName.replaceAll("discos?|duros?|almacenamiento|ssd", "").trim();
-                } else if (searchName.contains("fuente") || searchName.contains("alimentacion")
-                        || searchName.contains("alimentación") || searchName.contains("powersupply")) {
-                    searchCategory = "PowerSupply";
-                    searchName = searchName.replaceAll("fuentes?|de|alimentación|alimentacion|powersupply", "").trim();
-                } else if (searchName.contains("refrigeracion") || searchName.contains("refrigeración")
-                        || searchName.contains("cooling") || searchName.contains("ventilador")
-                        || searchName.contains("disipador")) {
-                    searchCategory = "Cooling";
-                    searchName = searchName
-                            .replaceAll("refrigeración|refrigeracion|cooling|ventiladores?|disipadores?", "").trim();
-                }
-
-                if (searchName.isEmpty()) {
-                    searchName = null;
-                }
-            }
-
-            Sort sortOrder = Sort.unsorted();
-            if ("priceAsc".equals(sort)) {
-                sortOrder = Sort.by(Sort.Direction.ASC, "price");
-            } else if ("priceDesc".equals(sort)) {
-                sortOrder = Sort.by(Sort.Direction.DESC, "price");
-            }
-
-            List<Product> results = productRepository.findWithFilters(searchName, searchCategory, searchBrand, minPrice,
-                    maxPrice, sortOrder);
+            // AHORA EL SERVICIO HACE TODO EL TRABAJO SUCIO
+            List<Product> results = productService.advancedSearch(name, category, brand, minPrice, maxPrice, sort);
 
             model.addAttribute("productos", results);
             model.addAttribute("query", name != null ? name : "");
             model.addAttribute("category", category != null ? category : "");
             model.addAttribute("brand", brand != null ? brand : "");
             model.addAttribute("currentSort", sort != null ? sort : "");
-
-            if (name != null && !name.trim().isEmpty()) {
-                model.addAttribute("searchTerm", name);
-            } else {
-                model.addAttribute("searchTerm", null);
-            }
+            model.addAttribute("searchTerm", (name != null && !name.trim().isEmpty()) ? name : null);
 
             model.addAttribute("isLoggedIn", request.getUserPrincipal() != null);
             CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
