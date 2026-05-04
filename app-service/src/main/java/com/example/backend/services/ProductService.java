@@ -15,7 +15,6 @@ import com.example.backend.repositories.ReviewRepository;
 @Service
 public class ProductService {
 
-    // Los repositorios AHORA viven aquí, no en el Controller
     @Autowired
     private ProductRepository productRepository;
 
@@ -37,7 +36,11 @@ public class ProductService {
         return productRepository.findByActiveTrue();
     }
 
-    // AQUÍ MUDAMOS TODA LA LÓGICA PESADA DEL CONTROLADOR
+    // Método añadido para solucionar el error "undefined for type ProductService"
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
+
     public List<Product> advancedSearch(String name, String category, String brand, Double minPrice, Double maxPrice, String sort) {
         String searchName = (name != null && !name.trim().isEmpty()) ? name.trim().toLowerCase() : null;
         String searchCategory = (category != null && !category.trim().isEmpty()) ? category.trim() : null;

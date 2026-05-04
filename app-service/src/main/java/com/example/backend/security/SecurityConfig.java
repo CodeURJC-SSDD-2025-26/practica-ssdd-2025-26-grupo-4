@@ -48,6 +48,7 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // ¡Sin sesiones!
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll() // Login libre
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/products/**").permitAll() // <--- ¡LA MAGIA!
                 .anyRequest().authenticated() // Todo lo demás con Token
             )
             // ESTO ES CLAVE: Metemos el filtro JWT antes del de usuario y contraseña

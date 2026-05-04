@@ -12,8 +12,6 @@ public class ProductDTO {
     private int stock;
     private String brand;
     private boolean active;
-    
-    // Podemos incluir datos calculados que sean útiles para el frontend
     private double averageScore;
     private int reviewCount;
 }
