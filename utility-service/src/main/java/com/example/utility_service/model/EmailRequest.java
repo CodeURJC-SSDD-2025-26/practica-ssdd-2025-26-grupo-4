@@ -18,6 +18,9 @@ public class EmailRequest {
     @Email(message = "La dirección de origen debe ser un email válido")
     private String from;
 
+    private String attachmentName;
+    private String attachmentBase64;
+
     public String getTo() {
         return to;
     }
@@ -48,5 +51,21 @@ public class EmailRequest {
 
     public void setFrom(String from) {
         this.from = from;
+    }
+
+    public String getAttachmentName() {
+        return attachmentName;
+    }
+
+    public void setAttachmentName(String attachmentName) {
+        this.attachmentName = attachmentName;
+    }
+
+    public String getAttachmentBase64() {
+        return attachmentBase64;
+    }
+
+    public void setAttachmentBase64(String attachmentBase64) {
+        this.attachmentBase64 = attachmentBase64;
     }
 }

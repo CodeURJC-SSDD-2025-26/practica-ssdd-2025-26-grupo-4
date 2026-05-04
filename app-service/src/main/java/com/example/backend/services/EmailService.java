@@ -1,60 +1,120 @@
 package com.example.backend.services;
 
-import java.io.ByteArrayOutputStream;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.scheduling.annotation.Async;
-
-import com.example.backend.models.Order;
-import com.example.backend.models.Product;
-import com.lowagie.text.Document;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.PdfWriter;
-
-import jakarta.mail.internet.MimeMessage;
-
-import com.lowagie.text.Table;
+import java.util.Base64;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+
+import com.example.backend.models.Order;
+import com.example.backend.models.Product;
 
 @Service
 public class EmailService {
 
     private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
-    @Autowired
-    private JavaMailSender mailSender;
+    private final RestTemplate restTemplate = new RestTemplate();
+    private final String utilityServiceUrl;
+
+    public EmailService(@Value("${utility.service.url:http://localhost:8080/api/utility}") String utilityServiceUrl) {
+        this.utilityServiceUrl = utilityServiceUrl;
+    }
 
     /**
-     * Generates the PDF content for the invoice.
-     * Prevents "null" strings by providing fallback values.
+     * Builds the invoice document using the remote utility-service PDF endpoint.
      */
     public byte[] generatePdfInvoice(Order order) throws Exception {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        Document document = new Document(PageSize.A4);
-        PdfWriter.getInstance(document, out);
-        document.open();
+        try {
+            PdfApiRequest request = new PdfApiRequest(
+                    "Factura pedido #" + (order.getId() != null ? order.getId() : "N/A"),
+                    buildInvoiceText(order));
+            byte[] response = restTemplate.postForObject(utilityServiceUrl + "/pdf", request, byte[].class);
+            if (response == null) {
+                throw new IllegalStateException("Utility service returned empty PDF response");
+            }
+            return response;
+        } catch (RestClientException e) {
+            throw new Exception("Error al generar el PDF mediante utility-service", e);
+        }
+    }
 
-        // Header
-        document.add(new Paragraph("PCBuilderShop - INVOICE"));
-        document.add(new Paragraph(" "));
-        
-        // Order information
-        document.add(new Paragraph("Order ID: " + (order.getId() != null ? order.getId() : "N/A")));
-        document.add(new Paragraph("Date: " + (order.getFormattedDate() != null && !order.getFormattedDate().isEmpty() ? order.getFormattedDate() : "N/A")));
-        document.add(new Paragraph("Status: " + (order.getStatus() != null ? order.getStatus() : "N/A")));
-        document.add(new Paragraph(" "));
+    /**
+     * Sends the invoice email through utility-service.
+     */
+    public void sendInvoiceEmail(Order order) {
+        if (order.getUser() == null || order.getUser().getEmail() == null) {
+            logger.error("Cannot send email: User or email is null for order ID: {}", order != null ? order.getId() : null);
+            return;
+        }
 
-        // Customer information
-        String customerName = "Customer";
+        String recipient = order.getUser().getEmail();
+        logger.info("Delegating email send to utility-service for order ID: {} to {}", order.getId(), recipient);
+
+        byte[] pdfBytes;
+        try {
+            pdfBytes = generatePdfInvoice(order);
+        } catch (Exception e) {
+            logger.error("No se pudo generar el PDF para email de order ID: {}", order.getId(), e);
+            return;
+        }
+
+        EmailApiRequest request = new EmailApiRequest(
+                recipient,
+                "Factura de tu pedido #" + order.getId(),
+                buildEmailBody(order),
+                "noreply@pcbuildershop.com",
+                "Factura_" + order.getId() + ".pdf",
+                Base64.getEncoder().encodeToString(pdfBytes));
+
+        try {
+            ResponseEntity<Map> response = restTemplate.postForEntity(utilityServiceUrl + "/email", request, Map.class);
+            if (response.getStatusCode().is2xxSuccessful()) {
+                logger.info("Email enviado correctamente para order ID: {}", order.getId());
+            } else {
+                logger.error("Utility-service email endpoint devolvió estado {} para order ID: {}",
+                        response.getStatusCode(), order.getId());
+            }
+        } catch (RestClientException e) {
+            logger.error("Fallo al enviar email mediante utility-service para order ID: {}", order.getId(), e);
+        }
+    }
+
+    private String buildEmailBody(Order order) {
+        String name = "cliente";
+        if (order.getUser() != null) {
+            if (order.getUser().getFirstName() != null && !order.getUser().getFirstName().isBlank()) {
+                name = order.getUser().getFirstName();
+            } else if (order.getUser().getUsername() != null) {
+                name = order.getUser().getUsername();
+            }
+        }
+
+        return "Hola " + name + ",\n\n" +
+               "Gracias por tu compra en PCBuilderShop. Adjuntamos los detalles de tu pedido y la factura.\n\n" +
+               "ID del Pedido: " + order.getId() + "\n" +
+               "Fecha: " + (order.getFormattedDate() != null ? order.getFormattedDate() : "N/A") + "\n" +
+               "Total: " + String.format("%.2f", order.getTotalPrice()) + "€\n\n" +
+               "Si necesitas ayuda, responde a este email.\n\n" +
+               "Saludos cordiales,\nEl equipo de PCBuilderShop";
+    }
+
+    private String buildInvoiceText(Order order) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("PCBuilderShop - FACTURA\n\n");
+        sb.append("Pedido #: ").append(order.getId() != null ? order.getId() : "N/A").append("\n");
+        sb.append("Fecha: ").append(order.getFormattedDate() != null ? order.getFormattedDate() : "N/A").append("\n");
+        sb.append("Estado: ").append(order.getStatus() != null ? order.getStatus() : "N/A").append("\n\n");
+
+        String customerName = "Cliente";
         String customerEmail = "N/A";
         if (order.getUser() != null) {
-            if (order.getUser().getDisplayName() != null && !order.getUser().getDisplayName().isEmpty()) {
+            if (order.getUser().getDisplayName() != null && !order.getUser().getDisplayName().isBlank()) {
                 customerName = order.getUser().getDisplayName();
             } else if (order.getUser().getUsername() != null) {
                 customerName = order.getUser().getUsername();
@@ -63,92 +123,42 @@ public class EmailService {
                 customerEmail = order.getUser().getEmail();
             }
         }
-        document.add(new Paragraph("Customer: " + customerName));
-        document.add(new Paragraph("Email: " + customerEmail));
-        document.add(new Paragraph(" "));
+        sb.append("Cliente: ").append(customerName).append("\n");
+        sb.append("Email: ").append(customerEmail).append("\n\n");
 
-        // Shipping address
-        String address = (order.getShippingAddress() != null && !order.getShippingAddress().isEmpty()) 
-            ? order.getShippingAddress() : "Not specified";
-        String city = (order.getCity() != null && !order.getCity().isEmpty()) 
-            ? order.getCity() : "";
-        String postalCode = (order.getPostalCode() != null && !order.getPostalCode().isEmpty()) 
-            ? order.getPostalCode() : "";
-        String country = (order.getCountry() != null && !order.getCountry().isEmpty()) 
-            ? order.getCountry() : "";
-        document.add(new Paragraph("Shipping Address: " + address));
-        if (!city.isEmpty() || !postalCode.isEmpty() || !country.isEmpty()) {
-            document.add(new Paragraph(city + " " + postalCode + ", " + country));
+        sb.append("Dirección de envío: ")
+          .append(order.getShippingAddress() != null && !order.getShippingAddress().isBlank() ? order.getShippingAddress() : "No especificada")
+          .append("\n");
+        sb.append(order.getCity() != null ? order.getCity() : "");
+        if (order.getPostalCode() != null && !order.getPostalCode().isBlank()) {
+            sb.append(" ").append(order.getPostalCode());
         }
-        document.add(new Paragraph(" "));
+        if (order.getCountry() != null && !order.getCountry().isBlank()) {
+            sb.append(", ").append(order.getCountry());
+        }
+        sb.append("\n\n");
 
-        // Products Table
-        Table table = new Table(3);
-        table.addCell(" Product\n");
-        table.addCell(" Quantity\n");
-        table.addCell("  Price\n");
-
+        sb.append("Productos:\n");
         if (order.getProducts() != null && !order.getProducts().isEmpty()) {
             for (Product p : order.getProducts()) {
-                table.addCell(p.getName() != null ? p.getName() : "Unknown");
-                table.addCell("1");
-                table.addCell(String.format("%.2f€", p.getPrice()));
+                sb.append("- ")
+                  .append(p.getName() != null ? p.getName() : "Desconocido")
+                  .append(" (\"")
+                  .append(String.format("%.2f€", p.getPrice()))
+                  .append("\")\n");
             }
+        } else {
+            sb.append("No hay productos en el pedido.\n");
         }
-        document.add(table);
 
-        document.add(new Paragraph(" "));
-        document.add(new Paragraph("TOTAL: " + String.format("%.2f€", order.getTotalPrice())));
-
-        document.close();
-        return out.toByteArray();
+        sb.append("\nTOTAL: ").append(String.format("%.2f€", order.getTotalPrice())).append("\n");
+        return sb.toString();
     }
 
-    /**
-     * Sends the invoice via email. 
-     * Now sends synchronously to ensure completion.
-     */
-    public void sendInvoiceEmail(Order order) {
-        try {
-            logger.info("Starting to send invoice email for order ID: {}", order.getId());
-            
-            if (order.getUser() == null || order.getUser().getEmail() == null) {
-                logger.error("Cannot send email: User or email is null for order ID: {}", order.getId());
-                return;
-            }
+    private static record EmailApiRequest(String to, String subject, String body, String from,
+                                           String attachmentName, String attachmentBase64) {
+    }
 
-            logger.info("Sending email to: {}", order.getUser().getEmail());
-            
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-
-            helper.setTo(order.getUser().getEmail());
-            helper.setSubject("Factura de tu pedido #" + order.getId());
-            helper.setFrom("noreply@pcbuildershop.com");
-
-            // Greeting logic to avoid "Hello null"
-            String name = (order.getUser().getFirstName() != null && !order.getUser().getFirstName().isEmpty()) 
-                ? order.getUser().getFirstName() 
-                : order.getUser().getUsername();
-            
-            String body = "Hola " + name + ",\n\n" +
-                          "Te adjuntamos la factura de tu compra reciente.\n\n" +
-                          "Detalles del Pedido:\n" +
-                          "ID del Pedido: " + order.getId() + "\n" +
-                          "Fecha: " + order.getFormattedDate() + "\n" +
-                          "Total: " + String.format("%.2f", order.getTotalPrice()) + "€\n\n" +
-                          "¡Gracias por elegir PCBuilderShop!\n\n" +
-                          "Saludos cordiales,\nEl equipo de PCBuilderShop";
-            
-            helper.setText(body);
-
-            byte[] pdfBytes = generatePdfInvoice(order);
-            helper.addAttachment("Factura" + order.getId() + ".pdf", new ByteArrayResource(pdfBytes));
-
-            mailSender.send(message);
-            logger.info("Invoice email sent successfully for order ID: {} to {}", order.getId(), order.getUser().getEmail());
-        } catch (Exception e) {
-            logger.error("Failed to send invoice email for order ID: {}", order.getId(), e);
-        }
+    private static record PdfApiRequest(String title, String content) {
     }
 }
