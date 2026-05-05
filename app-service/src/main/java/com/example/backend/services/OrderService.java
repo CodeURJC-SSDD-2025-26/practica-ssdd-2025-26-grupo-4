@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +49,10 @@ public class OrderService {
         return userRepository.findByUsername(username)
                 .map(user -> addressRepository.findByUserId(user.getId()))
                 .orElse(new ArrayList<>());
+    }
+
+    public Page<Order> getOrdersByUserUsername(String username, Pageable pageable) {
+        return orderRepository.findByUserUsername(username, pageable);
     }
 
     // Lógica para añadir al carrito (Usuario registrado)
@@ -99,7 +105,7 @@ public class OrderService {
                     products.add(product);
                 }
             });
-            
+
             double total = products.stream().mapToDouble(Product::getPrice).sum();
             order.setTotalPrice(total);
             orderRepository.save(order);
@@ -107,7 +113,8 @@ public class OrderService {
     }
 
     // Lógica del Checkout
-    public Order processPayment(String username, Long shipAddressId, String cardName, String cardNumber) throws Exception {
+    public Order processPayment(String username, Long shipAddressId, String cardName, String cardNumber)
+            throws Exception {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new Exception("User not found"));
         Order order = getActiveOrderForUser(username).orElseThrow(() -> new Exception("No active order"));
 
@@ -125,13 +132,15 @@ public class OrderService {
             }
         }
 
-        order.setPaymentMethod(cardName != null ? "Card ending in " + cardNumber.substring(Math.max(0, cardNumber.length() - 4)) : "Card");
+        order.setPaymentMethod(
+                cardName != null ? "Card ending in " + cardNumber.substring(Math.max(0, cardNumber.length() - 4))
+                        : "Card");
         order.setStatus("PENDIENTE");
         order.setOrderDate(LocalDateTime.now());
-        
+
         orderRepository.save(order);
         emailService.sendInvoiceEmail(order); // Llamamos al servicio de utilidades desde el app-service
-        
+
         return order;
     }
 

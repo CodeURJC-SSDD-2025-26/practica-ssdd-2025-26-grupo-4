@@ -4,6 +4,8 @@ import com.example.backend.dto.UserDTO;
 import com.example.backend.models.User;
 import com.example.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,7 +15,7 @@ import java.security.Principal;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1/users")
 public class UserRestController {
 
     @Autowired
@@ -49,7 +51,8 @@ public class UserRestController {
 
     @DeleteMapping("/address/{id}")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ResponseEntity<?> deleteAddress(@PathVariable Long id, Principal principal, @RequestHeader(value="Role", defaultValue="USER") String role) {
+    public ResponseEntity<?> deleteAddress(@PathVariable Long id, Principal principal,
+            @RequestHeader(value = "Role", defaultValue = "USER") String role) {
         try {
             boolean isAdmin = role.contains("ADMIN");
             userService.deleteAddress(id, principal.getName(), isAdmin);
@@ -57,5 +60,12 @@ public class UserRestController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("error", e.getMessage()));
         }
+    }
+
+    @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Page<UserDTO>> getAllUsers(Pageable pageable) {
+        Page<UserDTO> dtos = userService.findAll(pageable).map(this::convertToDTO);
+        return ResponseEntity.ok(dtos);
     }
 }

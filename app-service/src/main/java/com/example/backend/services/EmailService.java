@@ -49,7 +49,8 @@ public class EmailService {
      */
     public void sendInvoiceEmail(Order order) {
         if (order.getUser() == null || order.getUser().getEmail() == null) {
-            logger.error("Cannot send email: User or email is null for order ID: {}", order != null ? order.getId() : null);
+            logger.error("Cannot send email: User or email is null for order ID: {}",
+                    order != null ? order.getId() : null);
             return;
         }
 
@@ -96,12 +97,12 @@ public class EmailService {
         }
 
         return "Hola " + name + ",\n\n" +
-               "Gracias por tu compra en PCBuilderShop. Adjuntamos los detalles de tu pedido y la factura.\n\n" +
-               "ID del Pedido: " + order.getId() + "\n" +
-               "Fecha: " + (order.getFormattedDate() != null ? order.getFormattedDate() : "N/A") + "\n" +
-               "Total: " + String.format("%.2f", order.getTotalPrice()) + "€\n\n" +
-               "Si necesitas ayuda, responde a este email.\n\n" +
-               "Saludos cordiales,\nEl equipo de PCBuilderShop";
+                "Gracias por tu compra en PCBuilderShop. Adjuntamos los detalles de tu pedido y la factura.\n\n" +
+                "ID del Pedido: " + order.getId() + "\n" +
+                "Fecha: " + (order.getFormattedDate() != null ? order.getFormattedDate() : "N/A") + "\n" +
+                "Total: " + String.format("%.2f", order.getTotalPrice()) + "€\n\n" +
+                "Si necesitas ayuda, responde a este email.\n\n" +
+                "Saludos cordiales,\nEl equipo de PCBuilderShop";
     }
 
     private String buildInvoiceText(Order order) {
@@ -127,8 +128,10 @@ public class EmailService {
         sb.append("Email: ").append(customerEmail).append("\n\n");
 
         sb.append("Dirección de envío: ")
-          .append(order.getShippingAddress() != null && !order.getShippingAddress().isBlank() ? order.getShippingAddress() : "No especificada")
-          .append("\n");
+                .append(order.getShippingAddress() != null && !order.getShippingAddress().isBlank()
+                        ? order.getShippingAddress()
+                        : "No especificada")
+                .append("\n");
         sb.append(order.getCity() != null ? order.getCity() : "");
         if (order.getPostalCode() != null && !order.getPostalCode().isBlank()) {
             sb.append(" ").append(order.getPostalCode());
@@ -142,10 +145,10 @@ public class EmailService {
         if (order.getProducts() != null && !order.getProducts().isEmpty()) {
             for (Product p : order.getProducts()) {
                 sb.append("- ")
-                  .append(p.getName() != null ? p.getName() : "Desconocido")
-                  .append(" (\"")
-                  .append(String.format("%.2f€", p.getPrice()))
-                  .append("\")\n");
+                        .append(p.getName() != null ? p.getName() : "Desconocido")
+                        .append(" (\"")
+                        .append(String.format("%.2f€", p.getPrice()))
+                        .append("\")\n");
             }
         } else {
             sb.append("No hay productos en el pedido.\n");
@@ -156,7 +159,7 @@ public class EmailService {
     }
 
     private static record EmailApiRequest(String to, String subject, String body, String from,
-                                           String attachmentName, String attachmentBase64) {
+            String attachmentName, String attachmentBase64) {
     }
 
     private static record PdfApiRequest(String title, String content) {

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +43,8 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public List<Product> advancedSearch(String name, String category, String brand, Double minPrice, Double maxPrice, String sort) {
+    public List<Product> advancedSearch(String name, String category, String brand, Double minPrice, Double maxPrice,
+            String sort) {
         String searchName = (name != null && !name.trim().isEmpty()) ? name.trim().toLowerCase() : null;
         String searchCategory = (category != null && !category.trim().isEmpty()) ? category.trim() : null;
         String searchBrand = (brand != null && !brand.trim().isEmpty()) ? brand.trim() : null;
@@ -73,7 +76,8 @@ public class ProductService {
                     || searchName.contains("cooling") || searchName.contains("ventilador")
                     || searchName.contains("disipador")) {
                 searchCategory = "Cooling";
-                searchName = searchName.replaceAll("refrigeración|refrigeracion|cooling|ventiladores?|disipadores?", "").trim();
+                searchName = searchName.replaceAll("refrigeración|refrigeracion|cooling|ventiladores?|disipadores?", "")
+                        .trim();
             }
 
             if (searchName.isEmpty()) {
@@ -88,6 +92,60 @@ public class ProductService {
             sortOrder = Sort.by(Sort.Direction.DESC, "price");
         }
 
-        return productRepository.findWithFilters(searchName, searchCategory, searchBrand, minPrice, maxPrice, sortOrder);
+        return productRepository.findWithFilters(searchName, searchCategory, searchBrand, minPrice, maxPrice, sortOrder,
+                Pageable.unpaged()).getContent();
+    }
+
+    public Page<Product> advancedSearch(String name, String category, String brand, Double minPrice, Double maxPrice,
+            String sor, Pageable pageable) {
+        String searchName = (name != null && !name.trim().isEmpty()) ? name.trim().toLowerCase() : null;
+        String searchCategory = (category != null && !category.trim().isEmpty()) ? category.trim() : null;
+        String searchBrand = (brand != null && !brand.trim().isEmpty()) ? brand.trim() : null;
+
+        if (searchName != null) {
+            if (searchName.contains("procesador") || searchName.contains("cpu")) {
+                searchCategory = "CPU";
+                searchName = searchName.replaceAll("procesadores|procesador|cpu", "").trim();
+            } else if (searchName.contains("grafica") || searchName.contains("gráfica")
+                    || searchName.contains("gpu") || searchName.contains("tarjeta")) {
+                searchCategory = "GPU";
+                searchName = searchName.replaceAll("tarjetas?|gráficas?|graficas?|gpu|de|video", "").trim();
+            } else if (searchName.contains("placa") || searchName.contains("base")
+                    || searchName.contains("motherboard")) {
+                searchCategory = "Motherboard";
+                searchName = searchName.replaceAll("placas?|bases?|motherboards?", "").trim();
+            } else if (searchName.contains("ram") || searchName.contains("memoria")) {
+                searchCategory = "RAM";
+                searchName = searchName.replaceAll("memorias?|ram", "").trim();
+            } else if (searchName.contains("disco") || searchName.contains("duro") || searchName.contains("ssd")
+                    || searchName.contains("almacenamiento")) {
+                searchCategory = "SSD";
+                searchName = searchName.replaceAll("discos?|duros?|almacenamiento|ssd", "").trim();
+            } else if (searchName.contains("fuente") || searchName.contains("alimentacion")
+                    || searchName.contains("alimentación") || searchName.contains("powersupply")) {
+                searchCategory = "PowerSupply";
+                searchName = searchName.replaceAll("fuentes?|de|alimentación|alimentacion|powersupply", "").trim();
+            } else if (searchName.contains("refrigeracion") || searchName.contains("refrigeración")
+                    || searchName.contains("cooling") || searchName.contains("ventilador")
+                    || searchName.contains("disipador")) {
+                searchCategory = "Cooling";
+                searchName = searchName.replaceAll("refrigeración|refrigeracion|cooling|ventiladores?|disipadores?", "")
+                        .trim();
+            }
+
+            if (searchName.isEmpty()) {
+                searchName = null;
+            }
+        }
+
+        Sort sortOrder = Sort.unsorted();
+        if ("priceAsc".equals(sor)) {
+            sortOrder = Sort.by(Sort.Direction.ASC, "price");
+        } else if ("priceDesc".equals(sor)) {
+            sortOrder = Sort.by(Sort.Direction.DESC, "price");
+        }
+
+        return productRepository.findWithFilters(searchName, searchCategory, searchBrand, minPrice, maxPrice, sortOrder,
+                pageable);
     }
 }

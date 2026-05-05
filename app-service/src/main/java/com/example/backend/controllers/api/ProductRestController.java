@@ -2,6 +2,8 @@ package com.example.backend.controllers.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +18,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/v1/products")
 public class ProductRestController {
 
     @Autowired
@@ -33,25 +35,25 @@ public class ProductRestController {
         dto.setPrice(p.getPrice());
         dto.setCategory(p.getCategory());
         dto.setStock(p.getStock());
-        dto.setActive(p.isActive()); 
+        dto.setActive(p.isActive());
         return dto;
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductDTO>> searchProducts(
+    public ResponseEntity<Page<ProductDTO>> searchProducts(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String brand,
             @RequestParam(required = false) Double minPrice,
             @RequestParam(required = false) Double maxPrice,
-            @RequestParam(required = false) String sort) {
-        
-        List<Product> products = productService.advancedSearch(name, category, brand, minPrice, maxPrice, sort);
-        
-        List<ProductDTO> dtos = products.stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
-                
+            @RequestParam(required = false) String sort,
+            Pageable pageable) {
+
+        Page<Product> products = productService.advancedSearch(name, category, brand, minPrice, maxPrice, sort,
+                pageable);
+
+        Page<ProductDTO> dtos = products.map(this::convertToDTO);
+
         return ResponseEntity.ok(dtos);
     }
 
@@ -61,14 +63,6 @@ public class ProductRestController {
             ProductDTO dto = convertToDTO(product);
             return ResponseEntity.ok(dto);
         }).orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/category/{category}")
-    public ResponseEntity<List<ProductDTO>> getByCategory(@PathVariable String category) {
-        List<ProductDTO> dtos = productService.getProductsByCategory(category).stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("/recommendations")
@@ -81,6 +75,6 @@ public class ProductRestController {
 
     @GetMapping("/{id}/image")
     public ResponseEntity<Resource> getMainImage(@PathVariable Long id) {
-        return ResponseEntity.notFound().build(); 
+        return ResponseEntity.notFound().build();
     }
 }

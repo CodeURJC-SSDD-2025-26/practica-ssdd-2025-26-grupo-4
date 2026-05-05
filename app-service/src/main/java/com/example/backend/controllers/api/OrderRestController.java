@@ -1,6 +1,8 @@
 package com.example.backend.controllers.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,7 +21,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/orders")
+@RequestMapping("/api/v1/orders")
 @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
 public class OrderRestController {
 
@@ -38,7 +40,7 @@ public class OrderRestController {
     private OrderDTO convertToDTO(Order o) {
         OrderDTO dto = new OrderDTO();
         dto.setId(o.getId());
-        dto.setOrderDate(o.getOrderDate() != null ? o.getOrderDate().toString() : "N/A"); 
+        dto.setOrderDate(o.getOrderDate() != null ? o.getOrderDate().toString() : "N/A");
         dto.setTotalPrice(o.getTotalPrice());
         dto.setStatus(o.getStatus());
         dto.setPaymentMethod(o.getPaymentMethod());
@@ -46,7 +48,7 @@ public class OrderRestController {
         dto.setCity(o.getCity());
         dto.setPostalCode(o.getPostalCode());
         dto.setCountry(o.getCountry());
-        
+
         if (o.getUser() != null) {
             dto.setUsername(o.getUser().getUsername());
         }
@@ -57,7 +59,7 @@ public class OrderRestController {
                     .collect(Collectors.toList());
             dto.setProducts(productDTOs);
         }
-        
+
         return dto;
     }
 
@@ -84,8 +86,8 @@ public class OrderRestController {
 
     @PutMapping("/cart/update/{productId}")
     public ResponseEntity<?> updateCartQuantity(
-            @PathVariable Long productId, 
-            @RequestParam int quantity, 
+            @PathVariable Long productId,
+            @RequestParam int quantity,
             Principal principal) {
         orderService.updateProductQuantityInUserCart(principal.getName(), productId, quantity);
         return ResponseEntity.ok(Map.of("message", "Product quantity updated successfully."));
@@ -93,18 +95,28 @@ public class OrderRestController {
 
     @PostMapping("/checkout")
     public ResponseEntity<?> processCheckout(
-            @RequestBody Map<String, Object> paymentData, 
+            @RequestBody Map<String, Object> paymentData,
             Principal principal) {
         try {
-            Long addressId = paymentData.get("addressId") != null ? Long.valueOf(paymentData.get("addressId").toString()) : null;
+            Long addressId = paymentData.get("addressId") != null
+                    ? Long.valueOf(paymentData.get("addressId").toString())
+                    : null;
             String cardName = (String) paymentData.get("cardName");
             String cardNumber = (String) paymentData.get("cardNumber");
 
             Order completedOrder = orderService.processPayment(principal.getName(), addressId, cardName, cardNumber);
-            
+
             return ResponseEntity.status(HttpStatus.CREATED).body(convertToDTO(completedOrder));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<OrderDTO>> getAllOrders(Principal principal, Pageable pageable) {
+        Page<OrderDTO> orderDTOs = orderService.getOrdersByUserUsername(principal.getName(), pageable)
+                .map(this::convertToDTO);
+
+        return ResponseEntity.ok(orderDTOs);
     }
 }
