@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.PageRequest;
 
 import com.example.backend.models.Product;
 import com.example.backend.models.Review;
@@ -92,8 +93,13 @@ public class ProductService {
             sortOrder = Sort.by(Sort.Direction.DESC, "price");
         }
 
-        return productRepository.findWithFilters(searchName, searchCategory, searchBrand, minPrice, maxPrice, sortOrder,
-                Pageable.unpaged()).getContent();
+        Pageable pageable = sortOrder.isSorted()
+                ? Pageable.unpaged(sortOrder)
+                : Pageable.unpaged();
+
+        return productRepository.findWithFilters(searchName, searchCategory, searchBrand, minPrice, maxPrice,
+                pageable).getContent();
+
     }
 
     public Page<Product> advancedSearch(String name, String category, String brand, Double minPrice, Double maxPrice,
@@ -145,7 +151,14 @@ public class ProductService {
             sortOrder = Sort.by(Sort.Direction.DESC, "price");
         }
 
-        return productRepository.findWithFilters(searchName, searchCategory, searchBrand, minPrice, maxPrice, sortOrder,
-                pageable);
+        Pageable pageableWithSort = sortOrder.isSorted()
+                ? org.springframework.data.domain.PageRequest.of(
+                        pageable.getPageNumber(),
+                        pageable.getPageSize(),
+                        sortOrder)
+                : pageable;
+
+        return productRepository.findWithFilters(searchName, searchCategory, searchBrand, minPrice, maxPrice,
+                pageableWithSort);
     }
 }

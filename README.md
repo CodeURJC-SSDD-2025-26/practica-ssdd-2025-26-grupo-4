@@ -450,7 +450,19 @@ Principal responsable de la gestión dinámica del contenido, vinculación de lo
 
 ## 🛠 **Práctica 3: API REST, docker y despliegue**
 
-### **Documentación de la API REST**
+#### **Documentación de la API REST**
+
+La API REST de `app-service` está documentada mediante OpenAPI generado con SpringDoc. La especificación OpenAPI se genera a partir de los controladores REST del proyecto y se incluye en la carpeta `api-docs`.
+
+- [Especificación OpenAPI YAML](api-docs/apidocs.yaml)
+- [Documentación HTML de la API REST](https://raw.githack.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/main/api-docs/api-docs.html)
+
+Durante la ejecución local, la documentación también puede consultarse en:
+
+```text
+https://localhost:8443/api-docs
+https://localhost:8443/swagger-ui/index.html
+```
 
 #### **Especificación OpenAPI**
 📄 **[Especificación OpenAPI (YAML)](/api-docs/api-docs.yaml)**
