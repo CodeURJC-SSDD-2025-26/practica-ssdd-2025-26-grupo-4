@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.HttpStatus;
 
 import com.example.backend.dto.ProductDTO;
 import com.example.backend.models.Product;
@@ -71,6 +73,37 @@ public class ProductRestController {
             return ResponseEntity.ok(Map.of("message", "Generic recommendations for guests."));
         }
         return ResponseEntity.ok(Map.of("message", "Personalized recommendations for " + principal.getName()));
+    }
+
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> createProduct(@RequestBody Map<String, Object> productData) {
+        try {
+            Product product = new Product();
+
+            product.setName(productData.get("name").toString());
+            product.setDescription(productData.get("description").toString());
+            product.setPrice(Double.parseDouble(productData.get("price").toString()));
+            product.setCategory(productData.get("category").toString());
+            product.setStock(Integer.parseInt(productData.get("stock").toString()));
+            product.setActive(true);
+
+            Product savedProduct = productService.saveProduct(product);
+            return ResponseEntity.status(HttpStatus.CREATED).body(convertToDTO(savedProduct));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
+        try {
+            productService.deleteProduct(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
     }
 
     @GetMapping("/{id}/image")

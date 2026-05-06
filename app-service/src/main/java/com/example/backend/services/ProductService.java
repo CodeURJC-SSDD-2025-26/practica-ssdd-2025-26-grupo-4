@@ -44,6 +44,17 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public Product saveProduct(Product product) {
+        return productRepository.save(product);
+    }
+
+    public void deleteProduct(Long id) throws Exception {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new Exception("Product not found"));
+        product.setActive(false);
+        productRepository.save(product);
+    }
+
     public List<Product> advancedSearch(String name, String category, String brand, Double minPrice, Double maxPrice,
             String sort) {
         String searchName = (name != null && !name.trim().isEmpty()) ? name.trim().toLowerCase() : null;
@@ -93,13 +104,8 @@ public class ProductService {
             sortOrder = Sort.by(Sort.Direction.DESC, "price");
         }
 
-        Pageable pageable = sortOrder.isSorted()
-                ? Pageable.unpaged(sortOrder)
-                : Pageable.unpaged();
-
-        return productRepository.findWithFilters(searchName, searchCategory, searchBrand, minPrice, maxPrice,
-                pageable).getContent();
-
+        return productRepository.findWithFilters(searchName, searchCategory, searchBrand, minPrice, maxPrice, sortOrder,
+                Pageable.unpaged()).getContent();
     }
 
     public Page<Product> advancedSearch(String name, String category, String brand, Double minPrice, Double maxPrice,
@@ -144,21 +150,14 @@ public class ProductService {
             }
         }
 
-        Sort sortOrder = Sort.unsorted();
+        Sort sortOrder = pageable.getSort();
         if ("priceAsc".equals(sor)) {
             sortOrder = Sort.by(Sort.Direction.ASC, "price");
         } else if ("priceDesc".equals(sor)) {
             sortOrder = Sort.by(Sort.Direction.DESC, "price");
         }
 
-        Pageable pageableWithSort = sortOrder.isSorted()
-                ? org.springframework.data.domain.PageRequest.of(
-                        pageable.getPageNumber(),
-                        pageable.getPageSize(),
-                        sortOrder)
-                : pageable;
-
-        return productRepository.findWithFilters(searchName, searchCategory, searchBrand, minPrice, maxPrice,
-                pageableWithSort);
+        return productRepository.findWithFilters(searchName, searchCategory, searchBrand, minPrice, maxPrice, sortOrder,
+                pageable);
     }
 }

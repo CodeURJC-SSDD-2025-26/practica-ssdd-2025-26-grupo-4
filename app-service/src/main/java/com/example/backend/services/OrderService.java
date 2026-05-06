@@ -185,4 +185,9 @@ public class OrderService {
         }
         return items;
     }
+
+    public void deleteOrder(Long id) throws Exception {
+        orderRepository.deleteById(id);
+    }
+
 }

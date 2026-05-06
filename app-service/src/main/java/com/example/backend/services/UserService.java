@@ -37,12 +37,34 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User createAdminOrUser(String username, String email, String password, boolean isAdmin)
+            throws Exception {
+
+        if (userRepository.findByUsername(username).isPresent()) {
+            throw new Exception("Username already exists.");
+        }
+
+        User user = new User();
+
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setEncodedPassword(passwordEncoder.encode(password));
+
+        user.setRoles(Arrays.asList(isAdmin ? "ROLE_ADMIN" : "ROLE_USER"));
+
+        return userRepository.save(user);
+    }
+
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
     public Page<User> findAll(Pageable pageable) {
         return userRepository.findAll(pageable);
+    }
+
+    public void deleteUser(Long id) throws Exception {
+        userRepository.deleteById(id);
     }
 
     public void deleteAddress(Long addressId, String username, boolean isAdmin) throws Exception {

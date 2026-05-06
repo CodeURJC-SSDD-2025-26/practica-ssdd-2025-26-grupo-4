@@ -2,6 +2,7 @@ package com.example.backend.controllers.api;
 
 import com.example.backend.dto.UserDTO;
 import com.example.backend.models.User;
+import com.example.backend.services.OrderService;
 import com.example.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,9 @@ public class UserRestController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private OrderService orderService;
 
     private UserDTO convertToDTO(User u) {
         UserDTO dto = new UserDTO();
@@ -41,12 +45,58 @@ public class UserRestController {
         }
     }
 
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> createAdminOrUser(@RequestBody Map<String, Object> data) {
+        try {
+            boolean isAdmin = data.containsKey("admin") && Boolean.parseBoolean(data.get("isAdmin").toString());
+
+            User newUser = userService.createAdminOrUser(
+                    data.get("username").toString(),
+                    data.get("email").toString(),
+                    data.get("password").toString(),
+                    isAdmin);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(convertToDTO(newUser));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
     @GetMapping("/profile")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<?> getProfile(Principal principal) {
         return userService.findByUsername(principal.getName())
                 .map(user -> ResponseEntity.ok(convertToDTO(user)))
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/address")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public ResponseEntity<?> addAddress(@RequestBody Map<String, String> addressData, Principal principal) {
+        try {
+            orderService.addUserAddress(
+                    principal.getName(),
+                    addressData.get("street"),
+                    addressData.get("city"),
+                    addressData.get("postalCode"),
+                    addressData.get("country"));
+
+            return ResponseEntity.status(HttpStatus.CREATED).body("Address added successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        try {
+            userService.deleteUser(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
     }
 
     @DeleteMapping("/address/{id}")

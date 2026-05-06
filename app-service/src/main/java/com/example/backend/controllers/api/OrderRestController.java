@@ -112,6 +112,17 @@ public class OrderRestController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> deleteOrder(@PathVariable Long id) {
+        try {
+            orderService.deleteOrder(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
     @GetMapping
     public ResponseEntity<Page<OrderDTO>> getAllOrders(Principal principal, Pageable pageable) {
         Page<OrderDTO> orderDTOs = orderService.getOrdersByUserUsername(principal.getName(), pageable)
