@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Map;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/api/v1/reviews")
@@ -42,7 +43,8 @@ public class ReviewRestController {
             String comment = data.get("comment").toString();
 
             Review review = reviewService.createReview(principal.getName(), productId, score, comment);
-            return ResponseEntity.status(HttpStatus.CREATED).body(convertToDTO(review));
+            URI location = URI.create("/api/v1/reviews/" + review.getId());
+            return ResponseEntity.created(location).body(convertToDTO(review));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
@@ -65,5 +67,28 @@ public class ReviewRestController {
     public ResponseEntity<Page<ReviewDTO>> getAllReviews(Pageable pageable) {
         Page<ReviewDTO> dtos = reviewService.getAllReviews(pageable).map(this::convertToDTO);
         return ResponseEntity.ok(dtos);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getReview(@PathVariable Long id) {
+        return reviewService.getReviewById(id).map(review -> {
+            ReviewDTO dto = convertToDTO(review);
+            return ResponseEntity.ok(dto);
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public ResponseEntity<?> updateReview(@PathVariable Long id, @RequestBody Map<String, Object> data, Principal principal, @RequestHeader(value = "Role", defaultValue = "USER") String role) {
+        try {
+            boolean isAdmin = role.contains("ADMIN");
+            int score = Integer.parseInt(data.get("score").toString());
+            String comment = data.get("comment").toString();
+
+            Review updatedReview = reviewService.updateReview(id, principal.getName(), isAdmin, score, comment);
+            return ResponseEntity.ok(convertToDTO(updatedReview));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
     }
 }

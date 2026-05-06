@@ -18,6 +18,7 @@ import com.example.backend.dto.UserRegisterRequest;
 import java.security.Principal;
 import java.util.Map;
 import java.util.Arrays;
+import java.net.URI;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
@@ -52,7 +53,8 @@ public class UserRestController {
 
         try {
             User newUser = userService.registerNewUser(data.getUsername(), data.getEmail(), data.getPassword());
-            return ResponseEntity.status(HttpStatus.CREATED).body(convertToDTO(newUser));
+            URI location = URI.create("/api/v1/users/" + newUser.getId());
+            return ResponseEntity.created(location).body(convertToDTO(newUser));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
@@ -70,7 +72,8 @@ public class UserRestController {
                     data.get("password").toString(),
                     isAdmin);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(convertToDTO(newUser));
+            URI location = URI.create("/api/v1/users/" + newUser.getId());
+            return ResponseEntity.created(location).body(convertToDTO(newUser));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
@@ -84,6 +87,15 @@ public class UserRestController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getUserDetail(@PathVariable Long id) {
+        return userService.findById(id).map(user -> {
+            UserDTO dto = convertToDTO(user);
+            return ResponseEntity.ok(dto);
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping("/address")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<?> addAddress(@RequestBody Map<String, String> addressData, Principal principal) {
@@ -95,7 +107,8 @@ public class UserRestController {
                     addressData.get("postalCode"),
                     addressData.get("country"));
 
-            return ResponseEntity.status(HttpStatus.CREATED).body("Address added successfully.");
+            URI location = URI.create("/api/v1/users/profile");
+            return ResponseEntity.created(location).body(Map.of("message", "Address added successfully."));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }

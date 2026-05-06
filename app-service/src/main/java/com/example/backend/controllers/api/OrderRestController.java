@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/api/v1/orders")
@@ -106,7 +107,8 @@ public class OrderRestController {
 
             Order completedOrder = orderService.processPayment(principal.getName(), addressId, cardName, cardNumber);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(convertToDTO(completedOrder));
+            URI location = URI.create("/api/v1/orders/" + completedOrder.getId());
+            return ResponseEntity.created(location).body(convertToDTO(completedOrder));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
@@ -145,5 +147,14 @@ public class OrderRestController {
                 .map(this::convertToDTO);
 
         return ResponseEntity.ok(orderDTOs);
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getOrder(@PathVariable Long id) {
+        return orderService.getOrderById(id).map(order -> {
+            OrderDTO dto = convertToDTO(order);
+            return ResponseEntity.ok(dto);
+        }).orElse(ResponseEntity.notFound().build());
     }
 }

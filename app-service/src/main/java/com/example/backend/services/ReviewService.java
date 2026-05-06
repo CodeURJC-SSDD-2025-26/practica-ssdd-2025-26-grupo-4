@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class ReviewService {
@@ -56,5 +57,22 @@ public class ReviewService {
 
     public Page<Review> getAllReviews(Pageable pageable) {
         return reviewRepository.findAll(pageable);
+    }
+
+    public Optional<Review> getReviewById(Long id) {
+        return reviewRepository.findById(id);
+    }
+
+    public Review updateReview(Long reviewId, String username, boolean isAdmin, int score, String comment) throws Exception {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new Exception("Review not found."));
+
+        if (isAdmin || (review.getUser() != null && review.getUser().getUsername().equals(username))) {
+            review.setScore(score);
+            review.setComment(comment);
+            return reviewRepository.save(review);
+        } else {
+            throw new Exception("Unauthorized access to edit this review.");
+        }
     }
 }
