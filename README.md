@@ -662,17 +662,14 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
 
 ### **Participación de Miembros en la Práctica 3**
 
-#### **Alumno 1 - [Nombre Completo]**
+#### **Alumno 1 - Ramiro Daniel Flores Aquino**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
-
+Me encargué de refactorizar la arquitectura moviendo la lógica de los controladores a servicios y protegiendo la API mediante DTOs para evitar la exposición de datos sensibles.  Documentación del despliegue mediante el artefacto OCI publicado en DockerHub.
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Cambios de nombres de carpetas](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/d69e6d964734377e78d33709b067e04c5f1ee39f)  | [app-service](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/tree/main/app-service)   |
+|2| [Implementacion de DTOs para la API REST](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/6dc2d703491e96b5cc84b4d44fc0488905cd497f)  | [OrderDTO.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/app-service/src/main/java/com/example/backend/dto/OrderDTO.java)  , [ProductDTO.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/app-service/src/main/java/com/example/backend/dto/ProductDTO.java)
+|3| [Instrucciones de ejecución de imágenes y OCI Artifact](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/1882e662896794e6ced6a3db749367b0ab1f474e)  | [README.md](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/main/README.md)   |
 
 ---
 
@@ -691,17 +688,16 @@ Elaboración de la documentación OpenAPI de los endpoints y de los diagrama de 
 
 ---
 
-#### **Alumno 3 - [Nombre Completo]**
+#### **Alumno 3 - [Jonay Sebastián Ortiz Armas]**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+Me he encargado de arreglar algunas funcionalidades de la práctica anterior, de crear los RestControllers y los JWT Tokens, de añadir algunos DTOs y Services y de añadir algo de funcionalidad a los RestControllers.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Arreglar product edit y delete en la página de Admin](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/80c5e9b4e40e997ee991c45a76c9b5af2d0ae5e2)  | [AdminController.java](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/blob/80c5e9b4e40e997ee991c45a76c9b5af2d0ae5e2/app-service/src/main/java/com/example/backend/controllers/AdminController.java)   |
+|2| [Añadir JWT Tokens](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/701dd853087a6ef1ffd7807065e7546ac6ff70a2)  | [JwtRequestFilter.java‎](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/blob/701dd853087a6ef1ffd7807065e7546ac6ff70a2/app-service/src/main/java/com/example/backend/security/JwtRequestFilter.java)   |
+|3| [Añadir RestControllers (sin implementar)](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/639f7095e6311499943ba20994bfb51d8bb4411b)  | [AdminRestController.java‎](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/blob/639f7095e6311499943ba20994bfb51d8bb4411b/app-service/src/main/java/com/example/backend/controllers/api/AdminRestController.java)   |
+|4| [Añadir algunos DTOs y Services y funcionalidades básicas de los RestControllers](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/commit/b25d2419f615fb418642654ac8f1404581fc6434)  | [OrderRestController.java](https://github.com/CodeURJC-SSDD-2025-26/ssdd-2025-26-project-base/blob/b25d2419f615fb418642654ac8f1404581fc6434/app-service/src/main/java/com/example/backend/controllers/api/OrderRestController.java)   |
 
 ---
 
