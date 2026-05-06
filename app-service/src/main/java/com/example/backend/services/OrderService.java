@@ -53,6 +53,10 @@ public class OrderService {
         return orderRepository.findByStatusIn(java.util.Arrays.asList("ENTREGADO", "ENVIADO"));
     }
 
+    public List<Order> getOrdersByUserId(Long userId) {
+        return orderRepository.findByUserId(userId);
+    }
+
     public List<Address> getUserAddresses(String username) {
         return userRepository.findByUsername(username)
                 .map(user -> addressRepository.findByUserId(user.getId()))

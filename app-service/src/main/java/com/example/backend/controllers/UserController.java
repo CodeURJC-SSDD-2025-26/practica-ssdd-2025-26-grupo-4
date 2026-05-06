@@ -20,25 +20,21 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.backend.models.Address;
 import com.example.backend.models.User;
-import com.example.backend.repositories.AddressRepository;
-import com.example.backend.repositories.OrderRepository;
-import com.example.backend.repositories.ReviewRepository;
-import com.example.backend.repositories.UserRepository;
+import com.example.backend.services.OrderService;
+import com.example.backend.services.ReviewService;
+import com.example.backend.services.UserService;
 
 @Controller
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
-    private ReviewRepository reviewRepository;
+    private ReviewService reviewService;
 
     @Autowired
-    private OrderRepository orderRepository;
-
-    @Autowired
-    private AddressRepository addressRepository;
+    private OrderService orderService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -78,7 +74,7 @@ public class UserController {
             return "pages/user_registration";
         }
 
-        if (userRepository.findByUsername(username).isPresent()) {
+        if (userService.findByUsername(username).isPresent()) {
             model.addAttribute("error", "El usuario ya existe.");
             return "pages/user_registration";
         }
@@ -89,7 +85,7 @@ public class UserController {
         user.setEncodedPassword(passwordEncoder.encode(password));
         user.setRoles(Arrays.asList("ROLE_USER"));
 
-        userRepository.save(user);
+        userService.saveUser(user);
 
         return "redirect:/login";
     }
@@ -97,10 +93,10 @@ public class UserController {
     @GetMapping("/profile")
     public String profile(Model model, Principal principal) {
         if (principal != null) {
-            userRepository.findByUsername(principal.getName()).ifPresent(user -> {
+            userService.findByUsername(principal.getName()).ifPresent(user -> {
                 model.addAttribute("usuario", user);
-                model.addAttribute("reviews", reviewRepository.findByUserId(user.getId()));
-                model.addAttribute("pedidos", orderRepository.findByUserId(user.getId()));
+                model.addAttribute("reviews", reviewService.getReviewsByUserId(user.getId()));
+                model.addAttribute("pedidos", orderService.getOrdersByUserId(user.getId()));
             });
         }
         return "pages/profile";
@@ -114,7 +110,7 @@ public class UserController {
             @RequestParam(required = false) MultipartFile imageFile,
             Principal principal) throws IOException {
         if (principal != null) {
-            Optional<User> optUser = userRepository.findByUsername(principal.getName());
+            Optional<User> optUser = userService.findByUsername(principal.getName());
             if (optUser.isPresent()) {
                 User user = optUser.get();
                 user.setUsername(username);
@@ -130,7 +126,7 @@ public class UserController {
                     }
                 }
 
-                userRepository.save(user);
+                userService.saveUser(user);
 
                 // Re-authenticate with the new username so the SecurityContext is up-to-date
                 Authentication currentAuth = SecurityContextHolder.getContext().getAuthentication();
@@ -146,20 +142,16 @@ public class UserController {
     @PostMapping("/address/delete")
     public String deleteAddress(@RequestParam Long id, Principal principal) {
         if (principal == null) return "redirect:/login";
-        Optional<Address> optAddr = addressRepository.findById(id);
-        if (optAddr.isEmpty()) return "redirect:/payment";
-        Address addr = optAddr.get();
 
-        Optional<User> currentUserOpt = userRepository.findByUsername(principal.getName());
         boolean isAdmin = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 
-        if (isAdmin || (addr.getUser() != null && currentUserOpt.isPresent()
-                && addr.getUser().getId().equals(currentUserOpt.get().getId()))) {
-            addressRepository.deleteById(id);
+        try {
+            userService.deleteAddress(id, principal.getName(), isAdmin);
             return "redirect:/payment";
+        } catch (Exception e) {
+            return "redirect:/error/403";
         }
-        return "redirect:/error/403";
     }
 
 }

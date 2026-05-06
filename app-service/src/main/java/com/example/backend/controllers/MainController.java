@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.backend.models.Product;
 import com.example.backend.models.User;
-import com.example.backend.repositories.ProductRepository;
-import com.example.backend.repositories.UserRepository;
+import com.example.backend.services.ProductService;
+import com.example.backend.services.UserService;
 import com.example.backend.services.RecommendationService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,10 +25,10 @@ import jakarta.servlet.http.HttpServletRequest;
 public class MainController {
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductService productService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private RecommendationService recommendationService;
@@ -42,14 +42,12 @@ public class MainController {
 
         // 1. Hardware News Section
         // Your HTML expects 'productos' for this section
-        List<Product> hardwareNews = productRepository.findAll(Sort.by(Sort.Direction.DESC, "id")).stream()
-                .limit(8)
-                .collect(Collectors.toList());
+        List<Product> hardwareNews = productService.getLatestProducts(8);
         model.addAttribute("productos", hardwareNews);
 
         // 2. Recommendations Section ("Te podría interesar")
         if (isLoggedIn) {
-            Optional<User> userOpt = userRepository.findByUsername(principal.getName());
+            Optional<User> userOpt = userService.findByUsername(principal.getName());
             if (userOpt.isPresent()) {
                 List<Product> recommendations = recommendationService.getRecommendedProducts(userOpt.get());
                 model.addAttribute("recomendados", recommendations);
@@ -73,7 +71,7 @@ public class MainController {
 
     @GetMapping("/index")
     public String index(Model model) {
-        model.addAttribute("productos", productRepository.findAll());
+        model.addAttribute("productos", productService.getAllProducts());
         return "index";
     }
 

@@ -10,30 +10,30 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.example.backend.models.Review;
 import com.example.backend.models.User;
-import com.example.backend.repositories.ProductRepository;
-import com.example.backend.repositories.ReviewRepository;
-import com.example.backend.repositories.UserRepository;
+import com.example.backend.services.ProductService;
+import com.example.backend.services.ReviewService;
+import com.example.backend.services.UserService;
 
 @Controller
 public class ReviewController {
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductService productService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
-    private ReviewRepository reviewRepository;
+    private ReviewService reviewService;
 
     @GetMapping("/create-review")
     public String createReview(@RequestParam(value = "productId", required = false) Long productId, Model model) {
         if (productId != null) {
-            productRepository.findById(productId).ifPresent(product -> {
+            productService.getProductById(productId).ifPresent(product -> {
                 model.addAttribute("producto", product);
             });
         }
-        model.addAttribute("productos", productRepository.findAll());
+        model.addAttribute("productos", productService.getAllProducts());
         return "pages/create-review";
     }
 
@@ -43,17 +43,9 @@ public class ReviewController {
             @RequestParam String comment,
             Principal principal) {
         if (principal != null) {
-            userRepository.findByUsername(principal.getName()).ifPresent(user -> {
-                productRepository.findById(productId).ifPresent(product -> {
-                    Review review = new Review();
-                    review.setScore(score);
-                    review.setComment(comment);
-                    review.setDate(java.time.LocalDateTime.now());
-                    review.setUser(user);
-                    review.setProduct(product);
-                    reviewRepository.save(review);
-                });
-            });
+            try {
+                reviewService.createReview(principal.getName(), productId, score, comment);
+            } catch (Exception e) {}
         }
         return "redirect:/item-detail?id=" + productId;
     }
@@ -63,20 +55,19 @@ public class ReviewController {
     @PostMapping("/review/delete")
     public String deleteReviewByUser(@RequestParam Long id, Principal principal) {
         if (principal == null) return "redirect:/login";
-        Optional<Review> optReview = reviewRepository.findById(id);
+        Optional<Review> optReview = reviewService.getReviewById(id);
         if (optReview.isEmpty()) return "redirect:/";
         Review review = optReview.get();
+        Long productId = review.getProduct() != null ? review.getProduct().getId() : null;
 
-        Optional<User> currentUserOpt = userRepository.findByUsername(principal.getName());
         boolean isAdmin = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 
-        if (isAdmin || (review.getUser() != null && currentUserOpt.isPresent()
-                && review.getUser().getId().equals(currentUserOpt.get().getId()))) {
-            Long productId = review.getProduct() != null ? review.getProduct().getId() : null;
-            reviewRepository.deleteById(id);
+        try {
+            reviewService.deleteReview(id, principal.getName(), isAdmin);
             return productId != null ? "redirect:/item-detail?id=" + productId : "redirect:/";
+        } catch (Exception e) {
+            return "redirect:/error/403";
         }
-        return "redirect:/error/403";
     }
 }

@@ -1,7 +1,7 @@
 package com.example.backend.controllers;
 
 import com.example.backend.models.User;
-import com.example.backend.repositories.UserRepository;
+import com.example.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -18,11 +18,11 @@ import java.util.Optional;
 public class UserImageController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @GetMapping("/user/{id}/image")
     public ResponseEntity<Object> downloadUserImage(@PathVariable long id) throws SQLException {
-        Optional<User> user = userRepository.findById(id);
+        Optional<User> user = userService.findById(id);
 
         if (user.isPresent() && user.get().getProfilePicture() != null) {
             Resource file = new InputStreamResource(user.get().getProfilePicture().getBinaryStream());

@@ -8,9 +8,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import java.util.stream.Collectors;
 
 import com.example.backend.models.Product;
+import com.example.backend.models.ProductImage;
 import com.example.backend.models.Review;
 import com.example.backend.repositories.ProductRepository;
 import com.example.backend.repositories.ReviewRepository;
@@ -28,6 +32,10 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
+    public Optional<ProductImage> getProductImageById(Long imageId) {
+        return productRepository.findImageById(imageId);
+    }
+
     public List<Review> getReviewsByProductId(Long id) {
         return reviewRepository.findByProductId(id);
     }
@@ -39,9 +47,14 @@ public class ProductService {
         return productRepository.findByActiveTrue();
     }
 
-    // Método añadido para solucionar el error "undefined for type ProductService"
     public List<Product> getAllProducts() {
         return productRepository.findAll();
+    }
+
+    public List<Product> getLatestProducts(int limit) {
+        return productRepository.findAll(Sort.by(Sort.Direction.DESC, "id")).stream()
+                .limit(limit)
+                .collect(Collectors.toList());
     }
 
     public List<Product> getActiveProducts() {

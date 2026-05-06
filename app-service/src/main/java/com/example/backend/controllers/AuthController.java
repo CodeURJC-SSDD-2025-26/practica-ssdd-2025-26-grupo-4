@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.example.backend.models.User;
-import com.example.backend.repositories.UserRepository;
+import com.example.backend.services.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class AuthController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @GetMapping("/login")
     public String login(@RequestParam(value = "error", required = false) String error, Model model) {
@@ -38,7 +38,7 @@ public class AuthController {
     public Long currentUserId(Principal principal) {
         if (principal == null)
             return null;
-        Optional<User> u = userRepository.findByUsername(principal.getName());
+        Optional<User> u = userService.findByUsername(principal.getName());
         return u.map(User::getId).orElse(null);
     }
 

@@ -2,7 +2,7 @@ package com.example.backend.controllers;
 
 import com.example.backend.models.Product;
 import com.example.backend.models.ProductImage;
-import com.example.backend.repositories.ProductRepository;
+import com.example.backend.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -19,12 +19,12 @@ import java.util.Optional;
 public class ProductImageController {
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductService productService;
 
     // Serves the main image of a product for search results and index page
     @GetMapping("/product/{id}/image")
     public ResponseEntity<Object> downloadMainImage(@PathVariable long id) throws SQLException {
-        Optional<Product> product = productRepository.findById(id);
+        Optional<Product> product = productService.getProductById(id);
 
         if (product.isPresent() && product.get().getImageFile() != null) {
             Resource file = new InputStreamResource(product.get().getImageFile().getBinaryStream());
@@ -39,7 +39,7 @@ public class ProductImageController {
     @GetMapping("/product/image/{imageId}")
     public ResponseEntity<Object> downloadSpecificImage(@PathVariable long imageId) throws SQLException {
         // We use the custom query defined in ProductRepository to fetch the gallery image
-        Optional<ProductImage> image = productRepository.findImageById(imageId);
+        Optional<ProductImage> image = productService.getProductImageById(imageId);
 
         if (image.isPresent() && image.get().getImageFile() != null) {
             Resource file = new InputStreamResource(image.get().getImageFile().getBinaryStream());

@@ -63,6 +63,10 @@ public class ReviewService {
         return reviewRepository.findAll();
     }
 
+    public java.util.List<Review> getReviewsByUserId(Long userId) {
+        return reviewRepository.findByUserId(userId);
+    }
+
     public Review saveReview(Review review) {
         return reviewRepository.save(review);
     }
