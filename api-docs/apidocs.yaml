@@ -3,9 +3,269 @@ info:
   title: OpenAPI definition
   version: v0
 servers:
-- url: https://localhost:8443
+- url: https://localhost:8444
   description: Generated server url
 paths:
+  /api/v1/users/{id}:
+    get:
+      tags:
+      - user-rest-controller
+      operationId: getUserDetail
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    put:
+      tags:
+      - user-rest-controller
+      operationId: updateUser
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: {}
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    delete:
+      tags:
+      - user-rest-controller
+      operationId: deleteUser
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/v1/reviews/{id}:
+    get:
+      tags:
+      - review-rest-controller
+      operationId: getReview
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    put:
+      tags:
+      - review-rest-controller
+      operationId: updateReview
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: Role
+        in: header
+        required: false
+        schema:
+          type: string
+          default: USER
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: {}
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    delete:
+      tags:
+      - review-rest-controller
+      operationId: deleteReview
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: Role
+        in: header
+        required: false
+        schema:
+          type: string
+          default: USER
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/v1/products/{id}:
+    get:
+      tags:
+      - product-rest-controller
+      operationId: getProductDetail
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    put:
+      tags:
+      - product-rest-controller
+      operationId: updateProduct
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: {}
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    delete:
+      tags:
+      - product-rest-controller
+      operationId: deleteProduct
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/v1/orders/{id}:
+    get:
+      tags:
+      - order-rest-controller
+      operationId: getOrder
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    put:
+      tags:
+      - order-rest-controller
+      operationId: updateOrder
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: {}
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    delete:
+      tags:
+      - order-rest-controller
+      operationId: deleteOrder
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
   /api/v1/orders/cart/update/{productId}:
     put:
       tags:
@@ -31,11 +291,65 @@ paths:
             '*/*':
               schema:
                 type: object
+  /api/v1/users:
+    get:
+      tags:
+      - user-rest-controller
+      operationId: getAllUsers
+      parameters:
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageUserDTO"
+    post:
+      tags:
+      - user-rest-controller
+      operationId: createAdminOrUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: {}
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
   /api/v1/users/register:
     post:
       tags:
       - user-rest-controller
       operationId: registerUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRegisterRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/v1/users/address:
+    post:
+      tags:
+      - user-rest-controller
+      operationId: addAddress
       requestBody:
         content:
           application/json:
@@ -73,6 +387,74 @@ paths:
       tags:
       - review-rest-controller
       operationId: createReview
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: {}
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/v1/products:
+    get:
+      tags:
+      - product-rest-controller
+      operationId: searchProducts
+      parameters:
+      - name: name
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: category
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: brand
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: minPrice
+        in: query
+        required: false
+        schema:
+          type: number
+          format: double
+      - name: maxPrice
+        in: query
+        required: false
+        schema:
+          type: number
+          format: double
+      - name: sort
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageProductDTO"
+    post:
+      tags:
+      - product-rest-controller
+      operationId: createProduct
       requestBody:
         content:
           application/json:
@@ -172,98 +554,11 @@ paths:
             '*/*':
               schema:
                 type: object
-  /api/v1/users:
-    get:
-      tags:
-      - user-rest-controller
-      operationId: getAllUsers
-      parameters:
-      - name: pageable
-        in: query
-        required: true
-        schema:
-          $ref: "#/components/schemas/Pageable"
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/PageUserDTO"
   /api/v1/users/profile:
     get:
       tags:
       - user-rest-controller
       operationId: getProfile
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                type: object
-  /api/v1/products:
-    get:
-      tags:
-      - product-rest-controller
-      operationId: searchProducts
-      parameters:
-      - name: name
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: category
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: brand
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: minPrice
-        in: query
-        required: false
-        schema:
-          type: number
-          format: double
-      - name: maxPrice
-        in: query
-        required: false
-        schema:
-          type: number
-          format: double
-      - name: sort
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: pageable
-        in: query
-        required: true
-        schema:
-          $ref: "#/components/schemas/Pageable"
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/PageProductDTO"
-  /api/v1/products/{id}:
-    get:
-      tags:
-      - product-rest-controller
-      operationId: getProductDetail
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
       responses:
         "200":
           description: OK
@@ -333,24 +628,11 @@ paths:
             '*/*':
               schema:
                 type: object
-  /api/v1/users/address/{id}:
-    delete:
+  /api/v1/admin/dashboard/stats:
+    get:
       tags:
-      - user-rest-controller
-      operationId: deleteAddress
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-      - name: Role
-        in: header
-        required: false
-        schema:
-          type: string
-          default: USER
+      - admin-rest-controller
+      operationId: getDashboardStats
       responses:
         "200":
           description: OK
@@ -358,11 +640,11 @@ paths:
             '*/*':
               schema:
                 type: object
-  /api/v1/reviews/{id}:
+  /api/v1/users/address/{id}:
     delete:
       tags:
-      - review-rest-controller
-      operationId: deleteReview
+      - user-rest-controller
+      operationId: deleteAddress
       parameters:
       - name: id
         in: path
@@ -404,6 +686,25 @@ paths:
                 type: object
 components:
   schemas:
+    UserRegisterRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          maxLength: 20
+          minLength: 3
+        email:
+          type: string
+          format: email
+          minLength: 1
+        password:
+          type: string
+          maxLength: 20
+          minLength: 6
+      required:
+      - email
+      - password
+      - username
     Pageable:
       type: object
       properties:
@@ -432,6 +733,13 @@ components:
           type: boolean
         last:
           type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
+        pageable:
+          $ref: "#/components/schemas/PageableObject"
+        sort:
+          $ref: "#/components/schemas/SortObject"
         size:
           type: integer
           format: int32
@@ -442,41 +750,34 @@ components:
         number:
           type: integer
           format: int32
-        sort:
-          $ref: "#/components/schemas/SortObject"
-        numberOfElements:
-          type: integer
-          format: int32
-        pageable:
-          $ref: "#/components/schemas/PageableObject"
         empty:
           type: boolean
     PageableObject:
       type: object
       properties:
-        offset:
-          type: integer
-          format: int64
-        sort:
-          $ref: "#/components/schemas/SortObject"
-        pageSize:
-          type: integer
-          format: int32
+        paged:
+          type: boolean
         pageNumber:
           type: integer
           format: int32
-        paged:
-          type: boolean
+        pageSize:
+          type: integer
+          format: int32
+        sort:
+          $ref: "#/components/schemas/SortObject"
         unpaged:
           type: boolean
+        offset:
+          type: integer
+          format: int64
     SortObject:
       type: object
       properties:
-        empty:
-          type: boolean
         sorted:
           type: boolean
         unsorted:
+          type: boolean
+        empty:
           type: boolean
     UserDTO:
       type: object
@@ -507,6 +808,13 @@ components:
           type: boolean
         last:
           type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
+        pageable:
+          $ref: "#/components/schemas/PageableObject"
+        sort:
+          $ref: "#/components/schemas/SortObject"
         size:
           type: integer
           format: int32
@@ -517,13 +825,6 @@ components:
         number:
           type: integer
           format: int32
-        sort:
-          $ref: "#/components/schemas/SortObject"
-        numberOfElements:
-          type: integer
-          format: int32
-        pageable:
-          $ref: "#/components/schemas/PageableObject"
         empty:
           type: boolean
     ReviewDTO:
@@ -559,6 +860,13 @@ components:
           type: boolean
         last:
           type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
+        pageable:
+          $ref: "#/components/schemas/PageableObject"
+        sort:
+          $ref: "#/components/schemas/SortObject"
         size:
           type: integer
           format: int32
@@ -569,13 +877,6 @@ components:
         number:
           type: integer
           format: int32
-        sort:
-          $ref: "#/components/schemas/SortObject"
-        numberOfElements:
-          type: integer
-          format: int32
-        pageable:
-          $ref: "#/components/schemas/PageableObject"
         empty:
           type: boolean
     ProductDTO:
@@ -648,6 +949,13 @@ components:
           type: boolean
         last:
           type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
+        pageable:
+          $ref: "#/components/schemas/PageableObject"
+        sort:
+          $ref: "#/components/schemas/SortObject"
         size:
           type: integer
           format: int32
@@ -658,12 +966,5 @@ components:
         number:
           type: integer
           format: int32
-        sort:
-          $ref: "#/components/schemas/SortObject"
-        numberOfElements:
-          type: integer
-          format: int32
-        pageable:
-          $ref: "#/components/schemas/PageableObject"
         empty:
           type: boolean
