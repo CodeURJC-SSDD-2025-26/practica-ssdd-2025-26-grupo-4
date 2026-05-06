@@ -11,6 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
+import com.example.backend.dto.UserRegisterRequest;
 
 import java.security.Principal;
 import java.util.Map;
@@ -41,9 +44,14 @@ public class UserRestController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody Map<String, String> data) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody UserRegisterRequest data, BindingResult result) {
+
+        if (result.hasErrors()) {
+            return ResponseEntity.badRequest().body(Map.of("error", result.getFieldError().getDefaultMessage()));
+        }
+
         try {
-            User newUser = userService.registerNewUser(data.get("username"), data.get("email"), data.get("password"));
+            User newUser = userService.registerNewUser(data.getUsername(), data.getEmail(), data.getPassword());
             return ResponseEntity.status(HttpStatus.CREATED).body(convertToDTO(newUser));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));

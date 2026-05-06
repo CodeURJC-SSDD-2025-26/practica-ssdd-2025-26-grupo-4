@@ -54,7 +54,7 @@ public class SecurityConfig {
                                                                 "/api-docs.yaml",
                                                                 "/api-docs/**")
                                                 .permitAll()
-                                                .requestMatchers("/api/v1/auth/**").permitAll() // Login libre
+                                                .requestMatchers("/api/v1/auth/**", "/api/v1/users/register").permitAll() // Login libre y registro libre
                                                 .requestMatchers(org.springframework.http.HttpMethod.GET,
                                                                 "/api/v1/products/**")
                                                 .permitAll()
