@@ -63,6 +63,10 @@ public class UserService {
         return userRepository.findAll(pageable);
     }
 
+    public void deleteUser(Long id) throws Exception {
+        userRepository.deleteById(id);
+    }
+
     public void deleteAddress(Long addressId, String username, boolean isAdmin) throws Exception {
         Address addr = addressRepository.findById(addressId)
                 .orElseThrow(() -> new Exception("Address not found."));

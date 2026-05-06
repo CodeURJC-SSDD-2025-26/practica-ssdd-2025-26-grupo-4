@@ -47,7 +47,7 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public void deleteProduct(Long id) {
+    public void deleteProduct(Long id) throws Exception {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new Exception("Product not found"));
         product.setActive(false);
