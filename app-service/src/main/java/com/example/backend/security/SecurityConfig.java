@@ -42,17 +42,23 @@ public class SecurityConfig {
     @Order(1)
     public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
         http
-            .securityMatcher("/api/**") // Solo aplica a lo que empiece por /api/
-            .csrf(csrf -> csrf.disable()) // Desactivar CSRF para REST es vital
-            .cors(cors -> cors.disable()) // Por ahora desactivamos CORS para evitar jaleos
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // ¡Sin sesiones!
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll() // Login libre
-                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/products/**").permitAll() // <--- ¡LA MAGIA!
-                .anyRequest().authenticated() // Todo lo demás con Token
-            )
-            // ESTO ES CLAVE: Metemos el filtro JWT antes del de usuario y contraseña
-            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+                .securityMatcher("/api/**") // Solo aplica a lo que empiece por /api/
+                .csrf(csrf -> csrf.disable()) // Desactivar CSRF para REST es vital
+                .cors(cors -> cors.disable()) // Por ahora desactivamos CORS para evitar jaleos
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // ¡Sin
+                                                                                                              // sesiones!
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/v1/auth/**").permitAll() // Login libre
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/v1/products/**").permitAll() // <---
+                                                                                                                     // ¡LA
+                                                                                                                     // MAGIA!
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/v1/reviews/**").permitAll() // <---
+                                                                                                                    // ¡LA
+                                                                                                                    // MAGIA!
+                        .anyRequest().authenticated() // Todo lo demás con Token
+                )
+                // ESTO ES CLAVE: Metemos el filtro JWT antes del de usuario y contraseña
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -65,8 +71,9 @@ public class SecurityConfig {
     public SecurityFilterChain webFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/css/**", "/assets/**", "/js/**", "/product/**", "/user/**").permitAll()
-                .requestMatchers("/", "/index", "/item-detail", "/search", "/search-result","/user_registration",
-                        "/user-registration", "/login", "/shopping-cart").permitAll()
+                .requestMatchers("/", "/index", "/item-detail", "/search", "/search-result", "/user_registration",
+                        "/user-registration", "/login", "/shopping-cart")
+                .permitAll()
                 .requestMatchers("/create-review", "/payment", "/profile/**").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated());
