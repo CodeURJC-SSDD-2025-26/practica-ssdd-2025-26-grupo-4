@@ -108,7 +108,7 @@ public class UserRestController {
                     addressData.get("country"));
 
             URI location = URI.create("/api/v1/users/profile");
-            return ResponseEntity.created(location).body(Map.of("message", "Address added successfully."));
+            return ResponseEntity.created(location).body(Map.of("message", "Dirección añadida correctamente."));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
@@ -119,7 +119,7 @@ public class UserRestController {
     public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody Map<String, Object> userData) {
         try {
             User user = userService.findById(id)
-                    .orElseThrow(() -> new Exception("User not found"));
+                    .orElseThrow(() -> new Exception("Usuario no encontrado"));
 
             user.setUsername(userData.get("username").toString());
             user.setEmail(userData.get("email").toString());

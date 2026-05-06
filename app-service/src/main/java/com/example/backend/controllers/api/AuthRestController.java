@@ -35,7 +35,7 @@ public class AuthRestController {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("error", "Invalid username or password."));
+                    .body(Map.of("error", "Usuario o contraseña no válidos."));
         }
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(username);

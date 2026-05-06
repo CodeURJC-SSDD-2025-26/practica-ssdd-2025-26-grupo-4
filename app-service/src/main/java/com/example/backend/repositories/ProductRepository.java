@@ -16,12 +16,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
         @Query("SELECT i FROM ProductImage i WHERE i.id = :imageId")
         Optional<ProductImage> findImageById(@Param("imageId") Long imageId);
 
-        // Métodos nuevos para filtrar los que están borrados lógicamente
+        // Methods to filter out soft-deleted products
         List<Product> findByActiveTrue();
 
         List<Product> findByCategoryAndActiveTrue(String category);
 
-        // La query customizada con el p.active = true
+        // Custom query filtering only active products
         @Query("SELECT p FROM Product p WHERE p.active = true AND " +
                         "(:name IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))) AND " +
                         "(:category IS NULL OR p.category = :category) AND " +

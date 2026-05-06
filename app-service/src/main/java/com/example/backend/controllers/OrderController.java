@@ -165,8 +165,8 @@ public class OrderController {
             Order order = orderService.processPayment(principal.getName(), shipAddressId, cardName, cardNumber);
             return "redirect:/payment-correct?orderId=" + order.getId();
         } catch (Exception e) {
-            if ("Invalid address".equals(e.getMessage())) return "redirect:/error/403";
-            return "redirect:/shopping-cart?error=" + ("No active order".equals(e.getMessage()) ? "noorder" : "payment");
+            if ("Dirección no válida".equals(e.getMessage())) return "redirect:/error/403";
+            return "redirect:/shopping-cart?error=" + ("No hay un pedido activo".equals(e.getMessage()) ? "noorder" : "payment");
         }
     }
 

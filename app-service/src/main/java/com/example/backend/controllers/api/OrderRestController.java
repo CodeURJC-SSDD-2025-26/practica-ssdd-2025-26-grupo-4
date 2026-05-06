@@ -70,19 +70,19 @@ public class OrderRestController {
         if (orderOpt.isPresent()) {
             return ResponseEntity.ok(convertToDTO(orderOpt.get()));
         }
-        return ResponseEntity.ok(Map.of("message", "The cart is empty."));
+        return ResponseEntity.ok(Map.of("message", "El carrito está vacío."));
     }
 
     @PostMapping("/cart/add/{productId}")
     public ResponseEntity<?> addToCart(@PathVariable Long productId, Principal principal) {
         orderService.addProductToUserCart(principal.getName(), productId);
-        return ResponseEntity.ok(Map.of("message", "Product " + productId + " successfully added to cart."));
+        return ResponseEntity.ok(Map.of("message", "Producto " + productId + " añadido al carrito correctamente."));
     }
 
     @DeleteMapping("/cart/remove/{productId}")
     public ResponseEntity<?> removeFromCart(@PathVariable Long productId, Principal principal) {
         orderService.removeProductFromUserCart(principal.getName(), productId);
-        return ResponseEntity.ok(Map.of("message", "Product " + productId + " removed from cart."));
+        return ResponseEntity.ok(Map.of("message", "Producto " + productId + " eliminado del carrito."));
     }
 
     @PutMapping("/cart/update/{productId}")
@@ -91,7 +91,7 @@ public class OrderRestController {
             @RequestParam int quantity,
             Principal principal) {
         orderService.updateProductQuantityInUserCart(principal.getName(), productId, quantity);
-        return ResponseEntity.ok(Map.of("message", "Product quantity updated successfully."));
+        return ResponseEntity.ok(Map.of("message", "Cantidad de producto actualizada correctamente."));
     }
 
     @PostMapping("/checkout")
@@ -119,7 +119,7 @@ public class OrderRestController {
     public ResponseEntity<?> updateOrder(@PathVariable Long id, @RequestBody Map<String, Object> orderData) {
         try {
             Order order = orderService.getOrderById(id)
-                    .orElseThrow(() -> new Exception("Order not found"));
+                    .orElseThrow(() -> new Exception("Pedido no encontrado"));
 
             order.setStatus(orderData.get("status").toString());
 

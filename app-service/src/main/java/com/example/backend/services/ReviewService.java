@@ -34,23 +34,23 @@ public class ReviewService {
                     review.setUser(user);
                     review.setProduct(product);
                     return reviewRepository.save(review);
-                })).orElseThrow(() -> new Exception("User or product not found."));
+                })).orElseThrow(() -> new Exception("Usuario o producto no encontrado."));
     }
 
     public void deleteReview(Long reviewId, String username, boolean isAdmin) throws Exception {
         Review review = reviewRepository.findById(reviewId)
-                .orElseThrow(() -> new Exception("Review not found."));
+                .orElseThrow(() -> new Exception("Reseña no encontrada."));
 
         if (isAdmin || (review.getUser() != null && review.getUser().getUsername().equals(username))) {
             reviewRepository.deleteById(reviewId);
         } else {
-            throw new Exception("Unauthorized access to delete this review.");
+            throw new Exception("Acceso no autorizado para eliminar esta reseña.");
         }
     }
 
     public void addAdminReply(Long reviewId, String reply) throws Exception {
         Review review = reviewRepository.findById(reviewId)
-                .orElseThrow(() -> new Exception("Review not found."));
+                .orElseThrow(() -> new Exception("Reseña no encontrada."));
         review.setAdminReply(reply);
         reviewRepository.save(review);
     }
@@ -81,14 +81,14 @@ public class ReviewService {
 
     public Review updateReview(Long reviewId, String username, boolean isAdmin, int score, String comment) throws Exception {
         Review review = reviewRepository.findById(reviewId)
-                .orElseThrow(() -> new Exception("Review not found."));
+                .orElseThrow(() -> new Exception("Reseña no encontrada."));
 
         if (isAdmin || (review.getUser() != null && review.getUser().getUsername().equals(username))) {
             review.setScore(score);
             review.setComment(comment);
             return reviewRepository.save(review);
         } else {
-            throw new Exception("Unauthorized access to edit this review.");
+            throw new Exception("Acceso no autorizado para editar esta reseña.");
         }
     }
 }

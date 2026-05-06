@@ -27,7 +27,7 @@ public class UserService {
 
     public User registerNewUser(String username, String email, String password) throws Exception {
         if (userRepository.findByUsername(username).isPresent()) {
-            throw new Exception("Username already exists.");
+            throw new Exception("El nombre de usuario ya existe.");
         }
         User user = new User();
         user.setUsername(username);
@@ -41,7 +41,7 @@ public class UserService {
             throws Exception {
 
         if (userRepository.findByUsername(username).isPresent()) {
-            throw new Exception("Username already exists.");
+            throw new Exception("El nombre de usuario ya existe.");
         }
 
         User user = new User();
@@ -81,12 +81,12 @@ public class UserService {
 
     public void deleteAddress(Long addressId, String username, boolean isAdmin) throws Exception {
         Address addr = addressRepository.findById(addressId)
-                .orElseThrow(() -> new Exception("Address not found."));
+                .orElseThrow(() -> new Exception("Dirección no encontrada."));
 
         if (isAdmin || (addr.getUser() != null && addr.getUser().getUsername().equals(username))) {
             addressRepository.deleteById(addressId);
         } else {
-            throw new Exception("Unauthorized access to delete this address.");
+            throw new Exception("Acceso no autorizado para eliminar esta dirección.");
         }
     }
 }

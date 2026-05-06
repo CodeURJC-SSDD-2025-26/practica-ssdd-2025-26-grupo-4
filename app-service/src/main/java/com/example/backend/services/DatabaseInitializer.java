@@ -252,7 +252,7 @@ public class DatabaseInitializer {
                         r1.setScore(5);
                         r1.setComment("El Ryzen 7 9800X3D es una bestia para gaming.");
                         r1.setDate(LocalDateTime.now().minusDays(2));
-                        r1.setProduct(p1); // El procesador
+                        r1.setProduct(p1); // The processor
                         r1.setUser(customer);
                         reviewRepository.save(r1);
 
@@ -269,9 +269,9 @@ public class DatabaseInitializer {
                         Order o1 = new Order();
                         o1.setUser(customer);
                         o1.setOrderDate(LocalDateTime.now().minusWeeks(1));
-                        o1.setTotalPrice(674.95); // (p1 + p7 aprox)
+                        o1.setTotalPrice(674.95); // (p1 + p7 approx.)
                         o1.setStatus("ENTREGADO");
-                        // Importante: Si tu entidad Order tiene una lista de productos, añádelos
+                        // Important: If your Order entity has a product list, add them here
                         o1.setProducts(Arrays.asList(p1, p7));
                         orderRepository.save(o1);
 
@@ -279,7 +279,7 @@ public class DatabaseInitializer {
                         Order o2 = new Order();
                         o2.setUser(customer);
                         o2.setOrderDate(LocalDateTime.now());
-                        o2.setTotalPrice(1099.00); // El precio de la 4080
+                        o2.setTotalPrice(1099.00); // Price of the 4080
                         o2.setStatus("EN PROCESO");
                         o2.setProducts(Arrays.asList(p2));
                         orderRepository.save(o2);
@@ -288,7 +288,7 @@ public class DatabaseInitializer {
 
         private void setProductImage(Product product, String imagePath) {
                 try {
-                        // Cargamos la imagen desde la carpeta de recursos
+                        // Load image from the resources folder
                         Resource image = new ClassPathResource(imagePath);
                         if (image.exists()) {
                                 byte[] data = image.getContentAsByteArray();
@@ -296,7 +296,7 @@ public class DatabaseInitializer {
                                 product.setImage(true);
                         }
                 } catch (IOException e) {
-                        // Si hay un error al cargar la imagen, simplemente marcamos que no tiene
+                        // If loading the image fails, simply mark the product as having no image
                         product.setImage(false);
                 }
         }

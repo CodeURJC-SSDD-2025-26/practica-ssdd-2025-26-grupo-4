@@ -40,7 +40,7 @@ public class EmailService {
             }
             return response;
         } catch (RestClientException e) {
-            throw new Exception("Error al generar el PDF mediante utility-service", e);
+            throw new Exception("Failed to generate PDF via utility-service", e);
         }
     }
 
@@ -61,7 +61,7 @@ public class EmailService {
         try {
             pdfBytes = generatePdfInvoice(order);
         } catch (Exception e) {
-            logger.error("No se pudo generar el PDF para email de order ID: {}", order.getId(), e);
+            logger.error("Failed to generate PDF for email of order ID: {}", order.getId(), e);
             return;
         }
 
@@ -76,13 +76,13 @@ public class EmailService {
         try {
             ResponseEntity<Map> response = restTemplate.postForEntity(utilityServiceUrl + "/email", request, Map.class);
             if (response.getStatusCode().is2xxSuccessful()) {
-                logger.info("Email enviado correctamente para order ID: {}", order.getId());
+                logger.info("Email sent successfully for order ID: {}", order.getId());
             } else {
-                logger.error("Utility-service email endpoint devolvió estado {} para order ID: {}",
+                logger.error("Utility-service email endpoint returned status {} for order ID: {}",
                         response.getStatusCode(), order.getId());
             }
         } catch (RestClientException e) {
-            logger.error("Fallo al enviar email mediante utility-service para order ID: {}", order.getId(), e);
+            logger.error("Failed to send email via utility-service for order ID: {}", order.getId(), e);
         }
     }
 

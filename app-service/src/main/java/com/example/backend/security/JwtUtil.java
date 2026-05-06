@@ -11,8 +11,8 @@ import java.util.function.Function;
 
 @Service
 public class JwtUtil {
-    
-    // Clave secreta dura. En la vida real esto va en variables de entorno, kuso.
+
+    // Secret key — in production this should be loaded from environment variables
     private static final String SECRET = "EstaEsUnaClaveSecretaMuyLargaYSeguraParaNuestraApiRest2026PCBuilder";
     private final SecretKey key = Keys.hmacShaKeyFor(SECRET.getBytes());
 
@@ -20,7 +20,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // Caduca en 10 horas
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // Expires in 10 hours
                 .signWith(key)
                 .compact();
     }

@@ -29,48 +29,47 @@ public class SecurityConfig {
                 return new BCryptPasswordEncoder();
         }
 
-        // Bean necesario para hacer el login en la API REST
+        // Bean required for REST API login authentication
         @Bean
         public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
                 return authConfig.getAuthenticationManager();
         }
 
         // =======================================================
-        // CONFIGURACIÓN 1: PARA LA API REST (JWT y Stateless)
+        // CONFIGURATION 1: REST API (JWT and Stateless)
         // =======================================================
         @Bean
         @Order(1)
         public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
                 http
-                                .securityMatcher("/api/**") // Solo aplica a lo que empiece por /api/
-                                .csrf(csrf -> csrf.disable()) // Desactivar CSRF para REST es vital
-                                .cors(cors -> cors.disable()) // Por ahora desactivamos CORS para evitar jaleos
+                                .securityMatcher("/api/**")
+                                .csrf(csrf -> csrf.disable()) // CSRF disabled for stateless REST
+                                .cors(cors -> cors.disable())
                                 .sessionManagement(session -> session
-                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // ¡Sin
-                                                                                                         // sesiones!
+                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 .authorizeHttpRequests(auth -> auth
                                                 .requestMatchers(
                                                                 "/api-docs",
                                                                 "/api-docs.yaml",
                                                                 "/api-docs/**")
                                                 .permitAll()
-                                                .requestMatchers("/api/v1/auth/**", "/api/v1/users/register").permitAll() // Login libre y registro libre
+                                                .requestMatchers("/api/v1/auth/**", "/api/v1/users/register")
+                                                .permitAll()
                                                 .requestMatchers(org.springframework.http.HttpMethod.GET,
                                                                 "/api/v1/products/**")
                                                 .permitAll()
                                                 .requestMatchers(org.springframework.http.HttpMethod.GET,
                                                                 "/api/v1/reviews/**")
                                                 .permitAll()
-                                                .anyRequest().authenticated() // Todo lo demás con Token
-                                )
-                                // ESTO ES CLAVE: Metemos el filtro JWT antes del de usuario y contraseña
+                                                .anyRequest().authenticated())
+                                // Add JWT filter before the username/password authentication filter
                                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
                 return http.build();
         }
 
         // =======================================================
-        // CONFIGURACIÓN 2: PARA LA WEB MUSTACHE (Form Login clásico)
+        // CONFIGURATION 2: WEB (Mustache form-based login)
         // =======================================================
         @Bean
         @Order(2)

@@ -67,7 +67,7 @@ public class OrderService {
         return orderRepository.findByUserUsername(username, pageable);
     }
 
-    // Lógica para añadir al carrito (Usuario registrado)
+    // Add product to user's cart
     public void addProductToUserCart(String username, Long productId) {
         userRepository.findByUsername(username).ifPresent(user -> {
             Order order = getActiveOrderForUser(username).orElseGet(() -> {
@@ -88,7 +88,7 @@ public class OrderService {
         });
     }
 
-    // Lógica para eliminar del carrito (Usuario registrado)
+    // Remove product from user's cart
     public void removeProductFromUserCart(String username, Long productId) {
         getActiveOrderForUser(username).ifPresent(order -> {
             productRepository.findById(productId).ifPresent(product -> {
@@ -105,12 +105,12 @@ public class OrderService {
         });
     }
 
-    // Lógica para actualizar cantidad (Usuario registrado)
+    // Update product quantity in user's cart
     public void updateProductQuantityInUserCart(String username, Long productId, int quantity) {
         int safeQuantity = Math.max(0, quantity);
         getActiveOrderForUser(username).ifPresent(order -> {
             List<Product> products = order.getProducts();
-            products.removeIf(p -> p.getId().equals(productId)); // Elimina todas las instancias
+            products.removeIf(p -> p.getId().equals(productId)); // Remove all instances
 
             productRepository.findById(productId).ifPresent(product -> {
                 for (int i = 0; i < safeQuantity; i++) {
@@ -124,11 +124,11 @@ public class OrderService {
         });
     }
 
-    // Lógica del Checkout
+    // Checkout logic
     public Order processPayment(String username, Long shipAddressId, String cardName, String cardNumber)
             throws Exception {
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new Exception("User not found"));
-        Order order = getActiveOrderForUser(username).orElseThrow(() -> new Exception("No active order"));
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new Exception("Usuario no encontrado"));
+        Order order = getActiveOrderForUser(username).orElseThrow(() -> new Exception("No hay un pedido activo"));
 
         if (shipAddressId != null) {
             Optional<Address> addressOpt = addressRepository.findById(shipAddressId);
@@ -140,7 +140,7 @@ public class OrderService {
                 order.setPostalCode(addr.getPostalCode());
                 order.setCountry(addr.getCountry());
             } else {
-                throw new Exception("Invalid address");
+                throw new Exception("Dirección no válida");
             }
         }
 
@@ -151,7 +151,7 @@ public class OrderService {
         order.setOrderDate(LocalDateTime.now());
 
         orderRepository.save(order);
-        emailService.sendInvoiceEmail(order); // Llamamos al servicio de utilidades desde el app-service
+        emailService.sendInvoiceEmail(order); // Delegate to utility-service
 
         return order;
     }
@@ -168,7 +168,7 @@ public class OrderService {
         });
     }
 
-    // Lógica de presentación movida aquí para limpiar el controlador
+    // Presentation logic moved here to keep the controller clean
     public List<Map<String, Object>> buildCartItems(List<Product> products) {
         Map<Long, Integer> counts = new LinkedHashMap<>();
         Map<Long, Product> prodById = new LinkedHashMap<>();

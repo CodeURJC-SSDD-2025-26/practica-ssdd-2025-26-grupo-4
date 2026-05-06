@@ -73,9 +73,9 @@ public class ProductRestController {
     @GetMapping("/recommendations")
     public ResponseEntity<?> getRecommendations(Principal principal) {
         if (principal == null) {
-            return ResponseEntity.ok(Map.of("message", "Generic recommendations for guests."));
+            return ResponseEntity.ok(Map.of("message", "Recomendaciones genéricas para invitados."));
         }
-        return ResponseEntity.ok(Map.of("message", "Personalized recommendations for " + principal.getName()));
+        return ResponseEntity.ok(Map.of("message", "Recomendaciones personalizadas para " + principal.getName()));
     }
 
     @PostMapping
@@ -104,7 +104,7 @@ public class ProductRestController {
     public ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody Map<String, Object> productData) {
         try {
             Product product = productService.getProductById(id)
-                    .orElseThrow(() -> new Exception("Product not found"));
+                    .orElseThrow(() -> new Exception("Producto no encontrado"));
 
             product.setName(productData.get("name").toString());
             product.setDescription(productData.get("description").toString());
@@ -134,7 +134,7 @@ public class ProductRestController {
     @GetMapping("/{id}/image")
     public ResponseEntity<Resource> getMainImage(@PathVariable Long id) {
         try {
-            Product product = productService.getProductById(id).orElseThrow(() -> new Exception("Product not found"));
+            Product product = productService.getProductById(id).orElseThrow(() -> new Exception("Producto no encontrado"));
             if (product.getImageFile() != null) {
                 Resource file = new InputStreamResource(product.getImageFile().getBinaryStream());
                 return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").body(file);

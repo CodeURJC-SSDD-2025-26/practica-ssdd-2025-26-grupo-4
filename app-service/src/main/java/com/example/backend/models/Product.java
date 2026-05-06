@@ -33,7 +33,7 @@ public class Product {
 
     private boolean image;
 
-    // EL ATRIBUTO MÁGICO PARA EL SOFT DELETE
+    // Attribute used for soft delete
     private boolean active = true;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)

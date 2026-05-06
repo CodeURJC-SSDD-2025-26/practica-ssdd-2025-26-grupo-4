@@ -45,7 +45,9 @@ public class ReviewController {
         if (principal != null) {
             try {
                 reviewService.createReview(principal.getName(), productId, score, comment);
-            } catch (Exception e) {}
+            } catch (Exception e) {
+                // Review creation failed — redirect back to the product page silently
+            }
         }
         return "redirect:/item-detail?id=" + productId;
     }

@@ -17,7 +17,7 @@ public class GlobalRestControllerAdvice {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleResourceNotFoundException(ResourceNotFoundException ex) {
         Map<String, String> response = new HashMap<>();
-        response.put("error", "Not Found");
+        response.put("error", "No Encontrado");
         response.put("message", ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
@@ -25,7 +25,7 @@ public class GlobalRestControllerAdvice {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, String>> handleIllegalArgumentException(IllegalArgumentException ex) {
         Map<String, String> response = new HashMap<>();
-        response.put("error", "Bad Request");
+        response.put("error", "Petición Incorrecta");
         response.put("message", ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
@@ -33,15 +33,15 @@ public class GlobalRestControllerAdvice {
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<Map<String, String>> handleAccessDeniedException(AccessDeniedException ex) {
         Map<String, String> response = new HashMap<>();
-        response.put("error", "Forbidden");
-        response.put("message", "You don't have permission to access this resource.");
+        response.put("error", "Prohibido");
+        response.put("message", "No tienes permiso para acceder a este recurso.");
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> response = new HashMap<>();
-        response.put("error", "Validation Error");
+        response.put("error", "Error de Validación");
         StringBuilder errors = new StringBuilder();
         ex.getBindingResult().getFieldErrors().forEach(error -> 
             errors.append(error.getField()).append(": ").append(error.getDefaultMessage()).append("; ")
@@ -53,15 +53,15 @@ public class GlobalRestControllerAdvice {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<Map<String, String>> handleTypeMismatchException(MethodArgumentTypeMismatchException ex) {
         Map<String, String> response = new HashMap<>();
-        response.put("error", "Type Mismatch");
-        response.put("message", "Invalid value for parameter '" + ex.getName() + "'");
+        response.put("error", "Discrepancia de Tipos");
+        response.put("message", "Valor no válido para el parámetro '" + ex.getName() + "'");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleGenericException(Exception ex) {
         Map<String, String> response = new HashMap<>();
-        response.put("error", "Internal Server Error");
+        response.put("error", "Error Interno del Servidor");
         response.put("message", ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }

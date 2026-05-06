@@ -3,10 +3,8 @@ package com.example.backend.controllers;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,7 +43,7 @@ public class MainController {
         List<Product> hardwareNews = productService.getLatestProducts(8);
         model.addAttribute("productos", hardwareNews);
 
-        // 2. Recommendations Section ("Te podría interesar")
+        // 2. Recommendations Section ("You might be interested in")
         if (isLoggedIn) {
             Optional<User> userOpt = userService.findByUsername(principal.getName());
             if (userOpt.isPresent()) {

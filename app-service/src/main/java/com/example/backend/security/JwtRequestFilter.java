@@ -37,7 +37,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             try {
                 username = jwtUtil.extractUsername(jwt);
             } catch (Exception e) {
-                // Token inválido, lo ignoramos y dejamos que Spring bloquee la petición
+                // Invalid token — ignored so Spring Security blocks the request
             }
         }
 

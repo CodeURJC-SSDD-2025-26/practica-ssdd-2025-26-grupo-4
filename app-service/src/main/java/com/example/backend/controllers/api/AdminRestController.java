@@ -38,7 +38,7 @@ public class AdminRestController {
     public ResponseEntity<?> replyToReview(@PathVariable Long id, @RequestBody Map<String, String> data) {
         try {
             reviewService.addAdminReply(id, data.get("reply"));
-            return ResponseEntity.ok(Map.of("message", "Reply successfully added to review."));
+            return ResponseEntity.ok(Map.of("message", "Respuesta añadida correctamente a la reseña."));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }

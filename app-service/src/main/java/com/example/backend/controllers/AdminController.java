@@ -109,7 +109,7 @@ public class AdminController {
 
     @GetMapping("/admin/item-list")
     public String itemList(Model model) {
-        // AQUÍ USAMOS EL FILTRO PARA QUE NO SALGAN LOS BORRADOS EN EL FRONTEND
+        // Filter out soft-deleted products for the frontend
         model.addAttribute("productos", productService.getActiveProducts());
         return "pages/admin/item-list";
     }
@@ -228,7 +228,7 @@ public class AdminController {
         return "redirect:/admin/item-list";
     }
 
-    // EL SOFT DELETE CORREGIDO
+    // Soft delete: marks the product as inactive instead of removing it
     @PostMapping("/admin/item-delete")
     public String deleteProduct(@RequestParam Long id) {
         productService.getProductById(id).ifPresent(product -> {
@@ -303,7 +303,9 @@ public class AdminController {
     public String deleteUser(@RequestParam Long id) {
         try {
             userService.deleteUser(id);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            // Silently ignore if the email notification fails
+        }
         return "redirect:/admin/user-list";
     }
 
@@ -323,7 +325,9 @@ public class AdminController {
     public String deleteOrder(@RequestParam Long id) {
         try {
             orderService.deleteOrder(id);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            // Silently ignore if the email notification fails
+        }
         return "redirect:/admin/order-list";
     }
 
