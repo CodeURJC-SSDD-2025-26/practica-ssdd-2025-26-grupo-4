@@ -466,7 +466,15 @@ https://localhost:8443/swagger-ui/index.html
 
 Diagrama actualizado incluyendo los @RestController y su relación con los @Service compartidos:
 
-![Diagrama de Clases Actualizado](images/complete-classes-diagram.png)
+![Diagrama de Clases Actualizado](assets/images/DiagramaClases_Practica3.png)
+
+
+![Diagrama de Templates Actualizado](assets/images/DiagramaTemplates_Practica3.png)
+
+### **Diagrama de Servicios**
+
+![Diagrama de Servicios](assets/images/DiagramaServicios_Practica3.png)
+
 
 ### **Instrucciones de Ejecución con Docker**
 
@@ -549,17 +557,18 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
 
 ---
 
-#### **Alumno 2 - [Nombre Completo]**
+#### **Alumno 2 - David Díaz Gómez-Escalonilla**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+Desarrollo de utility-service e implementacion de la generación de PDF y el envío de correos mediante una API REST.
+Responsable de la integración entre microservicios, adaptando el app-service para consumir este servicio.
+Elaboración de la documentación OpenAPI de los endpoints y de los diagrama de clases actualizado y del diagrama de servicios
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Creacion de utility-service](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/1afdf887d29ba87e655b25f75f04e4b49857bce7)  | []()   |
+|2| [Implementacion servicio correo electrónico y PDF en utility-service](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/d4af331a55ae900a5b3cc71ed8410e8d3fdcb5b9)  | [pom.xml](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/d4af331a55ae900a5b3cc71ed8410e8d3fdcb5b9/utility-service/pom.xml), [UtilityController.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/d4af331a55ae900a5b3cc71ed8410e8d3fdcb5b9/utility-service/src/main/java/com/example/utility_service/controller/UtilityController.java), [GlobalExceptionHandler.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/d4af331a55ae900a5b3cc71ed8410e8d3fdcb5b9/utility-service/src/main/java/com/example/utility_service/exception/GlobalExceptionHandler.java), [PdfRequest.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/d4af331a55ae900a5b3cc71ed8410e8d3fdcb5b9/utility-service/src/main/java/com/example/utility_service/model/PdfRequest.java), [EmailService.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/d4af331a55ae900a5b3cc71ed8410e8d3fdcb5b9/utility-service/src/main/java/com/example/utility_service/service/EmailService.java), [PdfService.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/d4af331a55ae900a5b3cc71ed8410e8d3fdcb5b9/utility-service/src/main/java/com/example/utility_service/service/PdfService.java), [application.properties](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/d4af331a55ae900a5b3cc71ed8410e8d3fdcb5b9/utility-service/src/main/resources/application.properties), [PdfServiceTests](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/d4af331a55ae900a5b3cc71ed8410e8d3fdcb5b9/utility-service/src/test/java/com/example/utility_service/PdfServiceTests.java)
+|3| [Refactorizacion EmailService para usar la API REST de servicios de utilidad y adjuntar archivos PDF](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/819f1eb33c44b7fe3eb57f27fc7a26d86cc276f7)  | [app-service/.../EmailService.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/819f1eb33c44b7fe3eb57f27fc7a26d86cc276f7/app-service/src/main/java/com/example/backend/services/EmailService.java), [EmailRequest.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/819f1eb33c44b7fe3eb57f27fc7a26d86cc276f7/utility-service/src/main/java/com/example/utility_service/model/EmailRequest.java), [EmailService.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/819f1eb33c44b7fe3eb57f27fc7a26d86cc276f7/utility-service/src/main/java/com/example/utility_service/service/EmailService.java)
+|4| [Documentacion Open API](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/c90d724ae3491f78a4376c84db4336240bd3a9f1)  | [api-docs.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/c90d724ae3491f78a4376c84db4336240bd3a9f1/api-docs/api-docs.html), [apidocs.json](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/c90d724ae3491f78a4376c84db4336240bd3a9f1/api-docs/apidocs.json), [apidocs.yaml](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/blob/c90d724ae3491f78a4376c84db4336240bd3a9f1/api-docs/apidocs.yaml)
 
 ---
 
