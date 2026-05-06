@@ -186,6 +186,10 @@ public class OrderService {
         return items;
     }
 
+    public Order saveOrder(Order order) {
+        return orderRepository.save(order);
+    }
+
     public void deleteOrder(Long id) throws Exception {
         orderRepository.deleteById(id);
     }

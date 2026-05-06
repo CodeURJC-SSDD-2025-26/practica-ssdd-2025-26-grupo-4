@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Map;
+import java.util.Arrays;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -24,6 +26,9 @@ public class UserRestController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private UserDTO convertToDTO(User u) {
         UserDTO dto = new UserDTO();
@@ -83,6 +88,26 @@ public class UserRestController {
                     addressData.get("country"));
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Address added successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody Map<String, Object> userData) {
+        try {
+            User user = userService.findById(id)
+                    .orElseThrow(() -> new Exception("User not found"));
+
+            user.setUsername(userData.get("username").toString());
+            user.setEmail(userData.get("email").toString());
+            user.setEncodedPassword(passwordEncoder.encode(userData.get("password").toString()));
+            user.setRoles(Arrays.asList(
+                    userData.get("admin") != null && (Boolean) userData.get("admin") ? "ROLE_ADMIN" : "ROLE_USER"));
+
+            User updatedUser = userService.saveUser(user);
+            return ResponseEntity.ok(convertToDTO(updatedUser));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }

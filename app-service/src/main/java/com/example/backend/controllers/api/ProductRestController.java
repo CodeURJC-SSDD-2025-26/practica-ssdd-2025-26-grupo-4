@@ -95,6 +95,27 @@ public class ProductRestController {
         }
     }
 
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody Map<String, Object> productData) {
+        try {
+            Product product = productService.getProductById(id)
+                    .orElseThrow(() -> new Exception("Product not found"));
+
+            product.setName(productData.get("name").toString());
+            product.setDescription(productData.get("description").toString());
+            product.setPrice(Double.parseDouble(productData.get("price").toString()));
+            product.setCategory(productData.get("category").toString());
+            product.setStock(Integer.parseInt(productData.get("stock").toString()));
+            product.setActive(true);
+
+            Product updatedProduct = productService.saveProduct(product);
+            return ResponseEntity.ok(convertToDTO(updatedProduct));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {

@@ -112,6 +112,22 @@ public class OrderRestController {
         }
     }
 
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> updateOrder(@PathVariable Long id, @RequestBody Map<String, Object> orderData) {
+        try {
+            Order order = orderService.getOrderById(id)
+                    .orElseThrow(() -> new Exception("Order not found"));
+
+            order.setStatus(orderData.get("status").toString());
+
+            Order updatedOrder = orderService.saveOrder(order);
+            return ResponseEntity.ok(convertToDTO(updatedOrder));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteOrder(@PathVariable Long id) {
