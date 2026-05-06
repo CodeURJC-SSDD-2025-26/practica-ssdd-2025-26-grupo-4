@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.http.HttpStatus;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 
 import com.example.backend.dto.ProductDTO;
 import com.example.backend.models.Product;
@@ -129,6 +131,15 @@ public class ProductRestController {
 
     @GetMapping("/{id}/image")
     public ResponseEntity<Resource> getMainImage(@PathVariable Long id) {
+        try {
+            Product product = productService.getProductById(id).orElseThrow(() -> new Exception("Product not found"));
+            if (product.getImageFile() != null) {
+                Resource file = new InputStreamResource(product.getImageFile().getBinaryStream());
+                return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").body(file);
+            }
+        } catch (Exception e) {
+            // Ignorar y devolver 404
+        }
         return ResponseEntity.notFound().build();
     }
 }
