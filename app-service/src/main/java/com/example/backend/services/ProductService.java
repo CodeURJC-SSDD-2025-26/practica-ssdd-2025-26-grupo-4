@@ -43,6 +43,10 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public Product saveProduct(Product product) {
+        return productRepository.save(product);
+    }
+
     public List<Product> advancedSearch(String name, String category, String brand, Double minPrice, Double maxPrice,
             String sort) {
         String searchName = (name != null && !name.trim().isEmpty()) ? name.trim().toLowerCase() : null;
@@ -92,10 +96,13 @@ public class ProductService {
             sortOrder = Sort.by(Sort.Direction.DESC, "price");
         }
 
-        // Creamos un PageRequest gigante en lugar de unpaged() para poder aplicar el Sort
-        org.springframework.data.domain.PageRequest pageRequest = org.springframework.data.domain.PageRequest.of(0, 10000, sortOrder);
+        // Creamos un PageRequest gigante en lugar de unpaged() para poder aplicar el
+        // Sort
+        org.springframework.data.domain.PageRequest pageRequest = org.springframework.data.domain.PageRequest.of(0,
+                10000, sortOrder);
 
-        return productRepository.findWithFilters(searchName, searchCategory, searchBrand, minPrice, maxPrice, pageRequest).getContent();
+        return productRepository
+                .findWithFilters(searchName, searchCategory, searchBrand, minPrice, maxPrice, pageRequest).getContent();
     }
 
     public Page<Product> advancedSearch(String name, String category, String brand, Double minPrice, Double maxPrice,
@@ -146,10 +153,11 @@ public class ProductService {
         } else if ("priceDesc".equals(sor)) {
             sortOrder = Sort.by(Sort.Direction.DESC, "price");
         }
-        
+
         org.springframework.data.domain.PageRequest pageRequest = org.springframework.data.domain.PageRequest.of(
                 pageable.getPageNumber(), pageable.getPageSize(), sortOrder);
 
-        return productRepository.findWithFilters(searchName, searchCategory, searchBrand, minPrice, maxPrice, pageRequest);
+        return productRepository.findWithFilters(searchName, searchCategory, searchBrand, minPrice, maxPrice,
+                pageRequest);
     }
 }

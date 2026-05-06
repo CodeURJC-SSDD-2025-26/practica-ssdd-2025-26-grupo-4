@@ -73,6 +73,26 @@ public class ProductRestController {
         return ResponseEntity.ok(Map.of("message", "Personalized recommendations for " + principal.getName()));
     }
 
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> createProduct(@RequestBody Map<String, Object> productData) {
+        try {
+            Product product = new Product();
+
+            product.setName(productData.get("name").toString());
+            product.setDescription(productData.get("description").toString());
+            product.setPrice(Double.parseDouble(productData.get("price").toString()));
+            product.setCategory(productData.get("category").toString());
+            product.setStock(Integer.parseInt(productData.get("stock").toString()));
+            product.setActive(true);
+
+            Product savedProduct = productService.saveProduct(product);
+            return ResponseEntity.status(HttpStatus.CREATED).body(convertToDTO(savedProduct));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
     @GetMapping("/{id}/image")
     public ResponseEntity<Resource> getMainImage(@PathVariable Long id) {
         return ResponseEntity.notFound().build();
