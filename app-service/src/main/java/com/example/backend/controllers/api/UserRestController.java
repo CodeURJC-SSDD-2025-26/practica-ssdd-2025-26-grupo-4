@@ -41,6 +41,24 @@ public class UserRestController {
         }
     }
 
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> createAdminOrUser(@RequestBody Map<String, Object> data) {
+        try {
+            boolean isAdmin = data.containsKey("admin") && Boolean.parseBoolean(data.get("isAdmin").toString());
+
+            User newUser = userService.createAdminOrUser(
+                    data.get("username").toString(),
+                    data.get("email").toString(),
+                    data.get("password").toString(),
+                    isAdmin);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(convertToDTO(newUser));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
     @GetMapping("/profile")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<?> getProfile(Principal principal) {
