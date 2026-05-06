@@ -2,6 +2,7 @@ package com.example.backend.controllers.api;
 
 import com.example.backend.dto.UserDTO;
 import com.example.backend.models.User;
+import com.example.backend.services.OrderService;
 import com.example.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -76,10 +77,10 @@ public class UserRestController {
         try {
             orderService.addUserAddress(
                     principal.getName(),
-                    data.get("street"),
-                    data.get("city"),
-                    data.get("postalCode"),
-                    data.get("country"));
+                    addressData.get("street"),
+                    addressData.get("city"),
+                    addressData.get("postalCode"),
+                    addressData.get("country"));
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Address added successfully.");
         } catch (Exception e) {
