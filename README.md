@@ -664,7 +664,7 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
 
 #### **Alumno 1 - Ramiro Daniel Flores Aquino**
 
-Me encargué de refactorizar la arquitectura moviendo la lógica de los controladores a servicios y protegiendo la API mediante DTOs para evitar la exposición de datos sensibles. Además, configuré la infraestructura Docker, automatizando la construcción de imágenes multi-stage y documentando el despliegue mediante el artefacto OCI publicado en DockerHub.
+Me encargué de refactorizar la arquitectura moviendo la lógica de los controladores a servicios y protegiendo la API mediante DTOs para evitar la exposición de datos sensibles.  Documentación del despliegue mediante el artefacto OCI publicado en DockerHub.
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
 |1| [Cambios de nombres de carpetas](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/d69e6d964734377e78d33709b067e04c5f1ee39f)  | [app-service](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/tree/main/app-service)   |
