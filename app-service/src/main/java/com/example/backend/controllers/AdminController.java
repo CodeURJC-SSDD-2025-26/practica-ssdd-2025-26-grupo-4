@@ -22,36 +22,36 @@ import com.example.backend.models.Order;
 import com.example.backend.models.Product;
 import com.example.backend.models.Review;
 import com.example.backend.models.User;
-import com.example.backend.repositories.OrderRepository;
-import com.example.backend.repositories.ProductRepository;
-import com.example.backend.repositories.ReviewRepository;
-import com.example.backend.repositories.UserRepository;
+import com.example.backend.services.OrderService;
+import com.example.backend.services.ProductService;
+import com.example.backend.services.ReviewService;
+import com.example.backend.services.UserService;
 
 @Controller
 public class AdminController {
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductService productService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
-    private ReviewRepository reviewRepository;
+    private ReviewService reviewService;
 
     @Autowired
-    private OrderRepository orderRepository;
+    private OrderService orderService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/admin/admin-dashboard")
     public String adminDashboard(Model model) {
-        List<Product> allProducts = productRepository.findAll();
-        List<User> allUsers = userRepository.findAll();
-        List<Order> allOrders = orderRepository.findAll();
+        List<Product> allProducts = productService.getAllProducts();
+        List<User> allUsers = userService.getAllUsers();
+        List<Order> allOrders = orderService.getAllOrders();
 
-        List<Order> salesOrders = orderRepository.findByStatusIn(Arrays.asList("ENTREGADO", "ENVIADO"));
+        List<Order> salesOrders = orderService.getSalesOrders();
 
         model.addAttribute("totalProductos", allProducts.size());
         model.addAttribute("totalUsuarios", allUsers.size());
@@ -100,7 +100,7 @@ public class AdminController {
     @GetMapping("/admin/item-edit")
     public String itemEdit(@RequestParam(value = "id", required = false) Long id, Model model) {
         if (id != null) {
-            productRepository.findById(id).ifPresent(product -> {
+            productService.getProductById(id).ifPresent(product -> {
                 model.addAttribute("producto", product);
             });
         }
@@ -110,13 +110,13 @@ public class AdminController {
     @GetMapping("/admin/item-list")
     public String itemList(Model model) {
         // AQUÍ USAMOS EL FILTRO PARA QUE NO SALGAN LOS BORRADOS EN EL FRONTEND
-        model.addAttribute("productos", productRepository.findByActiveTrue());
+        model.addAttribute("productos", productService.getActiveProducts());
         return "pages/admin/item-list";
     }
 
     @GetMapping("/admin/order-list")
     public String orderList(Model model) {
-        List<Order> orders = orderRepository.findAll();
+        List<Order> orders = orderService.getAllOrders();
         model.addAttribute("pedidos", orders);
 
         long totalOrders = orders.size();
@@ -142,7 +142,7 @@ public class AdminController {
     @GetMapping("/admin/order-edit")
     public String orderEdit(@RequestParam(value = "id", required = false) Long id, Model model) {
         if (id != null) {
-            orderRepository.findById(id).ifPresent(order -> {
+            orderService.getOrderById(id).ifPresent(order -> {
                 model.addAttribute("pedido", order);
             });
         }
@@ -151,7 +151,7 @@ public class AdminController {
 
     @GetMapping("/admin/review-list")
     public String reviewList(Model model) {
-        model.addAttribute("reviews", reviewRepository.findAll());
+        model.addAttribute("reviews", reviewService.getAllReviews());
         return "pages/admin/review-list";
     }
 
@@ -163,7 +163,7 @@ public class AdminController {
     @GetMapping("/admin/user-edit")
     public String userEdit(@RequestParam(value = "id", required = false) Long id, Model model) {
         if (id != null) {
-            userRepository.findById(id).ifPresent(user -> {
+            userService.findById(id).ifPresent(user -> {
                 model.addAttribute("usuario", user);
             });
         }
@@ -172,7 +172,7 @@ public class AdminController {
 
     @GetMapping("/admin/user-list")
     public String userList(Model model) {
-        model.addAttribute("usuarios", userRepository.findAll());
+        model.addAttribute("usuarios", userService.getAllUsers());
         return "pages/admin/user-list";
     }
 
@@ -197,7 +197,7 @@ public class AdminController {
             product.setImage(true);
         }
 
-        productRepository.save(product);
+        productService.saveProduct(product);
         return "redirect:/admin/item-list";
     }
 
@@ -209,7 +209,7 @@ public class AdminController {
             @RequestParam double precio,
             @RequestParam int stock,
             @RequestParam(required = false) MultipartFile imageFile) throws IOException {
-        Optional<Product> optProduct = productRepository.findById(id);
+        Optional<Product> optProduct = productService.getProductById(id);
         if (optProduct.isPresent()) {
             Product product = optProduct.get();
             product.setName(nombre);
@@ -223,7 +223,7 @@ public class AdminController {
                 product.setImage(true);
             }
 
-            productRepository.save(product);
+            productService.saveProduct(product);
         }
         return "redirect:/admin/item-list";
     }
@@ -231,9 +231,9 @@ public class AdminController {
     // EL SOFT DELETE CORREGIDO
     @PostMapping("/admin/item-delete")
     public String deleteProduct(@RequestParam Long id) {
-        productRepository.findById(id).ifPresent(product -> {
+        productService.getProductById(id).ifPresent(product -> {
             product.setActive(false);
-            productRepository.save(product);
+            productService.saveProduct(product);
         });
         return "redirect:/admin/item-list";
     }
@@ -261,7 +261,7 @@ public class AdminController {
             user.setHasPicture(true);
         }
 
-        userRepository.save(user);
+        userService.saveUser(user);
         return "redirect:/admin/user-list";
     }
 
@@ -272,7 +272,7 @@ public class AdminController {
             @RequestParam(required = false) String contrasena,
             @RequestParam(required = false) String rol,
             @RequestParam(required = false) MultipartFile imageFile) throws IOException {
-        Optional<User> optUser = userRepository.findById(id);
+        Optional<User> optUser = userService.findById(id);
         if (optUser.isPresent()) {
             User user = optUser.get();
             user.setUsername(nombre);
@@ -294,14 +294,16 @@ public class AdminController {
                 user.setHasPicture(true);
             }
 
-            userRepository.save(user);
+            userService.saveUser(user);
         }
         return "redirect:/admin/user-list";
     }
 
     @PostMapping("/admin/user-delete")
     public String deleteUser(@RequestParam Long id) {
-        userRepository.deleteById(id);
+        try {
+            userService.deleteUser(id);
+        } catch (Exception e) {}
         return "redirect:/admin/user-list";
     }
 
@@ -310,43 +312,45 @@ public class AdminController {
             @RequestParam String status,
             @RequestParam(required = false) String emailMsg,
             @RequestParam(required = false) Boolean notifyClient) {
-        orderRepository.findById(id).ifPresent(order -> {
+        orderService.getOrderById(id).ifPresent(order -> {
             order.setStatus(status.toUpperCase());
-            orderRepository.save(order);
+            orderService.saveOrder(order);
         });
         return "redirect:/admin/order-edit?id=" + id;
     }
 
     @PostMapping("/admin/order-delete")
     public String deleteOrder(@RequestParam Long id) {
-        orderRepository.deleteById(id);
+        try {
+            orderService.deleteOrder(id);
+        } catch (Exception e) {}
         return "redirect:/admin/order-list";
     }
 
     @PostMapping("/admin/review-delete")
     public String deleteReview(@RequestParam Long id) {
-        reviewRepository.deleteById(id);
+        reviewService.deleteReviewAdmin(id);
         return "redirect:/admin/review-list";
     }
 
     @PostMapping("/admin/review-reply")
     public String replyReview(@RequestParam Long id, @RequestParam String reply) {
-        Optional<Review> optReview = reviewRepository.findById(id);
+        Optional<Review> optReview = reviewService.getReviewById(id);
         if (optReview.isPresent()) {
             Review review = optReview.get();
             review.setAdminReply(reply);
-            reviewRepository.save(review);
+            reviewService.saveReview(review);
         }
         return "redirect:/admin/review-list";
     }
 
     @PostMapping("/admin/review-reply-delete")
     public String deleteReviewReply(@RequestParam Long id) {
-        Optional<Review> optReview = reviewRepository.findById(id);
+        Optional<Review> optReview = reviewService.getReviewById(id);
         if (optReview.isPresent()) {
             Review review = optReview.get();
             review.setAdminReply(null);
-            reviewRepository.save(review);
+            reviewService.saveReview(review);
         }
         return "redirect:/admin/review-list";
     }

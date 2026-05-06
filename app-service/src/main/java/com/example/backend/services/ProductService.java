@@ -44,6 +44,10 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public List<Product> getActiveProducts() {
+        return productRepository.findByActiveTrue();
+    }
+
     public Product saveProduct(Product product) {
         return productRepository.save(product);
     }

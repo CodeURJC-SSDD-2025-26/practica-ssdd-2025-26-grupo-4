@@ -67,6 +67,10 @@ public class UserService {
         return userRepository.findAll(pageable);
     }
 
+    public java.util.List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
     public User saveUser(User user) {
         return userRepository.save(user);
     }

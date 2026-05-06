@@ -59,6 +59,18 @@ public class ReviewService {
         return reviewRepository.findAll(pageable);
     }
 
+    public java.util.List<Review> getAllReviews() {
+        return reviewRepository.findAll();
+    }
+
+    public Review saveReview(Review review) {
+        return reviewRepository.save(review);
+    }
+
+    public void deleteReviewAdmin(Long reviewId) {
+        reviewRepository.deleteById(reviewId);
+    }
+
     public Optional<Review> getReviewById(Long id) {
         return reviewRepository.findById(id);
     }
