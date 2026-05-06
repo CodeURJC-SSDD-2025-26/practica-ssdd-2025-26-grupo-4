@@ -490,7 +490,48 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
    cd [repositorio]
    ```
 
-2. **AQUÍ LOS SIGUIENTES PASOS**:
+2. **Acceder al directorio donde se encuentra el fichero `docker-compose.yml`**
+
+3. **Iniciar los contenedores**:
+   ```bash
+   docker compose up --build
+   ```
+
+   O en segundo plano:
+   ```bash
+   docker compose up -d --build
+   ```
+
+4. **Verificar que todos los servicios están funcionando correctamente**:
+   ```bash
+   docker ps
+   ```
+
+   Deberían aparecer los siguientes contenedores:
+   - `db`
+   - `app-service`
+   - `utility-service`
+
+5. **Esperar a que la base de datos pase el healthcheck**:
+
+   El servicio `app-service` y `utility-service` no arrancarán hasta que MySQL esté completamente disponible.
+
+6. **Acceder a la aplicación web**:
+
+   Abrir en el navegador:
+   ```
+   https://localhost:8443
+   ```
+
+7. **Acceder al servicio utility-service** (opcional):
+   ```
+   http://localhost:8080
+   ```
+
+8. **Detener los contenedores**:
+   ```bash
+   docker compose down
+   ```
 
 ### **Construcción de la Imagen Docker**
 
@@ -504,7 +545,44 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
    cd docker
    ```
 
-2. **AQUÍ LOS SIGUIENTES PASOS**
+
+2. **Construir las imágenes Docker de los servicios**:
+   ```bash
+   docker compose build
+   ```
+
+   También es posible construir las imágenes individualmente:
+   ```bash
+   docker build -t [usuario-dockerhub]/app-service:latest ./app-service
+   docker build -t [usuario-dockerhub]/utility-service:latest ./utility-service
+   ```
+
+3. **Verificar que las imágenes se han creado correctamente**:
+   ```bash
+   docker images
+   ```
+
+4. **Iniciar sesión en DockerHub**:
+   ```bash
+   docker login
+   ```
+
+5. **Publicar la imagen del servicio principal (`app-service`)**:
+   ```bash
+   docker push [usuario-dockerhub]/app-service:latest
+   ```
+
+8. **Publicar la imagen del servicio auxiliar (`utility-service`)**:
+   ```bash
+   docker push [usuario-dockerhub]/utility-service:latest
+   ```
+
+9. **Verificar que las imágenes han sido publicadas correctamente**:
+
+   Acceder al perfil de DockerHub:
+   ```
+   https://hub.docker.com/u/[usuario-dockerhub]
+   ```
 
 ### **Despliegue en Máquina Virtual**
 
@@ -525,8 +603,49 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
    ssh -i ssh-keys/app.key vmuser@10.100.139.XXX
    ```
 
-2. **AQUÍ LOS SIGUIENTES PASOS**:
+2. **Verificar que Docker y Docker Compose están instalados**:
+   ```bash
+   docker --version
+   docker compose version
+   ```
 
+3. **Clonar el repositorio del proyecto**:
+   ```bash
+   git clone https://github.com/[usuario]/[repositorio].git
+   cd [repositorio]
+   ```
+
+4. **Iniciar los contenedores en la máquina virtual**:
+   ```bash
+   docker compose up -d --build
+   ```
+
+5. **Comprobar que todos los servicios están funcionando correctamente**:
+   ```bash
+   docker ps
+   ```
+
+   Deberían aparecer los siguientes contenedores:
+   - `db`
+   - `app-service`
+   - `utility-service`
+
+6. **Consultar logs en caso de error**:
+   ```bash
+   docker compose logs -f
+   ```
+
+7. **Acceder a la aplicación desplegada**:
+
+   Desde un navegador web:
+   ```
+   https://[IP-o-dominio-VM]:8443
+   ```
+
+8. **Detener el despliegue** (opcional):
+   ```bash
+   docker compose down
+   ```
 ### **URL de la Aplicación Desplegada**
 
 🌐 **URL de acceso**: `https://[nombre-app].etsii.urjc.es:8443`
