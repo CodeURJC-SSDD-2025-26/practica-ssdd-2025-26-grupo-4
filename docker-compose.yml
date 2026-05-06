@@ -14,7 +14,7 @@ services:
       start_period: 30s
 
   app-service:
-    build: ./app-service
+    image: joeldomene/app-service:latest
     ports:
       - "8443:8443"
     environment:
@@ -27,7 +27,7 @@ services:
         condition: service_healthy
 
   utility-service:
-    build: ./utility-service
+    image: joeldomene/utility-service:latest
     ports:
       - "8080:8080"
     environment:
