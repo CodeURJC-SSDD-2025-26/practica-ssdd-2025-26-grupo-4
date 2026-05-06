@@ -92,8 +92,10 @@ public class ProductService {
             sortOrder = Sort.by(Sort.Direction.DESC, "price");
         }
 
-        return productRepository.findWithFilters(searchName, searchCategory, searchBrand, minPrice, maxPrice, sortOrder,
-                Pageable.unpaged()).getContent();
+        // Creamos un PageRequest gigante en lugar de unpaged() para poder aplicar el Sort
+        org.springframework.data.domain.PageRequest pageRequest = org.springframework.data.domain.PageRequest.of(0, 10000, sortOrder);
+
+        return productRepository.findWithFilters(searchName, searchCategory, searchBrand, minPrice, maxPrice, pageRequest).getContent();
     }
 
     public Page<Product> advancedSearch(String name, String category, String brand, Double minPrice, Double maxPrice,
@@ -138,14 +140,16 @@ public class ProductService {
             }
         }
 
-        Sort sortOrder = Sort.unsorted();
+        Sort sortOrder = pageable.getSort();
         if ("priceAsc".equals(sor)) {
             sortOrder = Sort.by(Sort.Direction.ASC, "price");
         } else if ("priceDesc".equals(sor)) {
             sortOrder = Sort.by(Sort.Direction.DESC, "price");
         }
+        
+        org.springframework.data.domain.PageRequest pageRequest = org.springframework.data.domain.PageRequest.of(
+                pageable.getPageNumber(), pageable.getPageSize(), sortOrder);
 
-        return productRepository.findWithFilters(searchName, searchCategory, searchBrand, minPrice, maxPrice, sortOrder,
-                pageable);
+        return productRepository.findWithFilters(searchName, searchCategory, searchBrand, minPrice, maxPrice, pageRequest);
     }
 }

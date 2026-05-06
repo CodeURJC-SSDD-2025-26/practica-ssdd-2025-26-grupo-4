@@ -34,6 +34,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                         @Param("brand") String brand,
                         @Param("minPrice") Double minPrice,
                         @Param("maxPrice") Double maxPrice,
-                        Sort sort,
                         Pageable pageable);
 }
