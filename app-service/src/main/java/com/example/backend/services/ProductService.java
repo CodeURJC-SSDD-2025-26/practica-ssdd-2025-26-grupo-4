@@ -47,6 +47,13 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    public void deleteProduct(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new Exception("Product not found"));
+        product.setActive(false);
+        productRepository.save(product);
+    }
+
     public List<Product> advancedSearch(String name, String category, String brand, Double minPrice, Double maxPrice,
             String sort) {
         String searchName = (name != null && !name.trim().isEmpty()) ? name.trim().toLowerCase() : null;
