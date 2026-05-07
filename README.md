@@ -737,14 +737,15 @@ Me he encargado de arreglar algunas funcionalidades de la práctica anterior, de
 
 #### **Alumno 4 - [Nombre Completo]**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+He configurado el sistema de despliegue y la documentación técnica de artefactos OCI en DockerHub. Además, he realizado la implementación (endpoints para las operaciones API CRUD), securización y documentación(actualización) de la API REST, asegurando buenas prácticas, paginación y manejo de errores.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Docker compose y docker files](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/ad7e7b3f9b47658e06abca3597e87dc5f77702e4)  | [App service dockerfile](app-service/Dockerfile)   |
+|2|   | [Docker compose](docker-compose.yml)   |
+|3|   | [Utility service dockerfile](utility-service/Dockerfile)   |
+|4| [Formateo y estilo de código](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/e5f47d303c38f280b33c6d29254955383be3219f)  | [Correcciones en la mayoría de archivos]   |
+|5| [Endpoints paginados](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-4/commit/ac350c1104065de876ca61f35bfddf9acff1b740)  | [Controllers]  |
+|5| [CRUD API Operations (diferentes commits)]  | [Archivos en RestControllers, Services y Repositories]   |
 
 ---
