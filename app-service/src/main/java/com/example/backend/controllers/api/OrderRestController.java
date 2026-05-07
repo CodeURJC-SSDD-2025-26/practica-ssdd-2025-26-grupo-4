@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Pageable;
 
 import com.example.backend.dto.OrderDTO;
 import com.example.backend.dto.ProductDTO;
@@ -73,13 +74,13 @@ public class OrderRestController {
         return ResponseEntity.ok(Map.of("message", "El carrito está vacío."));
     }
 
-    @PostMapping("/cart/add/{productId}")
+    @PostMapping("/cart/items/{productId}")
     public ResponseEntity<?> addToCart(@PathVariable Long productId, Principal principal) {
         orderService.addProductToUserCart(principal.getName(), productId);
         return ResponseEntity.ok(Map.of("message", "Producto " + productId + " añadido al carrito correctamente."));
     }
 
-    @DeleteMapping("/cart/remove/{productId}")
+    @DeleteMapping("/cart/items/{productId}")
     public ResponseEntity<?> removeFromCart(@PathVariable Long productId, Principal principal) {
         orderService.removeProductFromUserCart(principal.getName(), productId);
         return ResponseEntity.ok(Map.of("message", "Producto " + productId + " eliminado del carrito."));
@@ -144,6 +145,15 @@ public class OrderRestController {
     @GetMapping
     public ResponseEntity<Page<OrderDTO>> getAllOrders(Principal principal, Pageable pageable) {
         Page<OrderDTO> orderDTOs = orderService.getOrdersByUserUsername(principal.getName(), pageable)
+                .map(this::convertToDTO);
+
+        return ResponseEntity.ok(orderDTOs);
+    }
+
+    @GetMapping("/all")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Page<OrderDTO>> getAllOrdersAdmin(Pageable pageable) {
+        Page<OrderDTO> orderDTOs = orderService.getAllOrders(pageable)
                 .map(this::convertToDTO);
 
         return ResponseEntity.ok(orderDTOs);

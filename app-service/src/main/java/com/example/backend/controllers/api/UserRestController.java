@@ -160,7 +160,8 @@ public class UserRestController {
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Page<UserDTO>> getAllUsers(Pageable pageable) {
+    public ResponseEntity<Page<UserDTO>> getAllUsers(
+            @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
         Page<UserDTO> dtos = userService.findAll(pageable).map(this::convertToDTO);
         return ResponseEntity.ok(dtos);
     }

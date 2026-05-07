@@ -79,7 +79,8 @@ public class ReviewRestController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ResponseEntity<?> updateReview(@PathVariable Long id, @RequestBody Map<String, Object> data, Principal principal, @RequestHeader(value = "Role", defaultValue = "USER") String role) {
+    public ResponseEntity<?> updateReview(@PathVariable Long id, @RequestBody Map<String, Object> data,
+            Principal principal, @RequestHeader(value = "Role", defaultValue = "USER") String role) {
         try {
             boolean isAdmin = role.contains("ADMIN");
             int score = Integer.parseInt(data.get("score").toString());

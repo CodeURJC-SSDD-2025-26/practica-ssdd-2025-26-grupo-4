@@ -49,6 +49,10 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+    public Page<Order> getAllOrders(Pageable pageable) {
+        return orderRepository.findAll(pageable);
+    }
+
     public List<Order> getSalesOrders() {
         return orderRepository.findByStatusIn(java.util.Arrays.asList("ENTREGADO", "ENVIADO"));
     }

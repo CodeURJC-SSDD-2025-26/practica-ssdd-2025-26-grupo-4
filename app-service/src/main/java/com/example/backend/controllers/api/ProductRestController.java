@@ -134,7 +134,8 @@ public class ProductRestController {
     @GetMapping("/{id}/image")
     public ResponseEntity<Resource> getMainImage(@PathVariable Long id) {
         try {
-            Product product = productService.getProductById(id).orElseThrow(() -> new Exception("Producto no encontrado"));
+            Product product = productService.getProductById(id)
+                    .orElseThrow(() -> new Exception("Producto no encontrado"));
             if (product.getImageFile() != null) {
                 Resource file = new InputStreamResource(product.getImageFile().getBinaryStream());
                 return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").body(file);
