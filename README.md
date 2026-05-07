@@ -737,7 +737,7 @@ Me he encargado de arreglar algunas funcionalidades de la práctica anterior, de
 
 #### **Alumno 4 - [Nombre Completo]**
 
-He configurado el sistema de despliegue y la documentación técnica de artefactos OCI en DockerHub. Además, he realizado la implementación (endpoints para las operaciones API CRUD), securización y documentación(actualización) de la API REST, asegurando buenas prácticas, paginación y manejo de errores.
+He configurado el sistema de despliegue y la documentación técnica de artefactos OCI en DockerHub. Además, he realizado la implementación (endpoints para las operaciones API CRUD), securización y documentación(actualización) de la API REST, y he asegurado buenas prácticas, paginación y manejo de errores.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
