@@ -13,8 +13,10 @@ import org.springframework.http.HttpHeaders;
 
 import com.example.backend.dto.ProductDTO;
 import com.example.backend.models.Product;
+import com.example.backend.repositories.UserRepository;
 import com.example.backend.services.ProductService;
 import com.example.backend.services.RecommendationService;
+import com.example.backend.models.User;
 
 import java.security.Principal;
 import java.util.List;
@@ -31,6 +33,9 @@ public class ProductRestController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     private ProductDTO convertToDTO(Product p) {
         ProductDTO dto = new ProductDTO();
@@ -73,9 +78,17 @@ public class ProductRestController {
     @GetMapping("/recommendations")
     public ResponseEntity<?> getRecommendations(Principal principal) {
         if (principal == null) {
-            return ResponseEntity.ok(Map.of("message", "Recomendaciones genéricas para invitados."));
+            return ResponseEntity.ok(Map.of("message", "Inicia sesión para que el algoritmo te juzgue y te recomiende cosas."));
         }
-        return ResponseEntity.ok(Map.of("message", "Recomendaciones personalizadas para " + principal.getName()));
+
+        String usernameOrEmail = principal.getName();
+
+        User currentUser = userRepository.findByUsername(usernameOrEmail)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado, yabai..."));
+
+        List<Product> recommendedProducts = recommendationService.getRecommendedProducts(currentUser);
+
+        return ResponseEntity.ok(recommendedProducts);
     }
 
     @PostMapping

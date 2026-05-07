@@ -17,6 +17,7 @@ import com.example.backend.dto.UserRegisterRequest;
 
 import java.security.Principal;
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.net.URI;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -121,16 +122,34 @@ public class UserRestController {
             User user = userService.findById(id)
                     .orElseThrow(() -> new Exception("Usuario no encontrado"));
 
-            user.setUsername(userData.get("username").toString());
-            user.setEmail(userData.get("email").toString());
-            user.setEncodedPassword(passwordEncoder.encode(userData.get("password").toString()));
-            user.setRoles(Arrays.asList(
-                    userData.get("admin") != null && (Boolean) userData.get("admin") ? "ROLE_ADMIN" : "ROLE_USER"));
+            if (userData.containsKey("username") && userData.get("username") != null) {
+                user.setUsername(userData.get("username").toString());
+            }
+
+            if (userData.containsKey("email") && userData.get("email") != null) {
+                user.setEmail(userData.get("email").toString());
+            }
+
+            if (userData.containsKey("password") && userData.get("password") != null) {
+                String rawPassword = userData.get("password").toString();
+                if (!rawPassword.trim().isEmpty()) {
+                    user.setEncodedPassword(passwordEncoder.encode(rawPassword));
+                }
+            }
+
+            if (userData.containsKey("admin") && userData.get("admin") != null) {
+                boolean isAdmin = Boolean.parseBoolean(userData.get("admin").toString());
+                user.setRoles(new ArrayList<>(Arrays.asList(isAdmin ? "ROLE_ADMIN" : "ROLE_USER")));
+            }
 
             User updatedUser = userService.saveUser(user);
             return ResponseEntity.ok(convertToDTO(updatedUser));
+
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+            System.out.println("Error para el usuario: " + id);
+            e.printStackTrace(); 
+            String mensaje = e.getMessage() != null ? e.getMessage() : "Excepción sin mensaje: " + e.getClass().getSimpleName();
+            return ResponseEntity.badRequest().body(Map.of("error", mensaje));
         }
     }
 
