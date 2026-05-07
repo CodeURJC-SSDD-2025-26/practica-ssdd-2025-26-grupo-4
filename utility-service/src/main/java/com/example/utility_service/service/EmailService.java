@@ -66,7 +66,9 @@ public class EmailService {
             helper.setSubject(request.getSubject());
             helper.setText(request.getBody());
 
-            byte[] attachmentBytes = Base64.getDecoder().decode(request.getAttachmentBase64());
+            // Limpiar la cadena Base64 para eliminar caracteres inválidos
+            String cleanedBase64 = request.getAttachmentBase64().replaceAll("[^A-Za-z0-9+/=]", "");
+            byte[] attachmentBytes = Base64.getDecoder().decode(cleanedBase64);
             helper.addAttachment(request.getAttachmentName(), new ByteArrayResource(attachmentBytes));
 
             mailSender.send(mimeMessage);
