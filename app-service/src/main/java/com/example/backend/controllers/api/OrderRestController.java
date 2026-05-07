@@ -14,6 +14,7 @@ import com.example.backend.dto.ProductDTO;
 import com.example.backend.models.Order;
 import com.example.backend.models.Product;
 import com.example.backend.services.OrderService;
+import com.example.backend.services.EmailService;
 
 import java.security.Principal;
 import java.util.List;
@@ -29,6 +30,9 @@ public class OrderRestController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private EmailService emailService;
 
     private ProductDTO convertProductToDTO(Product p) {
         ProductDTO dto = new ProductDTO();
@@ -166,5 +170,31 @@ public class OrderRestController {
             OrderDTO dto = convertToDTO(order);
             return ResponseEntity.ok(dto);
         }).orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/{id}/resend-invoice")
+    public ResponseEntity<?> resendInvoiceEmail(@PathVariable Long id, Principal principal) {
+        try {
+            Optional<Order> orderOpt = orderService.getOrderById(id);
+            if (!orderOpt.isPresent()) {
+                return ResponseEntity.notFound().build();
+            }
+            
+            Order order = orderOpt.get();
+            
+            // Verify ownership (user can only resend their own invoice)
+            if (!order.getUser().getUsername().equals(principal.getName()) && 
+                !principal.getName().equals("admin")) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body(Map.of("error", "No tienes permiso para resend este email"));
+            }
+
+            // Send invoice email with explicit error handling
+            emailService.sendInvoiceEmailInternal(order);
+            return ResponseEntity.ok(Map.of("message", "Correo de factura reenviado exitosamente a " + order.getUser().getEmail()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "No se pudo enviar el correo: " + e.getMessage()));
+        }
     }
 }

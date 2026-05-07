@@ -24,6 +24,7 @@ public class EmailService {
 
     public EmailService(@Value("${utility.service.url:http://localhost:8080/api/utility}") String utilityServiceUrl) {
         this.utilityServiceUrl = utilityServiceUrl;
+        logger.info("EmailService initialized with utility-service URL: {}", utilityServiceUrl);
     }
 
     /**
@@ -46,24 +47,31 @@ public class EmailService {
 
     /**
      * Sends the invoice email through utility-service.
+     * Catches errors internally without throwing to allow payment flow to complete.
      */
     public void sendInvoiceEmail(Order order) {
+        try {
+            sendInvoiceEmailInternal(order);
+        } catch (Exception e) {
+            logger.error("Failed to send invoice email for order ID: {}", 
+                    order != null ? order.getId() : "unknown", e);
+        }
+    }
+
+    /**
+     * Internal method that throws exceptions for explicit error handling.
+     * Use this when you need to know if email sending failed.
+     */
+    public void sendInvoiceEmailInternal(Order order) throws Exception {
         if (order.getUser() == null || order.getUser().getEmail() == null) {
-            logger.error("Cannot send email: User or email is null for order ID: {}",
-                    order != null ? order.getId() : null);
-            return;
+            throw new IllegalArgumentException("Cannot send email: User or email is null for order ID: " + order.getId());
         }
 
         String recipient = order.getUser().getEmail();
-        logger.info("Delegating email send to utility-service for order ID: {} to {}", order.getId(), recipient);
+        logger.info("Sending invoice email to {} for order ID: {} via utility-service URL: {}", 
+                recipient, order.getId(), utilityServiceUrl);
 
-        byte[] pdfBytes;
-        try {
-            pdfBytes = generatePdfInvoice(order);
-        } catch (Exception e) {
-            logger.error("Failed to generate PDF for email of order ID: {}", order.getId(), e);
-            return;
-        }
+        byte[] pdfBytes = generatePdfInvoice(order);
 
         EmailApiRequest request = new EmailApiRequest(
                 recipient,
@@ -78,11 +86,12 @@ public class EmailService {
             if (response.getStatusCode().is2xxSuccessful()) {
                 logger.info("Email sent successfully for order ID: {}", order.getId());
             } else {
-                logger.error("Utility-service email endpoint returned status {} for order ID: {}",
-                        response.getStatusCode(), order.getId());
+                throw new Exception("Utility-service returned status " + response.getStatusCode() + 
+                        " for order ID: " + order.getId());
             }
         } catch (RestClientException e) {
-            logger.error("Failed to send email via utility-service for order ID: {}", order.getId(), e);
+            throw new Exception("Failed to connect to utility-service at " + utilityServiceUrl + 
+                    " for order ID: " + order.getId(), e);
         }
     }
 
