@@ -584,6 +584,40 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
    https://hub.docker.com/u/[usuario-dockerhub]
    ```
 
+### **Despliegue de la aplicación desde un OCI Artifact**
+
+Este método permite desplegar la aplicación directamente utilizando el artefacto publicado en DockerHub, sin necesidad de tener el archivo `docker-compose.yml` de forma local.
+
+1. **Lanzar la aplicación**:
+   Ejecuta el siguiente comando:
+   ```bash
+   docker compose -f oci://docker.io/[usuario-dockerhub]/pcbuildershop-compose up
+   ```
+
+Este comando descarga automáticamente la configuración del artefacto OCI y levanta todos los servicios definidos en él.
+
+
+### **Publicación de la aplicación como OCI Artifact**
+
+Este método permite publicar la configuración de despliegue sin necesidad de construir nuevas imágenes y sin usar *binding* de carpetas.
+
+1. **Situarse en la carpeta raíz**:
+   Debes estar en el directorio donde se encuentra el fichero `docker-compose.yml`.
+
+2. **Iniciar sesión en DockerHub**:
+   ```bash
+   docker login
+   ```
+
+3. **Publicar el fichero en el repositorio**:
+   Ejecuta el siguiente comando para publicar el artefacto:
+   ```bash
+   docker compose publish [usuario-dockerhub]/pcbuildershop-compose
+   ```
+
+4. **Verificación**:
+   Una vez publicado, puedes revisar tus artefactos de tipo Compose en tu perfil de DockerHub.
+
 ### **Despliegue en Máquina Virtual**
 
 #### **Requisitos:**
